@@ -4,7 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FPAIR - Función Pulmonar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Variables de color y estilos */
+        :root {
+            --primary: #1a6aa2;
+            --primary-dark: #0d4a75;
+            --primary-light: #4a9bd9;
+            --secondary: #34c7b3;
+            --accent: #ff7e5f;
+            --text-dark: #2c3e50;
+            --text-light: #5a6c7d;
+            --background: #f8fbfe;
+            --white: #ffffff;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
         /* Estilos generales */
         * {
             margin: 0;
@@ -14,240 +30,393 @@
         }
         
         body {
-            background: linear-gradient(135deg, #e8f4f8 0%, #ffffff 100%);
-            color: #2c3e50;
+            background-color: var(--background);
+            color: var(--text-dark);
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
         }
         
-        /* Encabezado */
-        .logo {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
+        /* Header con logo */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
         }
         
-        .logo h1 {
-            font-size: 3rem;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-            color: #1a5276;
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-right: 15px;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-text h1 {
+            font-size: 2rem;
             font-weight: 700;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        .logo h2 {
-            font-size: 2.2rem;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            color: #2980b9;
-            font-weight: 600;
-        }
-        
-        .logo h3 {
-            font-size: 1.4rem;
+            color: var(--primary);
             letter-spacing: 1px;
-            font-weight: normal;
-            color: #3498db;
-            margin-top: 10px;
+            line-height: 1;
+        }
+        
+        .logo-text h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            letter-spacing: 2px;
+            line-height: 1;
+            margin-top: 5px;
+        }
+        
+        .logo-text h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-top: 5px;
         }
         
         /* Contenido principal */
-        .content {
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 40px 20px;
             text-align: center;
-            margin: 30px 0;
-            padding: 0 20px;
         }
         
-        .welcome {
-            font-size: 2rem;
-            margin-bottom: 25px;
-            color: #2c3e50;
-            font-weight: 600;
-        }
-        
-        .description {
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            color: #34495e;
-            line-height: 1.7;
-        }
-        
-        .resources {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            color: #34495e;
-            line-height: 1.7;
-        }
-        
-        .audience {
-            font-size: 1.1rem;
+        .welcome-section {
+            max-width: 800px;
             margin-bottom: 40px;
-            color: #34495e;
-            font-style: italic;
         }
         
-        /* Agradecimientos */
-        .acknowledgments {
-            text-align: center;
-            margin: 30px 0;
-            color: #7f8c8d;
-            font-size: 1.1rem;
+        .welcome-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            line-height: 1.2;
         }
         
-        /* Botón */
+        .welcome-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+            width: 100%;
+            max-width: 1000px;
+        }
+        
+        .feature-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+        
+        .feature-description {
+            font-size: 1rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+        
+        /* Botón principal */
+        .cta-section {
+            margin: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
         .enter-btn {
-            display: block;
-            width: 220px;
-            margin: 30px auto;
-            padding: 16px 0;
-            background: linear-gradient(to right, #3498db, #2980b9);
-            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
             border: none;
-            border-radius: 30px;
+            border-radius: 50px;
+            padding: 18px 40px;
             font-size: 1.3rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(41, 128, 185, 0.3);
+            transition: var(--transition);
+            box-shadow: 0 6px 20px rgba(26, 106, 162, 0.3);
+            margin-bottom: 20px;
         }
         
         .enter-btn:hover {
-            background: linear-gradient(to right, #2980b9, #2471a3);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(41, 128, 185, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(26, 106, 162, 0.4);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
         }
         
-        .enter-btn:active {
-            transform: translateY(1px);
+        .enter-btn i {
+            margin-left: 10px;
+            font-size: 1.2rem;
         }
         
-        /* Pie de página */
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: auto;
-            font-size: 0.9rem;
-            color: #7f8c8d;
-            border-top: 1px solid #ecf0f1;
+        .acknowledgments {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-top: 20px;
         }
         
         /* Elementos decorativos */
         .decoration {
-            height: 4px;
-            width: 100px;
-            background: linear-gradient(to right, #3498db, #2980b9);
-            margin: 0 auto 30px;
-            border-radius: 2px;
+            position: relative;
+            width: 100%;
+            height: 200px;
+            margin: 40px 0;
+            overflow: hidden;
+        }
+        
+        .pulse-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(52, 199, 179, 0.1);
+            animation: pulse 4s infinite ease-in-out;
+        }
+        
+        .circle-1 {
+            width: 120px;
+            height: 120px;
+            top: 20px;
+            left: 15%;
+            animation-delay: 0s;
+        }
+        
+        .circle-2 {
+            width: 80px;
+            height: 80px;
+            top: 60px;
+            right: 20%;
+            animation-delay: 1s;
+        }
+        
+        .circle-3 {
+            width: 150px;
+            height: 150px;
+            bottom: 10px;
+            left: 60%;
+            animation-delay: 2s;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.3;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+            background: var(--white);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            font-size: 0.9rem;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
-            .logo h1 {
-                font-size: 2.5rem;
+            .header {
+                flex-direction: column;
+                text-align: center;
             }
             
-            .logo h2 {
-                font-size: 1.8rem;
+            .logo-container {
+                margin-bottom: 20px;
             }
             
-            .logo h3 {
+            .welcome-title {
+                font-size: 2.2rem;
+            }
+            
+            .welcome-subtitle {
                 font-size: 1.2rem;
             }
             
-            .welcome {
-                font-size: 1.7rem;
+            .features-grid {
+                grid-template-columns: 1fr;
             }
             
-            .description, .resources {
-                font-size: 1.1rem;
+            .decoration {
+                height: 150px;
             }
         }
         
         @media (max-width: 480px) {
-            .container {
-                padding: 10px;
+            .welcome-title {
+                font-size: 1.8rem;
             }
             
-            .logo h1 {
-                font-size: 2rem;
-            }
-            
-            .logo h2 {
-                font-size: 1.5rem;
-            }
-            
-            .logo h3 {
-                font-size: 1rem;
-            }
-            
-            .welcome {
-                font-size: 1.5rem;
-            }
-            
-            .description, .resources {
-                font-size: 1rem;
+            .welcome-subtitle {
+                font-size: 1.1rem;
             }
             
             .enter-btn {
-                width: 180px;
-                padding: 14px 0;
+                padding: 15px 30px;
                 font-size: 1.1rem;
+            }
+            
+            .feature-card {
+                padding: 20px 15px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header class="logo">
-            <h1>INCO</h1>
-            <h2>FPAIR</h2>
-            <h3>FUNCIÓN PULMONAR</h3>
+        <header class="header">
+            <div class="logo-container">
+                <i class="fas fa-lungs logo-icon"></i>
+                <div class="logo-text">
+                    <h1>INCO</h1>
+                    <h2>FPAIR</h2>
+                    <h3>FUNCIÓN PULMONAR</h3>
+                </div>
+            </div>
         </header>
         
-        <main class="content">
-            <h2 class="welcome">Bienvenido</h2>
-            <div class="decoration"></div>
-            <p class="description">Respira con tranquilidad. Aprende, practica y mejora con FPAIR.</p>
-            <p class="resources">Recursos educativos, guías detalladas de preparación y ejercicios específicos para optimizar tus resultados.</p>
-            <p class="audience">Creada para pacientes y profesionales.</p>
+        <main class="main-content">
+            <section class="welcome-section">
+                <h1 class="welcome-title">Bienvenido a FPAIR</h1>
+                <p class="welcome-subtitle">Respira con tranquilidad. Aprende, practica y mejora tu función pulmonar con nuestra plataforma especializada.</p>
+            </section>
             
-            <div class="acknowledgments">
-                <p>Agradecimientos</p>
+            <div class="decoration">
+                <div class="pulse-circle circle-1"></div>
+                <div class="pulse-circle circle-2"></div>
+                <div class="pulse-circle circle-3"></div>
             </div>
             
-            <button class="enter-btn">ENTRAR</button>
+            <section class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-book-medical feature-icon"></i>
+                    <h3 class="feature-title">Recursos Educativos</h3>
+                    <p class="feature-description">Material especializado para comprender y mejorar tu salud pulmonar.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-clipboard-list feature-icon"></i>
+                    <h3 class="feature-title">Guías de Preparación</h3>
+                    <p class="feature-description">Instrucciones detalladas para optimizar tus resultados y seguimiento.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-dumbbell feature-icon"></i>
+                    <h3 class="feature-title">Ejercicios Específicos</h3>
+                    <p class="feature-description">Prácticas diseñadas para fortalecer tu capacidad respiratoria.</p>
+                </div>
+            </section>
+            
+            <section class="cta-section">
+                <button class="enter-btn">
+                    ACCEDER A LA PLATAFORMA <i class="fas fa-arrow-right"></i>
+                </button>
+                <p class="acknowledgments">Agradecimientos a nuestro equipo médico y colaboradores</p>
+            </section>
         </main>
     </div>
     
     <footer>
-        <p>&copy; 2023 FPAIR - Función Pulmonar | Todos los derechos reservados</p>
+        <p>&copy; 2023 FPAIR - Plataforma para el cuidado de la función pulmonar | Diseñado para pacientes y profesionales</p>
     </footer>
 
     <script>
         document.querySelector('.enter-btn').addEventListener('click', function() {
-            // Aquí puedes agregar la funcionalidad que quieras para el botón ENTRAR
-            alert('Próximamente más contenido de FPAIR');
+            // Aquí puedes agregar la funcionalidad que quieras para el botón
             // Por ejemplo, redirigir a otra página:
-            // window.location.href = 'contenido.html';
+            // window.location.href = 'dashboard.html';
+            
+            // Por ahora, mostramos un mensaje
+            this.innerHTML = "REDIRIGIENDO... <i class='fas fa-spinner fa-spin'></i>";
+            
+            setTimeout(() => {
+                alert('Próximamente tendrás acceso completo a la plataforma FPAIR');
+                this.innerHTML = "ACCEDER A LA PLATAFORMA <i class='fas fa-arrow-right'></i>";
+            }, 1500);
+        });
+        
+        // Efecto de aparición suave para los elementos
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.feature-card, .welcome-title, .welcome-subtitle');
+            
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateY(20px)';
+                    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    
+                    setTimeout(() => {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
         });
     </script>
 </body>
