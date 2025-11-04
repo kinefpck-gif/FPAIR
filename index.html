@@ -97,6 +97,13 @@
             margin-top: 5px;
         }
         
+        /* Logotipo FPAIR en header */
+        .fpair-logo-header {
+            width: 70px;
+            height: auto;
+            margin-right: 15px;
+        }
+        
         /* Contenido principal */
         .main-content {
             display: flex;
@@ -126,6 +133,14 @@
             color: var(--text-light);
             margin-bottom: 30px;
             font-weight: 400;
+        }
+        
+        /* Logotipo FPAIR en sección principal */
+        .fpair-logo-main {
+            width: 180px;
+            height: auto;
+            margin: 20px 0;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
         }
         
         .features-grid {
@@ -306,6 +321,10 @@
             .decoration {
                 height: 150px;
             }
+            
+            .fpair-logo-main {
+                width: 140px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -325,6 +344,14 @@
             .feature-card {
                 padding: 20px 15px;
             }
+            
+            .fpair-logo-main {
+                width: 120px;
+            }
+            
+            .fpair-logo-header {
+                width: 50px;
+            }
         }
     </style>
 </head>
@@ -332,9 +359,14 @@
     <div class="container">
         <header class="header">
             <div class="logo-container">
-                <i class="fas fa-lungs logo-icon"></i>
+                <!-- 
+                    LOGO EN EL HEADER 
+                    Reemplaza "logo-fpair-header.png" con el nombre real de tu archivo
+                    Asegúrate de que el archivo esté en la misma carpeta que este HTML
+                -->
+                <img src="logo-fpair-header.png" alt="Logo FPAIR" class="fpair-logo-header">
                 <div class="logo-text">
-                
+                    <h1>INCO</h1>
                     <h2>FPAIR</h2>
                     <h3>FUNCIÓN PULMONAR</h3>
                 </div>
@@ -345,6 +377,13 @@
             <section class="welcome-section">
                 <h1 class="welcome-title">Bienvenido a FPAIR</h1>
                 <p class="welcome-subtitle">Respira con tranquilidad. Aprende, practica y mejora tu función pulmonar con nuestra plataforma especializada.</p>
+                
+                <!-- 
+                    LOGO EN LA SECCIÓN PRINCIPAL 
+                    Reemplaza "logo-fpair-main.png" con el nombre real de tu archivo
+                    Asegúrate de que el archivo esté en la misma carpeta que este HTML
+                -->
+                <img src="logo-fpair-main.png" alt="Logo FPAIR" class="fpair-logo-main">
             </section>
             
             <div class="decoration">
@@ -388,11 +427,6 @@
 
     <script>
         document.querySelector('.enter-btn').addEventListener('click', function() {
-            // Aquí puedes agregar la funcionalidad que quieras para el botón
-            // Por ejemplo, redirigir a otra página:
-            // window.location.href = 'dashboard.html';
-            
-            // Por ahora, mostramos un mensaje
             this.innerHTML = "REDIRIGIENDO... <i class='fas fa-spinner fa-spin'></i>";
             
             setTimeout(() => {
@@ -403,7 +437,7 @@
         
         // Efecto de aparición suave para los elementos
         document.addEventListener('DOMContentLoaded', function() {
-            const elements = document.querySelectorAll('.feature-card, .welcome-title, .welcome-subtitle');
+            const elements = document.querySelectorAll('.feature-card, .welcome-title, .welcome-subtitle, .fpair-logo-main');
             
             elements.forEach((element, index) => {
                 setTimeout(() => {
