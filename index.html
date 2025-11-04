@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPAIR - Función Pulmonar</title>
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e8f4f8 0%, #ffffff 100%);
+            color: #2c3e50;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Encabezado */
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+        
+        .logo h1 {
+            font-size: 3rem;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            color: #1a5276;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .logo h2 {
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            color: #2980b9;
+            font-weight: 600;
+        }
+        
+        .logo h3 {
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            font-weight: normal;
+            color: #3498db;
+            margin-top: 10px;
+        }
+        
+        /* Contenido principal */
+        .content {
+            text-align: center;
+            margin: 30px 0;
+            padding: 0 20px;
+        }
+        
+        .welcome {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .description {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #34495e;
+            line-height: 1.7;
+        }
+        
+        .resources {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #34495e;
+            line-height: 1.7;
+        }
+        
+        .audience {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            color: #34495e;
+            font-style: italic;
+        }
+        
+        /* Agradecimientos */
+        .acknowledgments {
+            text-align: center;
+            margin: 30px 0;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        /* Botón */
+        .enter-btn {
+            display: block;
+            width: 220px;
+            margin: 30px auto;
+            padding: 16px 0;
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(41, 128, 185, 0.3);
+        }
+        
+        .enter-btn:hover {
+            background: linear-gradient(to right, #2980b9, #2471a3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(41, 128, 185, 0.4);
+        }
+        
+        .enter-btn:active {
+            transform: translateY(1px);
+        }
+        
+        /* Pie de página */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            border-top: 1px solid #ecf0f1;
+        }
+        
+        /* Elementos decorativos */
+        .decoration {
+            height: 4px;
+            width: 100px;
+            background: linear-gradient(to right, #3498db, #2980b9);
+            margin: 0 auto 30px;
+            border-radius: 2px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 2.5rem;
+            }
+            
+            .logo h2 {
+                font-size: 1.8rem;
+            }
+            
+            .logo h3 {
+                font-size: 1.2rem;
+            }
+            
+            .welcome {
+                font-size: 1.7rem;
+            }
+            
+            .description, .resources {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .logo h1 {
+                font-size: 2rem;
+            }
+            
+            .logo h2 {
+                font-size: 1.5rem;
+            }
+            
+            .logo h3 {
+                font-size: 1rem;
+            }
+            
+            .welcome {
+                font-size: 1.5rem;
+            }
+            
+            .description, .resources {
+                font-size: 1rem;
+            }
+            
+            .enter-btn {
+                width: 180px;
+                padding: 14px 0;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="logo">
+            <h1>INCO</h1>
+            <h2>FPAIR</h2>
+            <h3>FUNCIÓN PULMONAR</h3>
+        </header>
+        
+        <main class="content">
+            <h2 class="welcome">Bienvenido</h2>
+            <div class="decoration"></div>
+            <p class="description">Respira con tranquilidad. Aprende, practica y mejora con FPAIR.</p>
+            <p class="resources">Recursos educativos, guías detalladas de preparación y ejercicios específicos para optimizar tus resultados.</p>
+            <p class="audience">Creada para pacientes y profesionales.</p>
+            
+            <div class="acknowledgments">
+                <p>Agradecimientos</p>
+            </div>
+            
+            <button class="enter-btn">ENTRAR</button>
+        </main>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 FPAIR - Función Pulmonar | Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        document.querySelector('.enter-btn').addEventListener('click', function() {
+            // Aquí puedes agregar la funcionalidad que quieras para el botón ENTRAR
+            alert('Próximamente más contenido de FPAIR');
+            // Por ejemplo, redirigir a otra página:
+            // window.location.href = 'contenido.html';
+        });
+    </script>
+</body>
+</html>
