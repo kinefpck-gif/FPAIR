@@ -48,6 +48,17 @@
             flex-direction: column;
         }
         
+        /* Páginas */
+        .page {
+            display: none;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .page.active {
+            display: flex;
+        }
+        
         /* Header con logo */
         .header {
             display: flex;
@@ -97,49 +108,49 @@
             margin-top: 5px;
         }
         
-        /* Logotipo FPAIR en header - MÁS GRANDE */
+        /* Logotipo FPAIR en header */
         .fpair-logo-header {
-            width: 140px; /* Aumentado significativamente */
+            width: 140px;
             height: auto;
             margin-right: 20px;
         }
         
-        /* Contenido principal */
+        /* Contenido principal - Página de inicio */
         .main-content {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             flex: 1;
-            padding: 20px 20px 40px;
+            padding: 40px 20px;
             text-align: center;
         }
         
         .welcome-section {
             max-width: 800px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         
         .welcome-title {
             font-size: 2.8rem;
             font-weight: 700;
             color: var(--primary-dark);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             line-height: 1.2;
         }
         
         .welcome-subtitle {
             font-size: 1.4rem;
             color: var(--text-light);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             font-weight: 400;
         }
         
-        /* Logotipo FPAIR en sección principal - MUY GRANDE */
+        /* Logotipo FPAIR en sección principal */
         .fpair-logo-main {
-            width: 320px; /* Aumentado significativamente */
+            width: 320px;
             height: auto;
-            margin: 15px 0; /* Reducido margen para compactar */
+            margin: 15px 0;
             filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
         }
         
@@ -147,7 +158,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 25px;
-            margin: 30px 0;
+            margin: 40px 0;
             width: 100%;
             max-width: 1000px;
         }
@@ -189,7 +200,7 @@
         
         /* Botón principal */
         .cta-section {
-            margin: 30px 0;
+            margin: 40px 0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -233,8 +244,8 @@
         .decoration {
             position: relative;
             width: 100%;
-            height: 150px; /* Reducido para compactar */
-            margin: 25px 0;
+            height: 200px;
+            margin: 40px 0;
             overflow: hidden;
         }
         
@@ -284,11 +295,321 @@
             }
         }
         
+        /* Navegación */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .back-btn {
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .back-btn:hover {
+            color: var(--primary-dark);
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Contenido principal - Página de plataforma */
+        .platform-content {
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+        }
+        
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .intro-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .intro-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .highlight-box {
+            background: rgba(26, 106, 162, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 25px 0;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .feature-list i {
+            color: var(--secondary);
+            margin-right: 12px;
+            margin-top: 4px;
+            font-size: 1.2rem;
+        }
+        
+        /* Sección de recursos en línea */
+        .inline-resources {
+            margin: 40px 0;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .inline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .inline-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+        
+        .inline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .inline-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            background: rgba(26, 106, 162, 0.1);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .inline-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+        
+        .inline-description {
+            font-size: 1rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .inline-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .inline-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Sección de menú de exámenes */
+        .exam-menu-section {
+            margin: 50px 0 30px;
+            text-align: center;
+        }
+        
+        .exam-menu-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 2px dashed var(--primary-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .exam-menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-style: solid;
+        }
+        
+        .exam-menu-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .exam-menu-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+        
+        .exam-menu-description {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+        
+        .exam-menu-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 6px 20px rgba(26, 106, 162, 0.3);
+        }
+        
+        .exam-menu-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(26, 106, 162, 0.4);
+        }
+        
+        .exam-menu-btn i {
+            margin-left: 10px;
+        }
+        
+        /* Modales */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        .modal-body {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+        
+        .modal-body p {
+            margin-bottom: 15px;
+        }
+        
         /* Footer */
         footer {
             text-align: center;
             padding: 25px 20px;
-            margin-top: 30px;
+            margin-top: 50px;
             background: var(--white);
             border-top: 1px solid rgba(0, 0, 0, 0.05);
             color: var(--text-light);
@@ -306,30 +627,36 @@
                 margin-bottom: 15px;
             }
             
-            .welcome-title {
-                font-size: 2.2rem;
+            .page-title {
+                font-size: 1.8rem;
             }
             
-            .welcome-subtitle {
-                font-size: 1.2rem;
+            .intro-title {
+                font-size: 1.5rem;
             }
             
-            .features-grid {
+            .intro-text {
+                font-size: 1rem;
+            }
+            
+            .features-grid, .inline-grid {
                 grid-template-columns: 1fr;
-                margin: 20px 0;
             }
             
             .decoration {
-                height: 120px;
-                margin: 20px 0;
+                height: 150px;
             }
             
             .fpair-logo-main {
-                width: 260px; /* Aumentado para móvil también */
+                width: 220px;
             }
             
             .fpair-logo-header {
-                width: 110px; /* Aumentado para móvil también */
+                width: 110px;
+            }
+            
+            .exam-menu-card {
+                padding: 30px 20px;
             }
         }
         
@@ -342,110 +669,349 @@
                 font-size: 1.1rem;
             }
             
+            .page-title {
+                font-size: 1.6rem;
+            }
+            
             .enter-btn {
                 padding: 15px 30px;
                 font-size: 1.1rem;
             }
             
-            .feature-card {
-                padding: 20px 15px;
+            .feature-card, .inline-card {
+                padding: 20px;
+            }
+            
+            .intro-section {
+                padding: 20px;
             }
             
             .fpair-logo-main {
-                width: 220px; /* Aumentado para móvil también */
+                width: 180px;
             }
             
             .fpair-logo-header {
-                width: 90px; /* Aumentado para móvil también */
-            }
-            
-            .header {
-                padding: 10px 0;
+                width: 90px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="logo-container">
-                <!-- 
-                    LOGO EN EL HEADER - MUY GRANDE
-                    Reemplaza "logo-fpair-header.png" con el nombre real de tu archivo
-                -->
-                <img src="https://via.placeholder.com/140x140/1a6aa2/ffffff?text=FPAIR" alt="Logo FPAIR" class="fpair-logo-header">
-                <div class="logo-text">
+    <!-- Página de inicio -->
+    <div id="home-page" class="page active">
+        <div class="container">
+            <header class="header">
+                <div class="logo-container">
+                    <img src="https://via.placeholder.com/140x140/1a6aa2/ffffff?text=FPAIR" alt="Logo FPAIR" class="fpair-logo-header">
+                    <div class="logo-text">
+                        <h1></h1>
+                        <h2>FPAIR</h2>
+                        <h3>FUNCIÓN PULMONAR</h3>
+                    </div>
+                </div>
+            </header>
+            
+            <main class="main-content">
+                <section class="welcome-section">
+                    <h1 class="welcome-title">Bienvenido a FPAIR</h1>
+                    <p class="welcome-subtitle">Respira con tranquilidad. Aprende, practica y mejora tu función pulmonar con nuestra plataforma especializada.</p>
+                    <img src="https://via.placeholder.com/320x320/1a6aa2/ffffff?text=FPAIR" alt="Logo FPAIR" class="fpair-logo-main">
+                </section>
+                
+                <div class="decoration">
+                    <div class="pulse-circle circle-1"></div>
+                    <div class="pulse-circle circle-2"></div>
+                    <div class="pulse-circle circle-3"></div>
+                </div>
+                
+                <section class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-book-medical feature-icon"></i>
+                        <h3 class="feature-title">Recursos Educativos</h3>
+                        <p class="feature-description">Material especializado para comprender y mejorar tu salud pulmonar.</p>
+                    </div>
                     
-                    <h2>FPAIR</h2>
-                    <h3>FUNCIÓN PULMONAR</h3>
-                </div>
-            </div>
-        </header>
+                    <div class="feature-card">
+                        <i class="fas fa-clipboard-list feature-icon"></i>
+                        <h3 class="feature-title">Guías de Preparación</h3>
+                        <p class="feature-description">Instrucciones detalladas para optimizar tus resultados y seguimiento.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <i class="fas fa-dumbbell feature-icon"></i>
+                        <h3 class="feature-title">Ejercicios Específicos</h3>
+                        <p class="feature-description">Prácticas diseñadas para fortalecer tu capacidad respiratoria.</p>
+                    </div>
+                </section>
+                
+                <section class="cta-section">
+                    <button id="enter-platform" class="enter-btn">
+                        ACCEDER A LA PLATAFORMA <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <p class="acknowledgments">Agradecimientos a nuestro equipo médico y colaboradores</p>
+                </section>
+            </main>
+        </div>
         
-        <main class="main-content">
-            <section class="welcome-section">
-                <h1 class="welcome-title">Bienvenido a FPAIR</h1>
-                <p class="welcome-subtitle">Respira con tranquilidad. Aprende, practica y mejora tu función pulmonar con nuestra plataforma especializada.</p>
-                
-                <!-- 
-                    LOGO EN LA SECCIÓN PRINCIPAL - MUY GRANDE
-                    Reemplaza "logo-fpair-main.png" con el nombre real de tu archivo
-                -->
-                <img src="https://via.placeholder.com/320x320/1a6aa2/ffffff?text=FPAIR" alt="Logo FPAIR" class="fpair-logo-main">
-            </section>
+        <footer>
+            <p>&copy; 2023 FPAIR - Plataforma para el cuidado de la función pulmonar | Diseñado para pacientes y profesionales</p>
+        </footer>
+    </div>
+
+    <!-- Página de plataforma -->
+    <div id="platform-page" class="page">
+        <div class="container">
+            <header class="header">
+                <div class="logo-container">
+                    <img src="https://via.placeholder.com/140x140/1a6aa2/ffffff?text=FPAIR" alt="Logo FPAIR" class="fpair-logo-header">
+                    <div class="logo-text">
+                        <h1>INCO</h1>
+                        <h2>FPAIR</h2>
+                        <h3>FUNCIÓN PULMONAR</h3>
+                    </div>
+                </div>
+            </header>
             
-            <div class="decoration">
-                <div class="pulse-circle circle-1"></div>
-                <div class="pulse-circle circle-2"></div>
-                <div class="pulse-circle circle-3"></div>
+            <div class="nav-container">
+                <div class="back-btn" id="back-to-home">
+                    <i class="fas fa-arrow-left"></i> Volver al Inicio
+                </div>
             </div>
             
-            <section class="features-grid">
-                <div class="feature-card">
-                    <i class="fas fa-book-medical feature-icon"></i>
-                    <h3 class="feature-title">Recursos Educativos</h3>
-                    <p class="feature-description">Material especializado para comprender y mejorar tu salud pulmonar.</p>
-                </div>
+            <main class="platform-content">
+                <h1 class="page-title">Transformando la Evaluación de la Función Pulmonar</h1>
                 
-                <div class="feature-card">
-                    <i class="fas fa-clipboard-list feature-icon"></i>
-                    <h3 class="feature-title">Guías de Preparación</h3>
-                    <p class="feature-description">Instrucciones detalladas para optimizar tus resultados y seguimiento.</p>
-                </div>
+                <section class="intro-section">
+                    <h2 class="intro-title">Información antes del examen</h2>
+                    <p class="intro-text">
+                        En FPAIR, creemos que un aspecto esencial, pero a menudo invisibilizado en los exámenes de función pulmonar, es la experiencia del paciente. Sabemos que la calidad de un examen no solo depende del equipo médico o la tecnología, sino también de cómo se siente y se prepara quien lo realiza.
+                    </p>
+                    
+                    <div class="highlight-box">
+                        <p class="intro-text">
+                            La Sociedad Torácica Estadounidense (ATS) y la Sociedad Respiratoria Europea (ERS), en la actualización del estándar de espirometría de 2019, destacaron la importancia de este factor. De hecho, un estudio de la Fundación Europea del Pulmón (2018) encuestó a 1.760 pacientes de 52 países y reveló que muchos de ellos necesitaban más información previa al examen, incluyendo aspectos clave como la suspensión de medicamentos o la técnica correcta.
+                        </p>
+                    </div>
+                    
+                    <p class="intro-text">
+                        En FPAIR, transformamos esta necesidad en una solución. Hemos creado una herramienta integral que acompaña a los pacientes en cada etapa del proceso, ofreciendo:
+                    </p>
+                    
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Material educativo claro y accesible para entender la función pulmonar y la importancia de cada prueba.</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Guías de preparación personalizadas que explican cómo optimizar la técnica y qué cuidados tomar antes del examen.</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Ejercicios prácticos en casa para mejorar la capacidad pulmonar y realizar la maniobra de forma más efectiva.</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Respuestas a las dudas más comunes, para que cada usuario llegue tranquilo y seguro a su evaluación.</span>
+                        </li>
+                    </ul>
+                    
+                    <p class="intro-text">
+                        Nuestro compromiso es que cada persona se sienta informada, acompañada y capaz de participar activamente en su propia salud respiratoria. Porque mejorar los resultados comienza con mejorar la experiencia.
+                    </p>
+                    
+                    <p class="intro-text" style="font-weight: 600; color: var(--primary);">
+                        FPAIR: Respira con confianza, aprende con nosotros.
+                    </p>
+                </section>
                 
-                <div class="feature-card">
-                    <i class="fas fa-dumbbell feature-icon"></i>
-                    <h3 class="feature-title">Ejercicios Específicos</h3>
-                    <p class="feature-description">Prácticas diseñadas para fortalecer tu capacidad respiratoria.</p>
-                </div>
-            </section>
-            
-            <section class="cta-section">
-                <button class="enter-btn">
-                    ACCEDER A LA PLATAFORMA <i class="fas fa-arrow-right"></i>
-                </button>
-                <p class="acknowledgments">Agradecimientos a nuestro equipo médico y colaboradores</p>
-            </section>
-        </main>
+                <section class="inline-resources">
+                    <h2 class="section-title">Recursos para Tu Preparación</h2>
+                    
+                    <div class="inline-grid">
+                        <div class="inline-card">
+                            <div class="inline-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 class="inline-title">Exámenes Seguros</h3>
+                            <p class="inline-description">
+                                Conoce todos los protocolos y medidas de seguridad que implementamos para garantizar que tus exámenes se realicen en un entorno protegido y confiable.
+                            </p>
+                            <button class="inline-btn" data-modal="safe-exams">Acceder</button>
+                        </div>
+                        
+                        <div class="inline-card">
+                            <div class="inline-icon">
+                                <i class="fas fa-search-lungs"></i>
+                            </div>
+                            <h3 class="inline-title">Cómo Leemos Tus Pulmones</h3>
+                            <p class="inline-description">
+                                Descubre el proceso detrás de los exámenes pulmonares y cómo interpretamos los resultados para evaluar tu salud respiratoria.
+                            </p>
+                            <button class="inline-btn" data-modal="read-lungs">Acceder</button>
+                        </div>
+                        
+                        <div class="inline-card">
+                            <div class="inline-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <h3 class="inline-title">Contraindicaciones</h3>
+                            <p class="inline-description">
+                                Información importante sobre situaciones en las que ciertos exámenes podrían no ser recomendables y las alternativas disponibles.
+                            </p>
+                            <button class="inline-btn" data-modal="contraindications">Acceder</button>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="exam-menu-section">
+                    <div class="exam-menu-card">
+                        <div class="exam-menu-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h3 class="exam-menu-title">Menú de Exámenes</h3>
+                        <p class="exam-menu-description">
+                            Accede a nuestra completa lista de exámenes de función pulmonar disponibles. Encuentra información detallada sobre cada prueba, preparación requerida y qué esperar durante el procedimiento.
+                        </p>
+                        <button class="exam-menu-btn" data-modal="exam-menu">
+                            Explorar Exámenes <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </section>
+            </main>
+        </div>
+        
+        <footer>
+            <p>&copy; 2023 FPAIR - Plataforma para el cuidado de la función pulmonar | Diseñado para pacientes y profesionales</p>
+        </footer>
     </div>
-    
-    <footer>
-        <p>&copy; 2023 FPAIR - Plataforma para el cuidado de la función pulmonar | Diseñado para pacientes y profesionales</p>
-    </footer>
+
+    <!-- Modales -->
+    <div id="safe-exams-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Exámenes Seguros</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>En FPAIR, tu seguridad es nuestra máxima prioridad. Implementamos rigurosos protocolos para garantizar que todos los exámenes se realicen en un entorno controlado y seguro:</p>
+                <ul>
+                    <li>Equipos médicos certificados y calibrados regularmente</li>
+                    <li>Protocolos de higiene y desinfección exhaustivos</li>
+                    <li>Personal capacitado en técnicas de seguridad</li>
+                    <li>Monitoreo constante durante los procedimientos</li>
+                    <li>Instalaciones diseñadas para tu comodidad y seguridad</li>
+                </ul>
+                <p>Todos nuestros procedimientos siguen las directrices de la Sociedad Torácica Estadounidense (ATS) y la Sociedad Respiratoria Europea (ERS).</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="read-lungs-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Cómo Leemos Tus Pulmones</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Los exámenes de función pulmonar nos permiten evaluar la salud de tus pulmones mediante diferentes parámetros:</p>
+                <ul>
+                    <li><strong>Espirometría:</strong> Mide la cantidad y velocidad del aire que puedes inhalar y exhalar</li>
+                    <li><strong>Volúmenes pulmonares:</strong> Evalúa la capacidad total de tus pulmones</li>
+                    <li><strong>Capacidad de difusión:</strong> Determina qué tan bien se transfiere el oxígeno a tu sangre</li>
+                    <li><strong>Pruebas de esfuerzo:</strong> Analizan tu respuesta respiratoria durante la actividad física</li>
+                </ul>
+                <p>Interpretamos estos resultados comparándolos con valores de referencia basados en tu edad, sexo, altura y origen étnico, lo que nos permite identificar posibles alteraciones en tu función respiratoria.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="contraindications-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Contraindicaciones</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Algunas condiciones de salud pueden requerir precauciones especiales o la postergación de ciertos exámenes pulmonares:</p>
+                <ul>
+                    <li>Infecciones respiratorias activas</li>
+                    <li>Neumotórax (presencia de aire en el espacio pleural)</li>
+                    <li>Angina inestable o infarto de miocardio reciente</li>
+                    <li>Aneurismas aórticos o cerebrales</li>
+                    <li>Cirugía ocular o abdominal reciente</li>
+                    <li>Embarazo avanzado (para algunas pruebas específicas)</li>
+                </ul>
+                <p>Es fundamental informar a nuestro equipo sobre cualquier condición de salud, medicación o procedimiento médico reciente para garantizar tu seguridad durante los exámenes.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="exam-menu-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Menú de Exámenes</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>En FPAIR ofrecemos una amplia gama de exámenes de función pulmonar para evaluar tu salud respiratoria:</p>
+                <ul>
+                    <li><strong>Espirometría simple y con broncodilatador</strong></li>
+                    <li><strong>Volúmenes pulmonares por pletismografía</strong></li>
+                    <li><strong>Capacidad de difusión de monóxido de carbono (DLCO)</strong></li>
+                    <li><strong>Prueba de esfuerzo cardiopulmonar</strong></li>
+                    <li><strong>Prueba de marcha de 6 minutos</strong></li>
+                    <li><strong>Oximetría de pulso en reposo y durante el ejercicio</strong></li>
+                    <li><strong>Gasometría arterial</strong></li>
+                    <li><strong>Pruebas de provocación bronquial</strong></li>
+                </ul>
+                <p>Cada examen está diseñado para evaluar aspectos específicos de tu función respiratoria. Nuestro equipo médico te ayudará a determinar cuáles son los más apropiados según tus necesidades.</p>
+            </div>
+        </div>
+    </div>
 
     <script>
-        document.querySelector('.enter-btn').addEventListener('click', function() {
-            this.innerHTML = "REDIRIGIENDO... <i class='fas fa-spinner fa-spin'></i>";
-            
-            setTimeout(() => {
-                alert('Próximamente tendrás acceso completo a la plataforma FPAIR');
-                this.innerHTML = "ACCEDER A LA PLATAFORMA <i class='fas fa-arrow-right'></i>";
-            }, 1500);
+        // Navegación entre páginas
+        document.getElementById('enter-platform').addEventListener('click', function() {
+            document.getElementById('home-page').classList.remove('active');
+            document.getElementById('platform-page').classList.add('active');
+        });
+        
+        document.getElementById('back-to-home').addEventListener('click', function() {
+            document.getElementById('platform-page').classList.remove('active');
+            document.getElementById('home-page').classList.add('active');
+        });
+        
+        // Funcionalidad de modales
+        const modalButtons = document.querySelectorAll('[data-modal]');
+        const modals = document.querySelectorAll('.modal');
+        const closeButtons = document.querySelectorAll('.close-modal');
+        
+        modalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-modal') + '-modal';
+                document.getElementById(modalId).classList.add('active');
+            });
+        });
+        
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('.modal').classList.remove('active');
+            });
+        });
+        
+        // Cerrar modal al hacer clic fuera del contenido
+        modals.forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
         });
         
         // Efecto de aparición suave para los elementos
         document.addEventListener('DOMContentLoaded', function() {
-            const elements = document.querySelectorAll('.feature-card, .welcome-title, .welcome-subtitle, .fpair-logo-main');
+            const elements = document.querySelectorAll('.feature-card, .welcome-title, .welcome-subtitle, .fpair-logo-main, .intro-section, .inline-card, .exam-menu-card');
             
             elements.forEach((element, index) => {
                 setTimeout(() => {
