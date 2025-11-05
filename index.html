@@ -426,16 +426,20 @@
         }
         
         .inline-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
             margin-bottom: 20px;
-            background: rgba(26, 106, 162, 0.1);
             width: 80px;
             height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
+        }
+        
+        /* Estilos para las imágenes personalizadas */
+        .custom-icon {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
         }
         
         .inline-title {
@@ -658,6 +662,11 @@
             .exam-menu-card {
                 padding: 30px 20px;
             }
+            
+            .custom-icon {
+                width: 60px;
+                height: 60px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -693,6 +702,11 @@
             .fpair-logo-header {
                 width: 90px;
             }
+            
+            .custom-icon {
+                width: 50px;
+                height: 50px;
+            }
         }
     </style>
 </head>
@@ -701,7 +715,7 @@
     <div id="home-page" class="page active">
         <div class="container">
             <header class="header">
-                   
+            
             <main class="main-content">
                 <section class="welcome-section">
                     <h1 class="welcome-title">Bienvenido a FPAIR</h1>
@@ -754,9 +768,9 @@
         <div class="container">
             <header class="header">
                 <div class="logo-container">
-                    <img src="https://via.placeholder.com/140x140/1a6aa2/ffffff?text=FPAIR" alt="Logo FPAIR" class="fpair-logo-header">
+                    <img src="logo-fpair-header.png" alt="Logo FPAIR" class="fpair-logo-header">
                     <div class="logo-text">
-                        <h1></h1>
+                        <h1>INCO</h1>
                         <h2>FPAIR</h2>
                         <h3>FUNCIÓN PULMONAR</h3>
                     </div>
@@ -822,7 +836,8 @@
                     <div class="inline-grid">
                         <div class="inline-card">
                             <div class="inline-icon">
-                                <i class="fas fa-shield-alt"></i>
+                                <!-- IMAGEN PERSONALIZADA PARA EXÁMENES SEGUROS -->
+                                <img src="examenes-seguros.png" alt="Exámenes Seguros" class="custom-icon">
                             </div>
                             <h3 class="inline-title">Exámenes Seguros</h3>
                             <p class="inline-description">
@@ -833,7 +848,8 @@
                         
                         <div class="inline-card">
                             <div class="inline-icon">
-                                <i class="fas fa-search-lungs"></i>
+                                <!-- IMAGEN PERSONALIZADA PARA CÓMO LEEMOS TUS PULMONES -->
+                                <img src="como-leemos-pulmones.png" alt="Cómo Leemos Tus Pulmones" class="custom-icon">
                             </div>
                             <h3 class="inline-title">Cómo Leemos Tus Pulmones</h3>
                             <p class="inline-description">
@@ -844,7 +860,8 @@
                         
                         <div class="inline-card">
                             <div class="inline-icon">
-                                <i class="fas fa-exclamation-triangle"></i>
+                                <!-- IMAGEN PERSONALIZADA PARA CONTRAINDICACIONES -->
+                                <img src="contraindicaciones.png" alt="Contraindicaciones" class="custom-icon">
                             </div>
                             <h3 class="inline-title">Contraindicaciones</h3>
                             <p class="inline-description">
