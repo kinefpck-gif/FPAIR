@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo Leemos Tus Pulmones - FPAIR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables de color y estilos */
+        :root {
+            --primary: #1a6aa2;
+            --primary-dark: #0d4a75;
+            --primary-light: #4a9bd9;
+            --secondary: #34c7b3;
+            --accent: #ff7e5f;
+            --text-dark: #2c3e50;
+            --text-light: #5a6c7d;
+            --background: #f8fbfe;
+            --white: #ffffff;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header con logo */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 10px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-text h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+        
+        .logo-text h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            letter-spacing: 2px;
+            line-height: 1;
+            margin-top: 5px;
+        }
+        
+        .logo-text h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+        
+        /* Logotipo FPAIR en header */
+        .fpair-logo-header {
+            width: 140px;
+            height: auto;
+            margin-right: 20px;
+        }
+        
+        /* Navegación */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .back-btn {
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .back-btn:hover {
+            color: var(--primary-dark);
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Contenido principal */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+        }
+        
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .content-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+        }
+        
+        .content-text {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .highlight-box {
+            background: rgba(26, 106, 162, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 25px 0;
+        }
+        
+        .checklist {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        
+        .checklist li {
+            margin-bottom: 8px;
+            list-style-type: none;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .image-placeholder {
+            background-color: #e8f4fc;
+            border: 2px dashed var(--primary-light);
+            border-radius: 8px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .video-container {
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .video-placeholder {
+            background-color: #e8f4fc;
+            border: 2px dashed var(--primary-light);
+            border-radius: 8px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary-light), transparent);
+            margin: 30px 0;
+        }
+        
+        .breathing-info {
+            background: rgba(52, 199, 179, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .breathing-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+        
+        .reserves-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .reserve-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .reserve-color {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .blue {
+            background-color: #3498db;
+        }
+        
+        .red {
+            background-color: #e74c3c;
+        }
+        
+        .reserve-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .reserve-label {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        
+        .conclusion-box {
+            background: rgba(52, 199, 179, 0.1);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .conclusion-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            text-align: center;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 50px;
+            background: var(--white);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-container {
+                margin-bottom: 15px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .content-text {
+                font-size: 1rem;
+            }
+            
+            .reserves-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .fpair-logo-header {
+                width: 110px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.6rem;
+            }
+            
+            .content-section {
+                padding: 20px;
+            }
+            
+            .fpair-logo-header {
+                width: 90px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <!-- LOGO FPAIR -->
+                <img src="logo-fpair-header.png" alt="Logo FPAIR" class="fpair-logo-header">
+                <div class="logo-text">
+                    <h1>INCO</h1>
+                    <h2>FPAIR</h2>
+                    <h3>FUNCIÓN PULMONAR</h3>
+                </div>
+            </div>
+        </header>
+        
+        <div class="nav-container">
+            <div class="back-btn" id="back-to-platform">
+                <i class="fas fa-arrow-left"></i> Volver a la Plataforma
+            </div>
+        </div>
+        
+        <main class="main-content">
+            <h1 class="page-title">Cómo Leemos Tus Pulmones</h1>
+            
+            <section class="content-section">
+                <h2 class="section-title">¿Qué es un espirograma y qué mide?</h2>
+                
+                <ul class="checklist">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                
+                <p class="content-text">
+                    Un espirograma es un gráfico que muestra cómo funcionan sus pulmones, el gráfico se compone de Volumen (en litros) y Tiempo, es decir cuánto aire inhalas y exhalas en cada respiración.
+                </p>
+                
+                <p class="content-text">
+                    Además, tenemos la capacidad de inhalar hasta llenar al máximo los pulmones (línea prepunteada verde) o soplar sin detenernos hasta vaciarlos lo máximo posible (línea prepunteada roja).
+                </p>
+                
+                <div class="image-placeholder">
+                    Espirograma - imagen.png
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2 class="section-title">Comencemos a entender</h2>
+                
+                <p class="content-text">
+                    Más adelante encontrarás videos de ayuda para cada examen, en donde guiamos tu respiración al igual que la leemos con el espirograma, toma atención.
+                </p>
+                
+                <div class="breathing-info">
+                    <h3 class="breathing-title">Respiración normal</h3>
+                    <p class="content-text">
+                        <strong>A tu respiración "normal" (el aire que entra y sale de los pulmones sin hacer esfuerzo) lo conocemos como Volumen Corriente, este nos muestra cuántos mL o litros usas para respirar relajado.</strong>
+                    </p>
+                    <p class="content-text">
+                        <strong>También vemos en qué fase de tu respiración te encuentras durante el examen.</strong>
+                    </p>
+                </div>
+                
+                <p class="content-text">
+                    En la imagen, tu inhalación normal de aire se encuentra en verde y la espiración se encuentra en celeste.
+                </p>
+                
+                <div class="image-placeholder">
+                    Respiración normal - imagen.png
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2 class="section-title">Reservas pulmonares</h2>
+                
+                <p class="content-text">
+                    De seguro has notado que al hacer ejercicio o una actividad de esfuerzo, tu respiración es más profunda. Pues sí, todos tenemos una reserva que podemos usar tanto para inhalar aire o para espirarlo.
+                </p>
+                
+                <div class="image-placeholder">
+                    Reservas pulmonares - imagen.png
+                </div>
+                
+                <p class="content-text">
+                    Durante los exámenes de función pulmonar, normalmente el operador te estará solicitando llegar a estos esfuerzos para poder tener las mediciones máximas que puedas realizar con tu mejor esfuerzo.
+                </p>
+                
+                <div class="reserves-grid">
+                    <div class="reserve-card">
+                        <div class="reserve-color blue"></div>
+                        <div class="reserve-value">Volumen de Reserva Inspiratorio</div>
+                        <div class="reserve-label">
+                            Al inhalar a tu máxima capacidad, analizamos tu Volumen de Reserva Inspiratorio. Para lograrlo, debes inhalar y forzar el llenado de tus pulmones a más no poder.
+                        </div>
+                    </div>
+                    
+                    <div class="reserve-card">
+                        <div class="reserve-color red"></div>
+                        <div class="reserve-value">Capacidad Vital</div>
+                        <div class="reserve-label">
+                            Al espirar largo, sin parar hasta finalizar haciendo presión con el abdomen para vaciar hasta la "última gota" de aire, analizamos todo el aire que pueden soplar tus pulmones.
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="content-text">
+                    El volumen de reserva espiratorio, es lo que puedes soplar sin parar desde tu respiración normal, no desde los pulmones llenos.
+                </p>
+                
+                <div class="highlight-box">
+                    <p class="content-text">
+                        Entonces, la Capacidad Vital es la suma de tu respiración normal y tus reservas de llenar o vaciar los pulmones.
+                    </p>
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2 class="section-title">Volumen Residual y Pletismografía</h2>
+                
+                <p class="content-text">
+                    No hay peligro al soplar sin detenerte hasta no poder más, nuestros pulmones poseen una reserva de aire que no podemos sacar por más que presionemos, a esto lo conocemos como el Volumen Residual.
+                </p>
+                
+                <p class="content-text">
+                    Para poder realizar la lectura de este volumen, es necesario realizar una Pletismografía Corporal, ya que como se aprecia en el gráfico, la espirometría no lee ese volumen pulmonar.
+                </p>
+                
+                <div class="image-placeholder">
+                    Volumen Residual - imagen.png
+                </div>
+                
+                <div class="conclusion-box">
+                    <p class="conclusion-text">
+                        Con estas herramientas podemos evaluar de manera precisa la salud de tus pulmones y detectar cualquier anomalía en tu función respiratoria.
+                    </p>
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2 class="section-title">Video de Ayuda</h2>
+                
+                <div class="video-container">
+                    <div class="video-placeholder">
+                        Video de ayuda - ayuda.mp4
+                    </div>
+                    <!-- Si tuvieras el video, usarías esta etiqueta:
+                    <video controls>
+                        <source src="ayuda.mp4" type="video/mp4">
+                        Tu navegador no soporta el elemento de video.
+                    </video>
+                    -->
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 FPAIR - Plataforma para el cuidado de la función pulmonar | Diseñado para pacientes y profesionales</p>
+    </footer>
+
+    <script>
+        // Navegación de vuelta a la plataforma
+        document.getElementById('back-to-platform').addEventListener('click', function() {
+            // En un entorno real, esto redirigiría a la plataforma
+            // window.location.href = 'platform.html';
+            
+            // Por ahora, mostramos un mensaje
+            alert('Volviendo a la plataforma FPAIR');
+        });
+        
+        // Efecto de aparición suave para los elementos
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.content-section');
+            
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateY(20px)';
+                    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    
+                    setTimeout(() => {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
