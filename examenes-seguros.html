@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exámenes Seguros - FPAIR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables de color y estilos */
+        :root {
+            --primary: #1a6aa2;
+            --primary-dark: #0d4a75;
+            --primary-light: #4a9bd9;
+            --secondary: #34c7b3;
+            --accent: #ff7e5f;
+            --text-dark: #2c3e50;
+            --text-light: #5a6c7d;
+            --background: #f8fbfe;
+            --white: #ffffff;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header con logo */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 10px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-text h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+        
+        .logo-text h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            letter-spacing: 2px;
+            line-height: 1;
+            margin-top: 5px;
+        }
+        
+        .logo-text h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+        
+        /* Logotipo FPAIR en header */
+        .fpair-logo-header {
+            width: 140px;
+            height: auto;
+            margin-right: 20px;
+        }
+        
+        /* Navegación */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .back-btn {
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .back-btn:hover {
+            color: var(--primary-dark);
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Contenido principal */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+        }
+        
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .content-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+        }
+        
+        .content-text {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .highlight-box {
+            background: rgba(26, 106, 162, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 25px 0;
+        }
+        
+        .evidence-info {
+            background: rgba(52, 199, 179, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .evidence-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+        
+        .evidence-doi {
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .stat-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        
+        .chart-container {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .chart-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+        
+        .chart-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+        }
+        
+        .chart-caption {
+            font-style: italic;
+            color: var(--text-light);
+            margin-top: 10px;
+        }
+        
+        .percentage-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .percentage-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .percentage-name {
+            font-weight: 500;
+        }
+        
+        .percentage-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .medical-explanation {
+            background: rgba(255, 126, 95, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .medical-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .conclusion-box {
+            background: rgba(52, 199, 179, 0.1);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .conclusion-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            text-align: center;
+        }
+        
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 30px;
+            color: var(--text-light);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 50px;
+            background: var(--white);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-container {
+                margin-bottom: 15px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .content-text {
+                font-size: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .fpair-logo-header {
+                width: 110px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.6rem;
+            }
+            
+            .content-section {
+                padding: 20px;
+            }
+            
+            .fpair-logo-header {
+                width: 90px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <!-- LOGO FPAIR -->
+                <img src="logo-fpair-header.png" alt="Logo FPAIR" class="fpair-logo-header">
+                <div class="logo-text">
+                    <h1>INCO</h1>
+                    <h2>FPAIR</h2>
+                    <h3>FUNCIÓN PULMONAR</h3>
+                </div>
+            </div>
+        </header>
+        
+        <div class="nav-container">
+            <div class="back-btn" id="back-to-platform">
+                <i class="fas fa-arrow-left"></i> Volver a la Plataforma
+            </div>
+        </div>
+        
+        <main class="main-content">
+            <h1 class="page-title">Exámenes Seguros</h1>
+            
+            <section class="content-section">
+                <h2 class="section-title">Estimado paciente,</h2>
+                <p class="content-text">
+                    Las pruebas de función pulmonar son procedimientos seguros y esenciales para evaluar la salud respiratoria. Estas pruebas miden la capacidad y eficiencia de sus pulmones, ayudando a diagnosticar y monitorear afecciones pulmonares.
+                </p>
+                
+                <p class="content-text">
+                    Diversos estudios científicos respaldan la seguridad de estas pruebas. Por ejemplo, investigaciones han demostrado que la espirometría es una herramienta confiable y bien tolerada por la mayoría de los pacientes, incluyendo niños y adultos mayores. Los efectos adversos son raros y generalmente leves, como mareos transitorios o tos.
+                </p>
+                
+                <p class="content-text">
+                    Además, organizaciones internacionales, como la American Thoracic Society y la European Respiratory Society, han establecido estándares y guías para garantizar la seguridad y precisión en la realización de estas pruebas.
+                </p>
+                
+                <p class="content-text">
+                    Es importante destacar que la información obtenida de estas pruebas permite a los profesionales de la salud diseñar planes de tratamiento adecuados y personalizados, mejorando su calidad de vida.
+                </p>
+                
+                <p class="content-text">
+                    Si tiene alguna inquietud o pregunta sobre el procedimiento, no dude en consultarnos. Su bienestar es nuestra prioridad.
+                </p>
+                
+                <div class="signature">
+                    <p>Atentamente,</p>
+                    <p><strong>FPAIR</strong></p>
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2 class="section-title">Evidencia Científica</h2>
+                
+                <div class="evidence-info">
+                    <h3 class="evidence-title">Seguridad de las pruebas de función pulmonar: datos de 20 años</h3>
+                    <p class="evidence-doi"><strong>Publicación:</strong> Abril 2016; 29(4):385-387. doi: 10.1198/torquip-2077-202046.</p>
+                    <p class="evidence-doi"><strong>Publicación electrónica:</strong> 20 de junio de 2017.</p>
+                    
+                    <p class="content-text">
+                        En una auditoría de un solo centro, se recopilaron datos demográficos y de incidentes de seguridad del paciente (PSI) y se clasificaron para las pruebas de función pulmonar realizadas entre 1996 y 2016, y se subdividieron en eventos cardiopulmonares o no cardiopulmonares.
+                    </p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">0.6%</div>
+                            <div class="stat-label">PSI por cada 1,000 pruebas</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">1/10,000</div>
+                            <div class="stat-label">Ingresos hospitalarios</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">0</div>
+                            <div class="stat-label">Mortalidad asociada</div>
+                        </div>
+                    </div>
+                    
+                    <p class="content-text">
+                        Se notificaron 119 PSI de 186,000 Pruebas de Función Pulmonar; es decir, 0.6% incidentes de seguridad del paciente por cada 1,000 pruebas.
+                    </p>
+                    
+                    <p class="content-text">
+                        Los incidentes de seguridad del paciente que requirieron ingreso hospitalario y/o asistencia al departamento de emergencias ocurrieron aproximadamente una vez cada 10,000 pruebas y no hubo mortalidad asociada a Pruebas de Función Pulmonar.
+                    </p>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Porcentaje de PSI en comparación con el número de pruebas realizadas</h3>
+                    <!-- IMAGEN DEL GRÁFICO DE PSI -->
+                    <img src="grafico-psi.png" alt="Gráfico de PSI en pruebas de función pulmonar" class="chart-image">
+                    <p class="chart-caption">PFT, pruebas de función pulmonar; PSI, incidentes de seguridad del paciente.</p>
+                    
+                    <p class="content-text">
+                        Como podemos apreciar en el gráfico, el año 2005 se realizaron más de 9,000 exámenes de función pulmonar y los PSI registrados, no superaron los 4 episodios.
+                    </p>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Distribución de PSI cardiopulmonares (n=91)</h3>
+                    
+                    <ul class="percentage-list">
+                        <li>
+                            <span class="percentage-name">Síncope</span>
+                            <span class="percentage-value">36.3%</span>
+                        </li>
+                        <li>
+                            <span class="percentage-name">Dificultad respiratoria</span>
+                            <span class="percentage-value">29.7%</span>
+                        </li>
+                        <li>
+                            <span class="percentage-name">Presíncope</span>
+                            <span class="percentage-value">16.5%</span>
+                        </li>
+                        <li>
+                            <span class="percentage-name">Hemoptisis</span>
+                            <span class="percentage-value">13.9%</span>
+                        </li>
+                        <li>
+                            <span class="percentage-name">Dolor torácico</span>
+                            <span class="percentage-value">12.1%</span>
+                        </li>
+                        <li>
+                            <span class="percentage-name">Neumotórax</span>
+                            <span class="percentage-value">2.2%</span>
+                        </li>
+                    </ul>
+                    
+                    <p class="content-text">
+                        Los PSI cardiopulmonares más frecuentes, reportados en 20 años, fue el síncope, seguido de la dificultad respiratoria (30%). La hiperventilación fue la causa más comúnmente informada de dificultad respiratoria, representando el 48% (13 pacientes) de los eventos.
+                    </p>
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2 class="section-title">Estudio de caso: Paciente con EPOC grave</h2>
+                
+                <div class="medical-explanation">
+                    <h3 class="medical-title">Contexto del estudio</h3>
+                    <p class="content-text">
+                        En otro estudio, realizado el año 2012, una paciente femenina de 70 años con enfermedad pulmonar obstructiva crónica (EPOC) muy grave, realizó una maniobra de espirometría (forzada) con mediciones hemodinámicas centrales simultáneas utilizando un catéter de arteria pulmonar y medición de la presión pleural utilizando un balón esofágico.
+                    </p>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 class="chart-title">Representación gráfica del estudio</h3>
+                    <!-- IMAGEN DEL ESTUDIO CON BALÓN ESOFÁGICO -->
+                    <img src="estudio-epoc.png" alt="Estudio de paciente con EPOC grave" class="chart-image">
+                </div>
+                
+                <div class="conclusion-box">
+                    <p class="conclusion-text">
+                        Aunque para esta paciente con EPOC muy grave, una maniobra de espiración forzada actuó como una maniobra de Valsalva con grandes efectos negativos sobre la función cardíaca, <strong>ELLA PERMANECIÓ ASINTOMÁTICA</strong>.
+                    </p>
+                </div>
+                
+                <p class="content-text">
+                    Al inicio de la espiración forzada (A), el aumento de la presión pleural fuerza la sangre hacia el corazón izquierdo, lo que provoca un aumento de la presión en la arteria radial.
+                </p>
+                
+                <p class="content-text">
+                    Posteriormente, hay una caída de la presión arterial sistémica a 70/50 mmHg (D) que es el resultado de esta espiración forzada.
+                </p>
+                
+                <p class="content-text">
+                    Al volver a inspirar, todos los valores vuelven a la normalidad (E).
+                </p>
+                
+                <div class="highlight-box">
+                    <p class="content-text">
+                        La caída resultante en la presión arterial sistémica respalda la recomendación de que la espirometría se debe realizar en posición sentada.
+                    </p>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 FPAIR - Plataforma para el cuidado de la función pulmonar | Diseñado para pacientes y profesionales</p>
+    </footer>
+
+    <script>
+        // Navegación de vuelta a la plataforma
+        document.getElementById('back-to-platform').addEventListener('click', function() {
+            // En un entorno real, esto redirigiría a la plataforma
+            // window.location.href = 'platform.html';
+            
+            // Por ahora, mostramos un mensaje
+            alert('Volviendo a la plataforma FPAIR');
+        });
+        
+        // Efecto de aparición suave para los elementos
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.content-section');
+            
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateY(20px)';
+                    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    
+                    setTimeout(() => {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
