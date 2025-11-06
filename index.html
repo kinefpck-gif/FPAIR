@@ -715,6 +715,17 @@
     <div id="home-page" class="page active">
         <div class="container">
             <header class="header">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i class="fas fa-lungs"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>FPAIR</h1>
+                        <h2>Función Pulmonar</h2>
+                        <h3>Plataforma de Evaluación Integral</h3>
+                    </div>
+                </div>
+            </header>
             
             <main class="main-content">
                 <section class="welcome-section">
@@ -722,7 +733,39 @@
                     <p class="welcome-subtitle">Respira con tranquilidad. Aprende, practica y mejora tu función pulmonar con nuestra plataforma especializada.</p>
                     <img src="logo-fpair-main.png" alt="Logo FPAIR" class="fpair-logo-main">
                 </section>
-                                      
+                
+                <div class="decoration">
+                    <div class="pulse-circle circle-1"></div>
+                    <div class="pulse-circle circle-2"></div>
+                    <div class="pulse-circle circle-3"></div>
+                </div>
+                
+                <section class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-stethoscope"></i>
+                        </div>
+                        <h3 class="feature-title">Exámenes Especializados</h3>
+                        <p class="feature-description">Accede a información detallada sobre todos los exámenes de función pulmonar disponibles.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Seguridad Garantizada</h3>
+                        <p class="feature-description">Conoce los protocolos de seguridad y contraindicaciones para cada procedimiento.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-book-medical"></i>
+                        </div>
+                        <h3 class="feature-title">Material Educativo</h3>
+                        <p class="feature-description">Aprende sobre cómo funcionan los exámenes y cómo prepararte adecuadamente.</p>
+                    </div>
+                </section>
+                
                 <section class="cta-section">
                     <button id="enter-platform" class="enter-btn">
                         ACCEDER A LA PLATAFORMA <i class="fas fa-arrow-right"></i>
@@ -744,7 +787,7 @@
                 <div class="logo-container">
                     <img src="logo-fpair-header.png" alt="Logo FPAIR" class="fpair-logo-header">
                     <div class="logo-text">
-                        <h1></h1>
+                        <h1>INCO</h1>
                         <h2>FPAIR</h2>
                         <h3>FUNCIÓN PULMONAR</h3>
                     </div>
@@ -811,37 +854,37 @@
                         <div class="inline-card">
                             <div class="inline-icon">
                                 <!-- IMAGEN PERSONALIZADA PARA EXÁMENES SEGUROS -->
-                                <img src="examenes-seguros.png" alt="Exámenes Seguros" class="custom-icon">
+                                <img src="images/examenes-seguros.png" alt="Exámenes Seguros" class="custom-icon">
                             </div>
                             <h3 class="inline-title">Exámenes Seguros</h3>
                             <p class="inline-description">
                                 Conoce todos los protocolos y medidas de seguridad que implementamos para garantizar que tus exámenes se realicen en un entorno protegido y confiable.
                             </p>
-                            <a href="examenes-seguros.html" class="inline-btn">Acceder</a>
+                            <button class="inline-btn" onclick="navigateTo('examenes-seguros.html')">Acceder</button>
                         </div>
                         
                         <div class="inline-card">
                             <div class="inline-icon">
                                 <!-- IMAGEN PERSONALIZADA PARA CÓMO LEEMOS TUS PULMONES -->
-                                <img src="como-leemos-pulmones.png" alt="Cómo Leemos Tus Pulmones" class="custom-icon">
+                                <img src="images/como-leemos-pulmones.png" alt="Cómo Leemos Tus Pulmones" class="custom-icon">
                             </div>
                             <h3 class="inline-title">Cómo Leemos Tus Pulmones</h3>
                             <p class="inline-description">
                                 Descubre el proceso detrás de los exámenes pulmonares y cómo interpretamos los resultados para evaluar tu salud respiratoria.
                             </p>
-                            <a href="comoleemostuspulmones.html" class="inline-btn">Acceder</a>
+                            <button class="inline-btn" onclick="navigateTo('como-leemos-pulmones.html')">Acceder</button>
                         </div>
                         
                         <div class="inline-card">
                             <div class="inline-icon">
                                 <!-- IMAGEN PERSONALIZADA PARA CONTRAINDICACIONES -->
-                                <img src="contraindicaciones.png" alt="Contraindicaciones" class="custom-icon">
+                                <img src="images/contraindicaciones.png" alt="Contraindicaciones" class="custom-icon">
                             </div>
                             <h3 class="inline-title">Contraindicaciones</h3>
                             <p class="inline-description">
                                 Información importante sobre situaciones en las que ciertos exámenes podrían no ser recomendables y las alternativas disponibles.
                             </p>
-                            <a href="contraindicaciones.html" class="inline-btn">Acceder</a>
+                            <button class="inline-btn" onclick="navigateTo('contraindicaciones.html')">Acceder</button>
                         </div>
                     </div>
                 </section>
@@ -849,13 +892,13 @@
                 <section class="exam-menu-section">
                     <div class="exam-menu-card">
                         <div class="exam-menu-icon">
-                            
+                            <i class="fas fa-clipboard-list"></i>
                         </div>
                         <h3 class="exam-menu-title">Menú de Exámenes</h3>
                         <p class="exam-menu-description">
                             Accede a nuestra completa lista de exámenes de función pulmonar disponibles. Encuentra información detallada sobre cada prueba, preparación requerida y qué esperar durante el procedimiento.
                         </p>
-                        <button class="exam-menu-btn" data-modal="exam-menu">
+                        <button class="exam-menu-btn" onclick="navigateTo('lista-examenes.html')">
                             Explorar Exámenes <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
@@ -868,128 +911,85 @@
         </footer>
     </div>
 
-    <!-- Modales -->
-    <div id="safe-exams-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Exámenes Seguros</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>En FPAIR, tu seguridad es nuestra máxima prioridad. Implementamos rigurosos protocolos para garantizar que todos los exámenes se realicen en un entorno controlado y seguro:</p>
-                <ul>
-                    <li>Equipos médicos certificados y calibrados regularmente</li>
-                    <li>Protocolos de higiene y desinfección exhaustivos</li>
-                    <li>Personal capacitado en técnicas de seguridad</li>
-                    <li>Monitoreo constante durante los procedimientos</li>
-                    <li>Instalaciones diseñadas para tu comodidad y seguridad</li>
-                </ul>
-                <p>Todos nuestros procedimientos siguen las directrices de la Sociedad Torácica Estadounidense (ATS) y la Sociedad Respiratoria Europea (ERS).</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="read-lungs-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Cómo Leemos Tus Pulmones</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Los exámenes de función pulmonar nos permiten evaluar la salud de tus pulmones mediante diferentes parámetros:</p>
-                <ul>
-                    <li><strong>Espirometría:</strong> Mide la cantidad y velocidad del aire que puedes inhalar y exhalar</li>
-                    <li><strong>Volúmenes pulmonares:</strong> Evalúa la capacidad total de tus pulmones</li>
-                    <li><strong>Capacidad de difusión:</strong> Determina qué tan bien se transfiere el oxígeno a tu sangre</li>
-                    <li><strong>Pruebas de esfuerzo:</strong> Analizan tu respuesta respiratoria durante la actividad física</li>
-                </ul>
-                <p>Interpretamos estos resultados comparándolos con valores de referencia basados en tu edad, sexo, altura y origen étnico, lo que nos permite identificar posibles alteraciones en tu función respiratoria.</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="contraindications-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Contraindicaciones</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Algunas condiciones de salud pueden requerir precauciones especiales o la postergación de ciertos exámenes pulmonares:</p>
-                <ul>
-                    <li>Infecciones respiratorias activas</li>
-                    <li>Neumotórax (presencia de aire en el espacio pleural)</li>
-                    <li>Angina inestable o infarto de miocardio reciente</li>
-                    <li>Aneurismas aórticos o cerebrales</li>
-                    <li>Cirugía ocular o abdominal reciente</li>
-                    <li>Embarazo avanzado (para algunas pruebas específicas)</li>
-                </ul>
-                <p>Es fundamental informar a nuestro equipo sobre cualquier condición de salud, medicación o procedimiento médico reciente para garantizar tu seguridad durante los exámenes.</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="exam-menu-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Menú de Exámenes</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>En FPAIR ofrecemos una amplia gama de exámenes de función pulmonar para evaluar tu salud respiratoria:</p>
-                <ul>
-                    <li><strong>Espirometría simple y con broncodilatador</strong></li>
-                    <li><strong>Volúmenes pulmonares por pletismografía</strong></li>
-                    <li><strong>Capacidad de difusión de monóxido de carbono (DLCO)</strong></li>
-                    <li><strong>Prueba de esfuerzo cardiopulmonar</strong></li>
-                    <li><strong>Prueba de marcha de 6 minutos</strong></li>
-                    <li><strong>Oximetría de pulso en reposo y durante el ejercicio</strong></li>
-                    <li><strong>Gasometría arterial</strong></li>
-                    <li><strong>Pruebas de provocación bronquial</strong></li>
-                </ul>
-                <p>Cada examen está diseñado para evaluar aspectos específicos de tu función respiratoria. Nuestro equipo médico te ayudará a determinar cuáles son los más apropiados según tus necesidades.</p>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Navegación entre páginas
-        document.getElementById('enter-platform').addEventListener('click', function() {
-            document.getElementById('home-page').classList.remove('active');
-            document.getElementById('platform-page').classList.add('active');
-        });
-        
-        document.getElementById('back-to-home').addEventListener('click', function() {
-            document.getElementById('platform-page').classList.remove('active');
-            document.getElementById('home-page').classList.add('active');
-        });
-        
-        // Funcionalidad de modales
-        const modalButtons = document.querySelectorAll('[data-modal]');
-        const modals = document.querySelectorAll('.modal');
-        const closeButtons = document.querySelectorAll('.close-modal');
-        
-        modalButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const modalId = this.getAttribute('data-modal') + '-modal';
-                document.getElementById(modalId).classList.add('active');
-            });
-        });
-        
-        closeButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                this.closest('.modal').classList.remove('active');
-            });
-        });
-        
-        // Cerrar modal al hacer clic fuera del contenido
-        modals.forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
+        // Script de navegación mejorado
+        (function() {
+            // Al cargar la página, desplazarse al principio
+            window.addEventListener('load', function() {
+                // Desplazarse al principio de la página
+                window.scrollTo(0, 0);
+                
+                // Si hay una posición guardada, restaurarla (para el botón Atrás)
+                const savedPosition = sessionStorage.getItem('scrollPosition');
+                if (savedPosition) {
+                    setTimeout(function() {
+                        window.scrollTo(0, parseInt(savedPosition));
+                        sessionStorage.removeItem('scrollPosition');
+                    }, 100);
                 }
             });
-        });
+            
+            // Manejar el botón Atrás del navegador
+            window.addEventListener('popstate', function(event) {
+                // Desplazarse al principio cuando se usa el botón Atrás
+                window.scrollTo(0, 0);
+            });
+            
+            // Función de navegación mejorada para enlaces
+            window.navigateTo = function(url) {
+                // Guardar la posición actual antes de navegar
+                sessionStorage.setItem('scrollPosition', window.pageYOffset || document.documentElement.scrollTop);
+                
+                // Navegar a la nueva página
+                window.location.href = url;
+            }
+            
+            // Navegación entre páginas
+            document.getElementById('enter-platform').addEventListener('click', function() {
+                document.getElementById('home-page').classList.remove('active');
+                document.getElementById('platform-page').classList.add('active');
+                // Desplazarse al principio
+                window.scrollTo(0, 0);
+            });
+            
+            document.getElementById('back-to-home').addEventListener('click', function() {
+                document.getElementById('platform-page').classList.remove('active');
+                document.getElementById('home-page').classList.add('active');
+                // Desplazarse al principio
+                window.scrollTo(0, 0);
+            });
+            
+            // Aplicar a todos los enlaces internos
+            document.addEventListener('DOMContentLoaded', function() {
+                const links = document.querySelectorAll('a[href^=""]:not([href^="#"])');
+                
+                links.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        const href = this.getAttribute('href');
+                        if (href && !href.startsWith('#') && !href.startsWith('http')) {
+                            e.preventDefault();
+                            navigateTo(href);
+                        }
+                    });
+                });
+                
+                // Aplicar a elementos con onclick
+                const clickableElements = document.querySelectorAll('[onclick*="window.location.href"]');
+                
+                clickableElements.forEach(element => {
+                    const originalOnClick = element.getAttribute('onclick');
+                    element.removeAttribute('onclick');
+                    
+                    element.addEventListener('click', function() {
+                        // Extraer la URL del onclick original
+                        const urlMatch = originalOnClick.match(/window\.location\.href\s*=\s*['"]([^'"]+)['"]/);
+                        if (urlMatch && urlMatch[1]) {
+                            navigateTo(urlMatch[1]);
+                        }
+                    });
+                });
+            });
+        })();
         
         // Efecto de aparición suave para los elementos
         document.addEventListener('DOMContentLoaded', function() {
