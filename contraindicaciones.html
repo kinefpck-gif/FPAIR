@@ -327,6 +327,49 @@
             text-align: center;
         }
         
+        /* Estilos para la sección de contraindicaciones absolutas */
+        .absolute-contraindications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .contraindication-group {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .group-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .gif-placeholder {
+            background-color: #e8f4fc;
+            border: 2px dashed var(--primary-light);
+            border-radius: 8px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0 0;
+            color: var(--primary);
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+        }
+        
         /* Footer */
         footer {
             text-align: center;
@@ -362,6 +405,10 @@
             }
             
             .contraindications-grid, .advice-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .absolute-contraindications-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -483,30 +530,61 @@
                 <h2 class="section-title">Contraindicaciones Absolutas</h2>
                 
                 <p class="content-text">
-                    La actualización del Manual de Espirometría por SER Chile, el 2024 establece directrices claras sobre las contraindicaciones para la realización de espirometrías, enfatizando la seguridad del paciente y la calidad de los resultados. A continuación, se detallan las principales contraindicaciones mencionadas en el manual:
+                    La actualización del Manual de Espirometría por SER Chile, el 2024 establece directrices claras sobre las contraindicaciones para la realización de espirometrías, enfatizando la seguridad del paciente y la calidad de los resultados.
                 </p>
                 
-                <ul class="checklist">
-                    <li>Patología cardiovascular no controlada</li>
-                    <li>Angina inestable *</li>
-                    <li>Hemoptisis</li>
-                    <li>Hipertensión arterial no controlada*</li>
-                    <li>Insuficiencia cardiaca descompensada</li>
-                    <li>Embolía pulmonar clínicamente inestable o hasta adecuada anticoagulación</li>
-                    <li>Accidente cerebro-vascular reciente*</li>
-                    <li>Trauma craneal reciente con síntomas persistentes</li>
-                    <li>Presencia de neumotórax reciente (al menos 4 semanas tras la resolución)</li>
-                    <li>Paciente con signos de insuficiencia respiratoria aguda</li>
-                    <li>Infección respiratoria o sistémica transmisible activa o presunta, incluida la tuberculosis dentro de las 4 primeras semanas de tratamiento</li>
-                    <li>Condiciones bucales que predisponen a la transmisión de infecciones o sangrado oral</li>
-                </ul>
+                <div class="absolute-contraindications-grid">
+                    <div class="contraindication-group">
+                        <h3 class="group-title">Condiciones Cardiovasculares</h3>
+                        <ul class="checklist">
+                            <li>Patología cardiovascular no controlada</li>
+                            <li>Angina inestable *</li>
+                            <li>Hemoptisis</li>
+                            <li>Hipertensión arterial no controlada*</li>
+                        </ul>
+                        <div class="gif-placeholder">
+                            GIF animado cardiovascular
+                        </div>
+                    </div>
+                    
+                    <div class="contraindication-group">
+                        <h3 class="group-title">Insuficiencia Cardíaca y Embolía</h3>
+                        <ul class="checklist">
+                            <li>Insuficiencia cardiaca descompensada</li>
+                            <li>Embolía pulmonar clínicamente inestable o hasta adecuada anticoagulación</li>
+                        </ul>
+                        <div class="gif-placeholder">
+                            GIF animado cardíaco
+                        </div>
+                    </div>
+                    
+                    <div class="contraindication-group">
+                        <h3 class="group-title">Condiciones Neurológicas</h3>
+                        <ul class="checklist">
+                            <li>Accidente cerebro-vascular reciente*</li>
+                            <li>Trauma craneal reciente con síntomas persistentes</li>
+                        </ul>
+                        <div class="gif-placeholder">
+                            GIF animado neurológico
+                        </div>
+                    </div>
+                    
+                    <div class="contraindication-group">
+                        <h3 class="group-title">Otras Condiciones</h3>
+                        <ul class="checklist">
+                            <li>Presencia de neumotórax reciente (al menos 4 semanas tras la resolución)</li>
+                            <li>Paciente con signos de insuficiencia respiratoria aguda</li>
+                            <li>Infección respiratoria o sistémica transmisible activa o presunta, incluida la tuberculosis dentro de las 4 primeras semanas de tratamiento</li>
+                            <li>Condiciones bucales que predisponen a la transmisión de infecciones o sangrado oral</li>
+                        </ul>
+                        <div class="gif-placeholder">
+                            GIF animado pulmonar
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="note-box">
                     <p>*Hasta por 1 mes después de estabilizado el episodio.</p>
-                </div>
-                
-                <div class="image-placeholder">
-                    Contraindicaciones absolutas - imagen.png
                 </div>
             </section>
             
@@ -558,11 +636,8 @@
     <script>
         // Navegación de vuelta a la plataforma
         document.getElementById('back-to-platform').addEventListener('click', function() {
-            // En un entorno real, esto redirigiría a la plataforma
-            // window.location.href = 'platform.html';
-            
-            // Por ahora, mostramos un mensaje
-            alert('Volviendo a la plataforma FPAIR');
+            // Usamos history.back() para volver a la página anterior
+            history.back();
         });
         
         // Efecto de aparición suave para los elementos
