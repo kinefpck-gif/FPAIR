@@ -134,7 +134,7 @@
         }
         
         .page-title {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--primary-dark);
             margin-bottom: 30px;
@@ -150,7 +150,7 @@
         }
         
         .section-title {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary-dark);
             margin-bottom: 20px;
@@ -159,7 +159,7 @@
         }
         
         .content-text {
-            font-size: 1rem;
+            font-size: 1.1rem;
             color: var(--text-dark);
             line-height: 1.7;
             margin-bottom: 20px;
@@ -173,118 +173,143 @@
             margin: 25px 0;
         }
         
-        .evidence-info {
-            background: rgba(52, 199, 179, 0.05);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .evidence-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--primary-dark);
-            margin-bottom: 10px;
-        }
-        
-        .evidence-doi {
-            font-style: italic;
-            color: var(--text-light);
-            margin-bottom: 15px;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 25px 0;
-        }
-        
-        .stat-card {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            border-top: 4px solid var(--primary);
-        }
-        
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        
-        .stat-label {
-            font-size: 1rem;
-            color: var(--text-light);
-        }
-        
-        .chart-container {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            margin: 25px 0;
-            text-align: center;
-        }
-        
-        .chart-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--primary-dark);
-            margin-bottom: 15px;
-        }
-        
-        .chart-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin: 15px 0;
-        }
-        
-        .chart-caption {
-            font-style: italic;
-            color: var(--text-light);
-            margin-top: 10px;
-        }
-        
-        .percentage-list {
-            list-style: none;
-            margin: 20px 0;
-        }
-        
-        .percentage-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .percentage-name {
-            font-weight: 500;
-        }
-        
-        .percentage-value {
-            font-weight: 600;
-            color: var(--primary);
-        }
-        
-        .medical-explanation {
+        .warning-box {
             background: rgba(255, 126, 95, 0.05);
             border-radius: 8px;
             padding: 20px;
             margin: 20px 0;
+            border-left: 4px solid var(--accent);
         }
         
-        .medical-title {
+        .warning-title {
             font-size: 1.3rem;
             font-weight: 600;
             color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        .checklist {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        
+        .checklist li {
+            margin-bottom: 8px;
+            list-style-type: none;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .checklist li:before {
+            content: "☑";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .image-placeholder {
+            background-color: #e8f4fc;
+            border: 2px dashed var(--primary-light);
+            border-radius: 8px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .contraindications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .contraindication-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary);
+        }
+        
+        .contraindication-type {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
             margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .contraindication-list {
+            list-style-type: none;
+        }
+        
+        .contraindication-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .contraindication-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .advice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .advice-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--secondary);
+        }
+        
+        .advice-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .advice-list {
+            list-style-type: none;
+        }
+        
+        .advice-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .advice-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        .note-box {
+            background: rgba(52, 199, 179, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            color: var(--text-light);
         }
         
         .conclusion-box {
@@ -302,11 +327,60 @@
             text-align: center;
         }
         
-        .signature {
-            text-align: right;
-            font-style: italic;
-            margin-top: 30px;
-            color: var(--text-light);
+        /* Estilos para la sección de contraindicaciones absolutas */
+        .absolute-contraindications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .contraindication-group {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .group-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 10px;
+        }
+
+        /* NUEVO ESTILO PARA GIFS REDUCIDOS */
+        .gif-image {
+            width: 150px; /* Tamaño reducido */
+            height: 120px; /* Altura fija para consistencia */
+            object-fit: cover; /* Ajusta la imagen sin distorsionar */
+            border-radius: 8px;
+            margin: 15px auto 0;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--primary-light);
+        }
+
+        .gif-placeholder {
+            background-color: #e8f4fc;
+            border: 2px dashed var(--primary-light);
+            border-radius: 8px;
+            width: 150px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px auto 0;
+            color: var(--primary);
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
         }
         
         /* Footer */
@@ -332,18 +406,22 @@
             }
             
             .page-title {
-                font-size: 1.6rem;
+                font-size: 1.8rem;
             }
             
             .section-title {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
             }
             
             .content-text {
                 font-size: 1rem;
             }
             
-            .stats-grid {
+            .contraindications-grid, .advice-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .absolute-contraindications-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -354,7 +432,7 @@
         
         @media (max-width: 480px) {
             .page-title {
-                font-size: 1.4rem;
+                font-size: 1.6rem;
             }
             
             .content-section {
@@ -365,7 +443,6 @@
                 width: 90px;
             }
         }
-        
     </style>
 </head>
 <body>
