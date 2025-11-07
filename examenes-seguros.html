@@ -238,11 +238,18 @@
         }
         
         .chart-image {
-            max-width: 100%;
+            max-width: 80%;
             height: auto;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             margin: 15px 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: zoom-in;
+        }
+        
+        .chart-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
         
         .chart-caption {
@@ -350,6 +357,10 @@
             .fpair-logo-header {
                 width: 110px;
             }
+            
+            .chart-image {
+                max-width: 90%;
+            }
         }
         
         @media (max-width: 480px) {
@@ -363,6 +374,10 @@
             
             .fpair-logo-header {
                 width: 90px;
+            }
+            
+            .chart-image {
+                max-width: 95%;
             }
         }
     </style>
@@ -391,7 +406,7 @@
             <h1 class="page-title">Exámenes Seguros</h1>
             
             <section class="content-section">
-                <h2 class="section-title">Estimado paciente</h2>
+                <h2 class="section-title">Estimado paciente,</h2>
                 <p class="content-text">
                     Las pruebas de función pulmonar son procedimientos seguros y esenciales para evaluar la salud respiratoria. Estas pruebas miden la capacidad y eficiencia de sus pulmones, ayudando a diagnosticar y monitorear afecciones pulmonares.
                 </p>
