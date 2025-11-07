@@ -134,7 +134,7 @@
         }
         
         .page-title {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary-dark);
             margin-bottom: 30px;
@@ -150,7 +150,7 @@
         }
         
         .section-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary-dark);
             margin-bottom: 20px;
@@ -159,7 +159,7 @@
         }
         
         .content-text {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--text-dark);
             line-height: 1.7;
             margin-bottom: 20px;
@@ -302,6 +302,25 @@
             text-align: center;
         }
         
+        /* Estilos para las imágenes */
+        .chart-image {
+            max-width: 80%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: zoom-in;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .chart-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
         /* Footer */
         footer {
             text-align: center;
@@ -325,11 +344,11 @@
             }
             
             .page-title {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
             
             .section-title {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
             }
             
             .content-text {
@@ -343,11 +362,15 @@
             .fpair-logo-header {
                 width: 110px;
             }
+            
+            .chart-image {
+                max-width: 90%;
+            }
         }
         
         @media (max-width: 480px) {
             .page-title {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
             }
             
             .content-section {
@@ -356,6 +379,10 @@
             
             .fpair-logo-header {
                 width: 90px;
+            }
+            
+            .chart-image {
+                max-width: 95%;
             }
         }
     </style>
