@@ -134,7 +134,7 @@
         }
         
         .page-title {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary-dark);
             margin-bottom: 30px;
@@ -150,7 +150,7 @@
         }
         
         .section-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary-dark);
             margin-bottom: 20px;
@@ -159,7 +159,7 @@
         }
         
         .content-text {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--text-dark);
             line-height: 1.7;
             margin-bottom: 20px;
@@ -365,6 +365,13 @@
             display: block;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border: 2px solid var(--primary-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: zoom-in;
+        }
+
+        .gif-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         .gif-placeholder {
@@ -406,11 +413,11 @@
             }
             
             .page-title {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
             
             .section-title {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
             }
             
             .content-text {
@@ -428,11 +435,16 @@
             .fpair-logo-header {
                 width: 110px;
             }
+
+            .gif-image {
+                width: 130px;
+                height: 104px;
+            }
         }
         
         @media (max-width: 480px) {
             .page-title {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
             }
             
             .content-section {
@@ -441,6 +453,11 @@
             
             .fpair-logo-header {
                 width: 90px;
+            }
+
+            .gif-image {
+                width: 110px;
+                height: 88px;
             }
         }
     </style>
@@ -574,7 +591,7 @@
                             <li>Presencia de neumotórax reciente (al menos 4 semanas tras la resolución)</li>
                         </ul>
                         <!-- Reemplaza con tu GIF redimensionado -->
-                        <img src="images/torax.png" alt="Presiones intratorácicas" class="png-image">
+                        <img src="images/torax.png" alt="Presiones intratorácicas" class="gif-image">
                     </div>
                     
                     <div class="contraindication-group">
