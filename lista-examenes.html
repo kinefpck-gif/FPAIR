@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Exámenes - FPAIR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables de color y estilos */
+        :root {
+            --primary: #1a6aa2;
+            --primary-dark: #0d4a75;
+            --primary-light: #4a9bd9;
+            --secondary: #34c7b3;
+            --accent: #ff7e5f;
+            --text-dark: #2c3e50;
+            --text-light: #5a6c7d;
+            --background: #f8fbfe;
+            --white: #ffffff;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header con logo */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 10px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-text h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+        
+        .logo-text h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            letter-spacing: 2px;
+            line-height: 1;
+            margin-top: 5px;
+        }
+        
+        .logo-text h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+        
+        /* Logotipo FPAIR en header */
+        .fpair-logo-header {
+            width: 140px;
+            height: auto;
+            margin-right: 20px;
+        }
+        
+        /* Navegación */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .back-btn {
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .back-btn:hover {
+            color: var(--primary-dark);
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Contenido principal */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+        }
+        
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        /* Pestañas */
+        .tabs-container {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .tabs-header {
+            display: flex;
+            background: var(--primary);
+            overflow-x: auto;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 18px 20px;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            text-align: center;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab-btn.active {
+            background: var(--white);
+            color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Lista de exámenes */
+        .exams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 20px;
+        }
+        
+        .exam-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .exam-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .exam-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            margin-right: 20px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #e8f4fc;
+            border: 2px dashed var(--primary-light);
+        }
+        
+        .exam-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .exam-content {
+            flex: 1;
+        }
+        
+        .exam-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        
+        .exam-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* Material de ayuda */
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 20px;
+        }
+        
+        .help-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border-top: 4px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .help-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .help-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            margin-right: 20px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #e8f4fc;
+            border: 2px dashed var(--primary-light);
+        }
+        
+        .help-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .help-content {
+            flex: 1;
+        }
+        
+        .help-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+        
+        .help-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 50px;
+            background: var(--white);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-container {
+                margin-bottom: 15px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .tabs-header {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                padding: 15px;
+            }
+            
+            .exams-grid, .help-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .exam-card, .help-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .exam-image, .help-image {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .fpair-logo-header {
+                width: 110px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.6rem;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .exams-grid, .help-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .fpair-logo-header {
+                width: 90px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <!-- LOGO FPAIR -->
+                <img src="logo-fpair-header.png" alt="Logo FPAIR" class="fpair-logo-header">
+                <div class="logo-text">
+                    <h1>INCO</h1>
+                    <h2>FPAIR</h2>
+                    <h3>FUNCIÓN PULMONAR</h3>
+                </div>
+            </div>
+        </header>
+        
+        <div class="nav-container">
+            <div class="back-btn" id="back-to-platform">
+                <i class="fas fa-arrow-left"></i> Volver a la Plataforma
+            </div>
+        </div>
+        
+        <main class="main-content">
+            <h1 class="page-title">LISTA DE EXÁMENES</h1>
+            
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="exams">Exámenes</button>
+                    <button class="tab-btn" data-tab="inhalers">Inhaladores</button>
+                    <button class="tab-btn" data-tab="help">Material de Ayuda</button>
+                </div>
+                
+                <!-- Pestaña de Exámenes -->
+                <div class="tab-content active" id="exams-tab">
+                    <div class="exams-grid">
+                        <!-- Espirometría -->
+                        <div class="exam-card" onclick="window.location.href='espirometria.html'">
+                            <div class="exam-image">
+                                <img src="images/espirometria.gif" alt="Espirometría">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">ESPIROMETRÍA</h3>
+                                <p class="exam-description">Mide la cantidad y velocidad del aire que puede inhalar y exhalar.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Capacidad de Difusión -->
+                        <div class="exam-card" onclick="window.location.href='capacidad-difusion.html'">
+                            <div class="exam-image">
+                                <img src="images/difusion.gif" alt="Capacidad de Difusión">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">CAPACIDAD DE DIFUSIÓN</h3>
+                                <p class="exam-description">Evalúa la capacidad de los pulmones para transferir gases a la sangre.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Volúmenes Pulmonares -->
+                        <div class="exam-card" onclick="window.location.href='volumenes-pulmonares.html'">
+                            <div class="exam-image">
+                                <img src="images/volumenes.gif" alt="Volúmenes Pulmonares">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">VOLÚMENES PULMONARES</h3>
+                                <p class="exam-description">Determina la cantidad de aire que pueden contener los pulmones.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- PIM-PEM -->
+                        <div class="exam-card" onclick="window.location.href='pim-pem.html'">
+                            <div class="exam-image">
+                                <img src="images/pim-pem.gif" alt="PIM-PEM">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">PIM-PEM</h3>
+                                <p class="exam-description">Mide la presión inspiratoria y espiratoria máxima.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Oscilometría de Impulso -->
+                        <div class="exam-card" onclick="window.location.href='oscilometria.html'">
+                            <div class="exam-image">
+                                <img src="images/oscilometria.gif" alt="Oscilometría de Impulso">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">OSCILOMETRÍA DE IMPULSO</h3>
+                                <p class="exam-description">Evalúa la resistencia de las vías respiratorias mediante oscilaciones.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Test de Caminata 6 Minutos -->
+                        <div class="exam-card" onclick="window.location.href='test-caminata.html'">
+                            <div class="exam-image">
+                                <img src="images/caminata.gif" alt="Test de Caminata 6 Minutos">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">TEST DE CAMINATA 6 MINUTOS</h3>
+                                <p class="exam-description">Evalúa la capacidad funcional del paciente durante la caminata.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Test de Provocación -->
+                        <div class="exam-card" onclick="window.location.href='test-provocacion.html'">
+                            <div class="exam-image">
+                                <img src="images/provocacion.gif" alt="Test de Provocación">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">TEST DE PROVOCACIÓN</h3>
+                                <p class="exam-description">Evalúa la respuesta bronquial a estímulos específicos.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Test de Ejercicio -->
+                        <div class="exam-card" onclick="window.location.href='test-ejercicio.html'">
+                            <div class="exam-image">
+                                <img src="images/ejercicio.gif" alt="Test de Ejercicio">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">TEST DE EJERCICIO</h3>
+                                <p class="exam-description">Evalúa la respuesta cardiorrespiratoria durante el ejercicio.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Test Cardiopulmonar -->
+                        <div class="exam-card" onclick="window.location.href='test-cardiopulmonar.html'">
+                            <div class="exam-image">
+                                <img src="images/cardiopulmonar.gif" alt="Test Cardiopulmonar">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">TEST CARDIOPULMONAR</h3>
+                                <p class="exam-description">Evalúa la interacción entre sistemas cardíaco y respiratorio.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Test Shunt (O2) -->
+                        <div class="exam-card" onclick="window.location.href='test-shunt.html'">
+                            <div class="exam-image">
+                                <img src="images/shunt.gif" alt="Test Shunt (O2)">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">TEST SHUNT (O2)</h3>
+                                <p class="exam-description">Evalúa el cortocircuito de sangre en los pulmones.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pestaña de Inhaladores -->
+                <div class="tab-content" id="inhalers-tab">
+                    <div class="exams-grid">
+                        <!-- Información Inhaladores -->
+                        <div class="exam-card" onclick="window.location.href='info-inhaladores.html'">
+                            <div class="exam-image">
+                                <img src="images/info-inhaladores.gif" alt="Información Inhaladores">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">INFORMACIÓN INHALADORES</h3>
+                                <p class="exam-description">Conoce los diferentes tipos de inhaladores y sus características.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Técnica Inhalatoria -->
+                        <div class="exam-card" onclick="window.location.href='tecnica-inhalatoria.html'">
+                            <div class="exam-image">
+                                <img src="images/tecnica-inhalatoria.gif" alt="Técnica Inhalatoria">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">TÉCNICA INHALATORIA</h3>
+                                <p class="exam-description">Aprende la técnica correcta para usar tu inhalador.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- ¿Queda Inhalador? -->
+                        <div class="exam-card" onclick="window.location.href='queda-inhalador.html'">
+                            <div class="exam-image">
+                                <img src="images/queda-inhalador.gif" alt="¿Queda Inhalador?">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">¿QUEDA INHALADOR?</h3>
+                                <p class="exam-description">Aprende a verificar si tu inhalador aún tiene medicamento.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Aerocámara y Limpieza -->
+                        <div class="exam-card" onclick="window.location.href='aerocamara-limpieza.html'">
+                            <div class="exam-image">
+                                <img src="images/aerocamara.gif" alt="Aerocámara y Limpieza">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">AEROCÁMARA Y LIMPIEZA</h3>
+                                <p class="exam-description">Mantenimiento y limpieza adecuada de tu aerocámara.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pestaña de Material de Ayuda -->
+                <div class="tab-content" id="help-tab">
+                    <div class="help-grid">
+                        <!-- Postura Recomendada -->
+                        <div class="help-card" onclick="window.location.href='postura-recomendada.html'">
+                            <div class="help-image">
+                                <img src="images/postura.gif" alt="Postura Recomendada">
+                            </div>
+                            <div class="help-content">
+                                <h3 class="help-title">Postura Recomendada</h3>
+                                <p class="help-description">Sentado con la espalda recta, sin cruzar las piernas, pies apoyados en el suelo.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Técnica por Examen -->
+                        <div class="help-card" onclick="window.location.href='tecnica-examen.html'">
+                            <div class="help-image">
+                                <img src="images/tecnica-examen.gif" alt="Técnica por Examen">
+                            </div>
+                            <div class="help-content">
+                                <h3 class="help-title">Técnica por Examen</h3>
+                                <p class="help-description">Explicamos cómo es el examen y dónde debes realizar el esfuerzo.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Consejos Prácticos -->
+                        <div class="help-card" onclick="window.location.href='consejos-practicos.html'">
+                            <div class="help-image">
+                                <img src="images/consejos.gif" alt="Consejos Prácticos">
+                            </div>
+                            <div class="help-content">
+                                <h3 class="help-title">Consejos Prácticos</h3>
+                                <p class="help-description">Consejos simples para mejorar tu experiencia en el laboratorio.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Ejercicios para Practicar -->
+                        <div class="help-card" onclick="window.location.href='ejercicios-practicar.html'">
+                            <div class="help-image">
+                                <img src="images/ejercicios.gif" alt="Ejercicios para Practicar">
+                            </div>
+                            <div class="help-content">
+                                <h3 class="help-title">Ejercicios para Practicar</h3>
+                                <p class="help-description">Ejercicios de preparación para mejorar tu examen.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Preguntas Frecuentes -->
+                        <div class="help-card" onclick="window.location.href='preguntas-frecuentes.html'">
+                            <div class="help-image">
+                                <img src="images/preguntas.gif" alt="Preguntas Frecuentes">
+                            </div>
+                            <div class="help-content">
+                                <h3 class="help-title">Preguntas Frecuentes</h3>
+                                <p class="help-description">Dudas comunes y sus respuestas para guiarte mejor.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 FPAIR - Plataforma para el cuidado de la función pulmonar | Diseñado para pacientes y profesionales</p>
+    </footer>
+
+    <script>
+        // Navegación de vuelta a la plataforma
+        document.getElementById('back-to-platform').addEventListener('click', function() {
+            history.back();
+        });
+        
+        // Funcionalidad de pestañas
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remover clase activa de todos los botones
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    // Añadir clase activa al botón clickeado
+                    this.classList.add('active');
+                    
+                    // Ocultar todos los contenidos
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    // Mostrar el contenido correspondiente
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // Efecto de aparición suave para los elementos
+            const elements = document.querySelectorAll('.exam-card, .help-card');
+            
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateY(20px)';
+                    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    
+                    setTimeout(() => {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
