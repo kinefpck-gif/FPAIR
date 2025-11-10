@@ -113,6 +113,13 @@
             width: 140px;
             height: auto;
             margin-right: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: zoom-in;
+        }
+        
+        .fpair-logo-header:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
         
         /* Contenido principal - Página de inicio */
@@ -132,7 +139,7 @@
         }
         
         .welcome-title {
-            font-size: 2.8rem;
+            font-size: 2.4rem;
             font-weight: 700;
             color: var(--primary-dark);
             margin-bottom: 20px;
@@ -140,7 +147,7 @@
         }
         
         .welcome-subtitle {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: var(--text-light);
             margin-bottom: 30px;
             font-weight: 400;
@@ -152,6 +159,13 @@
             height: auto;
             margin: 15px 0;
             filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: zoom-in;
+        }
+        
+        .fpair-logo-main:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
         
         .features-grid {
@@ -215,7 +229,7 @@
             border: none;
             border-radius: 50px;
             padding: 18px 40px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
@@ -331,7 +345,7 @@
         }
         
         .page-title {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--primary-dark);
             margin-bottom: 30px;
@@ -347,14 +361,14 @@
         }
         
         .intro-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary-dark);
             margin-bottom: 20px;
         }
         
         .intro-text {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--text-dark);
             line-height: 1.7;
             margin-bottom: 20px;
@@ -377,7 +391,7 @@
             display: flex;
             align-items: flex-start;
             margin-bottom: 15px;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         
         .feature-list i {
@@ -393,7 +407,7 @@
         }
         
         .section-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary-dark);
             margin-bottom: 25px;
@@ -440,17 +454,24 @@
             width: 70px;
             height: 70px;
             object-fit: contain;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: zoom-in;
+        }
+        
+        .custom-icon:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
         
         .inline-title {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--primary-dark);
             margin-bottom: 15px;
         }
         
         .inline-description {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--text-light);
             line-height: 1.5;
             margin-bottom: 20px;
@@ -466,10 +487,11 @@
             border: none;
             border-radius: 50px;
             padding: 10px 25px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            text-decoration: none;
         }
         
         .inline-btn:hover {
@@ -510,14 +532,14 @@
         }
         
         .exam-menu-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary-dark);
             margin-bottom: 15px;
         }
         
         .exam-menu-description {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--text-light);
             line-height: 1.5;
             margin-bottom: 25px;
@@ -532,11 +554,12 @@
             border: none;
             border-radius: 50px;
             padding: 12px 30px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             box-shadow: 0 6px 20px rgba(26, 106, 162, 0.3);
+            text-decoration: none;
         }
         
         .exam-menu-btn:hover {
@@ -632,11 +655,11 @@
             }
             
             .page-title {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
             
             .intro-title {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
             }
             
             .intro-text {
@@ -667,24 +690,28 @@
                 width: 60px;
                 height: 60px;
             }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
         }
         
         @media (max-width: 480px) {
             .welcome-title {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
             
             .welcome-subtitle {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
             
             .page-title {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
             }
             
             .enter-btn {
                 padding: 15px 30px;
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
             
             .feature-card, .inline-card {
@@ -849,9 +876,9 @@
                         <p class="exam-menu-description">
                             Accede a nuestra completa lista de exámenes de función pulmonar disponibles. Encuentra información detallada sobre cada prueba, preparación requerida y qué esperar durante el procedimiento.
                         </p>
-                        <button class="exam-menu-btn" data-modal="exam-menu">
+                        <a href="menu-examenes.html" class="exam-menu-btn">
                             Explorar Exámenes <i class="fas fa-arrow-right"></i>
-                        </button>
+                        </a>
                     </div>
                 </section>
             </main>
