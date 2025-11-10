@@ -394,7 +394,7 @@
                 <!-- LOGO FPAIR -->
                 <img src="logo-fpair-header.png" alt="Logo FPAIR" class="fpair-logo-header">
                 <div class="logo-text">
-                   
+                    <h1>INCO</h1>
                     <h2>FPAIR</h2>
                     <h3>FUNCIÓN PULMONAR</h3>
                 </div>
@@ -402,8 +402,8 @@
         </header>
         
         <div class="nav-container">
-            
-                
+            <div class="back-btn" id="back-to-platform">
+                <i class="fas fa-arrow-left"></i> Volver a la Plataforma
             </div>
         </div>
         
@@ -519,17 +519,6 @@
                             </div>
                         </div>
                         
-                        <!-- Test de Ejercicio -->
-                        <div class="exam-card" onclick="window.location.href='feno.html'">
-                            <div class="exam-image">
-                                <img src="images/feno.gif" alt="Feno">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">FeNO</h3>
-                                <p class="exam-description">Evalúa y mide la cantidad de oxido nitrico en el aire que exhalas.</p>
-                            </div>
-                        </div>
-                        
                         <!-- Test Shunt (O2) -->
                         <div class="exam-card" onclick="window.location.href='test-shunt.html'">
                             <div class="exam-image">
@@ -540,10 +529,20 @@
                                 <p class="exam-description">Evalúa el cortocircuito de sangre en los pulmones.</p>
                             </div>
                         </div>
+                        
+                        <!-- FeNO -->
+                        <div class="exam-card" onclick="window.location.href='test-feno.html'">
+                            <div class="exam-image">
+                                <img src="images/feno.gif" alt="FeNO">
+                            </div>
+                            <div class="exam-content">
+                                <h3 class="exam-title">FeNO</h3>
+                                <p class="exam-description">Mide el óxido nítrico exhalado para evaluar inflamación de las vías respiratorias.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
+                
                 <!-- Pestaña de Inhaladores -->
                 <div class="tab-content" id="inhalers-tab">
                     <div class="exams-grid">
