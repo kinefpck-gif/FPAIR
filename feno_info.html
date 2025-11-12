@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fracción Exhalada de Óxido Nítrico (FeNO)</title>
+  <style>
+    :root {
+      --azul-principal: #0077b6;
+      --azul-secundario: #00b4d8;
+      --verde-salud: #90e0ef;
+      --gris-fondo: #f6f9fb;
+      --gris-texto: #2c3e50;
+      --blanco: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--gris-fondo);
+      color: var(--gris-texto);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ======= HEADER / HERO ======= */
+    header {
+      position: relative;
+      background: linear-gradient(135deg, var(--azul-principal), var(--azul-secundario));
+      color: var(--blanco);
+      text-align: center;
+      padding: 100px 20px 80px;
+      border-radius: 0 0 80px 80px;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1), transparent 60%);
+      animation: moveGlow 8s infinite alternate;
+    }
+
+    @keyframes moveGlow {
+      0% { background-position: 20% 80%; }
+      100% { background-position: 80% 20%; }
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .header-text {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .header-image {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .header-image img {
+      max-width: 100%;
+      max-height: 100%;
+      filter: brightness(0) invert(1);
+    }
+
+    header h1 {
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.9;
+    }
+
+    /* ======= CONTENEDOR GENERAL ======= */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* ======= SECCIONES ======= */
+    .section {
+      background: var(--blanco);
+      border-radius: 16px;
+      padding: 40px 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: var(--azul-principal);
+      font-size: 1.9rem;
+      margin-bottom: 20px;
+      border-left: 5px solid var(--azul-secundario);
+      padding-left: 12px;
+    }
+
+    h3 {
+      color: var(--azul-secundario);
+      font-size: 1.3rem;
+      margin: 15px 0;
+    }
+
+    p {
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+    }
+
+    /* ======= CAROUSEL ======= */
+    .carousel-container {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #e3f2fd, #ffffff);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .carousel-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      padding: 30px;
+      transition: all 0.8s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+    }
+
+    .carousel-nav {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      background-color: #b0c4de;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background-color: var(--azul-secundario);
+    }
+
+    /* ======= TABS ======= */
+    .comparison-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      flex: 1;
+      min-width: 140px;
+      background: #edf6ff;
+      border: none;
+      border-radius: 8px 8px 0 0;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .tab.active {
+      background: var(--azul-principal);
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .tab-content {
+      display: none;
+      background: #f9fcff;
+      border-radius: 0 0 10px 10px;
+      padding: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .tab-content.active { display: block; }
+
+    /* ======= PASOS ======= */
+    .steps-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .step {
+      flex: 1;
+      min-width: 220px;
+      background: #f0faff;
+      border-radius: 10px;
+      text-align: center;
+      padding: 25px 15px;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .step:hover {
+      background: #e6f7ff;
+      transform: translateY(-5px);
+    }
+
+    .step-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--azul-secundario);
+    }
+
+    .step-icon img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .step h3 {
+      margin-bottom: 10px;
+    }
+
+    /* ======= TABLA ======= */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 1rem;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+      background-color: var(--azul-principal);
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background: #f9fcff;
+    }
+
+    /* ======= FAQ ======= */
+    .faq-item {
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .faq-question {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      font-weight: bold;
+      color: var(--azul-principal);
+    }
+
+    .faq-answer {
+      display: none;
+      padding-bottom: 10px;
+    }
+
+    .faq-answer.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ======= DESTACADOS ======= */
+    .highlight-box {
+      background-color: #e8f4fc;
+      border-left: 4px solid var(--azul-secundario);
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* ======= FOOTER ======= */
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
+      color: #7a8a97;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      .header-content { flex-direction: column; }
+      .steps-container { flex-direction: column; }
+      .tab { font-size: 0.9rem; }
+      .carousel-slide { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="header-text">
+        <h1>FRACCIÓN EXHALADA DE ÓXIDO NÍTRICO (FeNO)</h1>
+        <p>Entendiendo la inflamación de las vías respiratorias</p>
+      </div>
+      <div class="header-image">
+        <!-- Aquí irá la imagen PNG para FeNO -->
+        <img src="images/feno-icon.png" alt="Icono FeNO">
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Introducción -->
+    <section class="section">
+      <h2>¿Qué es la FeNO?</h2>
+      <p>La Fracción Exhalada de Óxido Nítrico (FeNO) es una prueba respiratoria no invasiva que mide la cantidad de óxido nítrico (NO) en el aire que exhalas. Este gas, que se produce en los pulmones, se relaciona con la inflamación de las vías respiratorias.</p>
+      <p>Este examen se utiliza principalmente para evaluar la inflamación de las vías respiratorias, como es común en el asma.</p>
+    </section>
+
+    <!-- Carousel - ¿Qué Mide y Evalúa? -->
+    <section class="section">
+      <h2>¿Qué Mide y Evalúa?</h2>
+      <div class="carousel-container">
+        <div class="carousel-slide active">
+          <h3>Óxido Nítrico (NO)</h3>
+          <p>El óxido nítrico es un gas producido en los pulmones, y su cantidad en el aire exhalado se utiliza como un marcador de inflamación de las vías respiratorias.</p>
+        </div>
+        <div class="carousel-slide">
+          <h3>Unidades de Medida</h3>
+          <p>Los resultados se expresan en partes por mil millones (ppb), lo que permite una medición precisa de la concentración de óxido nítrico en el aire exhalado.</p>
+        </div>
+        <div class="carousel-slide">
+          <h3>Interpretación de Resultados</h3>
+          <p>Un FeNO elevado indica una alta inflamación de las vías respiratorias, común en el asma no controlado. Un FeNO normal o bajo sugiere una baja inflamación.</p>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <span class="carousel-dot active" data-slide="0"></span>
+        <span class="carousel-dot" data-slide="1"></span>
+        <span class="carousel-dot" data-slide="2"></span>
+      </div>
+    </section>
+
+    <!-- Tabs - Rol, Técnica y Funcionamiento -->
+    <section class="section">
+      <h2>Información Adicional</h2>
+      
+      <div class="comparison-tabs">
+        <button class="tab active" data-tab="rol">Rol de la FeNO</button>
+        <button class="tab" data-tab="tecnica">Técnica</button>
+        <button class="tab" data-tab="funcionamiento">¿Cómo funciona?</button>
+      </div>
+
+      <div class="tab-content active" id="rol-content">
+        <h3>Rol de la FeNO en el diagnóstico</h3>
+        <p>Un FeNO elevado indica una alta inflamación de las vías respiratorias, común en el asma no controlado.</p>
+        <p>Un FeNO normal o bajo sugiere una baja inflamación, lo que podría indicar que el asma está bien controlado o que la inflamación no es el principal problema.</p>
+      </div>
+      <div class="tab-content" id="tecnica-content">
+        <h3>Técnica de medición</h3>
+        <p><strong>Normal, controlada y sostenida</strong></p>
+        <p><strong>Mide:</strong> Óxido Nítrico</p>
+        <p><strong>Ideal y útil para:</strong> diagnosticar asma, monitorear la inflamación, y ajuste de tratamiento.</p>
+        <p>Durante la exhalación sostenida, el dispositivo mide la concentración de óxido nítrico en el aire que pasa a través de la boquilla, desde sus pulmones.</p>
+      </div>
+      <div class="tab-content" id="funcionamiento-content">
+        <h3>¿Cómo funciona?</h3>
+        <p>El dispositivo de FeNO está equipado con sensores electrónicos que detectan y cuantifican la cantidad de óxido nítrico en el aire que exhalarás.</p>
+        <p>Los resultados se expresan en partes por mil millones (ppb).</p>
+      </div>
+    </section>
+
+    <!-- Instrucciones paso a paso -->
+    <section class="section">
+      <h2>Instrucciones paso a paso</h2>
+      <p>Al estar sentado en una posición erguida, pondrás ese equipo de medición de FeNO en la boca y sellarás bien los labios, ahora respira normal, el instructor te pedirá el esfuerzo en poco, ¡atento!</p>
+      
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/preparacion.png" alt="Preparación">
+          </div>
+          <h3>Preparación</h3>
+          <p>Siéntate derecho y coloca la boquilla correctamente.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/inhalar.png" alt="Inhalar">
+          </div>
+          <h3>Inhalar</h3>
+          <p>Realiza una inhalación profunda y completa.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/exhalar-controlado.png" alt="Exhalar controlado">
+          </div>
+          <h3>Exhalar</h3>
+          <p>Exhala de manera controlada y sostenida según las indicaciones.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/repetir.png" alt="Repetir">
+          </div>
+          <h3>Repetir</h3>
+          <p>Repite el proceso según las indicaciones del operador.</p>
+        </div>
+      </div>
+      
+      <div class="highlight-box">
+        <h3>Material de apoyo</h3>
+        <p><strong>El técnico del examen</strong> lo guiará correctamente durante el esfuerzo a realizar. Deben conseguir mínimo 2 esfuerzos bien realizados para poder confirmar los resultados obtenidos.</p>
+      </div>
+    </section>
+
+    <!-- Síntomas -->
+    <section class="section">
+      <h2>Posibles síntomas durante el examen</h2>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Situación</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>No deberías experimentar síntomas incómodos</td>
+            <td>La técnica respiratoria es una exhalación sostenida y controlada. No requiere esfuerzo</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="highlight-box">
+        <p>La exhalación controlada es clave para asegurar que la medición sea precisa, ya que una exhalación demasiado rápida o demasiado lenta puede afectar los resultados.</p>
+      </div>
+    </section>
+
+    <!-- Preguntas Frecuentes -->
+    <section class="section">
+      <h2>Preguntas Frecuentes</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Por qué es importante medir el FeNO? <span>+</span></div>
+        <div class="faq-answer">
+          <p>La medición de FeNO es importante porque permite evaluar la inflamación de las vías respiratorias, lo que ayuda en el diagnóstico del asma, el monitoreo del control de la enfermedad y la adecuación del tratamiento.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿La prueba es incómoda o dolorosa? <span>+</span></div>
+        <div class="faq-answer">
+          <p>No, la prueba es completamente no invasiva y no causa dolor. Solo requiere una exhalación controlada y sostenida, sin esfuerzos máximos.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Cuánto tiempo dura la prueba? <span>+</span></div>
+        <div class="faq-answer">
+          <p>La prueba completa suele durar entre 5 y 10 minutos, dependiendo de cuántos intentos sean necesarios para obtener resultados consistentes.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Quiénes deben realizarse esta prueba? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Pacientes con sospecha de asma, asmáticos para evaluar el control de la enfermedad, o personas con síntomas respiratorios persistentes para evaluar la presencia de inflamación en las vías respiratorias.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2025 Sistema de Información Médica Respiratoria</p>
+  </footer>
+
+  <script>
+    // Carousel
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+    let currentSlide = 0;
+    
+    function showSlide(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+      slides[n].classList.add('active');
+      dots[n].classList.add('active');
+      currentSlide = n;
+    }
+    
+    dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+    setInterval(() => showSlide((currentSlide + 1) % slides.length), 5000);
+
+    // Tabs
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab + '-content').classList.add('active');
+    }));
+
+    // FAQ
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const answer = q.nextElementSibling;
+        const open = answer.classList.toggle('active');
+        q.querySelector('span').textContent = open ? '-' : '+';
+      });
+    });
+  </script>
+</body>
+</html>
