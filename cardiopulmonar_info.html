@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Cardiopulmonar (TCP)</title>
+  <style>
+    :root {
+      --azul-principal: #0077b6;
+      --azul-secundario: #00b4d8;
+      --verde-salud: #90e0ef;
+      --gris-fondo: #f6f9fb;
+      --gris-texto: #2c3e50;
+      --blanco: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--gris-fondo);
+      color: var(--gris-texto);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ======= HEADER / HERO ======= */
+    header {
+      position: relative;
+      background: linear-gradient(135deg, var(--azul-principal), var(--azul-secundario));
+      color: var(--blanco);
+      text-align: center;
+      padding: 100px 20px 80px;
+      border-radius: 0 0 80px 80px;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1), transparent 60%);
+      animation: moveGlow 8s infinite alternate;
+    }
+
+    @keyframes moveGlow {
+      0% { background-position: 20% 80%; }
+      100% { background-position: 80% 20%; }
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .header-text {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .header-image {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .header-image img {
+      max-width: 100%;
+      max-height: 100%;
+      filter: brightness(0) invert(1);
+    }
+
+    header h1 {
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.9;
+    }
+
+    /* ======= CONTENEDOR GENERAL ======= */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* ======= SECCIONES ======= */
+    .section {
+      background: var(--blanco);
+      border-radius: 16px;
+      padding: 40px 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: var(--azul-principal);
+      font-size: 1.9rem;
+      margin-bottom: 20px;
+      border-left: 5px solid var(--azul-secundario);
+      padding-left: 12px;
+    }
+
+    h3 {
+      color: var(--azul-secundario);
+      font-size: 1.3rem;
+      margin: 15px 0;
+    }
+
+    p {
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+    }
+
+    /* ======= CAROUSEL ======= */
+    .carousel-container {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #e3f2fd, #ffffff);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .carousel-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      padding: 30px;
+      transition: all 0.8s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+    }
+
+    .carousel-nav {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      background-color: #b0c4de;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background-color: var(--azul-secundario);
+    }
+
+    /* ======= TABS ======= */
+    .comparison-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      flex: 1;
+      min-width: 140px;
+      background: #edf6ff;
+      border: none;
+      border-radius: 8px 8px 0 0;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .tab.active {
+      background: var(--azul-principal);
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .tab-content {
+      display: none;
+      background: #f9fcff;
+      border-radius: 0 0 10px 10px;
+      padding: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .tab-content.active { display: block; }
+
+    /* ======= PASOS ======= */
+    .steps-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .step {
+      flex: 1;
+      min-width: 220px;
+      background: #f0faff;
+      border-radius: 10px;
+      text-align: center;
+      padding: 25px 15px;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .step:hover {
+      background: #e6f7ff;
+      transform: translateY(-5px);
+    }
+
+    .step-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--azul-secundario);
+    }
+
+    .step-icon img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .step h3 {
+      margin-bottom: 10px;
+    }
+
+    /* ======= TABLA ======= */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 1rem;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+      background-color: var(--azul-principal);
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background: #f9fcff;
+    }
+
+    /* ======= FAQ ======= */
+    .faq-item {
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .faq-question {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      font-weight: bold;
+      color: var(--azul-principal);
+    }
+
+    .faq-answer {
+      display: none;
+      padding-bottom: 10px;
+    }
+
+    .faq-answer.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ======= DESTACADOS ======= */
+    .highlight-box {
+      background-color: #e8f4fc;
+      border-left: 4px solid var(--azul-secundario);
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* ======= FOOTER ======= */
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
+      color: #7a8a97;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      .header-content { flex-direction: column; }
+      .steps-container { flex-direction: column; }
+      .tab { font-size: 0.9rem; }
+      .carousel-slide { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="header-text">
+        <h1>TEST CARDIOPULMONAR (TCP)</h1>
+        <p>Entendiendo la capacidad cardiovascular y respiratoria</p>
+      </div>
+      <div class="header-image">
+        <!-- Aquí irá la imagen PNG para el test cardiopulmonar -->
+        <img src="images/tcp-icon.png" alt="Icono Test Cardiopulmonar">
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Introducción -->
+    <section class="section">
+      <h2>¿Qué es el Test Cardiopulmonar?</h2>
+      <p>El Test Cardiopulmonar de Ejercicio (CPET, por sus siglas en inglés) es una evaluación integral que mide la respuesta integrada del corazón, los pulmones y los músculos durante el ejercicio. Es una prueba avanzada que se utiliza para evaluar la capacidad funcional del sistema cardiovascular y respiratorio, identificar limitaciones al ejercicio, y diagnosticar posibles enfermedades cardíacas, pulmonares o metabólicas.</p>
+    </section>
+
+    <!-- Carousel - ¿Qué Mide y Evalúa? -->
+    <section class="section">
+      <h2>¿Qué Mide y Evalúa?</h2>
+      <div class="carousel-container">
+        <div class="carousel-slide active">
+          <h3>Consumo Máximo de Oxígeno (VO2 máx)</h3>
+          <p>Es un indicador clave de la capacidad aeróbica y la resistencia física. El VO2 máx representa la cantidad máxima de O2 que el cuerpo puede utilizar durante el ejercicio intenso.</p>
+        </div>
+        <div class="carousel-slide">
+          <h3>Ventilación (VE)</h3>
+          <p>Mide el volumen de aire exhalado por minuto, evaluando la eficiencia del sistema respiratorio durante el ejercicio.</p>
+        </div>
+        <div class="carousel-slide">
+          <h3>Umbral Anaeróbico (AT)</h3>
+          <p>Punto durante el ejercicio donde el metabolismo cambia de aeróbico a anaeróbico, indicando la intensidad de ejercicio que se puede mantener sin fatiga muscular significativa.</p>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <span class="carousel-dot active" data-slide="0"></span>
+        <span class="carousel-dot" data-slide="1"></span>
+        <span class="carousel-dot" data-slide="2"></span>
+      </div>
+    </section>
+
+    <!-- Tabs - Rol, Técnica y Funcionamiento -->
+    <section class="section">
+      <h2>Información Adicional</h2>
+      
+      <div class="comparison-tabs">
+        <button class="tab active" data-tab="rol">Rol del VO2 max</button>
+        <button class="tab" data-tab="tecnica">Técnica</button>
+        <button class="tab" data-tab="funcionamiento">¿Cómo funciona?</button>
+      </div>
+
+      <div class="tab-content active" id="rol-content">
+        <h3>Rol del VO2 max</h3>
+        <p>El VO2 max (consumo máximo de oxígeno) es un parámetro clave en la evaluación de la capacidad física y el estado cardiovascular de una persona. Representa la cantidad máxima de oxígeno que el cuerpo puede utilizar durante el ejercicio intenso.</p>
+        <p><strong>Salud:</strong> Un VO2 max alto se asocia con una mejor salud cardiovascular y una menor probabilidad de enfermedades crónicas.</p>
+        <p><strong>Rendimiento:</strong> En el ámbito deportivo, mejorar el VO2 max es crucial para aumentar la resistencia y el rendimiento en competiciones.</p>
+      </div>
+      <div class="tab-content" id="tecnica-content">
+        <h3>Técnica de medición</h3>
+        <p><strong>Esfuerzo, progresivo</strong></p>
+        <p><strong>Mide:</strong> VO2 max, VE, AT, VCO2, VEVCO2, FC, PA, V/O</p>
+        <p><strong>Ideal para:</strong> todo paciente que requiera evaluar capacidad física, pre operatoria, obesidad, tolerancia ejercicio, deportistas, etc.</p>
+        <p>La evaluación está indicada en una amplia gama de escenarios, tanto clínicos como deportivos, y es fundamental para evaluar la capacidad funcional del corazón y los pulmones durante el ejercicio, así como para personalizar el tratamiento y las recomendaciones de ejercicio en diversas condiciones.</p>
+      </div>
+      <div class="tab-content" id="funcionamiento-content">
+        <h3>¿Cómo funciona?</h3>
+        <p>El paciente utiliza una máscara facial o boquilla conectada a un sistema que mide la cantidad de oxígeno y dióxido de carbono inhalados y exhalados. Se realizará ejercicio en una cinta de correr o bicicleta estática, comenzando con una intensidad baja que se incrementa gradualmente.</p>
+      </div>
+    </section>
+
+    <!-- Instrucciones paso a paso -->
+    <section class="section">
+      <h2>Instrucciones paso a paso</h2>
+      <p>El operador conectará lo necesario para el test. Realizará una espirometría previamente y finalmente estará sentado en una bicicleta estática. Se le pedirá un ritmo mínimo para realizar el examen y deberá mantenerlo durante todo el test, mientras el operador irá incrementando la carga.</p>
+      
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/preparacion.png" alt="Preparación">
+          </div>
+          <h3>Preparación</h3>
+          <p>Se colocan los sensores y se realiza una espirometría basal.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/ejercicio-progresivo.png" alt="Ejercicio progresivo">
+          </div>
+          <h3>Ejercicio</h3>
+          <p>Se inicia el ejercicio con intensidad baja que aumenta progresivamente.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/monitoreo.png" alt="Monitoreo">
+          </div>
+          <h3>Monitoreo</h3>
+          <p>Se monitorizan constantemente los parámetros cardiopulmonares.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/recuperacion.png" alt="Recuperación">
+          </div>
+          <h3>Recuperación</h3>
+          <p>Se continúa el monitoreo durante la fase de recuperación post-ejercicio.</p>
+        </div>
+      </div>
+      
+      <div class="highlight-box">
+        <h3>Material de apoyo</h3>
+        <p><strong>El técnico del examen</strong> lo guiará correctamente durante el esfuerzo a realizar.</p>
+      </div>
+    </section>
+
+    <!-- Síntomas -->
+    <section class="section">
+      <h2>Posibles síntomas durante el examen</h2>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Síntoma</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Disnea</td>
+            <td>Dificultad respiratoria durante el esfuerzo progresivo</td>
+          </tr>
+          <tr>
+            <td>Fatiga muscular</td>
+            <td>Cansancio en piernas y brazos durante el ejercicio</td>
+          </tr>
+          <tr>
+            <td>Mareo</td>
+            <td>Sensación de inestabilidad durante o después del esfuerzo</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="highlight-box">
+        <p><strong>El TCP es un examen de esfuerzo, cuales síntomas normalmente son pasajeros.</strong></p>
+        <p>El equipo médico supervisará la prueba de cerca, y si alguno de estos síntomas es intolerable, la prueba se detendrá de inmediato. Se monitorean continuamente parámetros como el ritmo cardíaco, la saturación de oxígeno, y la presión arterial para garantizar su seguridad.</p>
+      </div>
+    </section>
+
+    <!-- Preguntas Frecuentes -->
+    <section class="section">
+      <h2>Preguntas Frecuentes</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Qué diferencia al TCP de otras pruebas de ejercicio? <span>+</span></div>
+        <div class="faq-answer">
+          <p>El TCP es más completo que una prueba de esfuerzo convencional porque evalúa simultáneamente la respuesta cardiovascular, respiratoria y metabólica al ejercicio, proporcionando una visión integral del rendimiento físico.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Cuánto tiempo dura la prueba? <span>+</span></div>
+        <div class="faq-answer">
+          <p>La prueba completa generalmente dura entre 30 y 60 minutos, incluyendo la preparación, el ejercicio progresivo y la fase de recuperación.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Es segura la prueba? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Sí, es una prueba muy segura que se realiza bajo supervisión médica especializada. Se monitorizan constantemente todos los parámetros vitales y la prueba se detiene inmediatamente si aparecen signos de alarma.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Quiénes se benefician de esta prueba? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Pacientes con enfermedades cardíacas o pulmonares, personas en evaluación preoperatoria, deportistas que buscan optimizar su entrenamiento, pacientes con fatiga inexplicada o con sospecha de limitaciones al ejercicio.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2025 Sistema de Información Médica Respiratoria</p>
+  </footer>
+
+  <script>
+    // Carousel
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+    let currentSlide = 0;
+    
+    function showSlide(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+      slides[n].classList.add('active');
+      dots[n].classList.add('active');
+      currentSlide = n;
+    }
+    
+    dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+    setInterval(() => showSlide((currentSlide + 1) % slides.length), 5000);
+
+    // Tabs
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab + '-content').classList.add('active');
+    }));
+
+    // FAQ
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const answer = q.nextElementSibling;
+        const open = answer.classList.toggle('active');
+        q.querySelector('span').textContent = open ? '-' : '+';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test de Ejercicio</title>
+  <style>
+    :root {
+      --azul-principal: #0077b6;
+      --azul-secundario: #00b4d8;
+      --verde-salud: #90e0ef;
+      --gris-fondo: #f6f9fb;
+      --gris-texto: #2c3e50;
+      --blanco: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--gris-fondo);
+      color: var(--gris-texto);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ======= HEADER / HERO ======= */
+    header {
+      position: relative;
+      background: linear-gradient(135deg, var(--azul-principal), var(--azul-secundario));
+      color: var(--blanco);
+      text-align: center;
+      padding: 100px 20px 80px;
+      border-radius: 0 0 80px 80px;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1), transparent 60%);
+      animation: moveGlow 8s infinite alternate;
+    }
+
+    @keyframes moveGlow {
+      0% { background-position: 20% 80%; }
+      100% { background-position: 80% 20%; }
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .header-text {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .header-image {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .header-image img {
+      max-width: 100%;
+      max-height: 100%;
+      filter: brightness(0) invert(1);
+    }
+
+    header h1 {
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.9;
+    }
+
+    /* ======= CONTENEDOR GENERAL ======= */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* ======= SECCIONES ======= */
+    .section {
+      background: var(--blanco);
+      border-radius: 16px;
+      padding: 40px 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: var(--azul-principal);
+      font-size: 1.9rem;
+      margin-bottom: 20px;
+      border-left: 5px solid var(--azul-secundario);
+      padding-left: 12px;
+    }
+
+    h3 {
+      color: var(--azul-secundario);
+      font-size: 1.3rem;
+      margin: 15px 0;
+    }
+
+    p {
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+    }
+
+    /* ======= CAROUSEL ======= */
+    .carousel-container {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #e3f2fd, #ffffff);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .carousel-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      padding: 30px;
+      transition: all 0.8s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+    }
+
+    .carousel-nav {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      background-color: #b0c4de;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background-color: var(--azul-secundario);
+    }
+
+    /* ======= TABS ======= */
+    .comparison-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      flex: 1;
+      min-width: 140px;
+      background: #edf6ff;
+      border: none;
+      border-radius: 8px 8px 0 0;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .tab.active {
+      background: var(--azul-principal);
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .tab-content {
+      display: none;
+      background: #f9fcff;
+      border-radius: 0 0 10px 10px;
+      padding: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .tab-content.active { display: block; }
+
+    /* ======= PASOS ======= */
+    .steps-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .step {
+      flex: 1;
+      min-width: 220px;
+      background: #f0faff;
+      border-radius: 10px;
+      text-align: center;
+      padding: 25px 15px;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .step:hover {
+      background: #e6f7ff;
+      transform: translateY(-5px);
+    }
+
+    .step-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--azul-secundario);
+    }
+
+    .step-icon img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .step h3 {
+      margin-bottom: 10px;
+    }
+
+    /* ======= TABLA ======= */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 1rem;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+      background-color: var(--azul-principal);
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background: #f9fcff;
+    }
+
+    /* ======= FAQ ======= */
+    .faq-item {
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .faq-question {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      font-weight: bold;
+      color: var(--azul-principal);
+    }
+
+    .faq-answer {
+      display: none;
+      padding-bottom: 10px;
+    }
+
+    .faq-answer.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ======= DESTACADOS ======= */
+    .highlight-box {
+      background-color: #e8f4fc;
+      border-left: 4px solid var(--azul-secundario);
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* ======= FOOTER ======= */
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
+      color: #7a8a97;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      .header-content { flex-direction: column; }
+      .steps-container { flex-direction: column; }
+      .tab { font-size: 0.9rem; }
+      .carousel-slide { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="header-text">
+        <h1>TEST DE EJERCICIO</h1>
+        <p>Entendiendo el broncoespasmo por ejercicio</p>
+      </div>
+      <div class="header-image">
+        <!-- Aquí irá la imagen PNG para el test de ejercicio -->
+        <img src="images/ejercicio-icon.png" alt="Icono Test de Ejercicio">
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Introducción -->
+    <section class="section">
+      <h2>¿Qué es el Test de Ejercicio?</h2>
+      <p>El test mide la respuesta de las vías respiratorias al ejercicio, específicamente si el ejercicio provoca un estrechamiento de las vías respiratorias, conocido como broncoespasmo inducido por ejercicio.</p>
+    </section>
+
+    <!-- Carousel - ¿Qué Mide y Evalúa? -->
+    <section class="section">
+      <h2>¿Qué Mide y Evalúa?</h2>
+      <div class="carousel-container">
+        <div class="carousel-slide active">
+          <h3>Volumen Espiratorio Forzado en el primer segundo (VEF1)</h3>
+          <p>Parámetro que se evalúa para medir cuánto aire puede exhalar el paciente en el primer segundo del esfuerzo.</p>
+        </div>
+        <div class="carousel-slide">
+          <h3>Hiperreactividad Bronquial (HRB)</h3>
+          <p>Condición de alta sensibilidad de las vías respiratorias a ciertos estímulos, lo que provoca un estrechamiento de las vías respiratorias.</p>
+        </div>
+        <div class="carousel-slide">
+          <h3>Frecuencia Cardíaca (FC)</h3>
+          <p>Se mide durante el ejercicio para lograr un gasto cardíaco máximo, condición necesaria para estimular la broncoconstricción inducida por ejercicio.</p>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <span class="carousel-dot active" data-slide="0"></span>
+        <span class="carousel-dot" data-slide="1"></span>
+        <span class="carousel-dot" data-slide="2"></span>
+      </div>
+    </section>
+
+    <!-- Tabs - Técnica, Funcionamiento y Rol -->
+    <section class="section">
+      <h2>Información Adicional</h2>
+      
+      <div class="comparison-tabs">
+        <button class="tab active" data-tab="tecnica">Técnica</button>
+        <button class="tab" data-tab="funcionamiento">¿Cómo funciona?</button>
+        <button class="tab" data-tab="rol">Rol de la Hiperreactividad</button>
+      </div>
+
+      <div class="tab-content active" id="tecnica-content">
+        <h3>Técnica de medición</h3>
+        <p><strong>Esfuerzo, rápido</strong></p>
+        <p><strong>Mide:</strong> HRB, VEF1, FC</p>
+        <p><strong>Ideal para:</strong> pacientes con síntomas como tos, sibilancias, disnea y opresión de pecho después de actividad física.</p>
+        <p>La detección de hiperreactividad bronquial es crucial para confirmar un diagnóstico de asma, especialmente en casos donde los síntomas no son claros.</p>
+      </div>
+      <div class="tab-content" id="funcionamiento-content">
+        <h3>¿Cómo funciona?</h3>
+        <p>El paciente realiza ejercicio físico, usualmente en una cinta de correr o en una bicicleta estática, con la intensidad ajustada para alcanzar una frecuencia cardiaca que sea al menos el 80% de la frecuencia cardiaca máxima prevista según la edad.</p>
+      </div>
+      <div class="tab-content" id="rol-content">
+        <h3>Rol de la hiperreactividad bronquial</h3>
+        <p>El ejercicio físico en una cinta de correr o bicicleta estática puede desencadenar broncoespasmo en personas con hiperreactividad bronquial. La función pulmonar se mide antes y después del ejercicio para detectar cambios en el VEF1.</p>
+      </div>
+    </section>
+
+    <!-- Instrucciones paso a paso -->
+    <section class="section">
+      <h2>Instrucciones paso a paso</h2>
+      <p>Al estar sentado en una posición erguida, pondrás el espirómetro en tu boca y sellarás bien los labios. Evaluaremos tu función pulmonar antes y después del ejercicio (Esfuerzos de Espirometría). El especialista te guiará, ¡prepárate!</p>
+      
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/preparacion.png" alt="Preparación">
+          </div>
+          <h3>Preparación</h3>
+          <p>Se realiza una espirometría basal para medir la función pulmonar inicial.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/ejercicio.png" alt="Ejercicio">
+          </div>
+          <h3>Ejercicio</h3>
+          <p>Realizas ejercicio en cinta o bicicleta hasta alcanzar la frecuencia cardíaca objetivo.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/post-ejercicio.png" alt="Post-ejercicio">
+          </div>
+          <h3>Post-ejercicio</h3>
+          <p>Se realizan espirometrías a intervalos regulares después del ejercicio.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/broncodilatador.png" alt="Broncodilatador">
+          </div>
+          <h3>Finalización</h3>
+          <p>Si es necesario, se administra broncodilatador para revertir síntomas.</p>
+        </div>
+      </div>
+      
+      <div class="highlight-box">
+        <h3>Material de apoyo</h3>
+        <p><strong>El técnico del examen</strong> lo guiará correctamente durante el test y el ejercicio, guiándote a lograr los estándares de calidad del examen.</p>
+      </div>
+    </section>
+
+    <!-- Síntomas -->
+    <section class="section">
+      <h2>Posibles síntomas durante el examen</h2>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Síntoma</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sibilancias</td>
+            <td>Sonido silbante al respirar debido al estrechamiento de las vías</td>
+          </tr>
+          <tr>
+            <td>Tos</td>
+            <td>Irritación de las vías respiratorias durante o después del ejercicio</td>
+          </tr>
+          <tr>
+            <td>Opresión en el pecho</td>
+            <td>Sensación de presión o tensión en el tórax</td>
+          </tr>
+          <tr>
+            <td>Fatiga</td>
+            <td>Cansancio muscular y respiratorio durante el esfuerzo</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="highlight-box">
+        <p><strong>La mayoría de los síntomas son temporales y desaparecen en pocos minutos.</strong></p>
+        <p>Si se detecta broncoespasmo, se puede administrar un broncodilatador de acción rápida (Salbutamol) para revertir el estrechamiento de las vías respiratorias. El paciente es monitorizado hasta que la función pulmonar se normaliza.</p>
+      </div>
+    </section>
+
+    <!-- Preguntas Frecuentes -->
+    <section class="section">
+      <h2>Preguntas Frecuentes</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Qué tipo de ejercicio se realiza durante la prueba? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Generalmente se utiliza una cinta de correr o una bicicleta estática. La intensidad se ajusta para alcanzar al menos el 80% de la frecuencia cardíaca máxima prevista para la edad del paciente.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Cuánto tiempo dura la prueba completa? <span>+</span></div>
+        <div class="faq-answer">
+          <p>La prueba completa suele durar entre 60 y 90 minutos, incluyendo la preparación, el ejercicio y las mediciones posteriores al ejercicio.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Es segura la prueba de ejercicio? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Sí, es una prueba segura que se realiza bajo supervisión médica especializada. Se monitorizan constantemente los signos vitales y la función pulmonar, y se cuenta con medicamentos de rescate en caso de necesidad.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Quiénes deben realizarse esta prueba? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Pacientes con síntomas de asma inducida por ejercicio, atletas con síntomas respiratorios durante el esfuerzo, o personas que experimentan tos, sibilancias u opresión en el pecho después de la actividad física.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2025 Sistema de Información Médica Respiratoria</p>
+  </footer>
+
+  <script>
+    // Carousel
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+    let currentSlide = 0;
+    
+    function showSlide(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+      slides[n].classList.add('active');
+      dots[n].classList.add('active');
+      currentSlide = n;
+    }
+    
+    dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+    setInterval(() => showSlide((currentSlide + 1) % slides.length), 5000);
+
+    // Tabs
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab + '-content').classList.add('active');
+    }));
+
+    // FAQ
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const answer = q.nextElementSibling;
+        const open = answer.classList.toggle('active');
+        q.querySelector('span').textContent = open ? '-' : '+';
+      });
+    });
+  </script>
+</body>
+</html>
