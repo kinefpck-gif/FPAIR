@@ -53,8 +53,39 @@
       100% { background-position: 80% 20%; }
     }
 
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .header-text {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .header-image {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .header-image img {
+      max-width: 100%;
+      max-height: 100%;
+      filter: brightness(0) invert(1);
+    }
+
     header h1 {
-      font-size: 3rem;
+      font-size: 2.3rem;
       margin-bottom: 10px;
       font-weight: 700;
       letter-spacing: 1px;
@@ -328,7 +359,8 @@
     }
 
     @media (max-width: 768px) {
-      header h1 { font-size: 2.3rem; }
+      header h1 { font-size: 2rem; }
+      .header-content { flex-direction: column; }
       .steps-container { flex-direction: column; }
       .tab { font-size: 0.9rem; }
       .carousel-slide { padding: 20px; }
@@ -337,8 +369,16 @@
 </head>
 <body>
   <header>
-    <h1>ESPIROMETRÍA</h1>
-    <p>Entendiendo tu función pulmonar</p>
+    <div class="header-content">
+      <div class="header-text">
+        <h1>ESPIROMETRÍA</h1>
+        <p>Entendiendo tu función pulmonar</p>
+      </div>
+      <div class="header-image">
+        <!-- Icono para la espirometría -->
+        <img src="images/espirometria-icon.png" alt="Icono Espirometría">
+      </div>
+    </div>
   </header>
 
   <div class="container">
@@ -400,47 +440,41 @@
       </div>
     </section>
 
-<!-- Instrucciones paso a paso -->
-<section class="section">
-  <h2>Instrucciones paso a paso</h2>
-  <p>Al estar sentado en una posición erguida, pondrás el espirómetro en la boca y sellarás bien con los labios, ahora respira normal, el instructor te pedirá el esfuerzo en poco, ¡atento!</p>
-  
-  <div class="steps-container">
-    <div class="step">
-      <div class="step-icon">
-        <img src="images/paso1.png" alt="Preparación">
+    <!-- Instrucciones paso a paso -->
+    <section class="section">
+      <h2>Instrucciones paso a paso</h2>
+      <p>Al estar sentado en una posición erguida, pondrás el espirómetro en la boca y sellarás bien con los labios, ahora respira normal, el instructor te pedirá el esfuerzo en poco, ¡atento!</p>
+      
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/preparacion.png" alt="Preparación">
+          </div>
+          <h3>Preparación</h3>
+          <p>Siéntate derecho y coloca la boquilla correctamente.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/inspiracion.png" alt="Inspiración">
+          </div>
+          <h3>Inspiración</h3>
+          <p>Realiza una inspiración profunda y completa.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/espiracion.png" alt="Espiración">
+          </div>
+          <h3>Espiración</h3>
+          <p>Exhala con fuerza y continuidad hasta vaciar los pulmones.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">
+            <img src="images/repeticion.png" alt="Repetición">
+          </div>
+          <h3>Repetición</h3>
+          <p>Repite el proceso según las indicaciones del operador.</p>
+        </div>
       </div>
-      <h3>Preparación</h3>
-      <p>Siéntate derecho y coloca la boquilla correctamente.</p>
-    </div>
-    <div class="step">
-      <div class="step-icon">
-        <img src="images/paso2.png" alt="Inspiración">
-      </div>
-      <h3>Inspiración</h3>
-      <p>Realiza una inspiración profunda y completa.</p>
-    </div>
-    <div class="step">
-      <div class="step-icon">
-        <img src="images/paso3.png" alt="Espiración">
-      </div>
-      <h3>Espiración</h3>
-      <p>Exhala con fuerza y continuidad hasta vaciar los pulmones.</p>
-    </div>
-    <div class="step">
-      <div class="step-icon">
-        <img src="images/paso4.png" alt="Repetición">
-      </div>
-      <h3>Repetición</h3>
-      <p>Repite el proceso según las indicaciones del operador.</p>
-    </div>
-  </div>
-  
-  <div class="highlight-box">
-    <h3>Material de apoyo</h3>
-    <p><strong>El operador del examen</strong> lo guiará correctamente durante el esfuerzo a realizar. Deben conseguir mínimo 3 esfuerzos bien realizados para poder confirmar los resultados obtenidos (siempre los mejores).</p>
-  </div>
-</section>
       
       <div class="highlight-box">
         <h3>Material de apoyo</h3>
