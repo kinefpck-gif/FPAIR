@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aerocámara - Información Completa</title>
+  <style>
+    :root {
+      --azul-principal: #0077b6;
+      --azul-secundario: #00b4d8;
+      --verde-salud: #90e0ef;
+      --gris-fondo: #f6f9fb;
+      --gris-texto: #2c3e50;
+      --blanco: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--gris-fondo);
+      color: var(--gris-texto);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ======= HEADER / HERO ======= */
+    header {
+      position: relative;
+      background: linear-gradient(135deg, var(--azul-principal), var(--azul-secundario));
+      color: var(--blanco);
+      text-align: center;
+      padding: 100px 20px 80px;
+      border-radius: 0 0 80px 80px;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1), transparent 60%);
+      animation: moveGlow 8s infinite alternate;
+    }
+
+    @keyframes moveGlow {
+      0% { background-position: 20% 80%; }
+      100% { background-position: 80% 20%; }
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .header-text {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .header-image {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .header-image img {
+      max-width: 100%;
+      max-height: 100%;
+      filter: brightness(0) invert(1);
+    }
+
+    header h1 {
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.9;
+    }
+
+    /* ======= CONTENEDOR GENERAL ======= */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* ======= SECCIONES ======= */
+    .section {
+      background: var(--blanco);
+      border-radius: 16px;
+      padding: 40px 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: var(--azul-principal);
+      font-size: 1.9rem;
+      margin-bottom: 20px;
+      border-left: 5px solid var(--azul-secundario);
+      padding-left: 12px;
+    }
+
+    h3 {
+      color: var(--azul-secundario);
+      font-size: 1.3rem;
+      margin: 15px 0;
+    }
+
+    p {
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+    }
+
+    /* ======= LISTA SIMPLE PARA TÉCNICA ======= */
+    .simple-list {
+      list-style-type: none;
+      margin: 20px 0;
+    }
+
+    .simple-list li {
+      padding: 15px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .simple-list li:last-child {
+      border-bottom: none;
+    }
+
+    /* ======= LISTA DE BENEFICIOS ======= */
+    .benefits-list {
+      list-style-type: none;
+      margin: 20px 0;
+    }
+
+    .benefits-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #e0e0e0;
+      position: relative;
+      padding-left: 30px;
+    }
+
+    .benefits-list li:before {
+      content: "✓";
+      color: var(--azul-secundario);
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+      top: 10px;
+    }
+
+    /* ======= LISTA DE PASOS (para limpieza) ======= */
+    .steps-list {
+      list-style-type: none;
+      margin: 20px 0;
+    }
+
+    .steps-list li {
+      padding: 15px 0;
+      border-bottom: 1px solid #e0e0e0;
+      position: relative;
+      padding-left: 40px;
+      counter-increment: step-counter;
+    }
+
+    .steps-list li:before {
+      content: counter(step-counter);
+      color: var(--blanco);
+      background-color: var(--azul-secundario);
+      font-size: 1rem;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ======= IMAGENES ======= */
+    .image-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .content-image {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* ======= VIDEO CONTAINER ======= */
+    .video-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .video-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--azul-principal);
+      color: white;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .video-link:hover {
+      background: var(--azul-secundario);
+      transform: translateY(-5px);
+    }
+
+    .video-link img {
+      width: 40px;
+      height: 40px;
+      filter: brightness(0) invert(1);
+    }
+
+    /* ======= FAQ ======= */
+    .faq-item {
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .faq-question {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      font-weight: bold;
+      color: var(--azul-principal);
+    }
+
+    .faq-answer {
+      display: none;
+      padding-bottom: 10px;
+    }
+
+    .faq-answer.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ======= DESTACADOS ======= */
+    .highlight-box {
+      background-color: #e8f4fc;
+      border-left: 4px solid var(--azul-secundario);
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* ======= FOOTER ======= */
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
+      color: #7a8a97;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      .header-content { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="header-text">
+        <h1>AEROCÁMARA</h1>
+        <p>Importancia en la administración de medicamentos inhalados</p>
+      </div>
+      <div class="header-image">
+        <!-- Icono para aerocámara -->
+        <img src="images/aerocamara-icon.png" alt="Icono Aerocámara">
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Importancia de la aerocámara -->
+    <section class="section">
+      <h2>Importancia de la Aerocámara</h2>
+      <p>El uso de aerocámaras en la administración de medicamentos inhalados es crucial para garantizar la correcta deposición del fármaco en las vías respiratorias. Estas cámaras ayudan a minimizar la coordinación requerida entre la activación del inhalador y la inhalación, optimizando el tratamiento y reduciendo los efectos secundarios locales.</p>
+      
+      <div class="image-container">
+        <img src="images/aerocamara-importancia.png" alt="Importancia de la aerocámara" class="content-image">
+      </div>
+      
+      <div class="highlight-box">
+        <h3>Beneficios de usar una aerocámara</h3>
+        <ul class="benefits-list">
+          <li>Mejora la deposición del medicamento en los pulmones</li>
+          <li>Reduce la cantidad de medicamento que queda en la boca o garganta</li>
+          <li>Disminuye el riesgo de efectos secundarios locales, como candidiasis oral</li>
+          <li>Facilita la coordinación entre la activación del inhalador y la inhalación</li>
+        </ul>
+      </div>
+      
+      <div class="highlight-box">
+        <h3>Eficiencia comprobada</h3>
+        <p><strong>Eficiencia:</strong> El uso de aerocámara aumenta hasta un 50% la cantidad de medicamento que llega a los pulmones en comparación con el uso directo del inhalador.</p>
+        <p><strong>Reducción de efectos secundarios:</strong> Reduce hasta en un 80% la retención de partículas en la orofaringe, disminuyendo el riesgo de candidiasis o irritación local.</p>
+        <p><strong>Beneficio en grupos vulnerables:</strong> Es esencial en niños, adultos mayores y personas con limitaciones físicas o cognitivas.</p>
+      </div>
+    </section>
+
+    <!-- Técnica de uso -->
+    <section class="section">
+      <h2>Técnica de uso de la aerocámara</h2>
+      
+      <div class="image-container">
+        <img src="images/tecnica-aerocamara.png" alt="Técnica de uso de la aerocámara" class="content-image">
+      </div>
+      
+      <ul class="simple-list">
+        <li>
+          <strong>Preparar el inhalador:</strong>
+          <ul>
+            <li>Retirar la tapa.</li>
+            <li>Agitar vigorosamente durante 5 a 10 segundos para asegurar la mezcla uniforme del medicamento.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Conectar el inhalador a la aerocámara:</strong>
+          <ul>
+            <li>Verificar que esté bien encajada, sin fugas visibles.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Colocación de la aerocámara:</strong>
+          <ul>
+            <li><strong>Boquilla:</strong> Sellar con los labios y asegurar una posición cómoda.</li>
+            <li><strong>Mascarilla (en niños o pacientes con baja coordinación):</strong> Cubrir boca y nariz, verificando el sellado.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Liberar la dosis:</strong>
+          <ul>
+            <li>Presionar el inhalador una sola vez.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Inhalación controlada:</strong>
+          <ul>
+            <li>Respirar lenta y profundamente (3-5 segundos de inhalación).</li>
+            <li>Mantener la respiración por 5-10 segundos (si es posible).</li>
+            <li>Repetir la inhalación 4-6 veces sin liberar nueva dosis.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Repetir si es necesario:</strong>
+          <ul>
+            <li>Esperar 30 segundos antes de una segunda dosis.</li>
+          </ul>
+        </li>
+      </ul>
+      
+      <!-- Icono de video -->
+      <div class="video-container">
+        <a href="https://www.youtube.com/watch?v=DEMO_VIDEO_ID" class="video-link" target="_blank">
+          <img src="images/video-icon.png" alt="Ver video instructivo">
+        </a>
+        <p style="margin-top: 15px; font-weight: bold;">Ver video instructivo</p>
+      </div>
+    </section>
+
+    <!-- Limpieza de la aerocámara -->
+    <section class="section">
+      <h2>Limpieza de la aerocámara</h2>
+      <p>Una limpieza adecuada previene la acumulación de residuos y mantiene la funcionalidad del dispositivo.</p>
+      
+      <div class="image-container">
+        <img src="images/limpieza-aerocamara.png" alt="Limpieza de la aerocámara" class="content-image">
+      </div>
+      
+      <h3>Paso a paso para lavar la aerocámara</h3>
+      <ol class="steps-list">
+        <li>Desmontar la aerocámara según las instrucciones del fabricante.</li>
+        <li>Lavar las piezas con agua tibia y detergente suave (sin usar cepillos ni esponjas abrasivas).</li>
+        <li>Enjuagar bien con abundante agua para eliminar cualquier residuo de jabón.</li>
+        <li>Dejar secar al aire libre en una superficie limpia y seca (no usar secadores ni toallas).</li>
+        <li>Ensamblar nuevamente cuando esté completamente seca.</li>
+      </ol>
+    </section>
+
+    <!-- Recomendaciones y sugerencias -->
+    <section class="section">
+      <h2>Recomendaciones y sugerencias</h2>
+      
+      <div class="highlight-box">
+        <h3>Mantenimiento de la aerocámara</h3>
+        <ul class="benefits-list">
+          <li>Limpiar la aerocámara al menos una vez a la semana, o más frecuentemente si se usa con regularidad.</li>
+          <li>Revisar periódicamente el dispositivo para detectar fisuras o desgastes.</li>
+          <li>Sustituir la aerocámara cada 6-12 meses o antes si presenta fisuras, opacidad o deformidades.</li>
+          <li>Reemplazar inmediatamente si se observan signos visibles de deterioro.</li>
+          <li>Guardar la aerocámara en un lugar limpio y seco.</li>
+        </ul>
+      </div>
+      
+      <div class="highlight-box">
+        <h3>Consejos adicionales</h3>
+        <ul class="benefits-list">
+          <li>Familiarizarse el paciente y/o cuidador sobre la técnica correcta y así maximizar los beneficios del tratamiento.</li>
+          <li>Realizar controles regulares para verificar el estado de la aerocámara.</li>
+        </ul>
+      </div>
+      
+      <div class="highlight-box">
+        <h3>Errores comunes a evitar</h3>
+        <ul class="benefits-list">
+          <li><strong>No agitar el inhalador:</strong> Siempre agitar antes de usar para asegurar la correcta mezcla del medicamento.</li>
+          <li><strong>Activar el inhalador varias veces antes de inhalar:</strong> Solo se debe liberar una dosis por vez para evitar la sobredosificación.</li>
+          <li><strong>Inhalar rápido o superficialmente:</strong> Realizar inhalaciones lentas y sostenidas para mejorar la deposición pulmonar.</li>
+          <li><strong>No sellar bien la boquilla o mascarilla:</strong> Asegurar un buen ajuste para evitar fugas de aerosol.</li>
+          <li><strong>No secar bien la aerocámara:</strong> La humedad residual puede afectar el rendimiento del dispositivo; es clave dejarla secar completamente.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Preguntas Frecuentes -->
+    <section class="section">
+      <h2>Preguntas Frecuentes</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Cuándo debo reemplazar mi aerocámara? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Se recomienda reemplazar la aerocámara cada 6 a 12 meses, o antes si presenta signos de desgaste como fisuras, opacidad o deformidades. Si la válvula no funciona correctamente, también es momento de cambiarla.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Puedo usar la misma aerocámara para diferentes tipos de inhaladores? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Depende del tipo de aerocámara. Algunas son universales y pueden usarse con diferentes inhaladores de dosis medida (MDI), pero otras están diseñadas específicamente para ciertos modelos. Consulte las instrucciones del fabricante para asegurarse de la compatibilidad.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Es necesario usar aerocámara con todos los inhaladores? <span>+</span></div>
+        <div class="faq-answer">
+          <p>La aerocámara se recomienda principalmente para inhaladores de dosis medida (MDI). No es necesaria para inhaladores de polvo seco (DPI), ya que estos dispositivos funcionan con un mecanismo diferente que no requiere coordinación entre la activación y la inhalación.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Cómo sé si estoy usando correctamente la aerocámara? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Una técnica correcta incluye: sellar bien los labios alrededor de la boquilla (o la mascarilla sobre nariz y boca), activar el inhalador solo una vez, inhalar lenta y profundamente, y mantener la respiración durante 5-10 segundos. Si escucha un sonido de silbido al inhalar, significa que está inhalando demasiado rápido.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">¿Qué hago si la válvula de mi aerocámara no funciona correctamente? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Si la válvula no se mueve al inhalar, o si está pegada o dañada, debe reemplazar la aerocámara. Una válvula defectuosa impedirá que el medicamento llegue correctamente a los pulmones.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2025 Sistema de Información Médica Respiratoria</p>
+  </footer>
+
+  <script>
+    // FAQ
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const answer = q.nextElementSibling;
+        const open = answer.classList.toggle('active');
+        q.querySelector('span').textContent = open ? '-' : '+';
+      });
+    });
+  </script>
+</body>
+</html>

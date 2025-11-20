@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revisión de Inhaladores - Información Completa</title>
+  <style>
+    :root {
+      --azul-principal: #0077b6;
+      --azul-secundario: #00b4d8;
+      --verde-salud: #90e0ef;
+      --gris-fondo: #f6f9fb;
+      --gris-texto: #2c3e50;
+      --blanco: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--gris-fondo);
+      color: var(--gris-texto);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ======= HEADER / HERO ======= */
+    header {
+      position: relative;
+      background: linear-gradient(135deg, var(--azul-principal), var(--azul-secundario));
+      color: var(--blanco);
+      text-align: center;
+      padding: 100px 20px 80px;
+      border-radius: 0 0 80px 80px;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1), transparent 60%);
+      animation: moveGlow 8s infinite alternate;
+    }
+
+    @keyframes moveGlow {
+      0% { background-position: 20% 80%; }
+      100% { background-position: 80% 20%; }
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .header-text {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .header-image {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .header-image img {
+      max-width: 100%;
+      max-height: 100%;
+      filter: brightness(0) invert(1);
+    }
+
+    header h1 {
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.9;
+    }
+
+    /* ======= CONTENEDOR GENERAL ======= */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* ======= SECCIONES ======= */
+    .section {
+      background: var(--blanco);
+      border-radius: 16px;
+      padding: 40px 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: var(--azul-principal);
+      font-size: 1.9rem;
+      margin-bottom: 20px;
+      border-left: 5px solid var(--azul-secundario);
+      padding-left: 12px;
+    }
+
+    h3 {
+      color: var(--azul-secundario);
+      font-size: 1.3rem;
+      margin: 15px 0;
+    }
+
+    p {
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+    }
+
+    /* ======= TABS ======= */
+    .comparison-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      flex: 1;
+      min-width: 140px;
+      background: #edf6ff;
+      border: none;
+      border-radius: 8px 8px 0 0;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .tab.active {
+      background: var(--azul-principal);
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .tab-content {
+      display: none;
+      background: #f9fcff;
+      border-radius: 0 0 10px 10px;
+      padding: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .tab-content.active { display: block; }
+
+    /* ======= LISTA DE PASOS ======= */
+    .steps-list {
+      list-style-type: none;
+      margin: 20px 0;
+    }
+
+    .steps-list li {
+      padding: 15px 0;
+      border-bottom: 1px solid #e0e0e0;
+      position: relative;
+      padding-left: 40px;
+      counter-increment: step-counter;
+    }
+
+    .steps-list li:before {
+      content: counter(step-counter);
+      color: var(--blanco);
+      background-color: var(--azul-secundario);
+      font-size: 1rem;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ======= LISTA DE MARCAS ======= */
+    .brands-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .brand-item {
+      background: #f0faff;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    /* ======= IMAGENES ======= */
+    .image-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .content-image {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* ======= FAQ ======= */
+    .faq-item {
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .faq-question {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      font-weight: bold;
+      color: var(--azul-principal);
+    }
+
+    .faq-answer {
+      display: none;
+      padding-bottom: 10px;
+    }
+
+    .faq-answer.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ======= DESTACADOS ======= */
+    .highlight-box {
+      background-color: #e8f4fc;
+      border-left: 4px solid var(--azul-secundario);
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* ======= FOOTER ======= */
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
+      color: #7a8a97;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      .header-content { flex-direction: column; }
+      .tab { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="header-text">
+        <h1>REVISIÓN DE INHALADORES</h1>
+        <p>Aprendiendo a revisar si aún tienes medicamento</p>
+      </div>
+      <div class="header-image">
+        <!-- Icono para revisión de inhaladores -->
+        <img src="images/revision-icon.png" alt="Icono Revisión de Inhaladores">
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Introducción -->
+    <section class="section">
+      <h2>¿Por qué es importante revisar tu inhalador?</h2>
+      <p>Si usas tu inhalador sin medicamento, podrías sentir que estás recibiendo alivio solo por la sensación de inhalar, pero en realidad no estarías administrando ninguna dosis. Revisar tu dispositivo evita que te quedes sin tratamiento en momentos críticos.</p>
+    </section>
+
+    <!-- Tabs para diferentes tipos de inhaladores -->
+    <section class="section">
+      <h2>Aprendiendo a revisar si aún tienes medicamento</h2>
+      
+      <div class="comparison-tabs">
+        <button class="tab active" data-tab="mdi">Inhalador de Dosis Medida (MDI)</button>
+        <button class="tab" data-tab="dpi">Inhalador de Polvo Seco (DPI)</button>
+        <button class="tab" data-tab="capsulas">Inhalador de Cápsulas</button>
+      </div>
+
+      <!-- Contenido para MDI -->
+      <div class="tab-content active" id="mdi-content">
+        <h3>Inhalador de dosis medida (MDI, cartucho presurizado)</h3>
+        
+        <div class="image-container">
+          <img src="images/mdi-inhalador.png" alt="Inhalador de dosis medida MDI" class="content-image">
+        </div>
+        
+        <ol class="steps-list">
+          <li><strong>Agitar el inhalador:</strong> Si sientes que algo se mueve dentro, puede que aún tenga medicamento, pero no es un método 100% confiable.</li>
+          <li><strong>Probar la pulverización:</strong> Retira la boquilla, apunta lejos de tu cara, y presiona una vez para ver si sale un aerosol visible.</li>
+        </ol>
+        
+        <div class="highlight-box">
+          <h3>Método del agua</h3>
+          <ol class="steps-list">
+            <li>Retire el cartucho de la cámara plástica.</li>
+            <li>Coloque el cartucho en un vaso con agua:
+              <ul>
+                <li><strong>Se hunde:</strong> Está lleno o casi lleno.</li>
+                <li><strong>Flota en diagonal:</strong> Está a medio uso.</li>
+                <li><strong>Flota en la superficie:</strong> Está vacío o casi vacío.</li>
+              </ul>
+            </li>
+            <li><strong>Importante:</strong> Seque bien el cartucho antes de volver a usarlo.</li>
+          </ol>
+          <p><strong>Contador de dosis:</strong> Algunos inhaladores tienen un contador que indica las dosis restantes.</p>
+          
+          <!-- Imagen del método del agua -->
+          <div class="image-container">
+            <img src="images/metodo-agua.png" alt="Método del agua para revisar inhaladores" class="content-image">
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenido para DPI -->
+      <div class="tab-content" id="dpi-content">
+        <h3>Inhalador de polvo seco (DPI, tipo Turbuhaler o Accuhaler)</h3>
+        
+        <div class="image-container">
+          <img src="images/dpi-inhalador.png" alt="Inhalador de polvo seco DPI" class="content-image">
+        </div>
+        
+        <div class="brands-list">
+          <div class="brand-item">Accuhaler</div>
+          <div class="brand-item">Essivhaler</div>
+          <div class="brand-item">Ellipta</div>
+          <div class="brand-item">Forspire</div>
+          <div class="brand-item">Genuair</div>
+          <div class="brand-item">Novolizer</div>
+          <div class="brand-item">Nesthaler</div>
+          <div class="brand-item">Séromax</div>
+          <div class="brand-item">Turbuhaler</div>
+          <div class="brand-item">Twisthaler</div>
+        </div>
+        
+        <ol class="steps-list">
+          <li><strong>Verificar la ventanilla de dosis:</strong> La mayoría de los DPI tienen un indicador numérico que baja con cada uso.</li>
+          <li><strong>Escuchar el sonido:</strong> Al girar o activar el dispositivo, si no escucha el sonido típico del mecanismo cargando la dosis, podría estar vacío.</li>
+          <li><strong>Prueba de inhalación:</strong> Inhala sin activar el medicamento; Si no notas sensación de polvo seco, es posible que se haya agotado.</li>
+        </ol>
+        
+        <!-- Imagen adicional para DPI -->
+        <div class="image-container">
+          <img src="images/dpi-detalle.png" alt="Detalle del inhalador de polvo seco" class="content-image">
+        </div>
+      </div>
+
+      <!-- Contenido para Cápsulas -->
+      <div class="tab-content" id="capsulas-content">
+        <h3>Inhalador de cápsulas de polvo seco (tipo HandlHaler o Breezhaler)</h3>
+        
+        <div class="image-container">
+          <img src="images/capsulas-inhalador.png" alt="Inhalador de cápsulas de polvo seco" class="content-image">
+        </div>
+        
+        <div class="brands-list">
+          <div class="brand-item">Aerolizer</div>
+          <div class="brand-item">Handihaler</div>
+          <div class="brand-item">Breezhaler</div>
+          <div class="brand-item">Zonda</div>
+        </div>
+        
+        <ol class="steps-list">
+          <li><strong>Abrir y revisar la cápsula:</strong> Después de inhalar, abra el dispositivo y verifique si queda polvo dentro de la cápsula.</li>
+          <li><strong>Perforar correctamente:</strong> Asegúrese de que la cápsula se haya perforado bien. Si no hay polvo después de usarlo, probablemente ya esté vacío.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Consejos finales -->
+    <section class="section">
+      <h2>Consejos finales</h2>
+      
+      <div class="highlight-box">
+        <h3>Llevar un registro</h3>
+        <p>Anotar la fecha de inicio de cada inhalador y calcular cuánto debería durar según la dosis diaria, puede ayudarte a no quedar sin tu siguiente inhalador.</p>
+      </div>
+      
+      <div class="highlight-box">
+        <h3>Revisar las instrucciones</h3>
+        <p>Cada inhalador tiene particularidades, así que siempre es bueno consultar el manual específico de su dispositivo.</p>
+      </div>
+    </section>
+
+    <!-- Preguntas Frecuentes -->
+    <section class="section">
+      <h2>Preguntas Frecuentes</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Es seguro usar el método del agua para revisar mi inhalador? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Sí, el método del agua es seguro siempre que seques completamente el cartucho antes de volver a colocarlo en el inhalador. Asegúrate de que no quede humedad en el interior antes de usarlo.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Qué hago si mi inhalador no tiene contador de dosis? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Si tu inhalador no tiene contador, lleva un registro escrito de cuándo comenzaste a usarlo y calcula cuántas dosis te quedan según la frecuencia de uso. Por ejemplo, si usas 2 inhalaciones al día y el inhalador tiene 200 dosis, debería durarte aproximadamente 100 días.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Puedo confiar en el sonido al agitar el inhalador? <span>+</span></div>
+        <div class="faq-answer">
+          <p>No completamente. Algunos inhaladores pueden hacer sonido incluso cuando están vacíos debido a los componentes internos. Es mejor usar métodos más confiables como el contador de dosis o el método del agua para los MDI.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Con qué anticipación debo reemplazar mi inhalador? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Es recomendable tener un inhalador de repuesto cuando notes que te quedan aproximadamente 10-15 dosis. Esto te dará tiempo suficiente para conseguir uno nuevo sin interrumpir tu tratamiento.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">¿Qué pasa si uso un inhalador que está vacío? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Si usas un inhalador vacío, no recibirás la dosis de medicamento necesaria. Esto puede provocar que tus síntomas empeoren y aumentar el riesgo de una crisis. Por eso es fundamental revisar regularmente si aún tiene medicamento.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2025 Sistema de Información Médica Respiratoria</p>
+  </footer>
+
+  <script>
+    // Tabs
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab + '-content').classList.add('active');
+    }));
+
+    // FAQ
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const answer = q.nextElementSibling;
+        const open = answer.classList.toggle('active');
+        q.querySelector('span').textContent = open ? '-' : '+';
+      });
+    });
+  </script>
+</body>
+</html>

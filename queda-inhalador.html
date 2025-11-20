@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suspensión de Inhaladores - Información Completa</title>
+  <style>
+    :root {
+      --azul-principal: #0077b6;
+      --azul-secundario: #00b4d8;
+      --verde-salud: #90e0ef;
+      --gris-fondo: #f6f9fb;
+      --gris-texto: #2c3e50;
+      --blanco: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--gris-fondo);
+      color: var(--gris-texto);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ======= HEADER / HERO ======= */
+    header {
+      position: relative;
+      background: linear-gradient(135deg, var(--azul-principal), var(--azul-secundario));
+      color: var(--blanco);
+      text-align: center;
+      padding: 100px 20px 80px;
+      border-radius: 0 0 80px 80px;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1), transparent 60%);
+      animation: moveGlow 8s infinite alternate;
+    }
+
+    @keyframes moveGlow {
+      0% { background-position: 20% 80%; }
+      100% { background-position: 80% 20%; }
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .header-text {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .header-image {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .header-image img {
+      max-width: 100%;
+      max-height: 100%;
+      filter: brightness(0) invert(1);
+    }
+
+    header h1 {
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.9;
+    }
+
+    /* ======= CONTENEDOR GENERAL ======= */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* ======= SECCIONES ======= */
+    .section {
+      background: var(--blanco);
+      border-radius: 16px;
+      padding: 40px 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: var(--azul-principal);
+      font-size: 1.9rem;
+      margin-bottom: 20px;
+      border-left: 5px solid var(--azul-secundario);
+      padding-left: 12px;
+    }
+
+    h3 {
+      color: var(--azul-secundario);
+      font-size: 1.3rem;
+      margin: 15px 0;
+    }
+
+    p {
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+    }
+
+    /* ======= CAROUSEL ======= */
+    .carousel-container {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #e3f2fd, #ffffff);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .carousel-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      padding: 30px;
+      transition: all 0.8s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+    }
+
+    .carousel-nav {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      background-color: #b0c4de;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background-color: var(--azul-secundario);
+    }
+
+    /* ======= TABS ======= */
+    .comparison-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      flex: 1;
+      min-width: 140px;
+      background: #edf6ff;
+      border: none;
+      border-radius: 8px 8px 0 0;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .tab.active {
+      background: var(--azul-principal);
+      color: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .tab-content {
+      display: none;
+      background: #f9fcff;
+      border-radius: 0 0 10px 10px;
+      padding: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .tab-content.active { display: block; }
+
+    /* ======= TABLA ======= */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 1rem;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #e0e0e0;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--azul-principal);
+      color: white;
+      text-align: center;
+    }
+
+    tr:nth-child(even) {
+      background: #f9fcff;
+    }
+
+    .time-column {
+      width: 20%;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    /* ======= LISTA DE SÍNTOMAS ======= */
+    .symptoms-list {
+      list-style-type: none;
+      margin: 20px 0;
+    }
+
+    .symptoms-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #e0e0e0;
+      position: relative;
+      padding-left: 30px;
+    }
+
+    .symptoms-list li:before {
+      content: "•";
+      color: var(--azul-secundario);
+      font-size: 1.5rem;
+      position: absolute;
+      left: 0;
+      top: 5px;
+    }
+
+    /* ======= FAQ ======= */
+    .faq-item {
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .faq-question {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      font-weight: bold;
+      color: var(--azul-principal);
+    }
+
+    .faq-answer {
+      display: none;
+      padding-bottom: 10px;
+    }
+
+    .faq-answer.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* ======= DESTACADOS ======= */
+    .highlight-box {
+      background-color: #e8f4fc;
+      border-left: 4px solid var(--azul-secundario);
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* ======= ENLACE A OTRA PÁGINA ======= */
+    .next-page-container {
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .next-page-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--azul-principal);
+      color: white;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .next-page-link:hover {
+      background: var(--azul-secundario);
+      transform: translateY(-5px);
+    }
+
+    .next-page-link img {
+      width: 40px;
+      height: 40px;
+      filter: brightness(0) invert(1);
+    }
+
+    /* ======= FOOTER ======= */
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
+      color: #7a8a97;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2rem; }
+      .header-content { flex-direction: column; }
+      .tab { font-size: 0.9rem; }
+      .carousel-slide { padding: 20px; }
+      .time-column { width: 30%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="header-text">
+        <h1>SUSPENSIÓN DE INHALADORES</h1>
+        <p>Entendiendo el motivo de suspender inhaladores</p>
+      </div>
+      <div class="header-image">
+        <!-- Icono para suspensión de inhaladores -->
+        <img src="images/inhalador-icon.png" alt="Icono Inhalador">
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Introducción -->
+    <section class="section">
+      <h2>¿Por qué suspender los inhaladores?</h2>
+      <p>Suspender los inhaladores antes de una sesión de función pulmonar es fundamental para garantizar resultados precisos y confiables. Los medicamentos que se encuentran en los inhaladores pueden modificar temporalmente la función de tus pulmones, haciendo que los resultados del examen no reflejen tu estado real.</p>
+      <p>Esto podría afectar el diagnóstico o la evaluación de su enfermedad respiratoria. Cumple el mismo propósito que llegar en ayuno a algunos exámenes de sangre.</p>
+    </section>
+
+    <!-- Tiempos de suspensión -->
+    <section class="section">
+      <h2>¿Cuánto tiempo debo suspender mi inhalador?</h2>
+      <p>Cada medicamento tiene un tiempo específico de acción en el cuerpo, lo que determina cuánto tiempo antes del examen debe suspenderse. Seguir estas indicaciones es clave para obtener una evaluación precisa y planificar el mejor tratamiento para ti.</p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th class="time-column">Tiempo</th>
+            <th>Medicamentos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="time-column">6-8 horas</td>
+            <td>• Salbutamol<br>• Fenoterol<br>• Bromuro de Ipratropio</td>
+          </tr>
+          <tr>
+            <td class="time-column">12 horas</td>
+            <td>• Salmeterol<br>• Formoterol<br>• Ipratropio<br>• Acidinio</td>
+          </tr>
+          <tr>
+            <td class="time-column">24 horas</td>
+            <td>• Vilanterol<br>• Indacaterol<br>• Tiotropio<br>• Glicopirronio<br>• Umeclidinio</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Información sobre nombres de inhaladores -->
+    <section class="section">
+      <h2>¿Mi inhalador se llama Fesema?</h2>
+      <p>Es normal confundir el nombre comercial con el medicamento, el cual suele aparecer en letras más pequeñas en la etiqueta o en la caja (por ejemplo, Salbutamol o Budesonida).</p>
+      <p>Si le indican suspensión de Salbutamol, significa que debe dejar de usar cualquier inhalador que tenga esa sustancia, aunque la marca sea diferente.</p>
+    </section>
+
+    <!-- Síntomas sin inhalador -->
+    <section class="section">
+      <h2>Posibles síntomas sin inhalador</h2>
+      <p>Si necesita dejar de usar su inhalador temporalmente para hacer el estudio, es posible que note algunos síntomas. Esto es normal y esperado, y el equipo médico estará atento para ayudarle si lo necesita.</p>
+      
+      <ul class="symptoms-list">
+        <li>Falta de aire leve o sensación de ahogo</li>
+        <li>Tos más frecuente o más seca</li>
+        <li>Opresión o peso en el pecho</li>
+        <li>Silbidos o ruidos al respirar (sibilancias)</li>
+        <li>Cansancio o dificultad para hacer esfuerzos simples</li>
+      </ul>
+      
+      <div class="highlight-box">
+        <h3>¿Qué hacer si sientes estos síntomas?</h3>
+        <p><strong>Mantenga la calma:</strong> respirar lentamente puede aliviar la sensación de falta de aire.</p>
+        <p><strong>Tenga su inhalador a mano:</strong> aunque no debe usarlo antes del examen, es importante traerlo por si fuera necesario después del estudio.</p>
+        <p>Puede usar su inhalador antes del examen si es indicado por su médico tratante o en un caso de SOS. En ambos casos debe informar al técnico para dejar registro en su examen.</p>
+      </div>
+    </section>
+
+    <!-- Información para el técnico -->
+    <section class="section">
+      <h2>El técnico del examen</h2>
+      <p>El técnico del examen juega un papel fundamental en el proceso de suspensión de inhaladores:</p>
+      
+      <ul class="symptoms-list">
+        <li>Preguntar directamente al paciente si usó su inhalador y a qué hora</li>
+        <li>Aclarar que, si se usa por error, no pasa nada: se puede volver a agendar o esperar el tiempo necesario para repetir la prueba</li>
+        <li>Registrar cualquier incidencia relacionada con el uso de medicamentos</li>
+      </ul>
+      
+      <div class="highlight-box">
+        <h3>Material de apoyo</h3>
+        <p>El técnico contará con información actualizada sobre los tiempos de suspensión de cada medicamento y podrá resolver cualquier duda que pueda surgir durante el proceso.</p>
+      </div>
+    </section>
+
+    <!-- Enlace a otra página -->
+    <div class="next-page-container">
+      <a href="otra-pagina.html" class="next-page-link">
+        <img src="images/siguiente-icon.png" alt="Siguiente página">
+      </a>
+    </div>
+
+    <!-- Preguntas Frecuentes -->
+    <section class="section">
+      <h2>Preguntas Frecuentes</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Qué pasa si uso mi inhalador por error antes del examen? <span>+</span></div>
+        <div class="faq-answer">
+          <p>No se preocupe, simplemente informe al técnico. En la mayoría de casos, el examen puede reprogramarse para otro día o esperar el tiempo necesario para que el efecto del medicamento desaparezca.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Puedo usar otros medicamentos para el asma durante la suspensión? <span>+</span></div>
+        <div class="faq-answer">
+          <p>Consulte con su médico. Algunos medicamentos orales para el asma pueden no interferir con los resultados, pero es importante informar al técnico sobre cualquier medicamento que esté tomando.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Qué hago si tengo una crisis durante la suspensión? <span>+</span></div>
+        <div class="faq-answer">
+          <p>En caso de una crisis respiratoria grave, use su inhalador de rescate. Su salud es lo más importante. Después, informe al centro médico para reprogramar la prueba.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">¿Todos los tipos de inhaladores requieren suspensión? <span>+</span></div>
+        <div class="faq-answer">
+          <p>No todos. Los corticosteroides inhalados generalmente no requieren suspensión, pero los broncodilatadores sí. Consulte siempre con su médico o con el técnico antes de la prueba.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2025 Sistema de Información Médica Respiratoria</p>
+  </footer>
+
+  <script>
+    // Carousel
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+    let currentSlide = 0;
+    
+    function showSlide(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+      slides[n].classList.add('active');
+      dots[n].classList.add('active');
+      currentSlide = n;
+    }
+    
+    dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+    setInterval(() => showSlide((currentSlide + 1) % slides.length), 5000);
+
+    // Tabs
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab + '-content').classList.add('active');
+    }));
+
+    // FAQ
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const answer = q.nextElementSibling;
+        const open = answer.classList.toggle('active');
+        q.querySelector('span').textContent = open ? '-' : '+';
+      });
+    });
+  </script>
+</body>
+</html>
