@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPAIR · Simulador DLCO (maniobra corregida)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #f2f7ff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .simulator-container {
+            max-width: 1600px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 32px;
+            box-shadow: 0 20px 40px rgba(0, 40, 80, 0.12), 0 8px 20px rgba(0, 60, 120, 0.1);
+            border: 1px solid #e6f0ff;
+        }
+
+        /* HEADER con logo FPAIR */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #d9e8ff;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-fpair {
+            background: #0057a3;
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 6px 14px rgba(0, 87, 163, 0.3);
+        }
+
+        .logo-text h2 {
+            color: #002b4f;
+            font-weight: 300;
+            font-size: 1.9rem;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .logo-text h2 span {
+            color: #0057a3;
+            font-weight: 600;
+        }
+
+        .logo-text .sub {
+            color: #5f7d9c;
+            font-size: 0.8rem;
+            letter-spacing: 0.3px;
+            margin-top: 4px;
+        }
+
+        .status-panel {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            background: #eef5ff;
+            padding: 12px 28px;
+            border-radius: 60px;
+            border: 1px solid #c8ddff;
+        }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pulse-dot {
+            width: 14px;
+            height: 14px;
+            background: #00b383;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #00b383;
+            animation: softPulse 2s infinite;
+        }
+
+        .live-text {
+            color: #0057a3;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .phase-tags {
+            display: flex;
+            gap: 10px;
+        }
+
+        .phase-tag {
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: #ffffff;
+            color: #3a5f8a;
+            border: 1px solid #b9d3ff;
+            transition: 0.2s;
+        }
+
+        .phase-tag.active-insp {
+            background: #0057a3;
+            color: white;
+            border-color: #0057a3;
+            box-shadow: 0 2px 8px #0057a3;
+        }
+
+        .phase-tag.active-exp {
+            background: #c44545;
+            color: white;
+            border-color: #c44545;
+        }
+
+        .phase-tag.active-pause {
+            background: #5f7d9c;
+            color: white;
+            border-color: #5f7d9c;
+        }
+        .phase-tag.active-hold {
+            background: #9b59b6;
+            color: white;
+            border-color: #9b59b6;
+        }
+
+        @keyframes softPulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.12); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* GRAFICO ARRIBA */
+        .graph-area {
+            margin-bottom: 24px;
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 20px;
+            border: 1px solid #d2e3ff;
+            box-shadow: 0 8px 18px rgba(0,60,120,0.06);
+        }
+
+        .graph-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            color: #1e3f66;
+            font-weight: 400;
+        }
+
+        .graph-container {
+            position: relative;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #fafdff;
+            border: 1px solid #c7ddff;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* INFO DEBAJO DEL CANVAS */
+        .graph-info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #eef5ff;
+            border-radius: 40px;
+            padding: 16px 28px;
+            margin-top: 16px;
+            border: 1px solid #bfd8ff;
+        }
+
+        .info-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-label {
+            color: #4a6d94;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            color: #002b4f;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+        .info-value span {
+            color: #0057a3;
+            font-weight: 600;
+        }
+
+        /* Leyenda colores */
+        .legend-slim {
+            display: flex;
+            gap: 24px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+            background: #edf5ff;
+            padding: 14px 22px;
+            border-radius: 50px;
+            border: 1px solid #bfd8ff;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #2b4f79;
+            font-size: 0.8rem;
+        }
+
+        .color-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+        }
+
+        /* BOTÓN DE MANIOBRA DLCO */
+        .maneuver-button-large {
+            background: linear-gradient(145deg, #0057a3, #003f7a);
+            border: none;
+            color: white;
+            padding: 20px 20px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            margin: 20px 0 10px;
+            box-shadow: 0 10px 22px rgba(0, 87, 163, 0.3);
+            border: 1px solid #8fc5ff;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .maneuver-button-large:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(145deg, #0066b3, #004b8f);
+            box-shadow: 0 16px 28px rgba(0,87,163,0.4);
+        }
+
+        .maneuver-status-badge {
+            background: #e7f0ff;
+            border-radius: 40px;
+            padding: 14px 20px;
+            color: #003f7a;
+            font-size: 0.9rem;
+            border-left: 6px solid #0057a3;
+            margin: 10px 0 20px;
+        }
+
+        /* CONTROLES (debajo) */
+        .controls-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .param-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .card-panel {
+            background: #f6faff;
+            border-radius: 28px;
+            padding: 22px 24px;
+            border: 1px solid #d0e3ff;
+            box-shadow: 0 5px 12px rgba(0,40,80,0.04);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #00315a;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            border-bottom: 1px dashed #b7d2ff;
+            padding-bottom: 12px;
+        }
+
+        .volumes-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .vol-readout {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 14px;
+            border-left: 4px solid #0057a3;
+            box-shadow: 0 2px 6px #dde9ff;
+        }
+
+        .vol-label {
+            color: #5f7d9c;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .vol-number {
+            color: #002b4f;
+            font-size: 1.7rem;
+            line-height: 1.2;
+            font-weight: 300;
+        }
+
+        .vol-unit {
+            color: #7b99bb;
+            font-size: 0.8rem;
+            margin-left: 4px;
+        }
+
+        .slider-group {
+            margin-bottom: 22px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            color: #1f446b;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+        }
+
+        .slider-header span:last-child {
+            background: #deebff;
+            padding: 3px 14px;
+            border-radius: 40px;
+            color: #0057a3;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        input[type=range].slider {
+            width: 100%;
+            height: 5px;
+            background: #cddeff;
+            border-radius: 10px;
+            -webkit-appearance: none;
+        }
+
+        input[type=range].slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #0057a3;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #0057a3;
+            border: 2px solid white;
+        }
+
+        .numeric-input {
+            background: white;
+            border: 1px solid #b9d3ff;
+            color: #002b4f;
+            padding: 8px 12px;
+            width: 80px;
+            border-radius: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .dual-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .dlco-predicho {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 20px;
+            border: 1px solid #caddff;
+            text-align: center;
+        }
+
+        .dlco-predicho .label {
+            color: #5f7d9c;
+            font-size: 0.8rem;
+        }
+
+        .dlco-predicho .value {
+            color: #0057a3;
+            font-size: 2.5rem;
+            font-weight: 300;
+            line-height: 1.2;
+        }
+
+        .dlco-predicho .unit {
+            color: #7b99bb;
+            font-size: 1rem;
+        }
+
+        .time-controls-modern {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .btn-icon {
+            background: #eaf2ff;
+            border: 1px solid #b3cfff;
+            color: #003766;
+            padding: 12px 25px;
+            border-radius: 40px;
+            display: flex;
+            gap: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-icon:hover {
+            background: #d1e4ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="simulator-container">
+        <!-- Header con logo FPAIR -->
+        <div class="header">
+            <div class="logo-area">
+                <div class="logo-fpair">FPAIR</div>
+                <div class="logo-text">
+                    <h2>Pulmo<span>Lab</span> Pro</h2>
+                    <div class="sub">Transformando la evaluación pulmonar · ATS/ERS 2019</div>
+                </div>
+            </div>
+            <div class="status-panel">
+                <div class="live-badge">
+                    <div class="pulse-dot"></div>
+                    <span class="live-text" id="liveStatusHeader">VT BASAL</span>
+                </div>
+                <div class="phase-tags">
+                    <div class="phase-tag" id="vtPhaseTag">VT</div>
+                    <div class="phase-tag" id="expPhaseTag">EXP</div>
+                    <div class="phase-tag" id="inspPhaseTag">INSP</div>
+                    <div class="phase-tag" id="holdPhaseTag">HOLD</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRAFICO PRINCIPAL (ARRIBA) -->
+        <div class="graph-area">
+            <div class="graph-header">
+                <h3>📈 Volumen pulmonar (L) · Maniobra DLCO (espiración completa → insp max → apnea 8s → espiración)</h3>
+            </div>
+            <div class="graph-container">
+                <canvas id="dlcoCanvas" width="1100" height="400"></canvas>
+            </div>
+            <!-- INFO DEBAJO DEL CANVAS -->
+            <div class="graph-info-bar">
+                <div class="info-block">
+                    <span class="info-label">Volumen actual</span>
+                    <span class="info-value" id="currentVolLive">2.15 <span>L</span></span>
+                </div>
+                <div class="info-block">
+                    <span class="info-label">Fase</span>
+                    <span class="info-value" id="currentPhaseLive">VT basal</span>
+                </div>
+                <div class="info-block">
+                    <span class="info-label">DLCO estimada</span>
+                    <span class="info-value" id="dlcoLive">-- <span>mL/min/mmHg</span></span>
+                </div>
+                <div class="info-block">
+                    <span class="info-label">TLC / VR</span>
+                    <span class="info-value" id="tlcVrLive">5.3 / 1.2 L</span>
+                </div>
+            </div>
+
+            <!-- Leyenda bajo gráfico -->
+            <div class="legend-slim">
+                <div class="legend-item"><span class="color-dot" style="background:#4facfe;"></span> VT basal</div>
+                <div class="legend-item"><span class="color-dot" style="background:#c44545;"></span> Espiración forzada a VR</div>
+                <div class="legend-item"><span class="color-dot" style="background:#2ecc71;"></span> VR (residual)</div>
+                <div class="legend-item"><span class="color-dot" style="background:#9b59b6;"></span> TLC (apnea 8s)</div>
+                <div class="legend-item"><span class="color-dot" style="background:#f39c12;"></span> Inspiración máxima</div>
+                <div class="legend-item"><span class="color-dot" style="background:#0057a3;"></span> VT (volumen corriente)</div>
+            </div>
+        </div>
+
+        <!-- BOTÓN DE MANIOBRA DLCO justo debajo del gráfico -->
+        <button class="maneuver-button-large" id="dlcoManeuverBtn">
+            <span>🫁</span> INICIAR MANIOBRA DLCO (espiración a VR → insp TLC → apnea 8s → espiración) <span>⏱️</span>
+        </button>
+        <div class="maneuver-status-badge" id="maneuverStatus">VT basal · esperando inicio de maniobra</div>
+
+        <!-- CONTROLES DEBAJO (PARÁMETROS MODIFICABLES) -->
+        <div class="controls-wrapper">
+            <div class="param-grid">
+                <!-- Volúmenes pulmonares (esenciales para definir VR, TLC, etc) -->
+                <div class="card-panel">
+                    <div class="card-title">📊 Volúmenes pulmonares (L) · editable</div>
+                    <div class="volumes-mini-grid">
+                        <div class="vol-readout"><div class="vol-label">VT</div><div><span class="vol-number" id="vtDisplay">0.5</span><span class="vol-unit">L</span></div></div>
+                        <div class="vol-readout"><div class="vol-label">VRI</div><div><span class="vol-number" id="vriDisplay">2.5</span><span class="vol-unit">L</span></div></div>
+                        <div class="vol-readout"><div class="vol-label">VRE</div><div><span class="vol-number" id="vreDisplay">1.1</span><span class="vol-unit">L</span></div></div>
+                        <div class="vol-readout"><div class="vol-label">VR</div><div><span class="vol-number" id="vrDisplay">1.2</span><span class="vol-unit">L</span></div></div>
+                    </div>
+                    <!-- Sliders + numérico -->
+                    <div class="slider-group">
+                        <div class="slider-header"><span>VT</span><span id="vtValLabel">0.50 L</span></div>
+                        <input type="range" class="slider" id="vt-slider" min="0.2" max="1.0" value="0.5" step="0.01">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="vtNum" value="0.5" step="0.01" min="0.2" max="1.0"></div>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header"><span>VRI</span><span id="vriValLabel">2.50 L</span></div>
+                        <input type="range" class="slider" id="vri-slider" min="1.0" max="3.5" value="2.5" step="0.05">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="vriNum" value="2.5" step="0.05" min="1.0" max="3.5"></div>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header"><span>VRE</span><span id="vreValLabel">1.10 L</span></div>
+                        <input type="range" class="slider" id="vre-slider" min="0.5" max="1.8" value="1.1" step="0.05">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="vreNum" value="1.1" step="0.05" min="0.5" max="1.8"></div>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header"><span>VR</span><span id="vrValLabel">1.20 L</span></div>
+                        <input type="range" class="slider" id="vr-slider" min="0.8" max="2.0" value="1.2" step="0.05">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="vrNum" value="1.2" step="0.05" min="0.8" max="2.0"></div>
+                    </div>
+                </div>
+
+                <!-- Panel de tiempos de la maniobra (simples) -->
+                <div class="card-panel">
+                    <div class="card-title">⏱️ Tiempos maniobra DLCO</div>
+                    <div class="slider-group">
+                        <div class="slider-header"><span>Duración espiración a VR</span><span id="expToVrLabel">3.0 s</span></div>
+                        <input type="range" class="slider" id="expToVrSlider" min="1.0" max="5.0" value="3.0" step="0.2">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="expToVrNum" value="3.0" step="0.2" min="1.0" max="5.0"></div>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header"><span>Meseta en VR</span><span id="plateauVrLabel">1.0 s</span></div>
+                        <input type="range" class="slider" id="plateauVrSlider" min="0.5" max="2.0" value="1.0" step="0.1">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="plateauVrNum" value="1.0" step="0.1" min="0.5" max="2.0"></div>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header"><span>Duración inspiración a TLC</span><span id="inspToTlcLabel">2.5 s</span></div>
+                        <input type="range" class="slider" id="inspToTlcSlider" min="1.0" max="4.0" value="2.5" step="0.2">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="inspToTlcNum" value="2.5" step="0.2" min="1.0" max="4.0"></div>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header"><span>Apnea en TLC (hold)</span><span id="apneaTlcLabel">8.0 s</span></div>
+                        <input type="range" class="slider" id="apneaTlcSlider" min="4.0" max="12.0" value="8.0" step="0.5">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="apneaTlcNum" value="8.0" step="0.5" min="4.0" max="12.0"></div>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header"><span>Espiración final a VR</span><span id="finalExpLabel">3.0 s</span></div>
+                        <input type="range" class="slider" id="finalExpSlider" min="1.0" max="5.0" value="3.0" step="0.2">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="finalExpNum" value="3.0" step="0.2" min="1.0" max="5.0"></div>
+                    </div>
+                </div>
+
+                <!-- Resultado DLCO calculado (simulado) -->
+                <div class="card-panel">
+                    <div class="card-title">📈 DLCO calculado</div>
+                    <div class="dlco-predicho">
+                        <div class="label">Capacidad de difusión (estimada)</div>
+                        <div class="value" id="dlcoFinal">18.5</div>
+                        <div class="unit">mL/min/mmHg</div>
+                    </div>
+                    <div style="margin-top: 20px; background: #deebff; border-radius: 20px; padding: 12px; text-align: center; color: #0057a3;" id="dlcoInterpretacion">
+                        Basado en VA y tiempo apnea
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles de simulación y velocidad -->
+            <div class="time-controls-modern">
+                <button class="btn-icon" id="playPauseBtn"><span id="playIcon">⏸️</span> <span id="playText">Pausar</span></button>
+                <button class="btn-icon" id="resetBtn"><span>↺</span> Reiniciar</button>
+                <div style="flex:1; min-width:200px;">
+                    <div style="color:#003f7a;">Velocidad simulación <span id="speedValue">1.0x</span></div>
+                    <input type="range" id="speed-slider" min="0.25" max="2.0" value="1.0" step="0.25" class="slider">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const canvas = document.getElementById('dlcoCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const margin = { top: 40, right: 60, bottom: 50, left: 70 };
+            const graphWidth = width - margin.left - margin.right;
+            const graphHeight = height - margin.top - margin.bottom;
+
+            // Volúmenes (compartidos con el slider)
+            let volumes = {
+                vt: 0.5,
+                vri: 2.5,
+                vre: 1.1,
+                vr: 1.2
+            };
+
+            // Tiempos específicos de maniobra DLCO
+            let times = {
+                expToVr: 3.0,      // espiración desde CRF hasta VR
+                plateauVr: 1.0,     // meseta en VR (1s)
+                inspToTlc: 2.5,     // inspiración desde VR a TLC
+                apneaTlc: 8.0,       // apnea en TLC (8s)
+                finalExp: 3.0        // espiración final de TLC a VR
+            };
+
+            // Estado de simulación
+            let simTime = 0;
+            let isPlaying = true;
+            let speed = 1.0;
+            let lastTimestamp = 0;
+            let points = [];          // { time, volume }
+            const maxPoints = 2000;
+            const timeWindow = 40;     // segundos visibles (para ver apnea larga)
+
+            // Estado maniobra
+            let maneuverActive = false;
+            let maneuverStartTime = 0;
+            let maneuverPhase = 'none';
+
+            // Elementos DOM
+            const vtSlider = document.getElementById('vt-slider');
+            const vriSlider = document.getElementById('vri-slider');
+            const vreSlider = document.getElementById('vre-slider');
+            const vrSlider = document.getElementById('vr-slider');
+            const vtNum = document.getElementById('vtNum');
+            const vriNum = document.getElementById('vriNum');
+            const vreNum = document.getElementById('vreNum');
+            const vrNum = document.getElementById('vrNum');
+            const vtValLabel = document.getElementById('vtValLabel');
+            const vriValLabel = document.getElementById('vriValLabel');
+            const vreValLabel = document.getElementById('vreValLabel');
+            const vrValLabel = document.getElementById('vrValLabel');
+            const vtDisplay = document.getElementById('vtDisplay');
+            const vriDisplay = document.getElementById('vriDisplay');
+            const vreDisplay = document.getElementById('vreDisplay');
+            const vrDisplay = document.getElementById('vrDisplay');
+
+            const expToVrSlider = document.getElementById('expToVrSlider');
+            const plateauVrSlider = document.getElementById('plateauVrSlider');
+            const inspToTlcSlider = document.getElementById('inspToTlcSlider');
+            const apneaTlcSlider = document.getElementById('apneaTlcSlider');
+            const finalExpSlider = document.getElementById('finalExpSlider');
+            const expToVrNum = document.getElementById('expToVrNum');
+            const plateauVrNum = document.getElementById('plateauVrNum');
+            const inspToTlcNum = document.getElementById('inspToTlcNum');
+            const apneaTlcNum = document.getElementById('apneaTlcNum');
+            const finalExpNum = document.getElementById('finalExpNum');
+            const expToVrLabel = document.getElementById('expToVrLabel');
+            const plateauVrLabel = document.getElementById('plateauVrLabel');
+            const inspToTlcLabel = document.getElementById('inspToTlcLabel');
+            const apneaTlcLabel = document.getElementById('apneaTlcLabel');
+            const finalExpLabel = document.getElementById('finalExpLabel');
+
+            const currentVolLive = document.getElementById('currentVolLive');
+            const currentPhaseLive = document.getElementById('currentPhaseLive');
+            const dlcoLive = document.getElementById('dlcoLive');
+            const tlcVrLive = document.getElementById('tlcVrLive');
+            const dlcoFinal = document.getElementById('dlcoFinal');
+            const dlcoInterpretacion = document.getElementById('dlcoInterpretacion');
+            
+            const liveStatusHeader = document.getElementById('liveStatusHeader');
+            const vtPhaseTag = document.getElementById('vtPhaseTag');
+            const expPhaseTag = document.getElementById('expPhaseTag');
+            const inspPhaseTag = document.getElementById('inspPhaseTag');
+            const holdPhaseTag = document.getElementById('holdPhaseTag');
+            const maneuverStatus = document.getElementById('maneuverStatus');
+            const dlcoManeuverBtn = document.getElementById('dlcoManeuverBtn');
+
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const speedSlider = document.getElementById('speed-slider');
+            const speedValue = document.getElementById('speedValue');
+            const playIcon = document.getElementById('playIcon');
+            const playText = document.getElementById('playText');
+
+            // Capacidades calculadas
+            function calcCapacities() {
+                const ci = volumes.vt + volumes.vri;
+                const crf = volumes.vre + volumes.vr;
+                const cvf = volumes.vri + volumes.vt + volumes.vre;
+                const cpt = cvf + volumes.vr;
+                return { ci, crf, cvf, cpt };
+            }
+
+            // Actualizar displays de volumen y etiquetas
+            function updateVolumeDisplays() {
+                vtValLabel.innerText = volumes.vt.toFixed(2)+' L'; vtNum.value = volumes.vt.toFixed(2); vtDisplay.innerText = volumes.vt.toFixed(2);
+                vriValLabel.innerText = volumes.vri.toFixed(2)+' L'; vriNum.value = volumes.vri.toFixed(2); vriDisplay.innerText = volumes.vri.toFixed(2);
+                vreValLabel.innerText = volumes.vre.toFixed(2)+' L'; vreNum.value = volumes.vre.toFixed(2); vreDisplay.innerText = volumes.vre.toFixed(2);
+                vrValLabel.innerText = volumes.vr.toFixed(2)+' L'; vrNum.value = volumes.vr.toFixed(2); vrDisplay.innerText = volumes.vr.toFixed(2);
+                
+                expToVrLabel.innerText = times.expToVr.toFixed(1)+' s'; expToVrNum.value = times.expToVr.toFixed(1);
+                plateauVrLabel.innerText = times.plateauVr.toFixed(1)+' s'; plateauVrNum.value = times.plateauVr.toFixed(1);
+                inspToTlcLabel.innerText = times.inspToTlc.toFixed(1)+' s'; inspToTlcNum.value = times.inspToTlc.toFixed(1);
+                apneaTlcLabel.innerText = times.apneaTlc.toFixed(1)+' s'; apneaTlcNum.value = times.apneaTlc.toFixed(1);
+                finalExpLabel.innerText = times.finalExp.toFixed(1)+' s'; finalExpNum.value = times.finalExp.toFixed(1);
+
+                const caps = calcCapacities();
+                tlcVrLive.innerText = caps.cpt.toFixed(1)+' / '+volumes.vr.toFixed(1)+' L';
+            }
+
+            // Calcular DLCO simulado (en función del volumen inspiratorio y tiempo apnea)
+            function calcularDLCO() {
+                const caps = calcCapacities();
+                const vi = caps.cpt - volumes.vr; // volumen inspirado desde VR hasta TLC
+                const tiempoApnea = times.apneaTlc;
+                // Fórmula ilustrativa: DLCO = (VI * 4.5) + (tiempoApnea * 0.8) + 5
+                let dlco = (vi * 4.5) + (tiempoApnea * 0.8) + 5;
+                dlco = Math.min(35, Math.max(8, Math.round(dlco * 10) / 10));
+                return dlco;
+            }
+
+            function refreshDLCO() {
+                const dlco = calcularDLCO();
+                dlcoFinal.innerText = dlco;
+                dlcoLive.innerText = dlco + ' mL/min/mmHg';
+                if (dlco < 12) dlcoInterpretacion.innerText = 'DLCO reducido (simulado)';
+                else if (dlco < 18) dlcoInterpretacion.innerText = 'DLCO normal-bajo';
+                else if (dlco < 25) dlcoInterpretacion.innerText = 'DLCO normal';
+                else dlcoInterpretacion.innerText = 'DLCO alto';
+            }
+
+            // Lógica de volumen basal VT (similar al CVF, basado en CRF)
+            function calculateBasalVolume(t, caps) {
+                const ti = 1.5, te = 2.5, tpausei=0.2, tpausee=0.2; // tiempos fijos para VT
+                const totalCycle = ti + te + tpausei + tpausee;
+                const tCycle = t % totalCycle;
+                const baseVolume = caps.crf;
+                
+                if (tCycle < ti) {
+                    // inspiración VT
+                    const p = tCycle / ti;
+                    return baseVolume + (volumes.vt * Math.sin(p * Math.PI/2));
+                } else if (tCycle < ti + tpausei) {
+                    return baseVolume + volumes.vt;
+                } else if (tCycle < ti + tpausei + te) {
+                    const p = (tCycle - ti - tpausei) / te;
+                    return baseVolume + volumes.vt - (volumes.vt * Math.sin(p * Math.PI/2));
+                } else {
+                    return baseVolume;
+                }
+            }
+
+            // Volumen durante maniobra DLCO
+            function calculateManeuverVolume(t, caps) {
+                const tm = t - maneuverStartTime;
+                // Orden: 
+                // 1. Espiración desde CRF a VR (expToVr duración)
+                // 2. Meseta en VR (plateauVr)
+                // 3. Inspiración desde VR a TLC (inspToTlc)
+                // 4. Apnea en TLC (apneaTlc) -> sin cambio de volumen
+                // 5. Espiración final desde TLC a VR (finalExp)
+                let tiempoAcum = 0;
+
+                // Fase 1: espiración a VR
+                if (tm < times.expToVr) {
+                    let p = tm / times.expToVr;
+                    let vol = caps.crf - (caps.crf - volumes.vr) * Math.sin(p * Math.PI/2);
+                    return { volume: vol, phase: 'exp', name: 'Espiración a VR' };
+                }
+                tiempoAcum += times.expToVr;
+
+                // Fase 2: meseta en VR (1 segundo)
+                if (tm < tiempoAcum + times.plateauVr) {
+                    return { volume: volumes.vr, phase: 'pause', name: 'Meseta VR' };
+                }
+                tiempoAcum += times.plateauVr;
+
+                // Fase 3: inspiración máxima a TLC
+                if (tm < tiempoAcum + times.inspToTlc) {
+                    let p = (tm - tiempoAcum) / times.inspToTlc;
+                    let vol = volumes.vr + (caps.cpt - volumes.vr) * Math.sin(p * Math.PI/2);
+                    return { volume: vol, phase: 'insp', name: 'Insp a TLC' };
+                }
+                tiempoAcum += times.inspToTlc;
+
+                // Fase 4: apnea en TLC (8 segundos, volumen constante)
+                if (tm < tiempoAcum + times.apneaTlc) {
+                    return { volume: caps.cpt, phase: 'hold', name: 'Apnea TLC (8s)' };
+                }
+                tiempoAcum += times.apneaTlc;
+
+                // Fase 5: espiración final a VR
+                if (tm < tiempoAcum + times.finalExp) {
+                    let p = (tm - tiempoAcum) / times.finalExp;
+                    let vol = caps.cpt - (caps.cpt - volumes.vr) * Math.sin(p * Math.PI/2);
+                    return { volume: vol, phase: 'exp', name: 'Espiración final' };
+                }
+                tiempoAcum += times.finalExp;
+
+                // Maniobra terminada, volver a VT basal
+                maneuverActive = false;
+                maneuverStatus.innerText = 'Maniobra DLCO completada · VT basal';
+                liveStatusHeader.innerText = 'VT BASAL';
+                dlcoManeuverBtn.style.background = 'linear-gradient(145deg, #0057a3, #003f7a)';
+                dlcoManeuverBtn.innerHTML = '<span>🫁</span> INICIAR MANIOBRA DLCO (espiración a VR → insp TLC → apnea 8s → espiración) <span>⏱️</span>';
+                return calculateBasalVolume(t, caps);
+            }
+
+            function getCurrentVolume(t) {
+                const caps = calcCapacities();
+                if (maneuverActive) {
+                    let res = calculateManeuverVolume(t, caps);
+                    if (!maneuverActive) return calculateBasalVolume(t, caps);
+                    return res.volume;
+                } else {
+                    return calculateBasalVolume(t, caps);
+                }
+            }
+
+            function getCurrentPhase(t) {
+                if (!maneuverActive) return { phase: 'VT', name: 'VT basal' };
+                const caps = calcCapacities();
+                const tm = t - maneuverStartTime;
+                let acc = 0;
+                if (tm < times.expToVr) return { phase: 'exp', name: 'Espirando a VR' };
+                acc += times.expToVr;
+                if (tm < acc + times.plateauVr) return { phase: 'pause', name: 'Meseta VR' };
+                acc += times.plateauVr;
+                if (tm < acc + times.inspToTlc) return { phase: 'insp', name: 'Inspirando a TLC' };
+                acc += times.inspToTlc;
+                if (tm < acc + times.apneaTlc) return { phase: 'hold', name: 'Apnea TLC' };
+                acc += times.apneaTlc;
+                if (tm < acc + times.finalExp) return { phase: 'exp', name: 'Espiración final' };
+                return { phase: 'VT', name: 'VT basal' };
+            }
+
+            // Dibujar gráfico (con líneas de VT, VR, TLC) - AHORA COMIENZA EN TIEMPO 0 A LA IZQUIERDA
+            function drawGraph() {
+                ctx.clearRect(0,0,width,height);
+                ctx.fillStyle = '#fafdff';
+                ctx.fillRect(0,0,width,height);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(margin.left,margin.top,graphWidth,graphHeight);
+
+                const caps = calcCapacities();
+                const maxVol = caps.cpt + 0.5;
+
+                // cuadrícula suave
+                ctx.strokeStyle = '#c7d7f0'; ctx.lineWidth = 0.6; ctx.setLineDash([5,4]);
+                for (let i=0; i<=7; i++) {
+                    let y = margin.top + graphHeight - (i/maxVol)*graphHeight;
+                    ctx.beginPath(); ctx.moveTo(margin.left,y); ctx.lineTo(margin.left+graphWidth,y); ctx.strokeStyle='#d4e2ff'; ctx.stroke();
+                    ctx.fillStyle='#5f7d9c'; ctx.font='11px Inter'; ctx.fillText(i+' L', margin.left-32, y+4);
+                }
+                
+                // Eje de tiempo: de 0 a timeWindow segundos, de izquierda a derecha
+                for (let i=0; i<=timeWindow; i+=5) {
+                    let x = margin.left + (i/timeWindow)*graphWidth;
+                    ctx.beginPath(); ctx.moveTo(x,margin.top); ctx.lineTo(x,margin.top+graphHeight); ctx.strokeStyle='#d4e2ff'; ctx.stroke();
+                    ctx.fillStyle='#5f7d9c'; ctx.fillText(i+'s', x-15, margin.top+graphHeight+20);
+                }
+                ctx.setLineDash([]);
+
+                // Líneas de referencia: CRF, VT insp, VR, TLC
+                const crf = caps.crf;
+                const vtInspLevel = crf + volumes.vt;
+                
+                // Línea CRF (base espiratoria) en naranja
+                ctx.beginPath(); ctx.strokeStyle = '#f39c12'; ctx.lineWidth = 2; ctx.setLineDash([8,5]);
+                let yCrf = margin.top + graphHeight - (crf / maxVol)*graphHeight;
+                ctx.moveTo(margin.left, yCrf); ctx.lineTo(margin.left+graphWidth, yCrf); ctx.stroke();
+                ctx.fillStyle = '#f39c12'; ctx.fillText('CRF', margin.left+graphWidth+8, yCrf-5);
+                
+                // Línea VT insp máximo en azul
+                ctx.beginPath(); ctx.strokeStyle = '#0057a3'; ctx.lineWidth = 2; ctx.setLineDash([8,5]);
+                let yVtInsp = margin.top + graphHeight - (vtInspLevel / maxVol)*graphHeight;
+                ctx.moveTo(margin.left, yVtInsp); ctx.lineTo(margin.left+graphWidth, yVtInsp); ctx.stroke();
+                ctx.fillStyle = '#0057a3'; ctx.fillText('VT insp', margin.left+graphWidth+8, yVtInsp-5);
+                
+                // VR línea verde
+                let yVr = margin.top + graphHeight - (volumes.vr / maxVol)*graphHeight;
+                ctx.beginPath(); ctx.strokeStyle = '#2ecc71'; ctx.lineWidth = 2; ctx.setLineDash([8,5]);
+                ctx.moveTo(margin.left, yVr); ctx.lineTo(margin.left+graphWidth, yVr); ctx.stroke();
+                ctx.fillStyle = '#2ecc71'; ctx.fillText('VR', margin.left+graphWidth+8, yVr-5);
+                
+                // TLC línea púrpura
+                let yTlc = margin.top + graphHeight - (caps.cpt / maxVol)*graphHeight;
+                ctx.beginPath(); ctx.strokeStyle = '#9b59b6'; ctx.lineWidth = 2; ctx.setLineDash([8,5]);
+                ctx.moveTo(margin.left, yTlc); ctx.lineTo(margin.left+graphWidth, yTlc); ctx.stroke();
+                ctx.fillStyle = '#9b59b6'; ctx.fillText('TLC', margin.left+graphWidth+8, yTlc-5);
+                
+                ctx.setLineDash([]);
+
+                // Curva de volumen - ahora tiempo 0 en borde izquierdo, tiempo actual en el punto correspondiente
+                if (points.length > 1) {
+                    ctx.beginPath(); ctx.strokeStyle = maneuverActive ? '#c44545' : '#4facfe'; ctx.lineWidth = 3;
+                    
+                    // El tiempo más antiguo en la ventana es 0 (siempre mostramos desde 0 hasta simTime)
+                    const minTime = 0;
+                    const maxTime = Math.max(simTime, timeWindow); // Para escalar correctamente, usamos maxTime = timeWindow si simTime < timeWindow
+                    
+                    // Escalamos el tiempo de forma que 0 esté en borde izquierdo y timeWindow en borde derecho
+                    // Si simTime es menor que timeWindow, comprimimos los puntos en la ventana
+                    let firstPointInside = true;
+                    
+                    for (let i=0; i<points.length; i++) {
+                        // Calculamos posición x: desde 0 hasta timeWindow segundos
+                        let t = points[i].time;
+                        // Si t > timeWindow, lo desplazamos para que se vea dentro de la ventana
+                        // Queremos mostrar siempre los últimos timeWindow segundos, con 0 en el borde izquierdo
+                        // Para ello, mostramos desde max(0, simTime-timeWindow) hasta simTime
+                        // Pero como queremos que 0 esté en el borde izquierdo, usamos un enfoque diferente:
+                        // Mostramos desde 0 hasta timeWindow, pero si simTime > timeWindow, desplazamos
+                        let displayTime = t;
+                        if (simTime > timeWindow) {
+                            displayTime = t - (simTime - timeWindow);
+                        }
+                        // displayTime ahora está entre 0 y timeWindow aproximadamente
+                        
+                        if (displayTime >= 0 && displayTime <= timeWindow) {
+                            let x = margin.left + (displayTime / timeWindow) * graphWidth;
+                            let y = margin.top + graphHeight - (points[i].volume / maxVol)*graphHeight;
+                            
+                            if (x >= margin.left && x <= margin.left + graphWidth) {
+                                if (firstPointInside) {
+                                    ctx.moveTo(x, y);
+                                    firstPointInside = false;
+                                } else {
+                                    ctx.lineTo(x, y);
+                                }
+                            } else {
+                                firstPointInside = true;
+                            }
+                        } else {
+                            firstPointInside = true;
+                        }
+                    }
+                    ctx.stroke();
+                }
+            }
+
+            function animate(ts) {
+                if(!lastTimestamp){ lastTimestamp=ts; requestAnimationFrame(animate); return; }
+                if(isPlaying) {
+                    let dt = (ts-lastTimestamp)/1000 * speed;
+                    simTime += dt;
+                    let vol = getCurrentVolume(simTime);
+                    let phaseInfo = getCurrentPhase(simTime);
+                    
+                    currentVolLive.innerText = vol.toFixed(2) + ' L';
+                    currentPhaseLive.innerText = phaseInfo.name;
+                    
+                    vtPhaseTag.classList.remove('active-insp','active-exp','active-pause','active-hold');
+                    expPhaseTag.classList.remove('active-insp','active-exp','active-pause','active-hold');
+                    inspPhaseTag.classList.remove('active-insp','active-exp','active-pause','active-hold');
+                    holdPhaseTag.classList.remove('active-insp','active-exp','active-pause','active-hold');
+
+                    if (!maneuverActive) {
+                        vtPhaseTag.classList.add('active-insp');
+                    } else {
+                        if (phaseInfo.phase === 'exp') expPhaseTag.classList.add('active-exp');
+                        else if (phaseInfo.phase === 'insp') inspPhaseTag.classList.add('active-insp');
+                        else if (phaseInfo.phase === 'hold') holdPhaseTag.classList.add('active-hold');
+                        else if (phaseInfo.phase === 'pause') vtPhaseTag.classList.add('active-pause');
+                    }
+
+                    points.push({ time: simTime, volume: vol });
+                    // Mantener puntos relevantes (últimos timeWindow segundos)
+                    points = points.filter(p => p.time > simTime - timeWindow - 2);
+                    if (points.length > maxPoints) points = points.slice(-maxPoints);
+                }
+                drawGraph();
+                lastTimestamp = ts;
+                requestAnimationFrame(animate);
+            }
+
+            // Event listeners
+            function bindAll() {
+                vtSlider.addEventListener('input', (e)=>{ volumes.vt = parseFloat(e.target.value); updateVolumeDisplays(); refreshDLCO(); });
+                vriSlider.addEventListener('input', (e)=>{ volumes.vri = parseFloat(e.target.value); updateVolumeDisplays(); refreshDLCO(); });
+                vreSlider.addEventListener('input', (e)=>{ volumes.vre = parseFloat(e.target.value); updateVolumeDisplays(); refreshDLCO(); });
+                vrSlider.addEventListener('input', (e)=>{ volumes.vr = parseFloat(e.target.value); updateVolumeDisplays(); refreshDLCO(); });
+                
+                vtNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||0.5; volumes.vt=Math.min(1,Math.max(0.2,v)); vtSlider.value=volumes.vt; updateVolumeDisplays(); refreshDLCO(); });
+                vriNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||2.5; volumes.vri=Math.min(3.5,Math.max(1.0,v)); vriSlider.value=volumes.vri; updateVolumeDisplays(); refreshDLCO(); });
+                vreNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||1.1; volumes.vre=Math.min(1.8,Math.max(0.5,v)); vreSlider.value=volumes.vre; updateVolumeDisplays(); refreshDLCO(); });
+                vrNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||1.2; volumes.vr=Math.min(2.0,Math.max(0.8,v)); vrSlider.value=volumes.vr; updateVolumeDisplays(); refreshDLCO(); });
+
+                expToVrSlider.addEventListener('input', (e)=>{ times.expToVr = parseFloat(e.target.value); updateVolumeDisplays(); refreshDLCO(); });
+                plateauVrSlider.addEventListener('input', (e)=>{ times.plateauVr = parseFloat(e.target.value); updateVolumeDisplays(); refreshDLCO(); });
+                inspToTlcSlider.addEventListener('input', (e)=>{ times.inspToTlc = parseFloat(e.target.value); updateVolumeDisplays(); refreshDLCO(); });
+                apneaTlcSlider.addEventListener('input', (e)=>{ times.apneaTlc = parseFloat(e.target.value); updateVolumeDisplays(); refreshDLCO(); });
+                finalExpSlider.addEventListener('input', (e)=>{ times.finalExp = parseFloat(e.target.value); updateVolumeDisplays(); refreshDLCO(); });
+
+                expToVrNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||3.0; times.expToVr=Math.min(5,Math.max(1,v)); expToVrSlider.value=times.expToVr; updateVolumeDisplays(); refreshDLCO(); });
+                plateauVrNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||1.0; times.plateauVr=Math.min(2,Math.max(0.5,v)); plateauVrSlider.value=times.plateauVr; updateVolumeDisplays(); refreshDLCO(); });
+                inspToTlcNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||2.5; times.inspToTlc=Math.min(4,Math.max(1,v)); inspToTlcSlider.value=times.inspToTlc; updateVolumeDisplays(); refreshDLCO(); });
+                apneaTlcNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||8.0; times.apneaTlc=Math.min(12,Math.max(4,v)); apneaTlcSlider.value=times.apneaTlc; updateVolumeDisplays(); refreshDLCO(); });
+                finalExpNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||3.0; times.finalExp=Math.min(5,Math.max(1,v)); finalExpSlider.value=times.finalExp; updateVolumeDisplays(); refreshDLCO(); });
+            }
+
+            dlcoManeuverBtn.addEventListener('click', ()=>{
+                if (!maneuverActive) {
+                    maneuverActive = true;
+                    maneuverStartTime = simTime;
+                    maneuverStatus.innerText = 'Maniobra DLCO en curso: espiración → meseta VR → insp TLC → apnea 8s → espiración final';
+                    liveStatusHeader.innerText = 'MANIOBRA DLCO';
+                    dlcoManeuverBtn.style.background = 'linear-gradient(145deg, #3d9e5a, #257545)';
+                    dlcoManeuverBtn.innerHTML = '<span>✓</span> MANIOBRA DLCO EN CURSO... <span>⏱️</span>';
+                }
+            });
+
+            playPauseBtn.addEventListener('click', ()=>{ isPlaying=!isPlaying; playIcon.innerText=isPlaying?'⏸️':'▶️'; playText.innerText=isPlaying?'Pausar':'Reanudar'; });
+            resetBtn.addEventListener('click', ()=>{ simTime=0; points=[]; maneuverActive=false; maneuverStatus.innerText='VT basal · esperando inicio de maniobra'; liveStatusHeader.innerText='VT BASAL'; dlcoManeuverBtn.style.background='linear-gradient(145deg, #0057a3, #003f7a)'; dlcoManeuverBtn.innerHTML='<span>🫁</span> INICIAR MANIOBRA DLCO (espiración a VR → insp TLC → apnea 8s → espiración) <span>⏱️</span>'; });
+            speedSlider.addEventListener('input', (e)=>{ speed=parseFloat(e.target.value); speedValue.innerText=speed.toFixed(2)+'x'; });
+
+            bindAll();
+            updateVolumeDisplays();
+            refreshDLCO();
+            requestAnimationFrame(animate);
+        })();
+    </script>
+</body>
+</html>
