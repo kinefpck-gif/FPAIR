@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPAIR · Simulador de Función Pulmonar (CVF Completa)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #f2f7ff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .simulator-container {
+            max-width: 1600px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 32px;
+            box-shadow: 0 20px 40px rgba(0, 40, 80, 0.12), 0 8px 20px rgba(0, 60, 120, 0.1);
+            border: 1px solid #e6f0ff;
+        }
+
+        /* HEADER con logo FPAIR */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #d9e8ff;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-fpair {
+            background: #0057a3;
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 6px 14px rgba(0, 87, 163, 0.3);
+        }
+
+        .logo-text h2 {
+            color: #002b4f;
+            font-weight: 300;
+            font-size: 1.9rem;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .logo-text h2 span {
+            color: #0057a3;
+            font-weight: 600;
+        }
+
+        .logo-text .sub {
+            color: #5f7d9c;
+            font-size: 0.8rem;
+            letter-spacing: 0.3px;
+            margin-top: 4px;
+        }
+
+        .status-panel {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            background: #eef5ff;
+            padding: 12px 28px;
+            border-radius: 60px;
+            border: 1px solid #c8ddff;
+        }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pulse-dot {
+            width: 14px;
+            height: 14px;
+            background: #00b383;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #00b383;
+            animation: softPulse 2s infinite;
+        }
+
+        .live-text {
+            color: #0057a3;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .phase-tags {
+            display: flex;
+            gap: 10px;
+        }
+
+        .phase-tag {
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: #ffffff;
+            color: #3a5f8a;
+            border: 1px solid #b9d3ff;
+            transition: 0.2s;
+        }
+
+        .phase-tag.active-insp {
+            background: #0057a3;
+            color: white;
+            border-color: #0057a3;
+            box-shadow: 0 2px 8px #0057a3;
+        }
+
+        .phase-tag.active-exp {
+            background: #c44545;
+            color: white;
+            border-color: #c44545;
+        }
+
+        .phase-tag.active-pause {
+            background: #5f7d9c;
+            color: white;
+            border-color: #5f7d9c;
+        }
+
+        @keyframes softPulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.12); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* GRAFICO ARRIBA */
+        .graph-area {
+            margin-bottom: 24px;
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 20px;
+            border: 1px solid #d2e3ff;
+            box-shadow: 0 8px 18px rgba(0,60,120,0.06);
+        }
+
+        .graph-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            color: #1e3f66;
+            font-weight: 400;
+        }
+
+        .graph-container {
+            position: relative;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #fafdff;
+            border: 1px solid #c7ddff;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* INFO DEBAJO DEL CANVAS (VOLUMEN ACTUAL, FASE, CPT, VR) */
+        .graph-info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #eef5ff;
+            border-radius: 40px;
+            padding: 16px 28px;
+            margin-top: 16px;
+            border: 1px solid #bfd8ff;
+        }
+
+        .info-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-label {
+            color: #4a6d94;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            color: #002b4f;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+        .info-value span {
+            color: #0057a3;
+            font-weight: 600;
+        }
+
+        /* Leyenda colores */
+        .legend-slim {
+            display: flex;
+            gap: 24px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+            background: #edf5ff;
+            padding: 14px 22px;
+            border-radius: 50px;
+            border: 1px solid #bfd8ff;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #2b4f79;
+            font-size: 0.8rem;
+        }
+
+        .color-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+        }
+
+        /* BOTÓN DE MANIOBRA */
+        .maneuver-button-large {
+            background: linear-gradient(145deg, #0057a3, #003f7a);
+            border: none;
+            color: white;
+            padding: 20px 20px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            margin: 20px 0 10px;
+            box-shadow: 0 10px 22px rgba(0, 87, 163, 0.3);
+            border: 1px solid #8fc5ff;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .maneuver-button-large:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(145deg, #0066b3, #004b8f);
+            box-shadow: 0 16px 28px rgba(0,87,163,0.4);
+        }
+
+        .maneuver-status-badge {
+            background: #e7f0ff;
+            border-radius: 40px;
+            padding: 14px 20px;
+            color: #003f7a;
+            font-size: 0.9rem;
+            border-left: 6px solid #0057a3;
+            margin: 10px 0 20px;
+        }
+
+        /* CONTROLES (debajo) */
+        .controls-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .param-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .card-panel {
+            background: #f6faff;
+            border-radius: 28px;
+            padding: 22px 24px;
+            border: 1px solid #d0e3ff;
+            box-shadow: 0 5px 12px rgba(0,40,80,0.04);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #00315a;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            border-bottom: 1px dashed #b7d2ff;
+            padding-bottom: 12px;
+        }
+
+        .volumes-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .vol-readout {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 14px;
+            border-left: 4px solid #0057a3;
+            box-shadow: 0 2px 6px #dde9ff;
+        }
+
+        .vol-label {
+            color: #5f7d9c;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .vol-number {
+            color: #002b4f;
+            font-size: 1.7rem;
+            line-height: 1.2;
+            font-weight: 300;
+        }
+
+        .vol-unit {
+            color: #7b99bb;
+            font-size: 0.8rem;
+            margin-left: 4px;
+        }
+
+        .slider-group {
+            margin-bottom: 22px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            color: #1f446b;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+        }
+
+        .slider-header span:last-child {
+            background: #deebff;
+            padding: 3px 14px;
+            border-radius: 40px;
+            color: #0057a3;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        input[type=range].slider {
+            width: 100%;
+            height: 5px;
+            background: #cddeff;
+            border-radius: 10px;
+            -webkit-appearance: none;
+        }
+
+        input[type=range].slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #0057a3;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #0057a3;
+            border: 2px solid white;
+        }
+
+        .numeric-input {
+            background: white;
+            border: 1px solid #b9d3ff;
+            color: #002b4f;
+            padding: 8px 12px;
+            width: 80px;
+            border-radius: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .dual-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .capacities-modern {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .capacity-block {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 16px;
+            border: 1px solid #caddff;
+            text-align: center;
+        }
+
+        .capacity-block .name {
+            color: #5f7d9c;
+            font-size: 0.7rem;
+        }
+
+        .capacity-block .value {
+            color: #0057a3;
+            font-size: 1.7rem;
+            font-weight: 300;
+        }
+
+        .time-controls-modern {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .btn-icon {
+            background: #eaf2ff;
+            border: 1px solid #b3cfff;
+            color: #003766;
+            padding: 12px 25px;
+            border-radius: 40px;
+            display: flex;
+            gap: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-icon:hover {
+            background: #d1e4ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="simulator-container">
+        <!-- Header con logo FPAIR -->
+        <div class="header">
+            <div class="logo-area">
+                <div class="logo-fpair">FPAIR</div>
+                <div class="logo-text">
+                    <h2>Pulmo<span>Lab</span> Pro</h2>
+                    <div class="sub">Transformando la evaluación pulmonar · ATS/ERS 2019</div>
+                </div>
+            </div>
+            <div class="status-panel">
+                <div class="live-badge">
+                    <div class="pulse-dot"></div>
+                    <span class="live-text" id="liveStatusHeader">VT BASAL</span>
+                </div>
+                <div class="phase-tags">
+                    <div class="phase-tag" id="inspPhaseTag">INSP</div>
+                    <div class="phase-tag" id="expPhaseTag">EXP</div>
+                    <div class="phase-tag" id="pausePhaseTag">PAUSA</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRAFICO PRINCIPAL (ARRIBA) -->
+        <div class="graph-area">
+            <div class="graph-header">
+                <h3>📈 Volumen pulmonar en tiempo real (L) · maniobra CVF completa</h3>
+            </div>
+            <div class="graph-container">
+                <canvas id="espirogramaCanvas" width="1100" height="400"></canvas>
+            </div>
+            <!-- INFO DEBAJO DEL CANVAS (VOLUMEN ACTUAL, FASE, CPT, VR) -->
+            <div class="graph-info-bar">
+                <div class="info-block">
+                    <span class="info-label">Volumen actual</span>
+                    <span class="info-value" id="currentVolLive">2.15 <span>L</span></span>
+                </div>
+                <div class="info-block">
+                    <span class="info-label">Fase activa</span>
+                    <span class="info-value" id="currentPhaseLive">VT Basal</span>
+                </div>
+                <div class="info-block">
+                    <span class="info-label">CPT (TLC)</span>
+                    <span class="info-value" id="tlcLive">5.30 L</span>
+                </div>
+                <div class="info-block">
+                    <span class="info-label">VR</span>
+                    <span class="info-value" id="vrLive">1.20 L</span>
+                </div>
+            </div>
+
+            <!-- Leyenda bajo gráfico -->
+            <div class="legend-slim">
+                <div class="legend-item"><span class="color-dot" style="background:#4facfe;"></span> VT basal</div>
+                <div class="legend-item"><span class="color-dot" style="background:#fe4f4f;"></span> Maniobra CVF</div>
+                <div class="legend-item"><span class="color-dot" style="background:#2ecc71;"></span> VR</div>
+                <div class="legend-item"><span class="color-dot" style="background:#f39c12;"></span> CRF</div>
+                <div class="legend-item"><span class="color-dot" style="background:#9b59b6;"></span> TLC/CPT</div>
+            </div>
+        </div>
+
+        <!-- BOTÓN DE MANIOBRA justo debajo del gráfico -->
+        <button class="maneuver-button-large" id="cvfManeuverBtn">
+            <span>🫁</span> INICIAR MANIOBRA CVF COMPLETA (inspiración + espiración forzada) <span>💨</span>
+        </button>
+        <div class="maneuver-status-badge" id="maneuverStatus">En reposo · VT basal</div>
+
+        <!-- CONTROLES DEBAJO (PARÁMETROS MODIFICABLES) -->
+        <div class="controls-wrapper">
+            <div class="param-grid">
+                <!-- Volúmenes pulmonares -->
+                <div class="card-panel">
+                    <div class="card-title">📊 Volúmenes (L) · editable</div>
+                    <div class="volumes-mini-grid">
+                        <div class="vol-readout"><div class="vol-label">VT</div><div><span class="vol-number" id="vtDisplay">0.5</span><span class="vol-unit">L</span></div></div>
+                        <div class="vol-readout"><div class="vol-label">VRI</div><div><span class="vol-number" id="vriDisplay">2.5</span><span class="vol-unit">L</span></div></div>
+                        <div class="vol-readout"><div class="vol-label">VRE</div><div><span class="vol-number" id="vreDisplay">1.1</span><span class="vol-unit">L</span></div></div>
+                        <div class="vol-readout"><div class="vol-label">VR</div><div><span class="vol-number" id="vrDisplay">1.2</span><span class="vol-unit">L</span></div></div>
+                    </div>
+                    <!-- Sliders + numérico -->
+                    <div class="slider-group">
+                        <div class="slider-header"><span>VT</span><span id="vtValLabel">0.50 L</span></div>
+                        <input type="range" class="slider" id="vt-slider" min="0.2" max="1.0" value="0.5" step="0.01">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="vtNum" value="0.5" step="0.01" min="0.2" max="1.0"></div>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header"><span>VRI</span><span id="vriValLabel">2.50 L</span></div>
+                        <input type="range" class="slider" id="vri-slider" min="1.0" max="3.5" value="2.5" step="0.05">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="vriNum" value="2.5" step="0.05" min="1.0" max="3.5"></div>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header"><span>VRE</span><span id="vreValLabel">1.10 L</span></div>
+                        <input type="range" class="slider" id="vre-slider" min="0.5" max="1.8" value="1.1" step="0.05">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="vreNum" value="1.1" step="0.05" min="0.5" max="1.8"></div>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-header"><span>VR</span><span id="vrValLabel">1.20 L</span></div>
+                        <input type="range" class="slider" id="vr-slider" min="0.8" max="2.0" value="1.2" step="0.05">
+                        <div class="dual-input"><input type="number" class="numeric-input" id="vrNum" value="1.2" step="0.05" min="0.8" max="2.0"></div>
+                    </div>
+                </div>
+
+                <!-- Tiempos VT Basal y CVF -->
+                <div class="card-panel">
+                    <div class="card-title">⏱️ Tiempos VT basal (s)</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                        <div><div class="slider-header">T insp VT <span id="tiVtLabel">1.5 s</span></div><input type="range" id="ti-vt-slider" min="0.5" max="3.0" value="1.5" step="0.1" class="slider"></div>
+                        <div><div class="slider-header">T esp VT <span id="teVtLabel">2.5 s</span></div><input type="range" id="te-vt-slider" min="1.0" max="4.0" value="2.5" step="0.1" class="slider"></div>
+                        <div><div class="slider-header">Pausa insp <span id="tpauseiVtLabel">0.2 s</span></div><input type="range" id="tpausei-vt-slider" min="0" max="1.0" value="0.2" step="0.05" class="slider"></div>
+                        <div><div class="slider-header">Pausa esp <span id="tpauseeVtLabel">0.2 s</span></div><input type="range" id="tpausee-vt-slider" min="0" max="1.0" value="0.2" step="0.05" class="slider"></div>
+                    </div>
+                    <div style="margin-top:25px;" class="card-title">⚡ Tiempos maniobra CVF</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:5px;">
+                        <div><div class="slider-header">Insp1 TLC <span id="ti1Label">2.0 s</span></div><input type="range" id="ti-cvf1-slider" min="0.5" max="3.0" value="2.0" class="slider"></div>
+                        <div><div class="slider-header">Esp forz <span id="teCvfLabel">4.0 s</span></div><input type="range" id="te-cvf-slider" min="1.0" max="6.0" value="4.0" class="slider"></div>
+                        <div><div class="slider-header">Insp2 TLC <span id="ti2Label">2.0 s</span></div><input type="range" id="ti-cvf2-slider" min="0.5" max="3.0" value="2.0" class="slider"></div>
+                        <div><div class="slider-header">Pausa TLC <span id="pauseTlcLabel">0.5 s</span></div><input type="range" id="tpause-tlc-slider" min="0" max="2.0" value="0.5" class="slider"></div>
+                        <div><div class="slider-header">Pausa VR <span id="pauseVrLabel">0.3 s</span></div><input type="range" id="tpause-vr-slider" min="0" max="2.0" value="0.3" class="slider"></div>
+                        <div><div class="slider-header">Pausa final <span id="pauseFinalLabel">0.5 s</span></div><input type="range" id="tpause-final-tlc-slider" min="0" max="2.0" value="0.5" class="slider"></div>
+                    </div>
+                </div>
+
+                <!-- Capacidades calculadas -->
+                <div class="card-panel">
+                    <div class="card-title">🧬 Capacidades calculadas</div>
+                    <div class="capacities-modern">
+                        <div class="capacity-block"><span class="name">CI</span><span class="value" id="ciDisplay">3.00</span> L</div>
+                        <div class="capacity-block"><span class="name">CRF</span><span class="value" id="crfDisplay">2.30</span> L</div>
+                        <div class="capacity-block"><span class="name">CVF</span><span class="value" id="cvfDisplay">4.10</span> L</div>
+                        <div class="capacity-block"><span class="name">CPT</span><span class="value" id="cptDisplay">5.30</span> L</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles de simulación y velocidad -->
+            <div class="time-controls-modern">
+                <button class="btn-icon" id="playPauseBtn"><span id="playIcon">⏸️</span> <span id="playText">Pausar</span></button>
+                <button class="btn-icon" id="resetBtn"><span>↺</span> Reiniciar</button>
+                <div style="flex:1; min-width:200px;">
+                    <div style="color:#003f7a;">Velocidad simulación <span id="speedValue">1.0x</span></div>
+                    <input type="range" id="speed-slider" min="0.25" max="2.0" value="1.0" step="0.25" class="slider">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const canvas = document.getElementById('espirogramaCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const margin = { top: 40, right: 50, bottom: 50, left: 70 };
+            const graphWidth = width - margin.left - margin.right;
+            const graphHeight = height - margin.top - margin.bottom;
+
+            let volumes = { vt: 0.5, vri: 2.5, vre: 1.1, vr: 1.2 };
+            let timesVT = { ti: 1.5, te: 2.5, tpausei: 0.2, tpausee: 0.2 };
+            let timesCVF = { ti1:2.0, te:4.0, ti2:2.0, tpauseTLC:0.5, tpauseVR:0.3, tpauseFinalTLC:0.5 };
+
+            let simTime = 0;
+            let isPlaying = true;
+            let speed = 1.0;
+            let lastTimestamp = 0;
+            let points = [];
+            const maxPoints = 2000;
+            const timeWindow = 25; // ventana fija de 25 segundos
+
+            let maneuverActive = false;
+            let maneuverStartTime = 0;
+
+            // Elementos DOM
+            const vtSlider = document.getElementById('vt-slider');
+            const vriSlider = document.getElementById('vri-slider');
+            const vreSlider = document.getElementById('vre-slider');
+            const vrSlider = document.getElementById('vr-slider');
+            const vtNum = document.getElementById('vtNum');
+            const vriNum = document.getElementById('vriNum');
+            const vreNum = document.getElementById('vreNum');
+            const vrNum = document.getElementById('vrNum');
+            const vtValLabel = document.getElementById('vtValLabel');
+            const vriValLabel = document.getElementById('vriValLabel');
+            const vreValLabel = document.getElementById('vreValLabel');
+            const vrValLabel = document.getElementById('vrValLabel');
+            const vtDisplay = document.getElementById('vtDisplay');
+            const vriDisplay = document.getElementById('vriDisplay');
+            const vreDisplay = document.getElementById('vreDisplay');
+            const vrDisplay = document.getElementById('vrDisplay');
+            
+            const tiVtSlider = document.getElementById('ti-vt-slider');
+            const teVtSlider = document.getElementById('te-vt-slider');
+            const tpauseiVtSlider = document.getElementById('tpausei-vt-slider');
+            const tpauseeVtSlider = document.getElementById('tpausee-vt-slider');
+            const tiVtLabel = document.getElementById('tiVtLabel');
+            const teVtLabel = document.getElementById('teVtLabel');
+            const tpauseiVtLabel = document.getElementById('tpauseiVtLabel');
+            const tpauseeVtLabel = document.getElementById('tpauseeVtLabel');
+
+            const tiCvf1 = document.getElementById('ti-cvf1-slider');
+            const teCvf = document.getElementById('te-cvf-slider');
+            const tiCvf2 = document.getElementById('ti-cvf2-slider');
+            const tpauseTlc = document.getElementById('tpause-tlc-slider');
+            const tpauseVr = document.getElementById('tpause-vr-slider');
+            const tpauseFinal = document.getElementById('tpause-final-tlc-slider');
+            const ti1Label = document.getElementById('ti1Label');
+            const teCvfLabel = document.getElementById('teCvfLabel');
+            const ti2Label = document.getElementById('ti2Label');
+            const pauseTlcLabel = document.getElementById('pauseTlcLabel');
+            const pauseVrLabel = document.getElementById('pauseVrLabel');
+            const pauseFinalLabel = document.getElementById('pauseFinalLabel');
+
+            const ciDisplay = document.getElementById('ciDisplay');
+            const crfDisplay = document.getElementById('crfDisplay');
+            const cvfDisplay = document.getElementById('cvfDisplay');
+            const cptDisplay = document.getElementById('cptDisplay');
+            const currentVolLive = document.getElementById('currentVolLive');
+            const currentPhaseLive = document.getElementById('currentPhaseLive');
+            const tlcLive = document.getElementById('tlcLive');
+            const vrLive = document.getElementById('vrLive');
+            const liveStatusHeader = document.getElementById('liveStatusHeader');
+            const inspPhaseTag = document.getElementById('inspPhaseTag');
+            const expPhaseTag = document.getElementById('expPhaseTag');
+            const pausePhaseTag = document.getElementById('pausePhaseTag');
+            const maneuverStatus = document.getElementById('maneuverStatus');
+            const cvfManeuverBtn = document.getElementById('cvfManeuverBtn');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const speedSlider = document.getElementById('speed-slider');
+            const speedValue = document.getElementById('speedValue');
+            const playIcon = document.getElementById('playIcon');
+            const playText = document.getElementById('playText');
+
+            function calculateCapacities() {
+                return { ci: volumes.vt + volumes.vri, crf: volumes.vre + volumes.vr, cvf: volumes.vri + volumes.vt + volumes.vre, cpt: volumes.vri + volumes.vt + volumes.vre + volumes.vr };
+            }
+
+            function updateAllDisplays() {
+                vtValLabel.innerText = volumes.vt.toFixed(2)+' L'; vtNum.value = volumes.vt.toFixed(2); vtDisplay.innerText = volumes.vt.toFixed(2);
+                vriValLabel.innerText = volumes.vri.toFixed(2)+' L'; vriNum.value = volumes.vri.toFixed(2); vriDisplay.innerText = volumes.vri.toFixed(2);
+                vreValLabel.innerText = volumes.vre.toFixed(2)+' L'; vreNum.value = volumes.vre.toFixed(2); vreDisplay.innerText = volumes.vre.toFixed(2);
+                vrValLabel.innerText = volumes.vr.toFixed(2)+' L'; vrNum.value = volumes.vr.toFixed(2); vrDisplay.innerText = volumes.vr.toFixed(2);
+                
+                tiVtLabel.innerText = timesVT.ti.toFixed(1)+' s'; teVtLabel.innerText = timesVT.te.toFixed(1)+' s'; tpauseiVtLabel.innerText = timesVT.tpausei.toFixed(2)+' s'; tpauseeVtLabel.innerText = timesVT.tpausee.toFixed(2)+' s';
+                ti1Label.innerText = timesCVF.ti1.toFixed(1)+' s'; teCvfLabel.innerText = timesCVF.te.toFixed(1)+' s'; ti2Label.innerText = timesCVF.ti2.toFixed(1)+' s'; pauseTlcLabel.innerText = timesCVF.tpauseTLC.toFixed(1)+' s'; pauseVrLabel.innerText = timesCVF.tpauseVR.toFixed(1)+' s'; pauseFinalLabel.innerText = timesCVF.tpauseFinalTLC.toFixed(1)+' s';
+                
+                const caps = calculateCapacities();
+                ciDisplay.innerText = caps.ci.toFixed(2); crfDisplay.innerText = caps.crf.toFixed(2); cvfDisplay.innerText = caps.cvf.toFixed(2); cptDisplay.innerText = caps.cpt.toFixed(2);
+                tlcLive.innerText = caps.cpt.toFixed(2)+' L'; vrLive.innerText = volumes.vr.toFixed(2)+' L';
+            }
+
+            function bindVolumeControls() {
+                vtSlider.addEventListener('input', (e)=>{ volumes.vt = parseFloat(e.target.value); updateAllDisplays(); });
+                vriSlider.addEventListener('input', (e)=>{ volumes.vri = parseFloat(e.target.value); updateAllDisplays(); });
+                vreSlider.addEventListener('input', (e)=>{ volumes.vre = parseFloat(e.target.value); updateAllDisplays(); });
+                vrSlider.addEventListener('input', (e)=>{ volumes.vr = parseFloat(e.target.value); updateAllDisplays(); });
+                vtNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||0.5; volumes.vt=Math.min(1,Math.max(0.2,v)); vtSlider.value=volumes.vt; updateAllDisplays(); });
+                vriNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||2.5; volumes.vri=Math.min(3.5,Math.max(1.0,v)); vriSlider.value=volumes.vri; updateAllDisplays(); });
+                vreNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||1.1; volumes.vre=Math.min(1.8,Math.max(0.5,v)); vreSlider.value=volumes.vre; updateAllDisplays(); });
+                vrNum.addEventListener('input', (e)=>{ let v=parseFloat(e.target.value)||1.2; volumes.vr=Math.min(2.0,Math.max(0.8,v)); vrSlider.value=volumes.vr; updateAllDisplays(); });
+                tiVtSlider.addEventListener('input',(e)=>{ timesVT.ti=parseFloat(e.target.value); updateAllDisplays(); });
+                teVtSlider.addEventListener('input',(e)=>{ timesVT.te=parseFloat(e.target.value); updateAllDisplays(); });
+                tpauseiVtSlider.addEventListener('input',(e)=>{ timesVT.tpausei=parseFloat(e.target.value); updateAllDisplays(); });
+                tpauseeVtSlider.addEventListener('input',(e)=>{ timesVT.tpausee=parseFloat(e.target.value); updateAllDisplays(); });
+                tiCvf1.addEventListener('input',(e)=>{ timesCVF.ti1=parseFloat(e.target.value); updateAllDisplays(); });
+                teCvf.addEventListener('input',(e)=>{ timesCVF.te=parseFloat(e.target.value); updateAllDisplays(); });
+                tiCvf2.addEventListener('input',(e)=>{ timesCVF.ti2=parseFloat(e.target.value); updateAllDisplays(); });
+                tpauseTlc.addEventListener('input',(e)=>{ timesCVF.tpauseTLC=parseFloat(e.target.value); updateAllDisplays(); });
+                tpauseVr.addEventListener('input',(e)=>{ timesCVF.tpauseVR=parseFloat(e.target.value); updateAllDisplays(); });
+                tpauseFinal.addEventListener('input',(e)=>{ timesCVF.tpauseFinalTLC=parseFloat(e.target.value); updateAllDisplays(); });
+            }
+            bindVolumeControls();
+
+            function calculateBasalVolume(t, caps) { 
+                const totalCycle = timesVT.ti + timesVT.te + timesVT.tpausei + timesVT.tpausee;
+                const tCycle = t % totalCycle;
+                const baseVolume = caps.crf;
+                if (tCycle < timesVT.ti) return { volume: baseVolume + (volumes.vt * Math.sin((tCycle/timesVT.ti)*Math.PI/2)), phase:'insp', phaseName:'Inspiración VT' };
+                else if (tCycle < timesVT.ti+timesVT.tpausei) return { volume: baseVolume+volumes.vt, phase:'pause', phaseName:'Pausa Insp VT' };
+                else if (tCycle < timesVT.ti+timesVT.tpausei+timesVT.te) { let p=(tCycle-timesVT.ti-timesVT.tpausei)/timesVT.te; return { volume: baseVolume+volumes.vt - (volumes.vt * Math.sin(p*Math.PI/2)), phase:'exp', phaseName:'Espiración VT' };}
+                else return { volume: baseVolume, phase:'pause', phaseName:'Pausa Esp VT' };
+            }
+            function calculateManeuverVolume(t, caps) {
+                const tm = t - maneuverStartTime;
+                if (tm < timesCVF.ti1) { let p = tm/timesCVF.ti1; return { volume: caps.crf + (caps.cpt-caps.crf)*Math.sin(p*Math.PI/2), phase:'insp', phaseName:'Insp Forzada 1' }; }
+                else if (tm < timesCVF.ti1+timesCVF.tpauseTLC) return { volume: caps.cpt, phase:'pause', phaseName:'Pausa TLC' };
+                else if (tm < timesCVF.ti1+timesCVF.tpauseTLC+timesCVF.te) { let p = (tm-timesCVF.ti1-timesCVF.tpauseTLC)/timesCVF.te; return { volume: caps.cpt - (caps.cpt-volumes.vr)*Math.sin(p*Math.PI/2), phase:'exp', phaseName:'Espiración forzada' }; }
+                else if (tm < timesCVF.ti1+timesCVF.tpauseTLC+timesCVF.te+timesCVF.tpauseVR) return { volume: volumes.vr, phase:'pause', phaseName:'Pausa VR' };
+                else if (tm < timesCVF.ti1+timesCVF.tpauseTLC+timesCVF.te+timesCVF.tpauseVR+timesCVF.ti2) { let p=(tm - (timesCVF.ti1+timesCVF.tpauseTLC+timesCVF.te+timesCVF.tpauseVR))/timesCVF.ti2; return { volume: volumes.vr + (caps.cpt-volumes.vr)*Math.sin(p*Math.PI/2), phase:'insp', phaseName:'Insp Forzada 2' }; }
+                else if (tm < timesCVF.ti1+timesCVF.tpauseTLC+timesCVF.te+timesCVF.tpauseVR+timesCVF.ti2+timesCVF.tpauseFinalTLC) return { volume: caps.cpt, phase:'pause', phaseName:'Pausa final' };
+                else { maneuverActive=false; maneuverStatus.innerText='Maniobra completada · VT basal'; cvfManeuverBtn.innerHTML='<span>🫁</span> INICIAR MANIOBRA CVF COMPLETA (inspiración + espiración forzada) <span>💨</span>'; liveStatusHeader.innerText='VT BASAL'; return calculateBasalVolume(t,caps); }
+            }
+            function calculateVolume(t) { let caps = calculateCapacities(); if(maneuverActive) { let res = calculateManeuverVolume(t,caps); if(!maneuverActive) return calculateBasalVolume(t,caps); return res; } else return calculateBasalVolume(t,caps); }
+
+            // Función drawGraph modificada para que el tiempo avance desde 0 a la izquierda
+            function drawGraph() {
+                ctx.clearRect(0,0,width,height);
+                ctx.fillStyle = '#fafdff';
+                ctx.fillRect(0,0,width,height);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(margin.left,margin.top,graphWidth,graphHeight);
+
+                const caps = calculateCapacities();
+                const maxV = Math.max(caps.cpt + 0.5, 7);
+
+                // cuadrícula
+                ctx.strokeStyle = '#c7d7f0';
+                ctx.lineWidth = 0.6;
+                ctx.setLineDash([5, 4]);
+                for (let i=0;i<=7;i++) { 
+                    let y=margin.top+graphHeight-(i/maxV)*graphHeight; 
+                    ctx.beginPath(); ctx.moveTo(margin.left,y); ctx.lineTo(margin.left+graphWidth,y); ctx.strokeStyle='#d4e2ff'; ctx.stroke(); 
+                    ctx.fillStyle='#5f7d9c'; ctx.font='11px Inter'; ctx.fillText(i+' L', margin.left-32, y+4); 
+                }
+                // Eje de tiempo: de 0 a timeWindow segundos
+                for (let i=0;i<=timeWindow;i+=2) { 
+                    let x=margin.left+(i/timeWindow)*graphWidth; 
+                    ctx.beginPath(); ctx.moveTo(x,margin.top); ctx.lineTo(x,margin.top+graphHeight); ctx.strokeStyle='#d4e2ff'; ctx.stroke(); 
+                    ctx.fillStyle='#5f7d9c'; ctx.fillText(i+'s', x-12, margin.top+graphHeight+18); 
+                }
+                ctx.setLineDash([]);
+
+                // Líneas de referencia: VR, CRF, TLC
+                const refLines = [
+                    { vol: volumes.vr, color: '#2ecc71', label: 'VR', dash: [8, 5] },
+                    { vol: caps.crf, color: '#f39c12', label: 'CRF', dash: [8, 5] },
+                    { vol: caps.cpt, color: '#9b59b6', label: 'TLC/CPT', dash: [8, 5] }
+                ];
+                refLines.forEach(ref => {
+                    const y = margin.top + graphHeight - (ref.vol / maxV) * graphHeight;
+                    ctx.beginPath();
+                    ctx.strokeStyle = ref.color;
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash(ref.dash);
+                    ctx.moveTo(margin.left, y);
+                    ctx.lineTo(margin.left + graphWidth, y);
+                    ctx.stroke();
+                    ctx.fillStyle = ref.color;
+                    ctx.font = 'bold 11px Inter';
+                    ctx.fillText(ref.label, margin.left + graphWidth + 8, y - 6);
+                });
+                ctx.setLineDash([]);
+
+                // Curva de volumen - MODIFICADA para que avance de izquierda a derecha
+                if (points.length > 1) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = maneuverActive?'#fe4f4f':'#4facfe';
+                    ctx.lineWidth = 3;
+                    
+                    // Tiempo visible: desde max(0, simTime-timeWindow) hasta simTime
+                    const minVisibleTime = Math.max(0, simTime - timeWindow);
+                    
+                    for(let i=0; i<points.length; i++) {
+                        const point = points[i];
+                        // Solo dibujamos puntos dentro de la ventana visible
+                        if (point.time >= minVisibleTime && point.time <= simTime) {
+                            // x proporcional: 0 en minVisibleTime, graphWidth en simTime
+                            let x = margin.left + ((point.time - minVisibleTime) / timeWindow) * graphWidth;
+                            let y = margin.top + graphHeight - (point.volume / maxV) * graphHeight;
+                            
+                            if (x >= margin.left && x <= margin.left + graphWidth) {
+                                if (i === 0 || points[i-1].time < minVisibleTime) {
+                                    ctx.moveTo(x, y);
+                                } else {
+                                    ctx.lineTo(x, y);
+                                }
+                            }
+                        }
+                    }
+                    ctx.stroke();
+                }
+                
+                // Punto actual
+                if (points.length > 0) {
+                    const lastPoint = points[points.length-1];
+                    const minVisibleTime = Math.max(0, simTime - timeWindow);
+                    if (lastPoint.time >= minVisibleTime) {
+                        let x = margin.left + ((lastPoint.time - minVisibleTime) / timeWindow) * graphWidth;
+                        let y = margin.top + graphHeight - (lastPoint.volume / maxV) * graphHeight;
+                        if (x >= margin.left && x <= margin.left + graphWidth) {
+                            ctx.beginPath(); ctx.arc(x, y, 8, 0, 2*Math.PI); ctx.fillStyle='white'; ctx.fill();
+                            ctx.beginPath(); ctx.arc(x, y, 5, 0, 2*Math.PI); ctx.fillStyle=maneuverActive?'#fe4f4f':'#4facfe'; ctx.fill();
+                        }
+                    }
+                }
+            }
+
+            function animate(ts) {
+                if(!lastTimestamp){ lastTimestamp=ts; requestAnimationFrame(animate); return; }
+                if(isPlaying) { 
+                    let dt = (ts-lastTimestamp)/1000 * speed; 
+                    simTime += dt;
+                    let {volume, phase, phaseName} = calculateVolume(simTime);
+                    
+                    // Actualizar displays
+                    currentVolLive.innerText = volume.toFixed(2)+' L';
+                    currentPhaseLive.innerText = phaseName || 'VT';
+                    
+                    // Actualizar fases
+                    inspPhaseTag.classList.remove('active-insp'); 
+                    expPhaseTag.classList.remove('active-exp'); 
+                    pausePhaseTag.classList.remove('active-pause');
+                    if(phase==='insp') inspPhaseTag.classList.add('active-insp');
+                    else if(phase==='exp') expPhaseTag.classList.add('active-exp');
+                    else pausePhaseTag.classList.add('active-pause');
+                    
+                    // Guardar punto
+                    points.push({time: simTime, volume});
+                    
+                    // Limpiar puntos antiguos (más allá de la ventana + margen)
+                    points = points.filter(p => p.time > simTime - timeWindow - 2);
+                    if(points.length > maxPoints) points = points.slice(-maxPoints);
+                }
+                drawGraph(); 
+                lastTimestamp=ts; 
+                requestAnimationFrame(animate);
+            }
+
+            cvfManeuverBtn.addEventListener('click',()=>{
+                if(!maneuverActive){
+                    maneuverActive=true; 
+                    maneuverStartTime=simTime; 
+                    maneuverStatus.innerText='⚠️ Maniobra CVF en curso (insp1→esp→insp2)'; 
+                    liveStatusHeader.innerText='MANIOBRA CVF'; 
+                    cvfManeuverBtn.style.background='linear-gradient(145deg, #3d9e5a, #257545)'; 
+                    cvfManeuverBtn.innerHTML='<span>✓</span> MANIOBRA EN CURSO... <span>💨</span>';
+                }
+            });
+
+            playPauseBtn.addEventListener('click',()=>{ 
+                isPlaying=!isPlaying; 
+                playIcon.innerText=isPlaying?'⏸️':'▶️'; 
+                playText.innerText=isPlaying?'Pausar':'Reanudar'; 
+            });
+            
+            resetBtn.addEventListener('click',()=>{ 
+                simTime=0; 
+                points=[]; 
+                maneuverActive=false; 
+                maneuverStatus.innerText='En reposo · VT basal'; 
+                liveStatusHeader.innerText='VT BASAL'; 
+                cvfManeuverBtn.style.background='linear-gradient(145deg, #0057a3, #003f7a)'; 
+                cvfManeuverBtn.innerHTML='<span>🫁</span> INICIAR MANIOBRA CVF COMPLETA (inspiración + espiración forzada) <span>💨</span>'; 
+            });
+            
+            speedSlider.addEventListener('input',(e)=>{ 
+                speed=parseFloat(e.target.value); 
+                speedValue.innerText=speed.toFixed(2)+'x'; 
+            });
+
+            updateAllDisplays();
+            requestAnimationFrame(animate);
+        })();
+    </script>
+</body>
+</html>
