@@ -1,9 +1,11 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Volúmenes Pulmonares | Guía Interactiva</title>
+
     <style>
         /* -------------------------------
            ESTILOS BASE
@@ -44,12 +46,12 @@
         --------------------------------*/
         header {
             text-align: center;
-            background-color: #ffffffcc;
+            background-color: rgba(255,255,255,0.85);
             backdrop-filter: blur(10px);
             border-radius: 16px;
             padding: 40px 20px;
             margin-bottom: 40px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
             animation: fadeInDown 1s ease;
         }
 
@@ -71,6 +73,8 @@
         .subtitle {
             color: #7f8c8d;
             font-size: 1.2rem;
+            max-width: 700px;
+            margin: auto;
         }
 
         /* -------------------------------
@@ -89,7 +93,7 @@
         .card {
             background-color: #fff;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             padding: 30px 25px;
             text-align: center;
             cursor: pointer;
@@ -105,7 +109,11 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(120deg, rgba(52, 152, 219, 0.1), rgba(0, 188, 212, 0.1));
+            background: linear-gradient(
+                120deg,
+                rgba(52,152,219,0.10),
+                rgba(0,188,212,0.10)
+            );
             transition: all 0.5s ease;
         }
 
@@ -115,7 +123,7 @@
 
         .card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 16px 35px rgba(0,0,0,0.12);
         }
 
         .icon img {
@@ -142,6 +150,7 @@
             font-size: 1rem;
             margin-bottom: 25px;
             padding: 0 10px;
+            line-height: 1.6;
         }
 
         .btn {
@@ -169,7 +178,6 @@
             padding: 25px 0;
             font-size: 0.95rem;
             color: #7f8c8d;
-            background-color: #f7faff;
             border-top: 1px solid #e0e0e0;
         }
 
@@ -177,14 +185,21 @@
            ANIMACIONES
         --------------------------------*/
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* -------------------------------
            RESPONSIVE
         --------------------------------*/
         @media (max-width: 768px) {
+
             h1 {
                 font-size: 2.2rem;
             }
@@ -192,58 +207,132 @@
             .card-title {
                 font-size: 1.4rem;
             }
+
+            .subtitle {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
+
 <body>
+
     <div class="container">
+
         <header>
             <h1>Volúmenes Pulmonares</h1>
-            <div class="separator"></div>
-            <p class="subtitle">Mide la capacidad total y los componentes del volumen pulmonar</p>
-        </header>
-        
-        
 
-                <h2 class="card-title">Información</h2>
-                <p class="card-description">Conoce los diferentes volúmenes y capacidades pulmonares, su importancia clínica y cómo se miden.</p>
-                <a href="volumenes_info.html" class="btn">Ver más</a>
+            <div class="separator"></div>
+
+            <p class="subtitle">
+                Mide la capacidad total pulmonar y los distintos
+                componentes del volumen de aire presentes en los pulmones.
+            </p>
+        </header>
+
+        <div class="content-grid">
+
+            <!-- INFORMACIÓN -->
+            <div class="card" onclick="location.href='volumenes_info.html'">
+
+                <div class="icon">
+                    <img src="images/informacion.gif" alt="Información">
+                </div>
+
+                <h2 class="card-title">
+                    Información
+                </h2>
+
+                <p class="card-description">
+                    Conoce los diferentes volúmenes y capacidades
+                    pulmonares, su importancia clínica y cómo
+                    ayudan a comprender el funcionamiento respiratorio.
+                </p>
+
+                <a href="volumenes_info.html" class="btn">
+                    Ver más
+                </a>
+
             </div>
-            
+
+            <!-- EXPLICACIÓN -->
             <div class="card" onclick="location.href='volumenes_explicacion.html'">
-                <div class="icon"><img src="images/explicacion.gif" alt="Explicación Técnica"></div>
-                <h2 class="card-title">Explicación Técnica</h2>
-                <p class="card-description">Descubre los métodos de medición, interpretación de resultados y valores de referencia.</p>
-                <a href="volumenes_explicacion.html" class="btn">Explorar</a>
+
+                <div class="icon">
+                    <img src="images/explicacion.gif" alt="Explicación Técnica">
+                </div>
+
+                <h2 class="card-title">
+                    Explicación Técnica
+                </h2>
+
+                <p class="card-description">
+                    Descubre cómo se miden los volúmenes pulmonares,
+                    la interpretación de resultados y los valores
+                    utilizados en el laboratorio de función pulmonar.
+                </p>
+
+                <a href="volumenes_explicacion.html" class="btn">
+                    Explorar
+                </a>
+
             </div>
-            
+
+            <!-- VIDEO -->
             <div class="card" onclick="location.href='volumenes_video.html'">
-                <div class="icon"><img src="images/video.gif" alt="Video Guía"></div>
-                <h2 class="card-title">Video Guía</h2>
-                <p class="card-description">Aprende visualmente cómo realizar la pletismografía corporal y otras técnicas de medición.</p>
-                <a href="volumenes_video.html" class="btn">Ver Video</a>
+
+                <div class="icon">
+                    <img src="images/video.gif" alt="Video Guía">
+                </div>
+
+                <h2 class="card-title">
+                    Video Guía
+                </h2>
+
+                <p class="card-description">
+                    Aprende visualmente cómo se realiza la
+                    pletismografía corporal y otras técnicas
+                    de medición de volúmenes pulmonares.
+                </p>
+
+                <a href="volumenes_video.html" class="btn">
+                    Ver Video
+                </a>
+
             </div>
+
         </div>
-        
+
         <footer>
-            <p>© 2025 Sistema de Información Pulmonar | Desarrollado con excelencia médica</p>
+            <p>
+                © 2025 Sistema de Información Pulmonar |
+                Desarrollado con excelencia médica
+            </p>
         </footer>
+
     </div>
-    
+
     <script>
-        // Efecto de transición suave al cargar
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+
             const cards = document.querySelectorAll('.card');
+
             cards.forEach((card, index) => {
+
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(20px)';
+
                 setTimeout(() => {
+
                     card.style.transition = 'all 0.8s ease';
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
+
                 }, index * 200);
             });
         });
     </script>
+
 </body>
 </html>
+```
