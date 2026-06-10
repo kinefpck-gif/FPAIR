@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Preparación de Inhaladores | FPAIR
+</title>
+
+<style>
+
+:root{
+--azul-principal:#0077b6;
+--azul-secundario:#00b4d8;
+--verde-salud:#90e0ef;
+--gris-fondo:#f6f9fb;
+--gris-texto:#2c3e50;
+--blanco:#fff;
+--rojo:#e63946;
+--amarillo:#ffb703;
+--verde:#2a9d8f;
+}
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:'Segoe UI',Roboto,sans-serif;
+}
+
+body{
+background:var(--gris-fondo);
+color:var(--gris-texto);
+line-height:1.7;
+overflow-x:hidden;
+}
+
+/* HERO */
+
+header{
+position:relative;
+background:
+linear-gradient(
+135deg,
+var(--azul-principal),
+var(--azul-secundario)
+);
+
+color:white;
+text-align:center;
+padding:100px 20px 80px;
+border-radius:0 0 80px 80px;
+overflow:hidden;
+}
+
+header::after{
+content:"";
+position:absolute;
+inset:0;
+
+background:
+radial-gradient(
+circle at 20% 80%,
+rgba(255,255,255,.10),
+transparent 60%
+);
+
+animation:moveGlow 8s
+infinite alternate;
+}
+
+@keyframes moveGlow{
+0%{
+background-position:20% 80%;
+}
+100%{
+background-position:80% 20%;
+}
+}
+
+.header-content{
+position:relative;
+z-index:2;
+max-width:900px;
+margin:auto;
+}
+
+header h1{
+font-size:2.5rem;
+font-weight:700;
+margin-bottom:15px;
+}
+
+header p{
+font-size:1.2rem;
+opacity:.95;
+}
+
+/* CONTAINER */
+
+.container{
+max-width:1300px;
+margin:auto;
+padding:40px 20px;
+}
+
+/* SECTION */
+
+.section{
+background:white;
+border-radius:18px;
+padding:35px;
+margin-bottom:35px;
+
+box-shadow:
+0 4px 20px rgba(0,0,0,.05);
+
+transition:
+transform .3s ease,
+box-shadow .3s ease;
+}
+
+.section:hover{
+transform:translateY(-4px);
+
+box-shadow:
+0 8px 30px rgba(0,0,0,.08);
+}
+
+h2{
+color:var(--azul-principal);
+font-size:1.9rem;
+border-left:5px solid
+var(--azul-secundario);
+padding-left:14px;
+margin-bottom:20px;
+}
+
+h3{
+color:var(--azul-secundario);
+margin-bottom:10px;
+}
+
+p{
+margin-bottom:15px;
+font-size:1.05rem;
+}
+
+/* ALERT */
+
+.highlight-box{
+background:#e8f4fc;
+border-left:5px solid
+var(--azul-secundario);
+
+padding:20px;
+border-radius:0 12px 12px 0;
+margin-top:20px;
+}
+
+/* GRID */
+
+.inhaladores-grid{
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(280px,1fr));
+
+gap:25px;
+margin-top:25px;
+}
+
+/* CARD */
+
+.inhalador-card{
+
+background:white;
+border-radius:18px;
+overflow:hidden;
+
+box-shadow:
+0 4px 15px rgba(0,0,0,.08);
+
+transition:.3s;
+border:2px solid transparent;
+}
+
+.inhalador-card:hover{
+transform:translateY(-5px);
+}
+
+.inhalador-card.selected{
+border-color:
+var(--azul-principal);
+}
+
+.inhalador-image{
+height:220px;
+background:#f4f9fc;
+
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.inhalador-image img{
+max-width:80%;
+max-height:180px;
+object-fit:contain;
+}
+
+.card-content{
+padding:22px;
+}
+
+.card-title{
+font-size:1.2rem;
+font-weight:700;
+color:var(--azul-principal);
+margin-bottom:10px;
+}
+
+.badge{
+display:inline-block;
+padding:8px 12px;
+border-radius:999px;
+font-size:.85rem;
+font-weight:600;
+margin:5px 5px 0 0;
+}
+
+.badge.tipo{
+background:#e8f4fc;
+color:#0077b6;
+}
+
+.badge.verde{
+background:#d8f3dc;
+color:#1b4332;
+}
+
+.badge.amarillo{
+background:#fff3bf;
+color:#99582a;
+}
+
+.badge.rojo{
+background:#ffe5e5;
+color:#9d0208;
+}
+
+.checkbox-area{
+margin-top:20px;
+padding-top:15px;
+border-top:1px solid #e9ecef;
+}
+
+.checkbox-area label{
+display:flex;
+gap:10px;
+align-items:center;
+font-weight:600;
+cursor:pointer;
+}
+
+input[type="checkbox"]{
+width:20px;
+height:20px;
+cursor:pointer;
+}
+
+/* SUMMARY */
+
+#resultado{
+margin-top:25px;
+}
+
+.result-card{
+background:#f8fbfd;
+border-radius:14px;
+padding:18px;
+margin-bottom:15px;
+border-left:6px solid
+var(--azul-principal);
+}
+
+.empty-state{
+text-align:center;
+padding:35px;
+color:#7a8a97;
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:35px;
+color:#7a8a97;
+font-size:.95rem;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+header h1{
+font-size:2rem;
+}
+
+.section{
+padding:25px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="header-content">
+
+<h1>
+PREPARACIÓN DE INHALADORES
+</h1>
+
+<p>
+Seleccione los inhaladores
+que usa actualmente.
+Le mostraremos cuándo
+debe suspenderlos antes
+de su examen de función pulmonar.
+</p>
+
+</div>
+
+</header>
+
+<div class="container">
+
+<section class="section">
+
+<h2>
+¿Qué inhaladores utiliza?
+</h2>
+
+<p>
+Marque todos los inhaladores
+que usa actualmente.
+Al final verá un resumen simple
+de cuándo debe suspenderlos.
+</p>
+
+<div class="highlight-box">
+
+<h3>
+Importante
+</h3>
+
+<p>
+No suspenda medicamentos
+si su médico le indicó algo distinto.
+Esta guía es educativa
+para preparación de exámenes
+de función pulmonar.
+</p>
+
+</div>
+
+<div class="inhaladores-grid">
+  <!-- VENTOLIN -->
+
+<div class="inhalador-card"
+data-prioridad="3"
+data-nombre="Ventolin"
+data-suspension="🟢 Suspender la mañana del examen o la noche anterior (según tolerancia)">
+
+<div class="inhalador-image">
+<img src="images/ventolin.png"
+alt="Ventolin">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Ventolin
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Salbutamol
+</p>
+
+<span class="badge tipo">
+SABA / Rescate rápido
+</span>
+
+<span class="badge verde">
+🟢 Suspensión corta
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+Suspender la mañana del examen
+o la noche anterior
+(según tolerancia)
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- AEROLIN -->
+
+<div class="inhalador-card"
+data-prioridad="3"
+data-nombre="Aerolin"
+data-suspension="🟢 Suspender la mañana del examen o la noche anterior (según tolerancia)">
+
+<div class="inhalador-image">
+<img src="images/aerolin.png"
+alt="Aerolin">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Aerolin
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Salbutamol
+</p>
+
+<span class="badge tipo">
+SABA / Rescate rápido
+</span>
+
+<span class="badge verde">
+🟢 Suspensión corta
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+Suspender la mañana del examen
+o la noche anterior
+(según tolerancia)
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- SALBUVENT -->
+
+<div class="inhalador-card"
+data-prioridad="3"
+data-nombre="Salbuvent"
+data-suspension="🟢 Suspender la mañana del examen o la noche anterior (según tolerancia)">
+
+<div class="inhalador-image">
+<img src="images/salbuvent.png"
+alt="Salbuvent">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Salbuvent
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Salbutamol
+</p>
+
+<span class="badge tipo">
+SABA / Rescate rápido
+</span>
+
+<span class="badge verde">
+🟢 Suspensión corta
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+Suspender la mañana del examen
+o la noche anterior
+(según tolerancia)
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- BERODUAL -->
+
+<div class="inhalador-card"
+data-prioridad="3"
+data-nombre="Berodual"
+data-suspension="🟢 Suspender la mañana del examen o la noche anterior (según tolerancia)">
+
+<div class="inhalador-image">
+<img src="images/berodual.png"
+alt="Berodual">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Berodual
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Fenoterol + Ipratropio
+</p>
+
+<span class="badge tipo">
+SABA/SAMA
+</span>
+
+<span class="badge verde">
+🟢 Suspensión corta
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+Suspender la mañana del examen
+o la noche anterior
+(según tolerancia)
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- COMBIVENT -->
+
+<div class="inhalador-card"
+data-prioridad="3"
+data-nombre="Combivent"
+data-suspension="🟢 Suspender la mañana del examen o la noche anterior (según tolerancia)">
+
+<div class="inhalador-image">
+<img src="images/combivent.png"
+alt="Combivent">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Combivent
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Salbutamol + Ipratropio
+</p>
+
+<span class="badge tipo">
+SABA/SAMA
+</span>
+
+<span class="badge verde">
+🟢 Suspensión corta
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+Suspender la mañana del examen
+o la noche anterior
+(según tolerancia)
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+<!-- SYMBICORT -->
+
+<div class="inhalador-card"
+data-prioridad="2"
+data-nombre="Symbicort Turbuhaler"
+data-suspension="🟡 Suspender la noche anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/symbicort.png"
+alt="Symbicort">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Symbicort Turbuhaler
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Budesonida + Formoterol
+</p>
+
+<span class="badge tipo">
+ICS / LABA
+</span>
+
+<span class="badge amarillo">
+🟡 12 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🌙 Suspender la noche anterior
+al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- SERETIDE DISKUS -->
+
+<div class="inhalador-card"
+data-prioridad="2"
+data-nombre="Seretide Diskus"
+data-suspension="🟡 Suspender la noche anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/seretide-diskus.png"
+alt="Seretide Diskus">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Seretide Diskus
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Fluticasona + Salmeterol
+</p>
+
+<span class="badge tipo">
+ICS / LABA
+</span>
+
+<span class="badge amarillo">
+🟡 12 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🌙 Suspender la noche anterior
+al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- SERETIDE EVOHALER -->
+
+<div class="inhalador-card"
+data-prioridad="2"
+data-nombre="Seretide Evohaler"
+data-suspension="🟡 Suspender la noche anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/seretide-evohaler.png"
+alt="Seretide Evohaler">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Seretide Evohaler
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Fluticasona + Salmeterol
+</p>
+
+<span class="badge tipo">
+ICS / LABA
+</span>
+
+<span class="badge amarillo">
+🟡 12 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🌙 Suspender la noche anterior
+al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- FOSTER -->
+
+<div class="inhalador-card"
+data-prioridad="2"
+data-nombre="Foster"
+data-suspension="🟡 Suspender la noche anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/foster.png"
+alt="Foster">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Foster
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Beclometasona + Formoterol
+</p>
+
+<span class="badge tipo">
+ICS / LABA
+</span>
+
+<span class="badge amarillo">
+🟡 12 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🌙 Suspender la noche anterior
+al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- RELVAR -->
+
+<div class="inhalador-card"
+data-prioridad="2"
+data-nombre="Relvar Ellipta"
+data-suspension="🟡 Suspender la noche anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/relvar.png"
+alt="Relvar">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Relvar Ellipta
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Fluticasona + Vilanterol
+</p>
+
+<span class="badge tipo">
+ICS / LABA
+</span>
+
+<span class="badge amarillo">
+🟡 12 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🌙 Suspender la noche anterior
+al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- OXIS -->
+
+<div class="inhalador-card"
+data-prioridad="2"
+data-nombre="Oxis Turbuhaler"
+data-suspension="🟡 Suspender la noche anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/oxis.png"
+alt="Oxis">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Oxis Turbuhaler
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Formoterol
+</p>
+
+<span class="badge tipo">
+LABA
+</span>
+
+<span class="badge amarillo">
+🟡 12 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🌙 Suspender la noche anterior
+al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- ATIMOS -->
+
+<div class="inhalador-card"
+data-prioridad="2"
+data-nombre="Atimos"
+data-suspension="🟡 Suspender la noche anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/atimos.png"
+alt="Atimos">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Atimos
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Formoterol
+</p>
+
+<span class="badge tipo">
+LABA
+</span>
+
+<span class="badge amarillo">
+🟡 12 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🌙 Suspender la noche anterior
+al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- SEREVENT -->
+
+<div class="inhalador-card"
+data-prioridad="2"
+data-nombre="Serevent"
+data-suspension="🟡 Suspender la noche anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/serevent.png"
+alt="Serevent">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Serevent
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Salmeterol
+</p>
+
+<span class="badge tipo">
+LABA
+</span>
+
+<span class="badge amarillo">
+🟡 12 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🌙 Suspender la noche anterior
+al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+<!-- SPIRIVA RESPIMAT -->
+
+<div class="inhalador-card"
+data-prioridad="1"
+data-nombre="Spiriva Respimat"
+data-suspension="🔴 Suspender desde la mañana del día anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/spiriva-respimat.png"
+alt="Spiriva Respimat">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Spiriva Respimat
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Tiotropio
+</p>
+
+<span class="badge tipo">
+LAMA
+</span>
+
+<span class="badge rojo">
+🔴 24 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🔴 Suspender desde la mañana
+del día anterior al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- SPIRIVA HANDIHALER -->
+
+<div class="inhalador-card"
+data-prioridad="1"
+data-nombre="Spiriva Handihaler"
+data-suspension="🔴 Suspender desde la mañana del día anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/spiriva-handihaler.png"
+alt="Spiriva Handihaler">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Spiriva Handihaler
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Tiotropio
+</p>
+
+<span class="badge tipo">
+LAMA
+</span>
+
+<span class="badge rojo">
+🔴 24 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🔴 Suspender desde la mañana
+del día anterior al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- INCRUSE -->
+
+<div class="inhalador-card"
+data-prioridad="1"
+data-nombre="Incruse Ellipta"
+data-suspension="🔴 Suspender desde la mañana del día anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/incruse.png"
+alt="Incruse">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Incruse Ellipta
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Umeclidinio
+</p>
+
+<span class="badge tipo">
+LAMA
+</span>
+
+<span class="badge rojo">
+🔴 24 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🔴 Suspender desde la mañana
+del día anterior al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- ULTIBRO -->
+
+<div class="inhalador-card"
+data-prioridad="1"
+data-nombre="Ultibro Breezhaler"
+data-suspension="🔴 Suspender desde la mañana del día anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/ultibro.png"
+alt="Ultibro">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Ultibro Breezhaler
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Indacaterol + Glicopirronio
+</p>
+
+<span class="badge tipo">
+LABA / LAMA
+</span>
+
+<span class="badge rojo">
+🔴 24 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🔴 Suspender desde la mañana
+del día anterior al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- ANORO -->
+
+<div class="inhalador-card"
+data-prioridad="1"
+data-nombre="Anoro Ellipta"
+data-suspension="🔴 Suspender desde la mañana del día anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/anoro.png"
+alt="Anoro">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Anoro Ellipta
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Umeclidinio + Vilanterol
+</p>
+
+<span class="badge tipo">
+LABA / LAMA
+</span>
+
+<span class="badge rojo">
+🔴 24 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🔴 Suspender desde la mañana
+del día anterior al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+
+
+<!-- TRELEGY -->
+
+<div class="inhalador-card"
+data-prioridad="1"
+data-nombre="Trelegy Ellipta"
+data-suspension="🔴 Suspender desde la mañana del día anterior al examen">
+
+<div class="inhalador-image">
+<img src="images/trelegy.png"
+alt="Trelegy">
+</div>
+
+<div class="card-content">
+
+<div class="card-title">
+Trelegy Ellipta
+</div>
+
+<p>
+<strong>Medicamento:</strong>
+Fluticasona +
+Umeclidinio +
+Vilanterol
+</p>
+
+<span class="badge tipo">
+Triple Terapia
+</span>
+
+<span class="badge rojo">
+🔴 24 horas
+</span>
+
+<p style="margin-top:15px;">
+<strong>Preparación examen:</strong><br>
+🔴 Suspender desde la mañana
+del día anterior al examen
+</p>
+
+<div class="checkbox-area">
+<label>
+<input type="checkbox"
+class="selector-inhalador">
+Tengo este inhalador
+</label>
+</div>
+
+</div>
+</div>
+</div>
+
+</section>
+
+<!-- RESUMEN -->
+
+<section class="section">
+
+<h2>
+Tus inhaladores seleccionados
+</h2>
+
+<div id="resultado">
+
+<div class="empty-state">
+Aún no ha seleccionado
+inhaladores.
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<footer>
+© 2025 FPAIR —
+Preparación examen respiratorio
+</footer>
+
+<script>
+
+const checkboxes =
+document.querySelectorAll(
+'.selector-inhalador'
+);
+
+const resultado =
+document.getElementById(
+'resultado'
+);
+
+function actualizarResumen(){
+
+let seleccionados = [];
+
+document
+.querySelectorAll(
+'.inhalador-card'
+)
+.forEach(card=>{
+
+const checkbox =
+card.querySelector('input');
+
+if(checkbox.checked){
+
+card.classList.add(
+'selected'
+);
+
+seleccionados.push({
+
+prioridad:
+parseInt(
+card.dataset.prioridad
+),
+
+nombre:
+card.dataset.nombre,
+
+suspension:
+card.dataset.suspension
+
+});
+
+}else{
+
+card.classList.remove(
+'selected'
+);
+
+}
+
+});
+
+seleccionados.sort(
+(a,b)=>
+a.prioridad-b.prioridad
+);
+
+if(
+seleccionados.length===0
+){
+
+resultado.innerHTML=
+`
+<div class="empty-state">
+Aún no ha seleccionado
+inhaladores.
+</div>
+`;
+
+return;
+}
+
+resultado.innerHTML=
+seleccionados.map(
+item=>`
+
+<div class="result-card">
+
+<h3>
+✓ ${item.nombre}
+</h3>
+
+<p>
+${item.suspension}
+</p>
+
+</div>
+
+`
+).join('');
+
+}
+
+checkboxes.forEach(cb=>{
+
+cb.addEventListener(
+'change',
+actualizarResumen
+);
+
+});
+
+</script>
+
+</body>
+</html>
