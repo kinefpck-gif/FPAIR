@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Técnicas Inhalatorias | FPAIR</title>
+
+  <style>
+
+    :root {
+      --azul-principal: #0077b6;
+      --azul-secundario: #00b4d8;
+      --verde-salud: #90e0ef;
+      --gris-fondo: #f6f9fb;
+      --gris-texto: #2c3e50;
+      --blanco: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--gris-fondo);
+      color: var(--gris-texto);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ======= HEADER / HERO ======= */
+
+    header {
+      position: relative;
+      background: linear-gradient(
+        135deg,
+        var(--azul-principal),
+        var(--azul-secundario)
+      );
+      color: var(--blanco);
+      text-align: center;
+      padding: 100px 20px 80px;
+      border-radius: 0 0 80px 80px;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+      radial-gradient(
+      circle at 20% 80%,
+      rgba(255,255,255,0.1),
+      transparent 60%
+      );
+
+      animation: moveGlow 8s infinite alternate;
+    }
+
+    @keyframes moveGlow {
+      0% {
+        background-position: 20% 80%;
+      }
+
+      100% {
+        background-position: 80% 20%;
+      }
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .header-text {
+      flex: 1;
+      max-width: 700px;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1.25rem;
+      opacity: 0.92;
+    }
+
+    /* ======= CONTAINER ======= */
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* ======= SECTION ======= */
+
+    .section {
+      background: var(--blanco);
+      border-radius: 16px;
+      padding: 40px 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-5px);
+
+      box-shadow:
+      0 6px 25px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: var(--azul-principal);
+      font-size: 1.9rem;
+      margin-bottom: 20px;
+      border-left: 5px solid var(--azul-secundario);
+      padding-left: 12px;
+    }
+
+    h3 {
+      color: var(--azul-secundario);
+      font-size: 1.3rem;
+      margin: 20px 0 12px;
+    }
+
+    p {
+      margin-bottom: 15px;
+      font-size: 1.05rem;
+    }
+
+    /* ======= HIGHLIGHT BOX ======= */
+
+    .highlight-box {
+      background-color: #e8f4fc;
+      border-left: 4px solid
+      var(--azul-secundario);
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* ======= INHALADOR LAYOUT ======= */
+
+    .inhalador-layout {
+      display: flex;
+      gap: 30px;
+      align-items: flex-start;
+      margin-top: 20px;
+    }
+
+    .inhalador-img {
+      flex: 1;
+      text-align: center;
+    }
+
+    .inhalador-img img {
+      max-width: 100%;
+      max-height: 320px;
+      border-radius: 12px;
+      box-shadow:
+      0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .inhalador-info {
+      flex: 2;
+    }
+
+    /* ======= PASOS ======= */
+
+    .steps-list {
+      list-style-type: none;
+      margin: 20px 0;
+      counter-reset: step-counter;
+    }
+
+    .steps-list li {
+      padding: 15px 0;
+      border-bottom: 1px solid #e0e0e0;
+      position: relative;
+      padding-left: 40px;
+      counter-increment: step-counter;
+    }
+
+    .steps-list li::before {
+
+      content: counter(step-counter);
+
+      color: white;
+      background-color:
+      var(--azul-secundario);
+
+      font-size: 1rem;
+      font-weight: bold;
+
+      position: absolute;
+      left: 0;
+      top: 12px;
+
+      width: 26px;
+      height: 26px;
+
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ======= TABS ======= */
+
+    .comparison-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      flex: 1;
+      min-width: 150px;
+      background: #edf6ff;
+      border: none;
+      border-radius: 8px 8px 0 0;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .tab.active {
+      background: var(--azul-principal);
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+      background: #f9fcff;
+      border-radius: 0 0 10px 10px;
+      padding: 25px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+        /* ======= VIDEO BUTTON ======= */
+
+    .video-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--azul-principal);
+      color: white;
+      text-decoration: none;
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .video-button:hover {
+      background: var(--azul-secundario);
+      transform: translateY(-2px);
+    }
+
+    .video-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* ======= BADGES ======= */
+
+    .med-badge {
+      display: inline-block;
+      background: #e8f4fc;
+      color: var(--azul-principal);
+      padding: 10px 14px;
+      border-radius: 999px;
+      margin: 6px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    /* ======= TABLE ======= */
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 14px;
+      border-bottom: 1px solid #e0e0e0;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--azul-principal);
+      color: white;
+      text-align: center;
+    }
+
+    tr:nth-child(even) {
+      background: #f9fcff;
+    }
+
+    /* ======= FAQ ======= */
+
+    .faq-item {
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .faq-question {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      font-weight: bold;
+      color: var(--azul-principal);
+    }
+
+    .faq-answer {
+      display: none;
+      padding-bottom: 10px;
+    }
+
+    .faq-answer.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity:0; }
+      to { opacity:1; }
+    }
+
+    /* ======= RESPONSIVE ======= */
+
+    @media (max-width: 768px) {
+
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .inhalador-layout {
+        flex-direction: column;
+      }
+
+      .comparison-tabs {
+        flex-direction: column;
+      }
+
+      .tab {
+        width: 100%;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO -->
+
+  <header>
+
+    <div class="header-content">
+
+      <div class="header-text">
+
+        <h1>TÉCNICAS INHALATORIAS</h1>
+
+        <p>
+          Aprenda el uso correcto de cada inhalador
+          para que el medicamento llegue mejor
+          a sus pulmones.
+        </p>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <div class="container">
+
+    <!-- INTRODUCCIÓN -->
+
+    <section class="section">
+
+      <h2>¿Qué es un inhalador?</h2>
+
+      <p>
+        Un inhalador es un dispositivo que permite
+        administrar medicamentos directamente hacia
+        los pulmones.
+      </p>
+
+      <p>
+        Dependiendo del tipo de inhalador,
+        la técnica puede cambiar significativamente.
+        Una buena técnica inhalatoria mejora
+        el tratamiento y ayuda a controlar
+        mejor los síntomas respiratorios.
+      </p>
+
+      <div class="highlight-box">
+
+        <h3>Importante</h3>
+
+        <p>
+          Aunque tenga el medicamento correcto,
+          una técnica inadecuada puede hacer
+          que gran parte del medicamento quede
+          en la boca o garganta y no llegue
+          correctamente a los pulmones.
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- TÉCNICAS INHALATORIAS -->
+
+    <section class="section">
+
+      <h2>Tipos de inhaladores y técnica correcta</h2>
+
+      <div class="comparison-tabs">
+
+        <button class="tab active"
+        data-tab="mdi">
+          Dosis Medida (MDI)
+        </button>
+
+        <button class="tab"
+        data-tab="multidosis">
+          Multidosis
+        </button>
+
+        <button class="tab"
+        data-tab="dpi">
+          DPI
+        </button>
+
+        <button class="tab"
+        data-tab="capsula">
+          Cápsula
+        </button>
+
+      </div>
+            <!-- MDI -->
+
+      <div class="tab-content active"
+      id="mdi-content">
+
+        <div class="inhalador-layout">
+
+          <div class="inhalador-img">
+
+            <img
+            src="images/mdi.png"
+            alt="Inhalador dosis medida">
+
+          </div>
+
+          <div class="inhalador-info">
+
+            <h3>
+              Inhalador de Dosis Medida (MDI)
+            </h3>
+
+            <p>
+              Este inhalador libera una dosis exacta
+              del medicamento al presionar el cartucho.
+              Requiere coordinación entre el disparo
+              y la inhalación.
+            </p>
+
+            <div class="highlight-box">
+
+              <h3>
+                Técnica correcta
+              </h3>
+
+              <ol class="steps-list">
+
+                <li>
+                  Retire la tapa del inhalador.
+                </li>
+
+                <li>
+                  Agite bien el inhalador durante
+                  unos segundos.
+                </li>
+
+                <li>
+                  Exhale suavemente antes
+                  de inhalar.
+                </li>
+
+                <li>
+                  Coloque la boquilla entre
+                  sus labios y selle bien.
+                </li>
+
+                <li>
+                  Comience una inhalación
+                  lenta y profunda mientras
+                  presiona el inhalador.
+                </li>
+
+                <li>
+                  Continúe inhalando lentamente
+                  hasta llenar completamente
+                  sus pulmones.
+                </li>
+
+                <li>
+                  Mantenga la respiración
+                  entre 5 y 10 segundos.
+                </li>
+
+                <li>
+                  Exhale lentamente.
+                </li>
+
+              </ol>
+
+            </div>
+
+            <h3>
+              Ejemplos frecuentes
+            </h3>
+
+            <span class="med-badge">
+              Salbutamol
+            </span>
+
+            <span class="med-badge">
+              Berodual
+            </span>
+
+            <span class="med-badge">
+              Seretide
+            </span>
+
+            <span class="med-badge">
+              Fluticasona
+            </span>
+
+            <div class="highlight-box">
+
+              <h3>
+                Consejo importante
+              </h3>
+
+              <p>
+                Este inhalador funciona mejor
+                cuando se realiza una inhalación
+                lenta y profunda.
+              </p>
+
+              <p>
+                En algunos pacientes puede
+                recomendarse el uso de una
+                aerocámara.
+              </p>
+
+            </div>
+
+            <a href="#"
+            class="video-button">
+
+              ▶ Ver técnica en video
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+            <!-- MULTIDOSIS -->
+
+      <div class="tab-content"
+      id="multidosis-content">
+
+        <div class="inhalador-layout">
+
+          <div class="inhalador-img">
+
+            <img
+            src="images/multidosis.png"
+            alt="Inhalador multidosis">
+
+          </div>
+
+          <div class="inhalador-info">
+
+            <h3>
+              Inhalador de Polvo Seco Multidosis
+            </h3>
+
+            <p>
+              Este tipo de inhalador contiene
+              varias dosis del medicamento
+              almacenadas dentro del dispositivo.
+              No necesita gas propulsor y depende
+              de la fuerza de su inhalación.
+            </p>
+
+            <div class="highlight-box">
+
+              <h3>
+                Técnica correcta
+              </h3>
+
+              <ol class="steps-list">
+
+                <li>
+                  Abra el inhalador siguiendo
+                  las instrucciones del dispositivo.
+                </li>
+
+                <li>
+                  Prepare o cargue la dosis.
+                </li>
+
+                <li>
+                  Exhale suavemente,
+                  lejos del inhalador.
+                </li>
+
+                <li>
+                  Coloque la boquilla
+                  entre sus labios
+                  sellando correctamente.
+                </li>
+
+                <li>
+                  Inspire de forma
+                  rápida, fuerte y profunda.
+                </li>
+
+                <li>
+                  Retire el dispositivo
+                  de la boca.
+                </li>
+
+                <li>
+                  Mantenga el aire
+                  entre 5 y 10 segundos.
+                </li>
+
+                <li>
+                  Exhale lentamente.
+                </li>
+
+              </ol>
+
+            </div>
+
+            <h3>
+              Ejemplos frecuentes
+            </h3>
+
+            <span class="med-badge">
+              Symbicort Turbuhaler
+            </span>
+
+            <span class="med-badge">
+              Seretide Diskus
+            </span>
+
+            <span class="med-badge">
+              Relvar Ellipta
+            </span>
+
+            <span class="med-badge">
+              Ultibro Breezhaler
+            </span>
+
+            <div class="highlight-box">
+
+              <h3>
+                Consejo importante
+              </h3>
+
+              <p>
+                Este inhalador necesita una
+                inhalación rápida y fuerte
+                para movilizar correctamente
+                el medicamento hacia
+                los pulmones.
+              </p>
+
+              <p>
+                Nunca exhale dentro
+                del dispositivo,
+                ya que la humedad puede
+                alterar el medicamento.
+              </p>
+
+            </div>
+
+            <a href="#"
+            class="video-button">
+
+              ▶ Ver técnica en video
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+            <!-- DPI -->
+
+      <div class="tab-content"
+      id="dpi-content">
+
+        <div class="inhalador-layout">
+
+          <div class="inhalador-img">
+
+            <img
+            src="images/dpi.png"
+            alt="Inhalador DPI">
+
+          </div>
+
+          <div class="inhalador-info">
+
+            <h3>
+              Inhalador de Polvo Seco (DPI)
+            </h3>
+
+            <p>
+              Este inhalador administra
+              el medicamento en forma
+              de polvo seco.
+              No necesita propulsor,
+              pero requiere una inhalación
+              rápida y fuerte para funcionar
+              correctamente.
+            </p>
+
+            <div class="highlight-box">
+
+              <h3>
+                Técnica correcta
+              </h3>
+
+              <ol class="steps-list">
+
+                <li>
+                  Abra el dispositivo
+                  según las instrucciones.
+                </li>
+
+                <li>
+                  Cargue la dosis
+                  del medicamento.
+                </li>
+
+                <li>
+                  Exhale suavemente
+                  lejos del inhalador.
+                </li>
+
+                <li>
+                  Selle completamente
+                  la boquilla con sus labios.
+                </li>
+
+                <li>
+                  Inspire rápida,
+                  fuerte y profundamente.
+                </li>
+
+                <li>
+                  Retire el inhalador
+                  de la boca.
+                </li>
+
+                <li>
+                  Mantenga el aire
+                  entre 5 y 10 segundos.
+                </li>
+
+                <li>
+                  Exhale lentamente.
+                </li>
+
+              </ol>
+
+            </div>
+
+            <h3>
+              Ejemplos frecuentes
+            </h3>
+
+            <span class="med-badge">
+              Diskus
+            </span>
+
+            <span class="med-badge">
+              Ellipta
+            </span>
+
+            <span class="med-badge">
+              Turbuhaler
+            </span>
+
+            <span class="med-badge">
+              Easyhaler
+            </span>
+
+            <div class="highlight-box">
+
+              <h3>
+                Consejo importante
+              </h3>
+
+              <p>
+                Este inhalador requiere
+                una inhalación fuerte
+                para lograr movilizar
+                adecuadamente el polvo
+                hacia los pulmones.
+              </p>
+
+              <p>
+                Nunca sople dentro
+                del inhalador.
+              </p>
+
+            </div>
+
+            <a href="#"
+            class="video-button">
+
+              ▶ Ver técnica en video
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+            <!-- CÁPSULA -->
+
+      <div class="tab-content"
+      id="capsula-content">
+
+        <div class="inhalador-layout">
+
+          <div class="inhalador-img">
+
+            <img
+            src="images/capsula.png"
+            alt="Inhalador de cápsula">
+
+          </div>
+
+          <div class="inhalador-info">
+
+            <h3>
+              Inhalador de Cápsula de Polvo Seco
+            </h3>
+
+            <p>
+              Este tipo de inhalador utiliza
+              cápsulas individuales que contienen
+              el medicamento en polvo.
+              La cápsula debe perforarse
+              antes de inhalar.
+            </p>
+
+            <div class="highlight-box">
+
+              <h3>
+                Técnica correcta
+              </h3>
+
+              <ol class="steps-list">
+
+                <li>
+                  Abra el dispositivo.
+                </li>
+
+                <li>
+                  Coloque la cápsula
+                  en el compartimento indicado.
+                </li>
+
+                <li>
+                  Cierre el inhalador.
+                </li>
+
+                <li>
+                  Perfore la cápsula
+                  según el mecanismo
+                  del dispositivo.
+                </li>
+
+                <li>
+                  Exhale suavemente
+                  lejos del inhalador.
+                </li>
+
+                <li>
+                  Selle firmemente
+                  sus labios alrededor
+                  de la boquilla.
+                </li>
+
+                <li>
+                  Inspire rápida,
+                  fuerte y profundamente.
+                </li>
+
+                <li>
+                  Mantenga el aire
+                  entre 5 y 10 segundos.
+                </li>
+
+                <li>
+                  Exhale lentamente.
+                </li>
+
+                <li>
+                  Revise la cápsula.
+                  Si aún queda medicamento,
+                  repita la inhalación.
+                </li>
+
+              </ol>
+
+            </div>
+
+            <h3>
+              Ejemplos frecuentes
+            </h3>
+
+            <span class="med-badge">
+              Spiriva Handihaler
+            </span>
+
+            <span class="med-badge">
+              Onbrez Breezhaler
+            </span>
+
+            <span class="med-badge">
+              Seebri Breezhaler
+            </span>
+
+            <span class="med-badge">
+              Ultibro Breezhaler
+            </span>
+
+            <div class="highlight-box">
+
+              <h3>
+                Consejo importante
+              </h3>
+
+              <p>
+                Nunca trague la cápsula.
+                La cápsula debe colocarse
+                dentro del inhalador
+                y perforarse antes
+                de usarla.
+              </p>
+
+              <p>
+                Escuchar vibración
+                de la cápsula durante
+                la inhalación puede indicar
+                una técnica adecuada.
+              </p>
+
+            </div>
+
+            <a href="#"
+            class="video-button">
+
+              ▶ Ver técnica en video
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+        <!-- RESUMEN RÁPIDO -->
+
+    <section class="section">
+
+      <h2>Resumen rápido de técnica inhalatoria</h2>
+
+      <p>
+        Cada inhalador tiene una técnica
+        distinta. Recuerde esta regla simple:
+      </p>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>
+              Tipo de inhalador
+            </th>
+
+            <th>
+              Cómo inhalar
+            </th>
+
+            <th>
+              ¿Usar aerocámara?
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>
+              Dosis Medida (MDI)
+            </td>
+
+            <td>
+              Lento y profundo
+            </td>
+
+            <td>
+              Sí, recomendado
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Polvo Seco Multidosis
+            </td>
+
+            <td>
+              Rápido y fuerte
+            </td>
+
+            <td>
+              No
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              DPI (Polvo Seco)
+            </td>
+
+            <td>
+              Rápido y fuerte
+            </td>
+
+            <td>
+              No
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Cápsula de Polvo Seco
+            </td>
+
+            <td>
+              Fuerte y profunda
+            </td>
+
+            <td>
+              No
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+    <!-- FAQ -->
+
+    <section class="section">
+
+      <h2>
+        Preguntas frecuentes
+      </h2>
+
+      <div class="faq-item">
+
+        <div class="faq-question">
+
+          ¿Cómo sé si estoy usando bien mi inhalador?
+
+          <span>+</span>
+
+        </div>
+
+        <div class="faq-answer">
+
+          <p>
+            Una buena técnica permite
+            que el medicamento llegue
+            correctamente a los pulmones.
+            Si siente mucho medicamento
+            en la boca o garganta,
+            podría necesitar mejorar
+            la técnica.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="faq-item">
+
+        <div class="faq-question">
+
+          ¿Por qué debo mantener el aire
+          después de inhalar?
+
+          <span>+</span>
+
+        </div>
+
+        <div class="faq-answer">
+
+          <p>
+            Mantener la respiración
+            entre 5 y 10 segundos ayuda
+            a que el medicamento se
+            deposite mejor en los pulmones.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="faq-item">
+
+        <div class="faq-question">
+
+          ¿Puedo usar cualquier técnica
+          para cualquier inhalador?
+
+          <span>+</span>
+
+        </div>
+
+        <div class="faq-answer">
+
+          <p>
+            No. Algunos inhaladores
+            requieren una inhalación lenta
+            y otros una inhalación rápida
+            y fuerte.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="faq-item">
+
+        <div class="faq-question">
+
+          ¿Debo limpiar mi inhalador?
+
+          <span>+</span>
+
+        </div>
+
+        <div class="faq-answer">
+
+          <p>
+            Sí. La limpieza adecuada
+            ayuda a mantener el buen
+            funcionamiento del dispositivo.
+            Revise siempre las indicaciones
+            del fabricante.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <footer style="
+  text-align:center;
+  padding:30px;
+  color:#7a8a97;
+  font-size:0.95rem;">
+
+    © 2025 FPAIR —
+    Educación Respiratoria
+
+  </footer>
+
+  <script>
+
+    /* ===== TABS ===== */
+
+    const tabs =
+    document.querySelectorAll('.tab');
+
+    const contents =
+    document.querySelectorAll(
+      '.tab-content'
+    );
+
+    tabs.forEach(tab => {
+
+      tab.addEventListener(
+        'click',
+        () => {
+
+        tabs.forEach(t =>
+          t.classList.remove('active')
+        );
+
+        contents.forEach(c =>
+          c.classList.remove('active')
+        );
+
+        tab.classList.add('active');
+
+        document
+        .getElementById(
+          tab.dataset.tab + '-content'
+        )
+        .classList.add('active');
+
+      });
+
+    });
+
+    /* ===== FAQ ===== */
+
+    document
+    .querySelectorAll(
+      '.faq-question'
+    )
+    .forEach(question => {
+
+      question.addEventListener(
+        'click',
+        () => {
+
+        const answer =
+        question.nextElementSibling;
+
+        const isOpen =
+        answer.classList.toggle(
+          'active'
+        );
+
+        question
+        .querySelector('span')
+        .textContent =
+        isOpen ? '-' : '+';
+
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
