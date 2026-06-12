@@ -670,3 +670,232 @@ body{
 
     font-weight:700;
 }
+/* ==========================================
+   FPAIR EXAM PAGES
+========================================== */
+
+.exam-layout{
+    display:flex;
+    min-height:100vh;
+}
+
+/* SIDEBAR INTERNA */
+
+.exam-sidebar{
+    width:290px;
+    min-width:290px;
+    height:100vh;
+
+    position:sticky;
+    top:0;
+
+    padding:30px 24px;
+
+    background:
+    rgba(10,20,35,.75);
+
+    backdrop-filter:blur(18px);
+
+    border-right:
+    1px solid var(--border-color);
+
+    overflow-y:auto;
+}
+
+.back-home{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    text-decoration:none;
+    color:var(--text-secondary);
+
+    margin-bottom:35px;
+
+    transition:.25s;
+}
+
+.back-home:hover{
+    color:white;
+}
+
+.exam-logo{
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    margin-bottom:40px;
+}
+
+.exam-logo img{
+    width:54px;
+    height:54px;
+    object-fit:contain;
+}
+
+.exam-logo h3{
+    font-family:'Poppins';
+    font-size:24px;
+}
+
+.exam-logo p{
+    color:var(--text-secondary);
+    font-size:14px;
+}
+
+/* NAV EXAM */
+
+.exam-nav{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.exam-nav a{
+    text-decoration:none;
+    color:var(--text-secondary);
+
+    padding:14px 18px;
+    border-radius:16px;
+
+    transition:.25s;
+}
+
+.exam-nav a:hover{
+    background:
+    rgba(66,201,255,.10);
+
+    color:white;
+}
+
+/* MAIN */
+
+.exam-main{
+    flex:1;
+    padding:50px;
+}
+
+/* HERO INTERNO */
+
+.exam-hero{
+    display:grid;
+    grid-template-columns:
+    1.3fr 1fr;
+
+    gap:40px;
+    align-items:center;
+
+    margin-bottom:80px;
+}
+
+.exam-hero h1{
+    font-family:'Poppins';
+    font-size:72px;
+    line-height:1;
+    margin-bottom:20px;
+}
+
+.exam-hero p{
+    color:var(--text-secondary);
+    font-size:20px;
+    line-height:1.8;
+    max-width:700px;
+}
+
+.exam-hero-image{
+    border-radius:30px;
+    overflow:hidden;
+
+    border:
+    1px solid var(--border-color);
+
+    background:
+    rgba(255,255,255,.04);
+
+    min-height:420px;
+}
+
+.exam-hero-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* SECTIONS */
+
+.section{
+    scroll-margin-top:80px;
+}
+
+/* LISTAS */
+
+.hero-card ul,
+.hero-card ol{
+    padding-left:20px;
+}
+
+.hero-card li{
+    margin-bottom:10px;
+}
+
+/* FAQ */
+
+#faq .hero-card h3{
+    margin-bottom:10px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1200px){
+
+    .exam-hero{
+        grid-template-columns:1fr;
+    }
+
+    .exam-hero h1{
+        font-size:56px;
+    }
+}
+
+@media(max-width:1000px){
+
+    .exam-layout{
+        flex-direction:column;
+    }
+
+    .exam-sidebar{
+        width:100%;
+        min-width:100%;
+        height:auto;
+        position:relative;
+    }
+
+    .exam-main{
+        padding:25px;
+    }
+
+    .exam-nav{
+        flex-direction:row;
+        overflow-x:auto;
+        padding-bottom:10px;
+    }
+
+    .exam-nav a{
+        white-space:nowrap;
+    }
+}
+
+@media(max-width:700px){
+
+    .exam-hero h1{
+        font-size:42px;
+    }
+
+    .exam-hero p{
+        font-size:17px;
+    }
+
+    .exam-main{
+        padding:20px;
+    }
+}
