@@ -899,3 +899,100 @@ body{
         padding:20px;
     }
 }
+/* ======================================
+   SPIROMETRY STEPPER PREMIUM
+====================================== */
+
+.spirometry-stepper{
+    padding:40px;
+}
+
+.step-progress{
+    margin-bottom:25px;
+
+    font-weight:700;
+    font-size:15px;
+
+    color:var(--accent);
+}
+
+.stepper-layout{
+    display:grid;
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:40px;
+    align-items:center;
+}
+
+.stepper-gif{
+    border-radius:28px;
+    overflow:hidden;
+
+    border:
+    1px solid var(--border-color);
+
+    min-height:380px;
+}
+
+.stepper-gif img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.stepper-content h3{
+    font-size:34px;
+    margin-bottom:18px;
+}
+
+.stepper-content p{
+    line-height:1.8;
+}
+
+.tip-box,
+.warning-box{
+    margin-top:24px;
+    padding:22px;
+    border-radius:22px;
+}
+
+.tip-box{
+    background:
+    rgba(66,201,255,.08);
+
+    border:
+    1px solid rgba(66,201,255,.18);
+}
+
+.warning-box{
+    background:
+    rgba(255,174,66,.08);
+
+    border:
+    1px solid rgba(255,174,66,.18);
+}
+
+.stepper-controls{
+    display:flex;
+    justify-content:space-between;
+
+    margin-top:35px;
+}
+
+.stepper-controls button:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+}
+
+@media(max-width:900px){
+
+    .stepper-layout{
+        grid-template-columns:1fr;
+    }
+
+    .stepper-content h3{
+        font-size:28px;
+    }
+
+}
