@@ -131,3 +131,174 @@ function smoothButtons(){
     });
 
 }
+// =====================================
+// FPAIR SPIROMETRY STEPPER
+// =====================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const steps = [
+
+        {
+            title: "Inspiración máxima",
+            description:
+                "Inspira profundamente hasta llenar completamente tus pulmones.",
+
+            tip:
+                "Imagina que debes llenar completamente el pecho antes de comenzar.",
+
+            error:
+                "Inspirar poco aire antes del soplido."
+        },
+
+        {
+            title: "Sellar boquilla",
+            description:
+                "Coloca la boquilla firmemente entre tus labios sin dejar fugas.",
+
+            tip:
+                "Aprieta suavemente los labios alrededor de la boquilla.",
+
+            error:
+                "Fuga de aire alrededor de la boquilla."
+        },
+
+        {
+            title: "Soplido explosivo",
+            description:
+                "Sopla lo más fuerte y rápido posible inmediatamente.",
+
+            tip:
+                "Piensa en soplar como apagar muchas velas al mismo tiempo.",
+
+            error:
+                "Inicio lento o poco explosivo."
+        },
+
+        {
+            title: "Seguir soplando",
+            description:
+                "Continúa expulsando aire hasta que el profesional lo indique.",
+
+            tip:
+                "Aunque parezca que no queda aire, sigue soplando.",
+
+            error:
+                "Finalizar el examen demasiado pronto."
+        },
+
+        {
+            title: "Inspiración final",
+            description:
+                "Inspira rápidamente al terminar para completar la curva.",
+
+            tip:
+                "Haz una inspiración rápida y fuerte.",
+
+            error:
+                "No realizar inspiración final."
+        },
+
+        {
+            title: "Repetir maniobra",
+            description:
+                "El examen suele repetirse varias veces para asegurar calidad.",
+
+            tip:
+                "No te preocupes si debes repetirla varias veces.",
+
+            error:
+                "Cansarse demasiado rápido o rendirse."
+        }
+
+    ];
+
+    let currentStep = 0;
+
+    const stepTitle =
+        document.getElementById("stepTitle");
+
+    const stepDescription =
+        document.getElementById("stepDescription");
+
+    const stepTip =
+        document.getElementById("stepTip");
+
+    const stepError =
+        document.getElementById("stepError");
+
+    const stepCounter =
+        document.getElementById("stepCounter");
+
+    const prevButton =
+        document.getElementById("prevStep");
+
+    const nextButton =
+        document.getElementById("nextStep");
+
+    if (
+        !stepTitle ||
+        !stepDescription ||
+        !stepTip ||
+        !stepError
+    ) return;
+
+    function updateStep() {
+
+        const step =
+            steps[currentStep];
+
+        stepTitle.textContent =
+            step.title;
+
+        stepDescription.textContent =
+            step.description;
+
+        stepTip.textContent =
+            step.tip;
+
+        stepError.textContent =
+            step.error;
+
+        stepCounter.textContent =
+            `Paso ${currentStep + 1} de ${steps.length}`;
+
+        prevButton.disabled =
+            currentStep === 0;
+
+        nextButton.textContent =
+            currentStep === steps.length - 1
+                ? "Finalizado ✓"
+                : "Siguiente →";
+    }
+
+    prevButton.addEventListener(
+        "click",
+        () => {
+
+            if (currentStep > 0) {
+                currentStep--;
+                updateStep();
+            }
+
+        }
+    );
+
+    nextButton.addEventListener(
+        "click",
+        () => {
+
+            if (
+                currentStep <
+                steps.length - 1
+            ) {
+                currentStep++;
+                updateStep();
+            }
+
+        }
+    );
+
+    updateStep();
+
+});
