@@ -1322,3 +1322,77 @@ body{
     }
 
 }
+/* ======================================
+   SIMULATOR MODE SWITCH
+====================================== */
+
+.simulator-mode-selector{
+    display:flex;
+    gap:14px;
+
+    margin-bottom:24px;
+    flex-wrap:wrap;
+}
+
+.mode-btn{
+    border:none;
+
+    padding:14px 22px;
+
+    border-radius:999px;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-size:15px;
+    font-weight:700;
+
+    transition:.25s;
+
+    background:
+    rgba(255,255,255,.05);
+
+    color:var(--text-color);
+
+    border:
+    1px solid
+    var(--border-color);
+}
+
+.mode-btn:hover{
+    transform:
+    translateY(-2px);
+}
+
+.mode-btn.active{
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(66,201,255,.22),
+        rgba(86,242,197,.14)
+    );
+
+    border:
+    1px solid
+    rgba(66,201,255,.25);
+
+    box-shadow:
+    0 0 24px
+    rgba(66,201,255,.12);
+}
+
+@media(max-width:700px){
+
+    .simulator-mode-selector{
+        flex-direction:column;
+    }
+
+    .mode-btn{
+        justify-content:center;
+    }
+
+}
