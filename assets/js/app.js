@@ -895,15 +895,26 @@ sum /
 dataArray.length;
 
 // =====================================
-// CALIBRACIÓN ATS MÁS ESTRICTA
+// ATS STRICT MODE
+// MUCHÍSIMO MÁS EXIGENTE
 // =====================================
 
+const noiseGate = 18;
+
+// eliminar ruido ambiente
+const cleanAverage =
+Math.max(
+0,
+average - noiseGate
+);
+
+// curva más agresiva
 const intensity =
 Math.min(
 Math.pow(
-average,
-1.18
-) * 0.9,
+cleanAverage,
+1.42
+) * 0.34,
 100
 );
 
