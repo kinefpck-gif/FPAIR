@@ -329,7 +329,8 @@ document
 });
 
 // =====================================
-// FPAIR SIMULATOR FIX
+// FPAIR SIMULATOR V2
+// PACIENTE / PROFESIONAL
 // =====================================
 
 window.addEventListener(
@@ -341,15 +342,16 @@ document.getElementById(
 "startSimulator"
 );
 
-if(!startBtn){
-console.log(
-"Simulador no encontrado"
-);
-return;
-}
+if(!startBtn) return;
 
-console.log(
-"Simulador cargado"
+const patientBtn =
+document.getElementById(
+"patientMode"
+);
+
+const professionalBtn =
+document.getElementById(
+"professionalMode"
 );
 
 const phase =
@@ -372,7 +374,54 @@ document.getElementById(
 "breathBar"
 );
 
+const circle =
+document.querySelector(
+".simulator-circle"
+);
+
 let running = false;
+
+let mode =
+"patient";
+
+// =====================================
+// MODE SWITCH
+// =====================================
+
+patientBtn.onclick =
+() => {
+
+mode = "patient";
+
+patientBtn.classList.add(
+"active"
+);
+
+professionalBtn.classList.remove(
+"active"
+);
+
+};
+
+professionalBtn.onclick =
+() => {
+
+mode =
+"professional";
+
+professionalBtn.classList.add(
+"active"
+);
+
+patientBtn.classList.remove(
+"active"
+);
+
+};
+
+// =====================================
+// START
+// =====================================
 
 startBtn.onclick =
 async function(){
@@ -387,9 +436,12 @@ true;
 startBtn.innerHTML =
 "Entrenando...";
 
+resetSimulator();
+
 await inhale();
 await explosive();
 await exhale();
+await finalInhale();
 await finish();
 
 running = false;
@@ -398,29 +450,40 @@ startBtn.disabled =
 false;
 
 startBtn.innerHTML =
-"Repetir práctica";
+`
+<i class="fa-solid fa-rotate-right"></i>
+Repetir práctica
+`;
 
 };
 
+// =====================================
+// PHASES
+// =====================================
+
 async function inhale(){
 
+setCircleState("inhale");
+
 phase.textContent =
-"Inspiración máxima";
+mode === "patient"
+? "Inspiración máxima"
+: "Preparación inspiratoria";
 
 instruction.innerHTML =
-"INSPIRE<br>PROFUNDO";
+mode === "patient"
+? "INSPIRE<br>PROFUNDO"
+: "INSPIRE<br>A CPT";
 
 for(let i=0;i<=100;i++){
 
 breathBar.style.width =
 i + "%";
 
-timer.textContent =
-Math.ceil(
-(100-i)/25
-);
+circle.style.transform =
+`scale(${1 + i/450})`;
 
-await wait(40);
+await wait(35);
 
 }
 
@@ -428,38 +491,82 @@ await wait(40);
 
 async function explosive(){
 
+setCircleState("explosive");
+
 phase.textContent =
-"Soplido explosivo";
+mode === "patient"
+? "Soplido fuerte"
+: "Inicio explosivo ATS";
 
 instruction.innerHTML =
-"¡SOPLE<br>FUERTE!";
-
-for(let i=3;i>=1;i--){
+mode === "patient"
+? "¡SOPLE<br>FUERTE!"
+: "EXPLOSIÓN<br>INICIAL";
 
 timer.textContent =
-i;
+"";
 
-await wait(1000);
-
-}
+await wait(1800);
 
 }
 
 async function exhale(){
 
-phase.textContent =
-"Siga soplando";
+setCircleState("exhale");
 
-instruction.innerHTML =
-"SIGA<br>SOPLANDO";
+phase.textContent =
+mode === "patient"
+? "Continúe soplando"
+: "Fase espiratoria";
+
+let messagesPatient = [
+"SIGA<br>SOPLANDO",
+"MUY<br>BIEN",
+"SIGA UN<br>POCO MÁS",
+"CASI<br>TERMINA"
+];
+
+let messagesProfessional = [
+"ESPIRACIÓN<br>SOSTENIDA",
+"EVALUANDO<br>FLUJO",
+"VIGILAR<br>FINAL PRECOZ",
+"ESFUERZO<br>ADECUADO"
+];
+
+const messages =
+mode === "patient"
+? messagesPatient
+: messagesProfessional;
 
 for(let i=100;i>=0;i--){
 
 breathBar.style.width =
 i + "%";
 
-timer.textContent =
-Math.ceil(i/16);
+circle.style.transform =
+`scale(${1 + i/500})`;
+
+if(i > 75){
+
+instruction.innerHTML =
+messages[0];
+
+} else if(i > 50){
+
+instruction.innerHTML =
+messages[1];
+
+} else if(i > 25){
+
+instruction.innerHTML =
+messages[2];
+
+} else {
+
+instruction.innerHTML =
+messages[3];
+
+}
 
 await wait(70);
 
@@ -467,20 +574,90 @@ await wait(70);
 
 }
 
-async function finish(){
+async function finalInhale(){
+
+setCircleState("inhale");
 
 phase.textContent =
-"Excelente";
+mode === "patient"
+? "Inspiración final"
+: "Inspiración post maniobra";
 
 instruction.innerHTML =
-"✅<br>MUY BIEN";
+mode === "patient"
+? "INSPIRE<br>RÁPIDO"
+: "INSPIRACIÓN<br>FINAL";
+
+await wait(1800);
+
+}
+
+async function finish(){
+
+setCircleState("success");
+
+phase.textContent =
+mode === "patient"
+? "Excelente práctica"
+: "Evaluación completada";
+
+instruction.innerHTML =
+mode === "patient"
+? "✅<br>MUY BIEN"
+: `
+✓ MANIOBRA<br>
+ACEPTABLE
+`;
 
 timer.textContent =
 "✓";
 
-await wait(1500);
+await wait(1200);
 
 }
+
+// =====================================
+// VISUAL STATES
+// =====================================
+
+function setCircleState(state){
+
+circle.classList.remove(
+"state-inhale",
+"state-exhale",
+"state-explosive",
+"state-success"
+);
+
+circle.classList.add(
+`state-${state}`
+);
+
+}
+
+// =====================================
+// RESET
+// =====================================
+
+function resetSimulator(){
+
+breathBar.style.width =
+"0%";
+
+timer.textContent =
+"";
+
+circle.style.transform =
+"scale(1)";
+
+instruction.innerHTML =
+"LISTO";
+
+}
+
+// =====================================
+// WAIT
+// =====================================
 
 function wait(ms){
 
