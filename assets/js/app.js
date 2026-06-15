@@ -900,8 +900,72 @@ average * 1.8,
 100
 );
 
+// =====================================
+// MEDIDOR DINÁMICO ATS
+// =====================================
+
 soundMeter.style.width =
 `${intensity}%`;
+
+// BAJO ESFUERZO
+if(intensity < 30){
+
+soundMeter.style.background =
+`
+linear-gradient(
+90deg,
+#ef4444,
+#f87171
+)
+`;
+
+soundMeter.style.boxShadow =
+`
+0 0 16px
+rgba(239,68,68,.35)
+`;
+
+}
+
+// ESFUERZO MODERADO
+else if(intensity < 65){
+
+soundMeter.style.background =
+`
+linear-gradient(
+90deg,
+#facc15,
+#f59e0b
+)
+`;
+
+soundMeter.style.boxShadow =
+`
+0 0 18px
+rgba(250,204,21,.35)
+`;
+
+}
+
+// SOPLIDO FUERTE / VALIDADO
+else{
+
+soundMeter.style.background =
+`
+linear-gradient(
+90deg,
+#22c55e,
+#4ade80
+)
+`;
+
+soundMeter.style.boxShadow =
+`
+0 0 22px
+rgba(34,197,94,.4)
+`;
+
+}
 
 analyzeIntensity(
 intensity
