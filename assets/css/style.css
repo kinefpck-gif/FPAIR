@@ -1396,3 +1396,69 @@ body{
     }
 
 }
+/* ======================================
+   SIMULATOR STATES
+====================================== */
+
+.simulator-circle{
+    transition:
+    transform .8s ease,
+    background .5s ease,
+    box-shadow .5s ease;
+}
+
+.state-inhale{
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(66,201,255,.35),
+        rgba(66,201,255,.06)
+    );
+
+    box-shadow:
+    0 0 50px
+    rgba(66,201,255,.18);
+}
+
+.state-explosive{
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,174,66,.35),
+        rgba(255,174,66,.08)
+    );
+
+    box-shadow:
+    0 0 60px
+    rgba(255,174,66,.18);
+}
+
+.state-exhale{
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(86,242,197,.25),
+        rgba(86,242,197,.05)
+    );
+
+    box-shadow:
+    0 0 55px
+    rgba(86,242,197,.15);
+}
+
+.state-success{
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(90,220,130,.30),
+        rgba(90,220,130,.08)
+    );
+
+    box-shadow:
+    0 0 60px
+    rgba(90,220,130,.20);
+}
