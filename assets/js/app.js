@@ -915,7 +915,7 @@ soundMeter.style.width =
 `${intensity}%`;
 
 // BAJO ESFUERZO
-if(intensity < 30){
+if(intensity < 42){
 
 soundMeter.style.background =
 `
@@ -935,7 +935,7 @@ rgba(239,68,68,.35)
 }
 
 // ESFUERZO MODERADO
-else if(intensity < 65){
+else if(intensity < 82){
 
 soundMeter.style.background =
 `
