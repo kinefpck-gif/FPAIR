@@ -329,244 +329,169 @@ document
 });
 
 // =====================================
-// FPAIR SPIROMETRY SIMULATOR
+// FPAIR SIMULATOR FIX
 // =====================================
 
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener(
+"load",
+() => {
 
-    const startBtn =
-        document.getElementById(
-            "startSimulator"
-        );
+const startBtn =
+document.getElementById(
+"startSimulator"
+);
 
-    if (!startBtn) return;
+if(!startBtn){
+console.log(
+"Simulador no encontrado"
+);
+return;
+}
 
-    const phase =
-        document.getElementById(
-            "simulatorPhase"
-        );
+console.log(
+"Simulador cargado"
+);
 
-    const timer =
-        document.getElementById(
-            "simulatorTimer"
-        );
+const phase =
+document.getElementById(
+"simulatorPhase"
+);
 
-    const instruction =
-        document.getElementById(
-            "simulatorInstruction"
-        );
+const timer =
+document.getElementById(
+"simulatorTimer"
+);
 
-    const breathBar =
-        document.getElementById(
-            "breathBar"
-        );
+const instruction =
+document.getElementById(
+"simulatorInstruction"
+);
 
-    const circle =
-        document.querySelector(
-            ".simulator-circle"
-        );
+const breathBar =
+document.getElementById(
+"breathBar"
+);
 
-    let running = false;
+let running = false;
 
-    startBtn.addEventListener(
-        "click",
-        async () => {
+startBtn.onclick =
+async function(){
 
-            if (running) return;
+if(running) return;
 
-            running = true;
+running = true;
 
-            startBtn.disabled = true;
-            startBtn.innerHTML =
-                `<i class="fa-solid fa-spinner fa-spin"></i>
-                Entrenando...`;
+startBtn.disabled =
+true;
 
-            // RESET
-            breathBar.style.width = "0%";
-            timer.textContent = "0";
+startBtn.innerHTML =
+"Entrenando...";
 
-            // ==========================
-            // FASE 1
-            // INSPIRAR
-            // ==========================
+await inhale();
+await explosive();
+await exhale();
+await finish();
 
-            phase.textContent =
-                "Inspiración máxima";
+running = false;
 
-            instruction.innerHTML =
-                "INSPIRE<br>PROFUNDO";
+startBtn.disabled =
+false;
 
-            circle.style.transform =
-                "scale(1.08)";
+startBtn.innerHTML =
+"Repetir práctica";
 
-            await animateBar(
-                0,
-                100,
-                4000
-            );
+};
 
-            // ==========================
-            // FASE 2
-            // SOPLIDO EXPLOSIVO
-            // ==========================
+async function inhale(){
 
-            phase.textContent =
-                "Soplido explosivo";
+phase.textContent =
+"Inspiración máxima";
 
-            circle.style.transform =
-                "scale(1)";
+instruction.innerHTML =
+"INSPIRE<br>PROFUNDO";
 
-            instruction.innerHTML =
-                "¡SOPLE<br>FUERTE!";
+for(let i=0;i<=100;i++){
 
-            breathBar.style.width =
-                "100%";
+breathBar.style.width =
+i + "%";
 
-            for (
-                let i = 3;
-                i >= 1;
-                i--
-            ) {
+timer.textContent =
+Math.ceil(
+(100-i)/25
+);
 
-                timer.textContent = i;
+await wait(40);
 
-                await wait(1000);
-            }
+}
 
-            // ==========================
-            // FASE 3
-            // EXHALACIÓN
-            // ==========================
+}
 
-            phase.textContent =
-                "Continúe soplando";
+async function explosive(){
 
-            instruction.innerHTML =
-                "SIGA<br>SOPLANDO";
+phase.textContent =
+"Soplido explosivo";
 
-            timer.textContent =
-                "6";
+instruction.innerHTML =
+"¡SOPLE<br>FUERTE!";
 
-            await exhalationPhase();
+for(let i=3;i>=1;i--){
 
-            // ==========================
-            // FASE 4
-            // INSP FINAL
-            // ==========================
+timer.textContent =
+i;
 
-            phase.textContent =
-                "Inspiración final";
+await wait(1000);
 
-            instruction.innerHTML =
-                "INSPIRE<br>RÁPIDO";
+}
 
-            circle.style.transform =
-                "scale(1.05)";
+}
 
-            breathBar.style.width =
-                "100%";
+async function exhale(){
 
-            await wait(2000);
+phase.textContent =
+"Siga soplando";
 
-            // ==========================
-            // FINAL
-            // ==========================
+instruction.innerHTML =
+"SIGA<br>SOPLANDO";
 
-            phase.textContent =
-                "Práctica completada";
+for(let i=100;i>=0;i--){
 
-            instruction.innerHTML =
-                "✅<br>EXCELENTE";
+breathBar.style.width =
+i + "%";
 
-            timer.textContent =
-                "✓";
+timer.textContent =
+Math.ceil(i/16);
 
-            breathBar.style.width =
-                "100%";
+await wait(70);
 
-            circle.style.transform =
-                "scale(1)";
+}
 
-            startBtn.disabled =
-                false;
+}
 
-            startBtn.innerHTML =
-                `<i class="fa-solid fa-play"></i>
-                Repetir práctica`;
+async function finish(){
 
-            running = false;
+phase.textContent =
+"Excelente";
 
-        }
-    );
+instruction.innerHTML =
+"✅<br>MUY BIEN";
 
-    async function exhalationPhase() {
+timer.textContent =
+"✓";
 
-        breathBar.style.width =
-            "100%";
+await wait(1500);
 
-        const seconds = 6;
+}
 
-        for (
-            let i = seconds;
-            i >= 0;
-            i--
-        ) {
+function wait(ms){
 
-            timer.textContent =
-                i;
+return new Promise(
+resolve =>
+setTimeout(
+resolve,
+ms
+)
+);
 
-            breathBar.style.width =
-                `${(i / seconds) * 100}%`;
-
-            await wait(1000);
-        }
-
-    }
-
-    async function animateBar(
-        from,
-        to,
-        duration
-    ) {
-
-        const frames = 60;
-        const step =
-            duration / frames;
-
-        for (
-            let i = 0;
-            i <= frames;
-            i++
-        ) {
-
-            const progress =
-                from +
-                (
-                    (to - from)
-                    *
-                    i
-                ) / frames;
-
-            breathBar.style.width =
-                `${progress}%`;
-
-            await wait(step);
-        }
-
-    }
-
-    function wait(ms) {
-
-        return new Promise(
-            resolve =>
-                setTimeout(
-                    resolve,
-                    ms
-                )
-        );
-
-    }
+}
 
 });
-
-console.log("FPAIR JS cargado");
