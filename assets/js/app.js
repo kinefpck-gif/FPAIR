@@ -696,3 +696,396 @@ ms
 }
 
 });
+
+// =====================================
+// FPAIR MICROPHONE ATS V1
+// =====================================
+
+window.addEventListener(
+"load",
+() => {
+
+const startMic =
+document.getElementById(
+"startMic"
+);
+
+if(!startMic) return;
+
+const stopMic =
+document.getElementById(
+"stopMic"
+);
+
+const micStatus =
+document.getElementById(
+"micStatus"
+);
+
+const micIndicator =
+document.getElementById(
+"micIndicator"
+);
+
+const soundMeter =
+document.getElementById(
+"soundMeter"
+);
+
+const micFeedback =
+document.getElementById(
+"micFeedback"
+);
+
+let audioContext;
+let analyser;
+let microphone;
+let stream;
+let animationFrame;
+
+let isBlowing = false;
+let blowStarted = false;
+let blowStartTime = 0;
+let maxIntensity = 0;
+
+startMic.addEventListener(
+"click",
+startMicrophone
+);
+
+stopMic.addEventListener(
+"click",
+stopMicrophone
+);
+
+// =====================================
+// START MIC
+// =====================================
+
+async function startMicrophone(){
+
+try{
+
+stream =
+await navigator
+.mediaDevices
+.getUserMedia({
+audio:true
+});
+
+audioContext =
+new AudioContext();
+
+analyser =
+audioContext
+.createAnalyser();
+
+microphone =
+audioContext
+.createMediaStreamSource(
+stream
+);
+
+microphone.connect(
+analyser
+);
+
+analyser.fftSize =
+512;
+
+startMic.disabled =
+true;
+
+stopMic.disabled =
+false;
+
+micStatus.textContent =
+"Escuchando soplido...";
+
+micIndicator.classList.add(
+"active"
+);
+
+micFeedback.innerHTML =
+"Comience cuando esté listo.";
+
+listenAudio();
+
+}catch(error){
+
+console.error(error);
+
+micStatus.textContent =
+"No fue posible acceder al micrófono.";
+
+micFeedback.innerHTML =
+"Debe permitir acceso al micrófono.";
+
+}
+
+}
+
+// =====================================
+// AUDIO LOOP
+// =====================================
+
+function listenAudio(){
+
+const dataArray =
+new Uint8Array(
+analyser.frequencyBinCount
+);
+
+function update(){
+
+analyser.getByteFrequencyData(
+dataArray
+);
+
+let volume = 0;
+
+for(let i=0;
+i<dataArray.length;
+i++){
+
+volume +=
+dataArray[i];
+
+}
+
+volume =
+volume /
+dataArray.length;
+
+const intensity =
+Math.min(
+volume * 2,
+100
+);
+
+soundMeter.style.width =
+`${intensity}%`;
+
+analyzeBlow(
+intensity
+);
+
+animationFrame =
+requestAnimationFrame(
+update
+);
+
+}
+
+update();
+
+}
+
+// =====================================
+// BLOW ANALYSIS
+// =====================================
+
+function analyzeBlow(
+intensity
+){
+
+// INICIO DEL SOPLIDO
+if(
+intensity > 18 &&
+!blowStarted
+){
+
+blowStarted =
+true;
+
+blowStartTime =
+Date.now();
+
+micStatus.textContent =
+"Soplido detectado";
+
+maxIntensity =
+intensity;
+
+if(
+mode ===
+"patient"
+){
+
+micFeedback.innerHTML =
+`
+✓ Buen inicio.
+Siga soplando
+todo lo posible.
+`;
+
+}else{
+
+micFeedback.innerHTML =
+`
+Inicio detectado.<br>
+Evaluando explosividad ATS.
+`;
+
+}
+
+}
+
+// DURANTE SOPLIDO
+if(blowStarted){
+
+if(
+intensity >
+maxIntensity
+){
+
+maxIntensity =
+intensity;
+
+}
+
+const elapsed =
+(
+Date.now()
+-
+blowStartTime
+)
+/1000;
+
+// SILENCIO = FIN
+if(
+intensity < 8
+){
+
+if(elapsed < 2){
+
+if(
+mode ===
+"patient"
+){
+
+micFeedback.innerHTML =
+`
+⚠ Parece que
+terminó muy rápido.
+
+Intente continuar
+el soplido.
+`;
+
+}else{
+
+micFeedback.innerHTML =
+`
+⚠ Final precoz
+probable.
+`;
+
+}
+
+}else{
+
+if(
+mode ===
+"patient"
+){
+
+micFeedback.innerHTML =
+`
+✓ Muy buen esfuerzo.
+`;
+
+}else{
+
+micFeedback.innerHTML =
+`
+✓ Maniobra
+aceptable.
+
+Esfuerzo:
+${estimateEffort()}
+`;
+
+}
+
+}
+
+blowStarted =
+false;
+
+}
+
+}
+
+}
+
+// =====================================
+// EFFORT
+// =====================================
+
+function estimateEffort(){
+
+if(maxIntensity > 70){
+
+return "alto";
+
+}
+
+if(maxIntensity > 40){
+
+return "moderado";
+
+}
+
+return "bajo";
+
+}
+
+// =====================================
+// STOP MIC
+// =====================================
+
+function stopMicrophone(){
+
+cancelAnimationFrame(
+animationFrame
+);
+
+if(stream){
+
+stream
+.getTracks()
+.forEach(track =>
+track.stop()
+);
+
+}
+
+soundMeter.style.width =
+"0%";
+
+micIndicator.classList.remove(
+"active"
+);
+
+micStatus.textContent =
+"Micrófono detenido";
+
+micFeedback.innerHTML =
+"Entrenamiento finalizado.";
+
+startMic.disabled =
+false;
+
+stopMic.disabled =
+true;
+
+blowStarted =
+false;
+
+maxIntensity =
+0;
+
+}
+
+});
