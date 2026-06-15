@@ -327,3 +327,244 @@ document
     );
 
 });
+
+// =====================================
+// FPAIR SPIROMETRY SIMULATOR
+// =====================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const startBtn =
+        document.getElementById(
+            "startSimulator"
+        );
+
+    if (!startBtn) return;
+
+    const phase =
+        document.getElementById(
+            "simulatorPhase"
+        );
+
+    const timer =
+        document.getElementById(
+            "simulatorTimer"
+        );
+
+    const instruction =
+        document.getElementById(
+            "simulatorInstruction"
+        );
+
+    const breathBar =
+        document.getElementById(
+            "breathBar"
+        );
+
+    const circle =
+        document.querySelector(
+            ".simulator-circle"
+        );
+
+    let running = false;
+
+    startBtn.addEventListener(
+        "click",
+        async () => {
+
+            if (running) return;
+
+            running = true;
+
+            startBtn.disabled = true;
+            startBtn.innerHTML =
+                `<i class="fa-solid fa-spinner fa-spin"></i>
+                Entrenando...`;
+
+            // RESET
+            breathBar.style.width = "0%";
+            timer.textContent = "0";
+
+            // ==========================
+            // FASE 1
+            // INSPIRAR
+            // ==========================
+
+            phase.textContent =
+                "Inspiración máxima";
+
+            instruction.innerHTML =
+                "INSPIRE<br>PROFUNDO";
+
+            circle.style.transform =
+                "scale(1.08)";
+
+            await animateBar(
+                0,
+                100,
+                4000
+            );
+
+            // ==========================
+            // FASE 2
+            // SOPLIDO EXPLOSIVO
+            // ==========================
+
+            phase.textContent =
+                "Soplido explosivo";
+
+            circle.style.transform =
+                "scale(1)";
+
+            instruction.innerHTML =
+                "¡SOPLE<br>FUERTE!";
+
+            breathBar.style.width =
+                "100%";
+
+            for (
+                let i = 3;
+                i >= 1;
+                i--
+            ) {
+
+                timer.textContent = i;
+
+                await wait(1000);
+            }
+
+            // ==========================
+            // FASE 3
+            // EXHALACIÓN
+            // ==========================
+
+            phase.textContent =
+                "Continúe soplando";
+
+            instruction.innerHTML =
+                "SIGA<br>SOPLANDO";
+
+            timer.textContent =
+                "6";
+
+            await exhalationPhase();
+
+            // ==========================
+            // FASE 4
+            // INSP FINAL
+            // ==========================
+
+            phase.textContent =
+                "Inspiración final";
+
+            instruction.innerHTML =
+                "INSPIRE<br>RÁPIDO";
+
+            circle.style.transform =
+                "scale(1.05)";
+
+            breathBar.style.width =
+                "100%";
+
+            await wait(2000);
+
+            // ==========================
+            // FINAL
+            // ==========================
+
+            phase.textContent =
+                "Práctica completada";
+
+            instruction.innerHTML =
+                "✅<br>EXCELENTE";
+
+            timer.textContent =
+                "✓";
+
+            breathBar.style.width =
+                "100%";
+
+            circle.style.transform =
+                "scale(1)";
+
+            startBtn.disabled =
+                false;
+
+            startBtn.innerHTML =
+                `<i class="fa-solid fa-play"></i>
+                Repetir práctica`;
+
+            running = false;
+
+        }
+    );
+
+    async function exhalationPhase() {
+
+        breathBar.style.width =
+            "100%";
+
+        const seconds = 6;
+
+        for (
+            let i = seconds;
+            i >= 0;
+            i--
+        ) {
+
+            timer.textContent =
+                i;
+
+            breathBar.style.width =
+                `${(i / seconds) * 100}%`;
+
+            await wait(1000);
+        }
+
+    }
+
+    async function animateBar(
+        from,
+        to,
+        duration
+    ) {
+
+        const frames = 60;
+        const step =
+            duration / frames;
+
+        for (
+            let i = 0;
+            i <= frames;
+            i++
+        ) {
+
+            const progress =
+                from +
+                (
+                    (to - from)
+                    *
+                    i
+                ) / frames;
+
+            breathBar.style.width =
+                `${progress}%`;
+
+            await wait(step);
+        }
+
+    }
+
+    function wait(ms) {
+
+        return new Promise(
+            resolve =>
+                setTimeout(
+                    resolve,
+                    ms
+                )
+        );
+
+    }
+
+});
