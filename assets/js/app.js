@@ -894,9 +894,16 @@ const average =
 sum /
 dataArray.length;
 
+// =====================================
+// CALIBRACIÓN ATS MÁS ESTRICTA
+// =====================================
+
 const intensity =
 Math.min(
-average * 1.8,
+Math.pow(
+average,
+1.18
+) * 0.9,
 100
 );
 
