@@ -388,37 +388,61 @@ let mode =
 // MODE SWITCH
 // =====================================
 
-patientBtn.onclick =
-() => {
+// =====================================
+// MODE SWITCH FIX
+// =====================================
 
-mode = "patient";
+function activateMode(selected){
+
+mode = selected;
+
+document
+.querySelectorAll(".mode-btn")
+.forEach(btn => {
+
+btn.classList.remove(
+"active"
+);
+
+});
+
+if(selected === "patient"){
 
 patientBtn.classList.add(
 "active"
 );
 
-professionalBtn.classList.remove(
-"active"
+console.log(
+"Modo paciente"
 );
 
-};
-
-professionalBtn.onclick =
-() => {
-
-mode =
-"professional";
+}else{
 
 professionalBtn.classList.add(
 "active"
 );
 
-patientBtn.classList.remove(
-"active"
+console.log(
+"Modo profesional"
 );
 
-};
+}
 
+}
+
+patientBtn.addEventListener(
+"click",
+() => activateMode(
+"patient"
+)
+);
+
+professionalBtn.addEventListener(
+"click",
+() => activateMode(
+"professional"
+)
+);
 // =====================================
 // START
 // =====================================
