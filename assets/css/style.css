@@ -1204,3 +1204,121 @@ body{
 
     line-height:1.7;
 }
+/* ======================================
+   FPAIR SIMULATOR
+====================================== */
+
+.simulator-card{
+    overflow:hidden;
+}
+
+.simulator-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:35px;
+}
+
+.simulator-status{
+    font-size:24px;
+    font-weight:700;
+}
+
+.simulator-timer{
+    font-size:42px;
+    font-weight:800;
+}
+
+.simulator-body{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.simulator-circle{
+    width:260px;
+    height:260px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:30px;
+
+    font-size:30px;
+    font-weight:800;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(66,201,255,.25),
+        rgba(66,201,255,.04)
+    );
+
+    border:
+    1px solid rgba(66,201,255,.15);
+
+    margin-bottom:35px;
+
+    transition:.4s;
+}
+
+.breath-bar-container{
+    width:100%;
+    max-width:700px;
+
+    height:22px;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    background:
+    rgba(255,255,255,.06);
+
+    margin-bottom:35px;
+}
+
+.breath-bar{
+    width:0%;
+    height:100%;
+
+    border-radius:999px;
+
+    transition:width .2s linear;
+
+    background:
+    linear-gradient(
+        90deg,
+        #42c9ff,
+        #56f2c5
+    );
+}
+
+.simulator-controls{
+    display:flex;
+    justify-content:center;
+}
+
+@media(max-width:700px){
+
+    .simulator-circle{
+        width:190px;
+        height:190px;
+        font-size:24px;
+    }
+
+    .simulator-status{
+        font-size:18px;
+    }
+
+    .simulator-timer{
+        font-size:32px;
+    }
+
+}
