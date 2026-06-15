@@ -1120,3 +1120,87 @@ body{
     font-weight:800;
     min-width:20px;
 }
+/* ======================================
+   ACCORDION PREMIUM ATS
+====================================== */
+
+.accordion-premium{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.accordion-item{
+    border-radius:28px;
+
+    overflow:hidden;
+
+    border:
+    1px solid var(--border-color);
+
+    background:
+    rgba(255,255,255,.03);
+
+    transition:.3s;
+}
+
+.accordion-item:hover{
+    transform:translateY(-2px);
+}
+
+.accordion-header{
+    width:100%;
+
+    background:none;
+    border:none;
+
+    padding:28px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    cursor:pointer;
+
+    font-size:20px;
+    font-weight:700;
+
+    color:white;
+}
+
+.accordion-content{
+    max-height:0;
+    overflow:hidden;
+
+    transition:
+    max-height .35s ease,
+    padding .35s ease;
+
+    padding:0 28px;
+}
+
+.accordion-item.active
+.accordion-content{
+    max-height:700px;
+    padding:0 28px 28px;
+}
+
+.accordion-content h4{
+    margin-top:20px;
+    margin-bottom:10px;
+}
+
+.fpair-tip{
+    margin-top:22px;
+
+    padding:18px;
+    border-radius:18px;
+
+    background:
+    rgba(66,201,255,.08);
+
+    border:
+    1px solid rgba(66,201,255,.18);
+
+    line-height:1.7;
+}
