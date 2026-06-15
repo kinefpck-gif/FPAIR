@@ -1061,3 +1061,62 @@ body{
 
     line-height:1.7;
 }
+/* ======================================
+   ATS / ERS PREMIUM
+====================================== */
+
+.quality-card{
+    height:100%;
+}
+
+.quality-header{
+    display:flex;
+    align-items:center;
+    gap:20px;
+
+    margin-bottom:30px;
+}
+
+.quality-icon{
+    width:64px;
+    height:64px;
+
+    border-radius:20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:28px;
+    font-weight:800;
+
+    background:
+    rgba(66,201,255,.12);
+
+    border:
+    1px solid rgba(66,201,255,.18);
+}
+
+.quality-subtitle{
+    margin-top:8px;
+    opacity:.8;
+}
+
+.quality-checks{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.quality-item{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+
+    line-height:1.7;
+}
+
+.quality-item span{
+    font-weight:800;
+    min-width:20px;
+}
