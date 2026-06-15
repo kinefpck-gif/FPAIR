@@ -568,3 +568,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+console.log("FPAIR JS cargado");
