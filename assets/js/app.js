@@ -895,7 +895,30 @@ spirometryCtx.strokeStyle =
 spirometryCtx.lineWidth =
 2;
 
-spirometryCtx.stroke();}
+spirometryCtx.stroke();
+// =====================================
+// LABELS ATS / ERS
+// =====================================
+
+spirometryCtx.fillStyle =
+"rgba(180,220,255,.65)";
+
+spirometryCtx.font =
+"14px Inter";
+
+// EJE Y
+spirometryCtx.fillText(
+"Flujo",
+12,
+22
+);
+
+// EJE X
+spirometryCtx.fillText(
+"Tiempo",
+spirometryCanvas.width - 85,
+baseline + 25
+);}
 
 // GRID HORIZONTAL
 for(
@@ -1570,7 +1593,29 @@ false;
 
 maxIntensity =
 0;
+// =====================================
+// RESET PREMIUM CURVA
+// =====================================
 
+setTimeout(() => {
+
+curvePoints = [];
+
+if(
+spirometryCtx &&
+spirometryCanvas
+){
+
+spirometryCtx.clearRect(
+0,
+0,
+spirometryCanvas.width,
+spirometryCanvas.height
+);
+
+}
+
+}, 350);
 }
 
 });
