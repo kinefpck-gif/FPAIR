@@ -1144,6 +1144,10 @@ rgba(34,197,94,.4)
 
 }
 
+drawSpirometryCurve(
+intensity
+);
+
 analyzeIntensity(
 intensity
 );
