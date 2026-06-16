@@ -1172,14 +1172,6 @@ maxIntensity,
 intensity
 );
 
-const elapsed =
-(
-Date.now()
--
-blowStartTime
-)
-/1000;
-
 // TERMINÓ
 
 if(intensity < 6){
