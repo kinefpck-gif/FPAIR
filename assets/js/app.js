@@ -849,27 +849,53 @@ x < spirometryCanvas.width;
 x += 50
 ){
 
-    spirometryCtx.beginPath();
+// =====================================
+// EJE ATS PREMIUM
+// =====================================
 
-    spirometryCtx.moveTo(
-        x,
-        0
-    );
+const baseline =
+spirometryCanvas.height - 35;
 
-    spirometryCtx.lineTo(
-        x,
-        spirometryCanvas.height
-    );
+// eje horizontal
+spirometryCtx.beginPath();
 
-    spirometryCtx.strokeStyle =
-    "rgba(255,255,255,.08)";
+spirometryCtx.moveTo(
+0,
+baseline
+);
 
-    spirometryCtx.lineWidth =
-    1;
+spirometryCtx.lineTo(
+spirometryCanvas.width,
+baseline
+);
 
-    spirometryCtx.stroke();
+spirometryCtx.strokeStyle =
+"rgba(255,255,255,.18)";
 
-}
+spirometryCtx.lineWidth = 2;
+
+spirometryCtx.stroke();
+
+// eje vertical
+spirometryCtx.beginPath();
+
+spirometryCtx.moveTo(
+50,
+10
+);
+
+spirometryCtx.lineTo(
+50,
+baseline
+);
+
+spirometryCtx.strokeStyle =
+"rgba(255,255,255,.18)";
+
+spirometryCtx.lineWidth =
+2;
+
+spirometryCtx.stroke();}
 
 // GRID HORIZONTAL
 for(
