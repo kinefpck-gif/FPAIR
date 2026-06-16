@@ -899,7 +899,7 @@ dataArray.length;
 // =====================================
 
 // Ignora casi todo el ruido ambiente
-const noiseGate = 28;
+const noiseGate = 42;
 
 // limpia ruido residual
 const cleanAverage =
@@ -913,8 +913,8 @@ const intensity =
 Math.min(
 Math.pow(
 cleanAverage,
-1.62
-) * 0.17,
+1.92
+) * 0.055,
 100
 );
 
@@ -926,7 +926,7 @@ soundMeter.style.width =
 `${intensity}%`;
 
 // BAJO ESFUERZO
-if(intensity < 58){
+if(intensity < 78){
 
 soundMeter.style.background =
 `
@@ -946,7 +946,7 @@ rgba(239,68,68,.35)
 }
 
 // ESFUERZO MODERADO
-else if(intensity < 92){
+else if(intensity < 98){
 
 soundMeter.style.background =
 `
