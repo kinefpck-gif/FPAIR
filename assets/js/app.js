@@ -908,8 +908,41 @@ curvePoints.shift();
 }
 
 // agregar nuevo punto
+// =====================================
+// CURVA TIPO ATS REALISTA
+// =====================================
+
+// intensidad ajustada
+let simulatedFlow =
+intensity * 1.45;
+
+// explosión inicial tipo PEF
+if(
+curvePoints.length < 7
+){
+
+simulatedFlow *= 1.5;
+
+}
+
+// caída fisiológica
+const decay =
+Math.exp(
+-curvePoints.length / 42
+);
+
+simulatedFlow *= decay;
+
+// evitar negativos
+simulatedFlow =
+Math.max(
+0,
+simulatedFlow
+);
+
+// guardar punto
 curvePoints.push(
-intensity
+simulatedFlow
 );
 
 // eje base
@@ -944,7 +977,7 @@ const x =
 const y =
 spirometryCanvas.height
 -
-(point * 1.8)
+(point * 2.25)
 -
 30;
 
@@ -967,12 +1000,33 @@ y
 }
 );
 
-spirometryCtx.lineWidth = 4;
+// =====================================
+// CURVA PREMIUM FPAIR
+// =====================================
+
+spirometryCtx.lineWidth = 5;
 
 spirometryCtx.strokeStyle =
 "#41d1ff";
 
+// glow premium
+spirometryCtx.shadowBlur =
+18;
+
+spirometryCtx.shadowColor =
+"#41d1ff";
+
+spirometryCtx.lineCap =
+"round";
+
+spirometryCtx.lineJoin =
+"round";
+
 spirometryCtx.stroke();
+
+// reset glow
+spirometryCtx.shadowBlur =
+0;
 
 }
    
