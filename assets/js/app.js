@@ -737,6 +737,30 @@ document.getElementById(
 "micFeedback"
 );
 
+// =====================================
+// ATS LIVE ELEMENTS
+// =====================================
+
+const atsStart =
+document.getElementById(
+"atsStart"
+);
+
+const atsEffort =
+document.getElementById(
+"atsEffort"
+);
+
+const atsDuration =
+document.getElementById(
+"atsDuration"
+);
+
+const atsQuality =
+document.getElementById(
+"atsQuality"
+);
+   
 let audioContext;
 let analyser;
 let microphone;
@@ -832,6 +856,20 @@ micStatus.textContent =
 micFeedback.innerHTML =
 "Sople fuerte cerca del micrófono.";
 
+// RESET ATS
+
+atsStart.textContent =
+"Esperando";
+
+atsEffort.textContent =
+"Sin señal";
+
+atsDuration.textContent =
+"0 s";
+
+atsQuality.textContent =
+"No iniciada";
+   
 listenAudio();
 
 }catch(error){
@@ -1057,6 +1095,76 @@ Analizando calidad ATS.
 // DURANTE SOPLIDO
 
 if(blowStarted){
+
+const elapsed =
+(
+Date.now()
+-
+blowStartTime
+)
+/1000;
+
+// DURACIÓN LIVE
+atsDuration.textContent =
+`${elapsed.toFixed(1)} s`;
+
+// ESFUERZO LIVE
+if(intensity < 78){
+
+atsEffort.textContent =
+"Bajo";
+
+}
+else if(intensity < 98){
+
+atsEffort.textContent =
+"Moderado";
+
+}
+else{
+
+atsEffort.textContent =
+"Alto";
+
+}
+
+// INICIO EXPLOSIVO
+if(maxIntensity > 96){
+
+atsStart.textContent =
+"✓ Explosivo";
+
+}else{
+
+atsStart.textContent =
+"⚠ Mejorable";
+
+}
+
+// CALIDAD ESTIMADA
+if(
+elapsed > 2 &&
+maxIntensity > 95
+){
+
+atsQuality.textContent =
+"A";
+
+}
+else if(
+elapsed > 1
+){
+
+atsQuality.textContent =
+"B";
+
+}
+else{
+
+atsQuality.textContent =
+"C";
+
+}   
 
 maxIntensity =
 Math.max(
