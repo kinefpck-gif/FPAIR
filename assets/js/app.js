@@ -838,6 +838,68 @@ spirometryCanvas.width,
 spirometryCanvas.height
 );
 
+// =====================================
+// GRID ATS / ERS PREMIUM
+// =====================================
+
+// GRID VERTICAL
+for(
+let x = 0;
+x < spirometryCanvas.width;
+x += 50
+){
+
+    spirometryCtx.beginPath();
+
+    spirometryCtx.moveTo(
+        x,
+        0
+    );
+
+    spirometryCtx.lineTo(
+        x,
+        spirometryCanvas.height
+    );
+
+    spirometryCtx.strokeStyle =
+    "rgba(255,255,255,.08)";
+
+    spirometryCtx.lineWidth =
+    1;
+
+    spirometryCtx.stroke();
+
+}
+
+// GRID HORIZONTAL
+for(
+let y = 0;
+y < spirometryCanvas.height;
+y += 40
+){
+
+    spirometryCtx.beginPath();
+
+    spirometryCtx.moveTo(
+        0,
+        y
+    );
+
+    spirometryCtx.lineTo(
+        spirometryCanvas.width,
+        y
+    );
+
+    spirometryCtx.strokeStyle =
+    "rgba(255,255,255,.05)";
+
+    spirometryCtx.lineWidth =
+    1;
+
+    spirometryCtx.stroke();
+
+}
+   
 // limitar puntos
 if(
 curvePoints.length > 180
