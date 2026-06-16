@@ -760,6 +760,22 @@ const atsQuality =
 document.getElementById(
 "atsQuality"
 );
+
+// =====================================
+// SPIROMETRY CANVAS
+// =====================================
+
+const spirometryCanvas =
+document.getElementById(
+"spirometryCanvas"
+);
+
+const spirometryCtx =
+spirometryCanvas?.getContext(
+"2d"
+);
+
+let curvePoints = [];
    
 let audioContext;
 let analyser;
