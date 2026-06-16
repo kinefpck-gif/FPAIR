@@ -920,6 +920,55 @@ spirometryCanvas.width - 85,
 baseline + 25
 );}
 
+// =====================================
+// MARCAS ATS DE TIEMPO
+// =====================================
+
+for(
+let second = 1;
+second <= 6;
+second++
+){
+
+const x =
+50 + (second * 120);
+
+// línea vertical suave
+spirometryCtx.beginPath();
+
+spirometryCtx.moveTo(
+x,
+baseline - 10
+);
+
+spirometryCtx.lineTo(
+x,
+baseline + 8
+);
+
+spirometryCtx.strokeStyle =
+"rgba(180,220,255,.18)";
+
+spirometryCtx.lineWidth =
+1.5;
+
+spirometryCtx.stroke();
+
+// número del segundo
+spirometryCtx.fillStyle =
+"rgba(180,220,255,.55)";
+
+spirometryCtx.font =
+"12px Inter";
+
+spirometryCtx.fillText(
+`${second}s`,
+x - 8,
+baseline + 22
+);
+
+}
+   
 // GRID HORIZONTAL
 for(
 let y = 0;
