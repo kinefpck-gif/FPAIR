@@ -817,6 +817,103 @@ return professional
 // EVENTS
 // =====================================
 
+// =====================================
+// DIBUJAR CURVA ESPIROMÉTRICA
+// =====================================
+
+function drawSpirometryCurve(
+intensity
+){
+
+if(
+!spirometryCtx ||
+!spirometryCanvas
+)return;
+
+// fondo limpio
+spirometryCtx.clearRect(
+0,
+0,
+spirometryCanvas.width,
+spirometryCanvas.height
+);
+
+// limitar puntos
+if(
+curvePoints.length > 180
+){
+curvePoints.shift();
+}
+
+// agregar nuevo punto
+curvePoints.push(
+intensity
+);
+
+// eje base
+spirometryCtx.beginPath();
+
+spirometryCtx.moveTo(
+0,
+spirometryCanvas.height - 30
+);
+
+spirometryCtx.lineTo(
+spirometryCanvas.width,
+spirometryCanvas.height - 30
+);
+
+spirometryCtx.strokeStyle =
+"rgba(255,255,255,.15)";
+
+spirometryCtx.lineWidth = 2;
+
+spirometryCtx.stroke();
+
+// curva
+spirometryCtx.beginPath();
+
+curvePoints.forEach(
+(point,index)=>{
+
+const x =
+(index * 5);
+
+const y =
+spirometryCanvas.height
+-
+(point * 1.8)
+-
+30;
+
+if(index===0){
+
+spirometryCtx.moveTo(
+x,
+y
+);
+
+}else{
+
+spirometryCtx.lineTo(
+x,
+y
+);
+
+}
+
+}
+);
+
+spirometryCtx.lineWidth = 4;
+
+spirometryCtx.strokeStyle =
+"#41d1ff";
+
+spirometryCtx.stroke();
+
+}
+   
 startMic.addEventListener(
 "click",
 async () => {
