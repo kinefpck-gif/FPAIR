@@ -982,6 +982,9 @@ atsDuration.textContent =
 
 atsQuality.textContent =
 "No iniciada";
+
+// RESET CURVA
+curvePoints = [];
    
 listenAudio();
 
@@ -1075,6 +1078,11 @@ cleanAverage,
 
 soundMeter.style.width =
 `${intensity}%`;
+
+// CURVA EN VIVO
+drawSpirometryCurve(
+intensity
+);   
 
 // BAJO ESFUERZO
 if(intensity < 78){
