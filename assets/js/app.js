@@ -1014,7 +1014,7 @@ getCurrentMode();
 // DETECTA SOPLIDO
 
 if(
-intensity > 45 &&
+intensity > 65 &&
 !blowStarted
 ){
 
