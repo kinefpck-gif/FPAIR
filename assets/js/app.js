@@ -765,18 +765,7 @@ document.getElementById(
 // SPIROMETRY CANVAS
 // =====================================
 
-const spirometryCanvas =
-document.getElementById(
-"spirometryCanvas"
-);
-
-const spirometryCtx =
-spirometryCanvas?.getContext(
-"2d"
-);
-
-let curvePoints = [];
-   
+  
 let audioContext;
 let analyser;
 let microphone;
@@ -816,109 +805,6 @@ return professional
 // =====================================
 // EVENTS
 // =====================================
-
-// =====================================
-// DIBUJAR CURVA ESPIROMÉTRICA
-// =====================================
-
-function drawSpirometryCurve(
-intensity
-){
-
-if(
-!spirometryCtx ||
-!spirometryCanvas
-)return;
-   
-const baseline =
-spirometryCanvas.height - 35;
-   
-// fondo limpio
-spirometryCtx.clearRect(
-0,
-0,
-spirometryCanvas.width,
-spirometryCanvas.height
-);
-
-// =====================================
-// GRID ATS / ERS PREMIUM
-// =====================================
-
-// GRID VERTICAL
-for(
-let x = 0;
-x < spirometryCanvas.width;
-x += 50
-){
-
-// =====================================
-// EJE ATS PREMIUM
-// =====================================
-
-// eje horizontal
-spirometryCtx.beginPath();
-
-spirometryCtx.moveTo(
-0,
-baseline
-);
-
-spirometryCtx.lineTo(
-spirometryCanvas.width,
-baseline
-);
-
-spirometryCtx.strokeStyle =
-"rgba(255,255,255,.18)";
-
-spirometryCtx.lineWidth = 2;
-
-spirometryCtx.stroke();
-
-// eje vertical
-spirometryCtx.beginPath();
-
-spirometryCtx.moveTo(
-50,
-10
-);
-
-spirometryCtx.lineTo(
-50,
-baseline
-);
-
-spirometryCtx.strokeStyle =
-"rgba(255,255,255,.18)";
-
-spirometryCtx.lineWidth =
-2;
-
-spirometryCtx.stroke();
-// =====================================
-// LABELS ATS / ERS
-// =====================================
-
-spirometryCtx.fillStyle =
-"rgba(180,220,255,.65)";
-
-spirometryCtx.font =
-"14px Inter";
-
-// EJE Y
-spirometryCtx.fillText(
-"Flujo",
-12,
-22
-);
-
-// EJE X
-spirometryCtx.fillText(
-"Tiempo",
-spirometryCanvas.width - 85,
-baseline + 25
-);}
 
 // =====================================
 // MARCAS ATS DE TIEMPO
@@ -1355,10 +1241,6 @@ rgba(34,197,94,.4)
 
 }
 
-drawSpirometryCurve(
-intensity
-);
-
 analyzeIntensity(
 intensity
 );
@@ -1639,29 +1521,4 @@ false;
 
 maxIntensity =
 0;
-// =====================================
-// RESET PREMIUM CURVA
-// =====================================
 
-setTimeout(() => {
-
-curvePoints = [];
-
-if(
-spirometryCtx &&
-spirometryCanvas
-){
-
-spirometryCtx.clearRect(
-0,
-0,
-spirometryCanvas.width,
-spirometryCanvas.height
-);
-
-}
-
-}, 350);
-}
-
-});
