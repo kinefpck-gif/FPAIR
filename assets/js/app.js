@@ -829,7 +829,10 @@ if(
 !spirometryCtx ||
 !spirometryCanvas
 )return;
-
+   
+const baseline =
+spirometryCanvas.height - 35;
+   
 // fondo limpio
 spirometryCtx.clearRect(
 0,
@@ -852,9 +855,6 @@ x += 50
 // =====================================
 // EJE ATS PREMIUM
 // =====================================
-
-const baseline =
-spirometryCanvas.height - 35;
 
 // eje horizontal
 spirometryCtx.beginPath();
@@ -1267,7 +1267,7 @@ dataArray.length;
 // =====================================
 
 // Ignora casi todo el ruido ambiente
-const noiseGate = 42;
+const noiseGate = 18;
 
 // limpia ruido residual
 const cleanAverage =
@@ -1388,7 +1388,7 @@ getCurrentMode();
 // DETECTA SOPLIDO
 
 if(
-intensity > 65 &&
+intensity > 35 &&
 !blowStarted
 ){
 
