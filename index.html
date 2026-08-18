@@ -112,6 +112,7 @@
   .exam-card{
     background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px;
     display:flex; flex-direction:column; gap:10px; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    cursor:pointer;
   }
   .exam-card:hover{transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--accent-soft);}
   .exam-icon{
@@ -402,18 +403,18 @@
 <script>
 /* ============ DATOS DE EXÁMENES ============ */
 const EXAMS = [
-  {name:"Espirometría", desc:"Evalúa cuánto aire puedes expulsar y qué tan rápido.", icon:"lungs", link: "espirometria.html"},
-  {name:"Espirometría Pre/Post BD", desc:"Evalúa respuesta al broncodilatador.", icon:"wind", link: "espirometria_pre_post.html"},
-  {name:"DLCO", desc:"Evalúa intercambio gaseoso pulmonar.", icon:"drop", link: "difusion_info.html"},
-  {name:"Pletismografía corporal", desc:"Evalúa volúmenes pulmonares completos.", icon:"box", link: "pletismografia.html"},
-  {name:"IOS", desc:"Oscilometría respiratoria sin esfuerzo.", icon:"wave", link: "ios.html"},
-  {name:"FENO", desc:"Evalúa inflamación respiratoria.", icon:"flame", link: "feno.html"},
-  {name:"PIM / PEM", desc:"Evalúa fuerza muscular respiratoria.", icon:"gauge", link: "pim_pem.html"},
-  {name:"Test de provocación bronquial", desc:"Estudia hiperreactividad bronquial.", icon:"alert", link: "provocacion_bronquial.html"},
-  {name:"SHUNT", desc:"Evalúa alteraciones de oxigenación.", icon:"circle", link: "shunt.html"},
-  {name:"Caminata 6 minutos", desc:"Evalúa tolerancia al ejercicio.", icon:"walk", link: "caminata_6min.html"},
-  {name:"Gasometría arterial", desc:"Evalúa oxígeno, CO₂ y equilibrio ácido-base.", icon:"drop", link: "gasometria.html"},
-  {name:"Test cardiopulmonar (CPET)", desc:"Evalúa respuesta cardiorrespiratoria al esfuerzo.", icon:"heart", link: "test-cardiopulmonar.html"},
+  {name:"Espirometría", desc:"Evalúa cuánto aire puedes expulsar y qué tan rápido.", icon:"lungs", link:"espirometria.html"},
+  {name:"Espirometría Pre/Post BD", desc:"Evalúa respuesta al broncodilatador.", icon:"wind", link:"espirometria_pre_post.html"},
+  {name:"DLCO", desc:"Evalúa intercambio gaseoso pulmonar.", icon:"drop", link:"difusion_info.html"},
+  {name:"Pletismografía corporal", desc:"Evalúa volúmenes pulmonares completos.", icon:"box", link:"pletismografia.html"},
+  {name:"IOS", desc:"Oscilometría respiratoria sin esfuerzo.", icon:"wave", link:"ios.html"},
+  {name:"FENO", desc:"Evalúa inflamación respiratoria.", icon:"flame", link:"feno.html"},
+  {name:"PIM / PEM", desc:"Evalúa fuerza muscular respiratoria.", icon:"gauge", link:"pim_pem.html"},
+  {name:"Test de provocación bronquial", desc:"Estudia hiperreactividad bronquial.", icon:"alert", link:"provocacion_bronquial.html"},
+  {name:"SHUNT", desc:"Evalúa alteraciones de oxigenación.", icon:"circle", link:"shunt.html"},
+  {name:"Caminata 6 minutos", desc:"Evalúa tolerancia al ejercicio.", icon:"walk", link:"caminata_6min.html"},
+  {name:"Gasometría arterial", desc:"Evalúa oxígeno, CO₂ y equilibrio ácido-base.", icon:"drop", link:"gasometria.html"},
+  {name:"Test cardiopulmonar (CPET)", desc:"Evalúa respuesta cardiorrespiratoria al esfuerzo.", icon:"heart", link:"cpet.html"},
 ];
 const ICONS = {
   lungs:'<path d="M9 3v7c0 2-2 3-4 3s-3-2-3-5 2-6 4-6h3zm6 0v7c0 2 2 3 4 3s3-2 3-5-2-6-4-6h-3z"/>',
@@ -427,26 +428,22 @@ const ICONS = {
   circle:'<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
   walk:'<path d="M13 4a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 21l2-6 2 2 2 4M8 13l3-4 3 1 3-2"/>',
   heart:'<path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-10 11z"/>'
-
+};
 const examGrid = document.getElementById('examGrid');
-EXAMS.forEach(e => {
+EXAMS.forEach(e=>{
   const card = document.createElement('div');
   card.className = 'exam-card';
   card.innerHTML = `
     <span class="exam-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[e.icon]}</svg></span>
     <h3>${e.name}</h3>
     <p>${e.desc}</p>
-    <span class="exam-link">Aprender examen →</span>
-  `;
-  
-  // Hacer clic en toda la tarjeta redirige
-  if (e.link) {
-    card.style.cursor = 'pointer';
-    card.addEventListener('click', () => {
+    <span class="exam-link">Aprender examen →</span>`;
+  // Agregar evento de clic para redirigir
+  card.addEventListener('click', function() {
+    if (e.link) {
       window.location.href = e.link;
-    });
-  }
-  
+    }
+  });
   examGrid.appendChild(card);
 });
 
