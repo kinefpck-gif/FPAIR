@@ -427,16 +427,26 @@ const ICONS = {
   circle:'<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
   walk:'<path d="M13 4a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 21l2-6 2 2 2 4M8 13l3-4 3 1 3-2"/>',
   heart:'<path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-10 11z"/>'
-};
+
 const examGrid = document.getElementById('examGrid');
-EXAMS.forEach(e=>{
+EXAMS.forEach(e => {
   const card = document.createElement('div');
   card.className = 'exam-card';
   card.innerHTML = `
     <span class="exam-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[e.icon]}</svg></span>
     <h3>${e.name}</h3>
     <p>${e.desc}</p>
-    <span class="exam-link">Aprender examen →</span>`;
+    <span class="exam-link">Aprender examen →</span>
+  `;
+  
+  // Hacer clic en toda la tarjeta redirige
+  if (e.link) {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      window.location.href = e.link;
+    });
+  }
+  
   examGrid.appendChild(card);
 });
 
