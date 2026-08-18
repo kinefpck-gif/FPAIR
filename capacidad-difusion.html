@@ -16,7 +16,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #f7faff 0%, #eaf3ff 100%);
+            background: linear-gradient(135deg, #eef9f7 0%, #e0f4f0 100%);
             color: #2c3e50;
             min-height: 100vh;
             display: flex;
@@ -55,7 +55,7 @@
 
         h1 {
             font-size: 2.8rem;
-            color: #0056b3;
+            color: #0e8a82;
             margin-bottom: 15px;
             letter-spacing: 0.5px;
         }
@@ -63,7 +63,7 @@
         .separator {
             height: 4px;
             width: 100px;
-            background: linear-gradient(90deg, #3498db, #00bcd4);
+            background: linear-gradient(90deg, #14b8a6, #22d3b8);
             margin: 0 auto 20px;
             border-radius: 5px;
         }
@@ -79,6 +79,9 @@
         .content-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
             gap: 30px;
             margin-top: 20px;
         }
@@ -105,7 +108,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(120deg, rgba(52, 152, 219, 0.1), rgba(0, 188, 212, 0.1));
+            background: linear-gradient(120deg, rgba(14, 138, 130, 0.1), rgba(34, 211, 184, 0.1));
             transition: all 0.5s ease;
         }
 
@@ -134,7 +137,7 @@
             font-size: 1.6rem;
             font-weight: 600;
             margin-bottom: 15px;
-            color: #003366;
+            color: #0b2530;
         }
 
         .card-description {
@@ -147,7 +150,7 @@
         .btn {
             display: inline-block;
             padding: 12px 28px;
-            background: linear-gradient(90deg, #3498db, #00bcd4);
+            background: linear-gradient(90deg, #14b8a6, #22d3b8);
             color: white;
             border-radius: 50px;
             font-weight: 600;
@@ -156,7 +159,7 @@
         }
 
         .btn:hover {
-            background: linear-gradient(90deg, #2980b9, #0097a7);
+            background: linear-gradient(90deg, #0e8a82, #0e8a82);
             transform: scale(1.05);
         }
 
@@ -169,7 +172,7 @@
             padding: 25px 0;
             font-size: 0.95rem;
             color: #7f8c8d;
-            background-color: #f7faff;
+            background-color: #eef9f7;
             border-top: 1px solid #e0e0e0;
         }
 
@@ -194,6 +197,8 @@
             }
         }
     </style>
+  <link rel="stylesheet" href="assets/css/fpair-widgets.css">
+  <script src="assets/js/theme.js"></script>
 </head>
 <body>
     <div class="container">
@@ -211,19 +216,9 @@
                 <a href="difusion_info.html" class="btn">Ver más</a>
             </div>
             
-            <div class="card" onclick="location.href='difusion_explicacion.html'">
-                <div class="icon"><img src="images/explicacion.gif" alt="Explicación Técnica"></div>
-                <h2 class="card-title">Explicación Técnica</h2>
-                <p class="card-description">Descubre el procedimiento paso a paso, interpretación de resultados y factores que afectan la medición.</p>
-                <a href="difusion_explicacion.html" class="btn">Explorar</a>
-            </div>
             
-            <div class="card" onclick="location.href='difusion_video.html'">
-                <div class="icon"><img src="images/video.gif" alt="Video Guía"></div>
-                <h2 class="card-title">Video Guía</h2>
-                <p class="card-description">Aprende visualmente cómo realizar correctamente la prueba de difusión de monóxido de carbono.</p>
-                <a href="difusion_video.html" class="btn">Ver Video</a>
-            </div>
+            
+            
         </div>
         
         <footer>
@@ -246,5 +241,6 @@
             });
         });
     </script>
+  <script src="assets/js/auth.js"></script>
 </body>
 </html>
