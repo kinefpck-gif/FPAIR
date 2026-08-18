@@ -8,17 +8,46 @@
     <style>
         /* Variables de color y estilos */
         :root {
-            --primary: #1a6aa2;
-            --primary-dark: #0d4a75;
-            --primary-light: #4a9bd9;
-            --secondary: #34c7b3;
-            --accent: #ff7e5f;
-            --text-dark: #2c3e50;
-            --text-light: #5a6c7d;
-            --background: #f8fbfe;
+            --primary: #0e8a82;
+            --primary-dark: #086b64;
+            --primary-light: #22d3b8;
+            --secondary: #14b8a6;
+            --accent: #22d3b8;
+            --text-dark: #0b2530;
+            --text-light: #4b6b6d;
+            --background: #eef9f7;
             --white: #ffffff;
-            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --shadow: 0 8px 30px rgba(14, 138, 130, 0.12);
             --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --primary: #42c9ff;
+            --primary-dark: #0d4a75;
+            --primary-light: #7fdcff;
+            --secondary: #00d4ff;
+            --accent: #29f0b4;
+            --text-dark: #ffffff;
+            --text-light: #a9b6c7;
+            --background: #07111f;
+            --white: #101f2e;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            --transition: all 0.3s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            html:not([data-theme]) {
+                --primary: #42c9ff;
+                --primary-dark: #0d4a75;
+                --primary-light: #7fdcff;
+                --secondary: #00d4ff;
+                --accent: #29f0b4;
+                --text-dark: #ffffff;
+                --text-light: #a9b6c7;
+                --background: #07111f;
+                --white: #101f2e;
+                --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+            }
         }
         
         /* Estilos generales */
@@ -461,6 +490,8 @@
             }
         }
     </style>
+  <link rel="stylesheet" href="assets/css/fpair-widgets.css">
+  <script src="assets/js/theme.js"></script>
 </head>
 <body>
     <div class="container">
@@ -477,8 +508,6 @@
         </header>
         
         <div class="nav-container">
-            <div>
-                
         </div>
         
         <main class="main-content">
@@ -678,5 +707,6 @@
             });
         });
     </script>
+  <script src="assets/js/auth.js"></script>
 </body>
 </html>
