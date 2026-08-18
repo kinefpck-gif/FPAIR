@@ -1,635 +1,871 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espirometría en Niños - Información para Padres</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Espirometría en Niños | FPAIR</title>
+    <meta name="description" content="Aprende qué es la espirometría pediátrica, cómo se evalúa la función pulmonar en niños y cómo preparar a tu hijo para el examen.">
+    <meta name="theme-color" content="#0E8A82">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
+        /* ===== VARIABLES FPAIR ===== */
+        :root {
+            --bg: #F3FBFA;
+            --bg-alt: #E7F6F4;
+            --surface: #FFFFFF;
+            --surface-alt: #F0FBF9;
+            --border: #D3EDE9;
+            --text: #0B2530;
+            --text-soft: #4B6B6D;
+            --primary: #0E8A82;
+            --primary-strong: #086B64;
+            --accent: #22D3B8;
+            --accent-soft: #C8F5EC;
+            --shadow: 0 12px 32px -12px rgba(14,138,130,.22);
+            --radius: 16px;
         }
-        
+
+        [data-theme="dark"] {
+            --bg: #06191B;
+            --bg-alt: #0A2224;
+            --surface: #0D2B2D;
+            --surface-alt: #0F3335;
+            --border: #164448;
+            --text: #E6F7F4;
+            --text-soft: #8FBDB8;
+            --primary: #2FE0C3;
+            --primary-strong: #63F0D6;
+            --accent: #14B8A6;
+            --accent-soft: #0F3B3A;
+            --shadow: 0 12px 32px -12px rgba(0,0,0,.55);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            background-color: #f0f8ff;
-            color: #333;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
+            transition: background .35s ease, color .35s ease;
+            -webkit-font-smoothing: antialiased;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px 20px;
-            background: linear-gradient(135deg, #4CAF50, #2E7D32);
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            color: white;
-        }
-        
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-        }
-        
-        .subtitle {
-            font-size: 1.3rem;
-            opacity: 0.9;
-        }
-        
-        .section {
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            padding: 30px;
-            margin-bottom: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-        }
-        
-        h2 {
-            color: #2E7D32;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #4CAF50;
-        }
-        
-        h3 {
-            color: #4CAF50;
-            font-size: 1.4rem;
-            margin: 25px 0 15px;
-        }
-        
-        p {
-            margin-bottom: 15px;
-            font-size: 1.05rem;
-        }
-        
-        ul, ol {
-            margin-left: 20px;
-            margin-bottom: 20px;
-        }
-        
-        li {
-            margin-bottom: 8px;
-        }
-        
-        .card-container {
+
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+        a { color: inherit; text-decoration: none; }
+
+        /* ===== LAYOUT ===== */
+        .exam-layout {
             display: flex;
-            justify-content: space-between;
-            margin: 30px 0;
-            gap: 20px;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            gap: 40px;
+            align-items: flex-start;
         }
-        
-        .card {
+
+        .exam-sidebar {
+            width: 240px;
+            flex-shrink: 0;
+            padding: 30px 0;
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .exam-main {
             flex: 1;
-            background-color: #f8f9fa;
+            padding: 30px 0;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-soft);
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: color .2s;
+            cursor: pointer;
+        }
+        .back-home:hover {
+            color: var(--primary-strong);
+        }
+
+        .exam-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .exam-logo .logo-box {
+            width: 44px;
+            height: 44px;
             border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #04211E;
+            font-weight: 800;
+            font-size: 1.1rem;
+            font-family: 'Manrope', sans-serif;
         }
-        
-        .card:hover {
-            transform: translateY(-5px);
+        .exam-logo h3 { font-size: 1.1rem; line-height: 1.2; }
+        .exam-logo p { font-size: .85rem; color: var(--text-soft); }
+
+        .exam-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
-        
-        .card-title {
-            font-weight: bold;
-            color: #2E7D32;
-            margin-bottom: 10px;
+        .exam-nav a {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            color: var(--text-soft);
+            transition: all .2s;
+        }
+        .exam-nav a:hover {
+            background: var(--accent-soft);
+            color: var(--primary-strong);
+        }
+
+        /* ===== SECCIONES ===== */
+        .section {
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .section:last-child { border-bottom: none; }
+
+        .section-header {
+            margin-bottom: 24px;
+        }
+        .section-header h2 {
+            font-size: clamp(1.5rem, 2.6vw, 2rem);
+            color: var(--primary-strong);
+        }
+        .section-header p {
+            color: var(--text-soft);
+            margin-top: 6px;
+        }
+
+        .hero-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+        .hero-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--primary-strong);
+        }
+        .hero-card p {
+            color: var(--text-soft);
+        }
+
+        /* ===== GRID ===== */
+        .exam-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .exam-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all .2s;
+        }
+        .exam-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent);
+        }
+        .exam-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            color: var(--primary-strong);
+        }
+        .exam-card p {
+            font-size: .92rem;
+            color: var(--text-soft);
+        }
+        .exam-card small {
+            font-size: .78rem;
+            color: var(--text-soft);
+            display: block;
+            margin-top: 4px;
+        }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .check-item {
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .check-item i {
+            color: var(--primary);
             font-size: 1.2rem;
         }
-        
+
+        /* ===== CAROUSEL ===== */
         .carousel-container {
             position: relative;
-            height: 300px;
+            height: 280px;
             overflow: hidden;
-            border-radius: 10px;
-            margin: 30px 0;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
         }
-        
         .carousel-slide {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             opacity: 0;
-            transition: opacity 0.8s ease, transform 0.8s ease;
-            transform: translateX(100%);
-            padding: 25px;
-            background-color: #e8f5e9;
-            border-radius: 10px;
+            padding: 30px 25px;
+            transition: all 0.6s ease;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
+            text-align: center;
         }
-        
-        .carousel-slide.active {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .carousel-slide.prev {
-            transform: translateX(-100%);
-        }
-        
+        .carousel-slide.active { opacity: 1; }
+        .carousel-slide h3 { font-size: 1.2rem; margin-bottom: 8px; }
+        .carousel-slide p { max-width: 500px; margin: 0 auto 8px; }
+
         .carousel-nav {
-            display: flex;
-            justify-content: center;
-            margin-top: 15px;
+            text-align: center;
+            margin-top: 16px;
         }
-        
         .carousel-dot {
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background-color: #bdc3c7;
+            display: inline-block;
+            background: var(--border);
             margin: 0 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
-        
         .carousel-dot.active {
-            background-color: #4CAF50;
+            background: var(--primary);
         }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+        /* ===== TABS ===== */
+        .comparison-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
-        
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0;
+        .tab {
+            flex: 1;
+            min-width: 140px;
+            background: var(--bg-alt);
+            border: none;
+            border-radius: 8px 8px 0 0;
+            padding: 12px 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 700;
+            color: var(--text-soft);
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
         }
-        
-        th {
-            background-color: #4CAF50;
-            color: white;
+        .tab.active {
+            background: var(--primary);
+            color: #04211E;
+            box-shadow: var(--shadow);
         }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
+        .tab:hover:not(.active) {
+            background: var(--accent-soft);
         }
-        
-        .highlight-box {
-            background-color: #e8f5e9;
-            border-left: 4px solid #4CAF50;
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 0 8px 8px 0;
+        .tab-content {
+            display: none;
+            background: var(--surface-alt);
+            border-radius: 0 0 10px 10px;
+            padding: 20px 24px;
+            animation: fadeIn 0.4s ease;
         }
-        
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== PASOS ===== */
         .steps-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            margin: 25px 0;
+            gap: 16px;
+            justify-content: center;
         }
-        
         .step {
             flex: 1;
-            min-width: 200px;
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            min-width: 180px;
+            max-width: 260px;
+            background: var(--bg-alt);
+            border-radius: 12px;
             text-align: center;
-            transition: transform 0.3s ease;
+            padding: 24px 16px;
+            transition: all 0.3s;
+            border: 1px solid var(--border);
         }
-        
         .step:hover {
+            background: var(--accent-soft);
             transform: translateY(-5px);
         }
-        
-        .step-number {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background-color: #4CAF50;
-            color: white;
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 50%;
-            line-height: 40px;
-            margin-bottom: 15px;
-            font-weight: bold;
+            background: var(--primary);
+            color: #04211E;
+            font-size: 1.8rem;
         }
-        
+        .step h3 { font-size: 1rem; margin-bottom: 6px; }
+        .step p { font-size: 0.92rem; margin-bottom: 0; }
+
+        /* ===== TABLA ===== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 0.98rem;
+        }
+        th, td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+        th {
+            background: var(--primary);
+            color: #04211E;
+            font-weight: 700;
+        }
+        tr:nth-child(even) {
+            background: var(--bg-alt);
+        }
+
+        /* ===== FAQ ===== */
         .faq-item {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 20px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border);
         }
-        
         .faq-question {
-            font-weight: bold;
-            color: #2E7D32;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
+            padding: 14px 0;
+            font-weight: 700;
+            color: var(--primary-strong);
+            font-size: 1.02rem;
         }
-        
+        .faq-question span {
+            font-size: 1.3rem;
+            transition: transform 0.3s;
+            color: var(--text-soft);
+        }
         .faq-answer {
-            padding: 10px 0;
             display: none;
-            animation: fadeIn 0.5s ease;
+            padding-bottom: 14px;
+            color: var(--text-soft);
         }
-        
         .faq-answer.active {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
-        
+
+        /* ===== DESTACADOS ===== */
+        .highlight-box {
+            background: var(--accent-soft);
+            border-left: 4px solid var(--primary);
+            padding: 18px 22px;
+            margin: 20px 0 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box h3 { margin-top: 0; }
+        .highlight-box p { margin-bottom: 0; }
+
+        /* ===== TIPS MOTIVACIONALES ===== */
         .tips-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 25px 0;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
         }
-        
         .tip-card {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 16px;
             text-align: center;
+            transition: all 0.3s;
         }
-        
         .tip-card:hover {
-            transform: translateY(-5px);
+            background: var(--accent-soft);
+            transform: translateY(-4px);
         }
-        
-        .tip-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #4CAF50;
+        .tip-card .tip-icon {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            display: block;
         }
-        
-        .icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #4CAF50;
+        .tip-card h4 {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--primary-strong);
+            margin-bottom: 4px;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .tip-card p {
+            font-size: 0.88rem;
+            color: var(--text-soft);
+            margin-bottom: 0;
         }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
+
+        /* ===== FOOTER ===== */
         footer {
             text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: #7f8c8d;
+            padding: 30px 24px;
+            color: var(--text-soft);
             font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
         }
-        
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .exam-layout { flex-direction: column; }
+            .exam-sidebar { display: none; }
+        }
+
         @media (max-width: 768px) {
-            .card-container, .steps-container, .tips-container {
-                flex-direction: column;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-            }
+            .exam-layout { padding: 0 16px; }
+            .exam-main { padding: 20px 0; }
+            .section { padding: 24px 0; }
+            .hero-card { padding: 20px; }
+            .steps-container { flex-direction: column; align-items: center; }
+            .step { max-width: 100%; width: 100%; }
+            .comparison-tabs { flex-direction: column; }
+            .tab { border-radius: 8px; }
+            .carousel-container { height: 320px; }
+            .carousel-slide { padding: 20px 15px; }
+            table { font-size: 0.85rem; }
+            th, td { padding: 8px 10px; }
+            .exam-grid { grid-template-columns: 1fr; }
+            .checklist-grid { grid-template-columns: 1fr; }
+            .tips-container { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .carousel-container { height: 360px; }
+            .tips-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>ESPIROMETRÍA EN NIÑOS</h1>
-            <p class="subtitle">Entendiendo la salud pulmonar de tu hijo</p>
-        </header>
-        
-        <!-- Sección de Introducción -->
-        <section class="section">
-            <h2>Espirometría para Niños</h2>
-            <p>La espirometría es una prueba sencilla, segura y no invasiva que mide cómo funcionan los pulmones de tu hijo. Es fundamental para diagnosticar y monitorear enfermedades respiratorias, como el asma o la fibrosis quística.</p>
-            <p>Imaginen los pulmones como un globo: la espirometría evalúa qué tan bien ese globo se infla y se desinfla, ayudando a los médicos a entender la capacidad pulmonar y detectar posibles problemas respiratorios.</p>
-            
-            <div class="highlight-box">
-                <p><strong>Importante:</strong> La prueba es igual de efectiva en niños y adultos, pero con adaptaciones para que los más pequeños se sientan cómodos y motivados.</p>
-            </div>
-        </section>
-        
-        <!-- Sección de ¿Qué Mide y Evalúa? con carrusel -->
-        <section class="section">
-            <h2>¿Qué Mide y Evalúa?</h2>
-            <div class="carousel-container">
-                <div class="carousel-slide active">
-                    <div class="icon">📊</div>
-                    <h3>Capacidad Vital Forzada (CVF)</h3>
-                    <p>La cantidad total de aire que se puede exhalar forzadamente después de una inhalación profunda.</p>
-                    <p>Este parámetro ayuda a evaluar la capacidad pulmonar total de tu hijo.</p>
-                </div>
-                <div class="carousel-slide">
-                    <div class="icon">⏱️</div>
-                    <h3>Volumen Espiratorio Forzado en el Primer Segundo (VEF1)</h3>
-                    <p>La cantidad de aire que se exhala en el primer segundo de la espiración forzada.</p>
-                    <p>Es crucial para evaluar la salud de las vías respiratorias de tu hijo.</p>
-                </div>
-                <div class="carousel-slide">
-                    <div class="icon">🔍</div>
-                    <h3>Índice de Tiffeneau (VEF1/CVF)</h3>
-                    <p>Relación entre el VEF1 y la CVF, utilizada para diferenciar entre enfermedades obstructivas y restrictivas.</p>
-                    <p>Ayuda a los médicos a identificar el tipo de problema respiratorio.</p>
+<body data-theme="light">
+
+    <div class="exam-layout">
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="exam-sidebar">
+            <a href="index.html" class="back-home" id="backHome">
+                <i class="fa-solid fa-arrow-left"></i>
+                Volver al inicio
+            </a>
+
+            <div class="exam-logo">
+                <div class="logo-box">FP</div>
+                <div>
+                    <h3>FPAIR</h3>
+                    <p>Espirometría Niños</p>
                 </div>
             </div>
-            <div class="carousel-nav">
-                <div class="carousel-dot active" data-slide="0"></div>
-                <div class="carousel-dot" data-slide="1"></div>
-                <div class="carousel-dot" data-slide="2"></div>
-            </div>
-        </section>
-        
-        <!-- Sección de Cómo funciona -->
-        <section class="section">
-            <h2>¿Cómo funciona?</h2>
-            
-            <h3>Antes de empezar:</h3>
-            <p>El operador explicará con calma en palabras sencillas lo que hará tu hijo. Es importante que él o ella se sienta seguro y entienda que no duele.</p>
-            
-            <h3>Durante la prueba:</h3>
-            <ul>
-                <li>Tu hijo respirará profundamente, llenando sus pulmones de aire.</li>
-                <li>Luego, soplará con todas sus fuerzas por una boquilla conectada a un dispositivo llamado espirómetro.</li>
-                <li>El soplido debe ser fuerte, rápido y sostenido hasta que el operador diga "¡basta!".</li>
-            </ul>
-            
-            <div class="highlight-box">
-                <h3>Material para padres</h3>
-                <p><strong>El operador del examen</strong> lo guiará correctamente durante el esfuerzo a realizar. Deben conseguir mínimo 3 esfuerzos bien realizados para poder confirmar los resultados obtenidos (siempre los mejores).</p>
-                <p>Los valores obtenidos se comparan con los de otros niños de la misma edad, género y talla, para saber si los pulmones de tu hijo están funcionando correctamente.</p>
-            </div>
-        </section>
-        
-        <!-- Sección de Tips motivacionales -->
-        <section class="section">
-            <h2>Tips motivacionales</h2>
-            <p>Para ayudar a los niños a entender el esfuerzo, usamos metáforas o juegos:</p>
-            
-            <div class="tips-container">
-                <div class="tip-card">
-                    <div class="tip-icon">🏆</div>
-                    <h3>Competencia de soplar</h3>
-                    <p>Motivar al niño a que compita con el operador para ver quién sopla más fuerte y por más tiempo.</p>
+
+            <nav class="exam-nav">
+                <a href="#que-es">Qué es</a>
+                <a href="#que-mide">Qué mide</a>
+                <a href="#como-funciona">Cómo funciona</a>
+                <a href="#tips">Tips motivacionales</a>
+                <a href="#tecnica">Técnica</a>
+                <a href="#sintomas">Síntomas</a>
+                <a href="#faq">Preguntas frecuentes</a>
+            </nav>
+        </aside>
+
+        <!-- ===== MAIN ===== -->
+        <main class="exam-main">
+
+            <!-- ===== HERO ===== -->
+            <section class="exam-hero" style="display:flex; gap:40px; align-items:center; padding:20px 0 30px;">
+                <div class="exam-hero-content" style="flex:1;">
+                    <span class="hero-badge" style="display:inline-block; background:var(--accent-soft); color:var(--primary-strong); padding:6px 14px; border-radius:999px; font-size:.78rem; font-weight:700; margin-bottom:16px;">
+                        Examen de función pulmonar · ATS/ERS
+                    </span>
+                    <h1 style="font-size:clamp(2.5rem,4vw,3.5rem); line-height:1.08; margin-bottom:16px;">Espirometría en Niños</h1>
+                    <p style="font-size:1.08rem; color:var(--text-soft); max-width:48ch; margin-bottom:24px;">
+                        La espirometría pediátrica es una prueba sencilla, segura y no invasiva que evalúa cómo funcionan los pulmones de los niños. Conoce cómo preparar a tu hijo y qué esperar del examen.
+                    </p>
+                    <div class="hero-buttons" style="display:flex; gap:12px; flex-wrap:wrap;">
+                        <a href="#tecnica"><button class="primary-btn" style="display:inline-flex; align-items:center; gap:8px; font-family:'Manrope',sans-serif; font-weight:700; font-size:.95rem; padding:12px 22px; border-radius:999px; border:1px solid transparent; cursor:pointer; background:var(--primary); color:#04211E; box-shadow:var(--shadow); transition:all .2s;"><i class="fa-solid fa-child"></i> Ver técnica</button></a>
+                        <a href="#tips"><button class="secondary-btn" style="display:inline-flex; align-items:center; gap:8px; font-family:'Manrope',sans-serif; font-weight:700; font-size:.95rem; padding:12px 22px; border-radius:999px; border:1px solid var(--border); cursor:pointer; background:transparent; color:var(--text); transition:all .2s;"><i class="fa-solid fa-star"></i> Tips motivacionales</button></a>
+                    </div>
                 </div>
-                <div class="tip-card">
-                    <div class="tip-icon">🎂</div>
-                    <h3>Soplar velas</h3>
-                    <p>Imaginar que está soplando las velas de un pastel gigante.</p>
+                <div class="exam-hero-image" style="flex-shrink:0; width:200px; height:200px; background:var(--accent-soft); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:5rem; color:var(--primary);">
+                    <i class="fa-solid fa-child"></i>
                 </div>
-                <div class="tip-card">
-                    <div class="tip-icon">🎈</div>
-                    <h3>Inflar un globo</h3>
-                    <p>Visualizar que está inflando un globo enorme con su respiración.</p>
+            </section>
+
+            <!-- ===== QUÉ ES ===== -->
+            <section id="que-es" class="section">
+                <div class="section-header">
+                    <h2>Espirometría para Niños</h2>
+                    <p>Comprende de forma simple qué evalúa este examen en los más pequeños.</p>
                 </div>
-                <div class="tip-card">
-                    <div class="tip-icon">⛵</div>
-                    <h3>Barquito de papel</h3>
-                    <p>Imaginar que está empujando un barquito de papel por un río imaginario.</p>
+                <div class="hero-card">
+                    <p>La espirometría es una prueba sencilla, segura y no invasiva que mide cómo funcionan los pulmones de tu hijo. Es fundamental para diagnosticar y monitorear enfermedades respiratorias, como el asma o la fibrosis quística.</p>
+                    <br>
+                    <p>Imaginen los pulmones como un globo: la espirometría evalúa qué tan bien ese globo se infla y se desinfla, ayudando a los médicos a entender la capacidad pulmonar y detectar posibles problemas respiratorios.</p>
+                    <div class="highlight-box" style="margin-top:16px;">
+                        <p><strong>Importante:</strong> La prueba es igual de efectiva en niños y adultos, pero con adaptaciones para que los más pequeños se sientan cómodos y motivados.</p>
+                    </div>
                 </div>
-            </div>
-            
-            <p>El operador animará y alentará a tu hijo durante toda la maniobra para que dé su mejor esfuerzo, haciendo que la experiencia sea positiva y sin estrés.</p>
-        </section>
-        
-        <!-- Sección de Instrucciones paso a paso -->
-        <section class="section">
-            <h2>Instrucciones paso a paso</h2>
-            <p>Al estar sentado en una posición erguida, pondrás el espirómetro en la boca y sellarás bien con los labios, ahora respira normal, el instructor te avisará cuando comienza la competencia.</p>
-            
-            <div class="steps-container">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Preparación</h3>
-                    <p>Siéntate derecho y coloca la boquilla correctamente.</p>
+            </section>
+
+            <!-- ===== QUÉ MIDE ===== -->
+            <section id="que-mide" class="section">
+                <div class="section-header">
+                    <h2>¿Qué Mide y Evalúa?</h2>
+                    <p>Parámetros respiratorios principales explicados de forma simple.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Inspiración</h3>
-                    <p>Realiza una inspiración profunda y completa.</p>
+                <div class="carousel-container">
+                    <div class="carousel-slide active">
+                        <div style="font-size:2.5rem; margin-bottom:10px;">📊</div>
+                        <h3>Capacidad Vital Forzada (CVF)</h3>
+                        <p>La cantidad total de aire que se puede exhalar forzadamente después de una inhalación profunda. Este parámetro ayuda a evaluar la capacidad pulmonar total de tu hijo.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <div style="font-size:2.5rem; margin-bottom:10px;">⏱️</div>
+                        <h3>Volumen Espiratorio Forzado (VEF1)</h3>
+                        <p>La cantidad de aire que se exhala en el primer segundo de la espiración forzada. Es crucial para evaluar la salud de las vías respiratorias de tu hijo.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <div style="font-size:2.5rem; margin-bottom:10px;">🔍</div>
+                        <h3>Índice de Tiffeneau (VEF1/CVF)</h3>
+                        <p>Relación entre el VEF1 y la CVF, utilizada para diferenciar entre enfermedades obstructivas y restrictivas. Ayuda a los médicos a identificar el tipo de problema respiratorio.</p>
+                    </div>
                 </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Espiración</h3>
-                    <p>Exhala con fuerza y continuidad hasta vaciar los pulmones.</p>
+                <div class="carousel-nav">
+                    <span class="carousel-dot active" data-slide="0"></span>
+                    <span class="carousel-dot" data-slide="1"></span>
+                    <span class="carousel-dot" data-slide="2"></span>
                 </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>Repetición</h3>
-                    <p>Repite el proceso según las indicaciones del operador.</p>
+            </section>
+
+            <!-- ===== CÓMO FUNCIONA ===== -->
+            <section id="como-funciona" class="section">
+                <div class="section-header">
+                    <h2>¿Cómo funciona?</h2>
+                    <p>Conoce el procedimiento paso a paso.</p>
                 </div>
-            </div>
-        </section>
-        
-        <!-- Sección de Síntomas -->
-        <section class="section">
-            <h2>Posibles síntomas durante un esfuerzo espirométrico</h2>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Síntoma</th>
-                        <th>Descripción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Mareos</td>
-                        <td>Sensación de vértigo o inestabilidad</td>
-                    </tr>
-                    <tr>
-                        <td>Fatiga</td>
-                        <td>Cansancio muscular respiratorio</td>
-                    </tr>
-                    <tr>
-                        <td>Tos</td>
-                        <td>Irritación de las vías respiratorias</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <div class="highlight-box">
-                <p><strong>La mayoría de los síntomas son temporales y desaparecen rápidamente.</strong></p>
-                <p>Aunque es normal experimentar algunos síntomas durante un esfuerzo espirométrico, pocas veces los niños se sienten mal con el esfuerzo.</p>
-            </div>
-        </section>
-        
-        <!-- Sección de Preguntas Frecuentes -->
-        <section class="section">
-            <h2>Preguntas frecuentes de los padres</h2>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>¿Y si mi hijo no entiende o se cansa rápido?</span>
-                    <span>+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>Es normal que los niños necesiten varios intentos. El operador repetirá la explicación con calma y convertirá la prueba en un juego. Lo importante es lograr al menos tres maniobras aceptables para validar los resultados.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>¿Sentirá molestias durante la prueba?</span>
-                    <span>+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>Al soplar con fuerza, podría sentirse mareado o toser un poco, pero estos síntomas desaparecen en segundos. El operador estará atento para detenerse si es necesario.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>¿Cuánto dura la prueba?</span>
-                    <span>+</span>
-                </div>
-                <div class="faq-answer">
-                    <ul>
-                        <li>Sin broncodilatador: 10 a 15 minutos.</li>
-                        <li>Con broncodilatador: 25 a 30 minutos.</li>
+                <div class="hero-card">
+                    <h3>Antes de empezar:</h3>
+                    <p>El operador explicará con calma en palabras sencillas lo que hará tu hijo. Es importante que él o ella se sienta seguro y entienda que no duele.</p>
+
+                    <h3 style="margin-top:20px;">Durante la prueba:</h3>
+                    <ul style="padding-left:20px; color:var(--text-soft);">
+                        <li>Tu hijo respirará profundamente, llenando sus pulmones de aire.</li>
+                        <li>Luego, soplará con todas sus fuerzas por una boquilla conectada a un dispositivo llamado espirómetro.</li>
+                        <li>El soplido debe ser fuerte, rápido y sostenido hasta que el operador diga "¡basta!".</li>
                     </ul>
+
+                    <div class="highlight-box" style="margin-top:16px;">
+                        <h3>Material para padres</h3>
+                        <p><strong>El operador del examen</strong> lo guiará correctamente durante el esfuerzo a realizar. Deben conseguir mínimo 3 esfuerzos bien realizados para poder confirmar los resultados obtenidos (siempre los mejores).</p>
+                        <p style="margin-top:8px;">Los valores obtenidos se comparan con los de otros niños de la misma edad, género y talla, para saber si los pulmones de tu hijo están funcionando correctamente.</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>¿La prueba es segura para mi hijo?</span>
-                    <span>+</span>
+            </section>
+
+            <!-- ===== TIPS MOTIVACIONALES ===== -->
+            <section id="tips" class="section">
+                <div class="section-header">
+                    <h2>Tips motivacionales</h2>
+                    <p>Para ayudar a los niños a entender el esfuerzo, usamos metáforas o juegos.</p>
                 </div>
-                <div class="faq-answer">
-                    <p>¡Sí! La espirometría es totalmente segura y está recomendada en niños desde los 5 años, cuando ya pueden seguir instrucciones básicas o ser competitivos.</p>
+                <div class="hero-card">
+                    <div class="tips-container">
+                        <div class="tip-card">
+                            <span class="tip-icon">🏆</span>
+                            <h4>Competencia de soplar</h4>
+                            <p>Motivar al niño a que compita con el operador para ver quién sopla más fuerte y por más tiempo.</p>
+                        </div>
+                        <div class="tip-card">
+                            <span class="tip-icon">🎂</span>
+                            <h4>Soplar velas</h4>
+                            <p>Imaginar que está soplando las velas de un pastel gigante.</p>
+                        </div>
+                        <div class="tip-card">
+                            <span class="tip-icon">🎈</span>
+                            <h4>Inflar un globo</h4>
+                            <p>Visualizar que está inflando un globo enorme con su respiración.</p>
+                        </div>
+                        <div class="tip-card">
+                            <span class="tip-icon">⛵</span>
+                            <h4>Barquito de papel</h4>
+                            <p>Imaginar que está empujando un barquito de papel por un río imaginario.</p>
+                        </div>
+                    </div>
+                    <p style="margin-top:16px;">El operador animará y alentará a tu hijo durante toda la maniobra para que dé su mejor esfuerzo, haciendo que la experiencia sea positiva y sin estrés.</p>
                 </div>
-            </div>
-        </section>
-        
-        <footer>
-            <p>Gracias a la espirometría, los especialistas podrán tomar mejores decisiones para el tratamiento y cuidado respiratorio de tu hijo.</p>
-            <p>Si tienes dudas o inquietudes, no dudes en preguntar al profesional de salud.</p>
-            <p>© 2023 Sistema de Información Médica Respiratoria</p>
-        </footer>
+            </section>
+
+            <!-- ===== TÉCNICA ===== -->
+            <section id="tecnica" class="section">
+                <div class="section-header">
+                    <h2>Instrucciones paso a paso</h2>
+                    <p>Practica la maniobra antes del examen.</p>
+                </div>
+                <div class="hero-card">
+                    <p>Al estar sentado en una posición erguida, pondrás el espirómetro en la boca y sellarás bien con los labios, ahora respira normal, el instructor te avisará cuando comienza la competencia.</p>
+
+                    <div class="steps-container" style="margin-top:20px;">
+                        <div class="step">
+                            <div class="step-icon">🧘</div>
+                            <h3>Preparación</h3>
+                            <p>Siéntate derecho y coloca la boquilla correctamente.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">🌬️</div>
+                            <h3>Inspiración</h3>
+                            <p>Realiza una inspiración profunda y completa.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">💨</div>
+                            <h3>Espiración</h3>
+                            <p>Exhala con fuerza y continuidad hasta vaciar los pulmones.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">🔄</div>
+                            <h3>Repetición</h3>
+                            <p>Repite el proceso según las indicaciones del operador.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== SÍNTOMAS ===== -->
+            <section id="sintomas" class="section">
+                <div class="section-header">
+                    <h2>Posibles síntomas durante un esfuerzo espirométrico</h2>
+                    <p>Reacciones que pueden experimentar los niños.</p>
+                </div>
+                <div class="hero-card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Síntoma</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mareos</td>
+                                <td>Sensación de vértigo o inestabilidad</td>
+                            </tr>
+                            <tr>
+                                <td>Fatiga</td>
+                                <td>Cansancio muscular respiratorio</td>
+                            </tr>
+                            <tr>
+                                <td>Tos</td>
+                                <td>Irritación de las vías respiratorias</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="highlight-box">
+                        <p><strong>La mayoría de los síntomas son temporales y desaparecen rápidamente.</strong></p>
+                        <p>Aunque es normal experimentar algunos síntomas durante un esfuerzo espirométrico, pocas veces los niños se sienten mal con el esfuerzo.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== FAQ ===== -->
+            <section id="faq" class="section">
+                <div class="section-header">
+                    <h2>Preguntas frecuentes de los padres</h2>
+                </div>
+                <div class="hero-card">
+                    <div class="faq-item">
+                        <div class="faq-question">¿Y si mi hijo no entiende o se cansa rápido? <span>+</span></div>
+                        <div class="faq-answer">
+                            <p>Es normal que los niños necesiten varios intentos. El operador repetirá la explicación con calma y convertirá la prueba en un juego. Lo importante es lograr al menos tres maniobras aceptables para validar los resultados.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">¿Sentirá molestias durante la prueba? <span>+</span></div>
+                        <div class="faq-answer">
+                            <p>Al soplar con fuerza, podría sentirse mareado o toser un poco, pero estos síntomas desaparecen en segundos. El operador estará atento para detenerse si es necesario.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">¿Cuánto dura la prueba? <span>+</span></div>
+                        <div class="faq-answer">
+                            <ul style="padding-left:20px;">
+                                <li>Sin broncodilatador: 10 a 15 minutos.</li>
+                                <li>Con broncodilatador: 25 a 30 minutos.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">¿La prueba es segura para mi hijo? <span>+</span></div>
+                        <div class="faq-answer">
+                            <p>¡Sí! La espirometría es totalmente segura y está recomendada en niños desde los 5 años, cuando ya pueden seguir instrucciones básicas o ser competitivos.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
     </div>
 
+    <footer>
+        <p><b>FPAIR</b> — Educación y entrenamiento respiratorio basado en estándares internacionales ATS/ERS.</p>
+        <p style="font-size:0.85rem; margin-top:4px;">Gracias a la espirometría, los especialistas podrán tomar mejores decisiones para el tratamiento y cuidado respiratorio de tu hijo.</p>
+    </footer>
+
     <script>
-        // Carrusel de "¿Qué Mide y Evalúa?"
-        document.addEventListener('DOMContentLoaded', function() {
-            const slides = document.querySelectorAll('.carousel-slide');
-            const dots = document.querySelectorAll('.carousel-dot');
-            let currentSlide = 0;
-            
-            // Función para mostrar slide específico
-            function showSlide(n) {
-                slides.forEach(slide => slide.classList.remove('active', 'prev'));
-                dots.forEach(dot => dot.classList.remove('active'));
-                
-                currentSlide = n;
-                slides[currentSlide].classList.add('active');
-                dots[currentSlide].classList.add('active');
-                
-                // Marcar slide anterior para transición
-                if (currentSlide > 0) {
-                    slides[currentSlide - 1].classList.add('prev');
-                } else {
-                    slides[slides.length - 1].classList.add('prev');
-                }
-            }
-            
-            // Configurar eventos para los dots
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    showSlide(index);
-                });
-            });
-            
-            // Cambio automático cada 5 segundos
-            setInterval(() => {
-                let nextSlide = (currentSlide + 1) % slides.length;
-                showSlide(nextSlide);
-            }, 5000);
-            
-            // FAQ Acordeón
-            const faqQuestions = document.querySelectorAll('.faq-question');
-            
-            faqQuestions.forEach(question => {
-                question.addEventListener('click', () => {
-                    const answer = question.nextElementSibling;
-                    const isActive = answer.classList.contains('active');
-                    
-                    // Cerrar todas las respuestas
-                    document.querySelectorAll('.faq-answer').forEach(ans => {
-                        ans.classList.remove('active');
-                    });
-                    
-                    // Abrir la respuesta actual si no estaba activa
-                    if (!isActive) {
-                        answer.classList.add('active');
-                    }
-                    
-                    // Cambiar el icono de + a -
-                    const icon = question.querySelector('span:last-child');
-                    if (answer.classList.contains('active')) {
-                        icon.textContent = '-';
-                    } else {
-                        icon.textContent = '+';
-                    }
-                });
-            });
-            
-            // Efecto de animación en elementos al hacer scroll
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-            
-            // Aplicar animación a las secciones
-            document.querySelectorAll('.section').forEach(section => {
-                section.style.opacity = '0';
-                section.style.transform = 'translateY(20px)';
-                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(section);
+        // ============================================================
+        // VOLVER AL INICIO (index.html)
+        // ============================================================
+        document.getElementById('backHome').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'index.html';
+        });
+
+        // ============================================================
+        // CAROUSEL
+        // ============================================================
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        let currentSlide = 0;
+        let carouselInterval;
+
+        function showSlide(n) {
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            slides[n].classList.add('active');
+            dots[n].classList.add('active');
+            currentSlide = n;
+        }
+
+        function nextSlide() {
+            showSlide((currentSlide + 1) % slides.length);
+        }
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                clearInterval(carouselInterval);
+                showSlide(i);
+                carouselInterval = setInterval(nextSlide, 5000);
             });
         });
+
+        carouselInterval = setInterval(nextSlide, 5000);
+
+        // ============================================================
+        // TABS
+        // ============================================================
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                const target = document.getElementById(tab.dataset.tab + '-content');
+                if (target) target.classList.add('active');
+            });
+        });
+
+        // ============================================================
+        // FAQ
+        // ============================================================
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const answer = q.nextElementSibling;
+                const isOpen = answer.classList.contains('active');
+                document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('active'));
+                document.querySelectorAll('.faq-question span').forEach(s => s.textContent = '+');
+                if (!isOpen) {
+                    answer.classList.add('active');
+                    q.querySelector('span').textContent = '-';
+                }
+            });
+        });
+
+        // ============================================================
+        // MODO OSCURO/CLARO
+        // ============================================================
+        function getPreferredTheme() {
+            const saved = localStorage.getItem('fpair:theme');
+            if (saved) return saved;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem('fpair:theme', theme);
+        }
+
+        applyTheme(getPreferredTheme());
+
+        // Toggle con doble clic en el título del hero
+        document.querySelector('.exam-hero h1')?.addEventListener('dblclick', () => {
+            const current = document.body.getAttribute('data-theme');
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        console.log('✅ Espirometría Pediátrica - FPAIR cargado correctamente');
     </script>
+
 </body>
 </html>
