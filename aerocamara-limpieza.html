@@ -6,12 +6,32 @@
   <title>Aerocámara - Información Completa</title>
   <style>
     :root {
-      --azul-principal: #0077b6;
-      --azul-secundario: #00b4d8;
-      --verde-salud: #90e0ef;
-      --gris-fondo: #f6f9fb;
-      --gris-texto: #2c3e50;
-      --blanco: #fff;
+      --azul-principal: #0e8a82;
+      --azul-secundario: #14b8a6;
+      --verde-salud: #7ce0d3;
+      --gris-fondo: #eef9f7;
+      --gris-texto: #0b2530;
+      --blanco: #ffffff;
+    }
+
+    [data-theme="dark"] {
+      --azul-principal: #42c9ff;
+      --azul-secundario: #00d4ff;
+      --verde-salud: #29f0b4;
+      --gris-fondo: #07111f;
+      --gris-texto: #ffffff;
+      --blanco: #101f2e;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html:not([data-theme]) {
+        --azul-principal: #42c9ff;
+        --azul-secundario: #00d4ff;
+        --verde-salud: #29f0b4;
+        --gris-fondo: #07111f;
+        --gris-texto: #ffffff;
+        --blanco: #101f2e;
+      }
     }
 
     * {
@@ -302,6 +322,8 @@
       .header-content { flex-direction: column; }
     }
   </style>
+  <link rel="stylesheet" href="assets/css/fpair-widgets.css">
+  <script src="assets/js/theme.js"></script>
 </head>
 <body>
   <header>
@@ -314,7 +336,6 @@
         <!-- Icono para aerocámara -->
         
       </div>
-    </div>
   </header>
 
   <div class="container">
@@ -503,5 +524,6 @@
       });
     });
   </script>
+  <script src="assets/js/auth.js"></script>
 </body>
 </html>
