@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gasometría Arterial | FPAIR</title>
+    <meta name="description" content="Aprende qué es la gasometría arterial, cómo se evalúa el equilibrio ácido-base y la oxigenación sanguínea, y cómo prepararte para el examen.">
+    <meta name="theme-color" content="#0E8A82">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* ===== VARIABLES FPAIR ===== */
+        :root {
+            --bg: #F3FBFA;
+            --bg-alt: #E7F6F4;
+            --surface: #FFFFFF;
+            --surface-alt: #F0FBF9;
+            --border: #D3EDE9;
+            --text: #0B2530;
+            --text-soft: #4B6B6D;
+            --primary: #0E8A82;
+            --primary-strong: #086B64;
+            --accent: #22D3B8;
+            --accent-soft: #C8F5EC;
+            --shadow: 0 12px 32px -12px rgba(14,138,130,.22);
+            --radius: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg: #06191B;
+            --bg-alt: #0A2224;
+            --surface: #0D2B2D;
+            --surface-alt: #0F3335;
+            --border: #164448;
+            --text: #E6F7F4;
+            --text-soft: #8FBDB8;
+            --primary: #2FE0C3;
+            --primary-strong: #63F0D6;
+            --accent: #14B8A6;
+            --accent-soft: #0F3B3A;
+            --shadow: 0 12px 32px -12px rgba(0,0,0,.55);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            transition: background .35s ease, color .35s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+        a { color: inherit; text-decoration: none; }
+
+        /* ===== LAYOUT ===== */
+        .exam-layout {
+            display: flex;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .exam-sidebar {
+            width: 240px;
+            flex-shrink: 0;
+            padding: 30px 0;
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .exam-main {
+            flex: 1;
+            padding: 30px 0;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-soft);
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: color .2s;
+            cursor: pointer;
+        }
+        .back-home:hover {
+            color: var(--primary-strong);
+        }
+
+        .exam-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .exam-logo .logo-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #04211E;
+            font-weight: 800;
+            font-size: 1.1rem;
+            font-family: 'Manrope', sans-serif;
+        }
+        .exam-logo h3 { font-size: 1.1rem; line-height: 1.2; }
+        .exam-logo p { font-size: .85rem; color: var(--text-soft); }
+
+        .exam-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .exam-nav a {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            color: var(--text-soft);
+            transition: all .2s;
+        }
+        .exam-nav a:hover {
+            background: var(--accent-soft);
+            color: var(--primary-strong);
+        }
+
+        /* ===== SECCIONES ===== */
+        .section {
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .section:last-child { border-bottom: none; }
+
+        .section-header {
+            margin-bottom: 24px;
+        }
+        .section-header h2 {
+            font-size: clamp(1.5rem, 2.6vw, 2rem);
+            color: var(--primary-strong);
+        }
+        .section-header p {
+            color: var(--text-soft);
+            margin-top: 6px;
+        }
+
+        .hero-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+        .hero-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--primary-strong);
+        }
+        .hero-card p {
+            color: var(--text-soft);
+        }
+
+        /* ===== GRID ===== */
+        .exam-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .exam-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all .2s;
+        }
+        .exam-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent);
+        }
+        .exam-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            color: var(--primary-strong);
+        }
+        .exam-card p {
+            font-size: .92rem;
+            color: var(--text-soft);
+        }
+        .exam-card small {
+            font-size: .78rem;
+            color: var(--text-soft);
+            display: block;
+            margin-top: 4px;
+        }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .check-item {
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .check-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* ===== CAROUSEL ===== */
+        .carousel-container {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+            border-radius: 12px;
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+        }
+        .carousel-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            padding: 30px 25px;
+            transition: all 0.6s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .carousel-slide.active { opacity: 1; }
+        .carousel-slide h3 { font-size: 1.2rem; margin-bottom: 8px; }
+        .carousel-slide p { max-width: 500px; margin: 0 auto 8px; }
+
+        .carousel-nav {
+            text-align: center;
+            margin-top: 16px;
+        }
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            background: var(--border);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .carousel-dot.active {
+            background: var(--primary);
+        }
+
+        /* ===== TABS ===== */
+        .comparison-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tab {
+            flex: 1;
+            min-width: 140px;
+            background: var(--bg-alt);
+            border: none;
+            border-radius: 8px 8px 0 0;
+            padding: 12px 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 700;
+            color: var(--text-soft);
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .tab.active {
+            background: var(--primary);
+            color: #04211E;
+            box-shadow: var(--shadow);
+        }
+        .tab:hover:not(.active) {
+            background: var(--accent-soft);
+        }
+        .tab-content {
+            display: none;
+            background: var(--surface-alt);
+            border-radius: 0 0 10px 10px;
+            padding: 20px 24px;
+            animation: fadeIn 0.4s ease;
+        }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== PASOS ===== */
+        .steps-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+        }
+        .step {
+            flex: 1;
+            min-width: 180px;
+            max-width: 260px;
+            background: var(--bg-alt);
+            border-radius: 12px;
+            text-align: center;
+            padding: 24px 16px;
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+        }
+        .step:hover {
+            background: var(--accent-soft);
+            transform: translateY(-5px);
+        }
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #04211E;
+            font-size: 1.8rem;
+        }
+        .step h3 { font-size: 1rem; margin-bottom: 6px; }
+        .step p { font-size: 0.92rem; margin-bottom: 0; }
+
+        /* ===== TABLAS ===== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 0.98rem;
+        }
+        th, td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+        th {
+            background: var(--primary);
+            color: #04211E;
+            font-weight: 700;
+        }
+        tr:nth-child(even) {
+            background: var(--bg-alt);
+        }
+
+        /* ===== TABLA DE VALORES ===== */
+        .values-table td:first-child {
+            font-weight: 600;
+            color: var(--text);
+        }
+        .values-table td:last-child {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 500;
+        }
+        .values-table .normal {
+            color: var(--primary-strong);
+        }
+        .values-table .abnormal {
+            color: var(--danger);
+        }
+
+        /* ===== FAQ ===== */
+        .faq-item {
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .faq-question {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            font-weight: 700;
+            color: var(--primary-strong);
+            font-size: 1.02rem;
+        }
+        .faq-question span {
+            font-size: 1.3rem;
+            transition: transform 0.3s;
+            color: var(--text-soft);
+        }
+        .faq-answer {
+            display: none;
+            padding-bottom: 14px;
+            color: var(--text-soft);
+        }
+        .faq-answer.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* ===== DESTACADOS ===== */
+        .highlight-box {
+            background: var(--accent-soft);
+            border-left: 4px solid var(--primary);
+            padding: 18px 22px;
+            margin: 20px 0 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box h3 { margin-top: 0; }
+        .highlight-box p { margin-bottom: 0; }
+
+        .warning-box {
+            background: color-mix(in srgb, var(--danger) 8%, transparent);
+            border-left: 4px solid var(--danger);
+            padding: 18px 22px;
+            margin: 20px 0 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box h3 { margin-top: 0; color: var(--danger); }
+        .warning-box p { margin-bottom: 0; }
+
+        /* ===== INTERPRETACIÓN ===== */
+        .interpretation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .interpretation-card {
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+        }
+        .interpretation-card h4 {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+            color: var(--primary-strong);
+        }
+        .interpretation-card .badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: .75rem;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+        .interpretation-card .badge.acidosis {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .interpretation-card .badge.alcalosis {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .interpretation-card .badge.normal {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 30px 24px;
+            color: var(--text-soft);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .exam-layout { flex-direction: column; }
+            .exam-sidebar { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .exam-layout { padding: 0 16px; }
+            .exam-main { padding: 20px 0; }
+            .section { padding: 24px 0; }
+            .hero-card { padding: 20px; }
+            .steps-container { flex-direction: column; align-items: center; }
+            .step { max-width: 100%; width: 100%; }
+            .comparison-tabs { flex-direction: column; }
+            .tab { border-radius: 8px; }
+            .carousel-container { height: 320px; }
+            .carousel-slide { padding: 20px 15px; }
+            table { font-size: 0.85rem; }
+            th, td { padding: 8px 10px; }
+            .exam-grid { grid-template-columns: 1fr; }
+            .checklist-grid { grid-template-columns: 1fr; }
+            .interpretation-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .carousel-container { height: 360px; }
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <div class="exam-layout">
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="exam-sidebar">
+            <a href="fpair-rediseno.html" class="back-home" id="backHome">
+                <i class="fa-solid fa-arrow-left"></i>
+                Volver al inicio
+            </a>
+
+            <div class="exam-logo">
+                <div class="logo-box">FP</div>
+                <div>
+                    <h3>FPAIR</h3>
+                    <p>Gasometría Arterial</p>
+                </div>
+            </div>
+
+            <nav class="exam-nav">
+                <a href="#que-es">Qué es</a>
+                <a href="#que-mide">Qué mide</a>
+                <a href="#valores-normales">Valores normales</a>
+                <a href="#informacion-adicional">Información adicional</a>
+                <a href="#tecnica">Técnica</a>
+                <a href="#interpretacion">Interpretación</a>
+                <a href="#faq">Preguntas frecuentes</a>
+            </nav>
+        </aside>
+
+        <!-- ===== MAIN ===== -->
+        <main class="exam-main">
+
+            <!-- ===== HERO ===== -->
+            <section class="exam-hero" style="display:flex; gap:40px; align-items:center; padding:20px 0 30px;">
+                <div class="exam-hero-content" style="flex:1;">
+                    <span class="hero-badge" style="display:inline-block; background:var(--accent-soft); color:var(--primary-strong); padding:6px 14px; border-radius:999px; font-size:.78rem; font-weight:700; margin-bottom:16px;">
+                        Examen de función respiratoria
+                    </span>
+                    <h1 style="font-size:clamp(2.5rem,4vw,3.5rem); line-height:1.08; margin-bottom:16px;">Gasometría Arterial</h1>
+                    <p style="font-size:1.08rem; color:var(--text-soft); max-width:48ch; margin-bottom:24px;">
+                        La gasometría arterial evalúa el equilibrio ácido-base y la oxigenación sanguínea. Es fundamental para diagnosticar y monitorear enfermedades respiratorias y metabólicas.
+                    </p>
+                    <div class="hero-buttons" style="display:flex; gap:12px; flex-wrap:wrap;">
+                        <a href="#tecnica"><button class="primary-btn" style="display:inline-flex; align-items:center; gap:8px; font-family:'Manrope',sans-serif; font-weight:700; font-size:.95rem; padding:12px 22px; border-radius:999px; border:1px solid transparent; cursor:pointer; background:var(--primary); color:#04211E; box-shadow:var(--shadow); transition:all .2s;"><i class="fa-solid fa-droplet"></i> Conocer técnica</button></a>
+                        <a href="#que-es"><button class="secondary-btn" style="display:inline-flex; align-items:center; gap:8px; font-family:'Manrope',sans-serif; font-weight:700; font-size:.95rem; padding:12px 22px; border-radius:999px; border:1px solid var(--border); cursor:pointer; background:transparent; color:var(--text); transition:all .2s;"><i class="fa-solid fa-circle-info"></i> Ver información</button></a>
+                    </div>
+                </div>
+                <div class="exam-hero-image" style="flex-shrink:0; width:200px; height:200px; background:var(--accent-soft); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:5rem; color:var(--primary);">
+                    <i class="fa-solid fa-flask"></i>
+                </div>
+            </section>
+
+            <!-- ===== QUÉ ES ===== -->
+            <section id="que-es" class="section">
+                <div class="section-header">
+                    <h2>¿Qué es la Gasometría Arterial?</h2>
+                    <p>Comprende de forma simple qué evalúa este examen.</p>
+                </div>
+                <div class="hero-card">
+                    <p>La gasometría arterial es un examen que mide los niveles de oxígeno (O₂), dióxido de carbono (CO₂) y el pH en la sangre arterial. Proporciona información crucial sobre el estado respiratorio y metabólico del paciente.</p>
+                    <br>
+                    <p>Se realiza mediante la extracción de una muestra de sangre arterial, generalmente de la arteria radial en la muñeca, femoral en la ingle o braquial en el brazo.</p>
+                    <br>
+                    <p>Es un examen fundamental en el diagnóstico y seguimiento de enfermedades respiratorias, cardíacas, metabólicas y en pacientes críticos o con ventilación mecánica.</p>
+                </div>
+            </section>
+
+            <!-- ===== QUÉ MIDE ===== -->
+            <section id="que-mide" class="section">
+                <div class="section-header">
+                    <h2>¿Qué mide la gasometría arterial?</h2>
+                    <p>Parámetros principales explicados de forma simple.</p>
+                </div>
+                <div class="carousel-container">
+                    <div class="carousel-slide active">
+                        <h3>pH (Potencial de Hidrógeno)</h3>
+                        <p>Indica la acidez o alcalinidad de la sangre. Un pH normal está entre 7.35 y 7.45. Valores por debajo indican acidemia, por encima alcalemia.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <h3>PaO₂ (Presión Parcial de Oxígeno)</h3>
+                        <p>Mide la cantidad de oxígeno disuelto en la sangre arterial. Refleja la eficiencia de los pulmones para oxigenar la sangre. El valor normal es ≥ 80 mmHg.</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <h3>PaCO₂ (Presión Parcial de Dióxido de Carbono)</h3>
+                        <p>Mide la cantidad de CO₂ en la sangre arterial. Refleja la eficiencia de la ventilación pulmonar. El valor normal está entre 35 y 45 mmHg.</p>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <span class="carousel-dot active" data-slide="0"></span>
+                    <span class="carousel-dot" data-slide="1"></span>
+                    <span class="carousel-dot" data-slide="2"></span>
+                </div>
+            </section>
+
+            <!-- ===== VALORES NORMALES ===== -->
+            <section id="valores-normales" class="section">
+                <div class="section-header">
+                    <h2>Valores Normales</h2>
+                    <p>Rangos de referencia para los principales parámetros.</p>
+                </div>
+                <div class="hero-card">
+                    <table class="values-table">
+                        <thead>
+                            <tr>
+                                <th>Parámetro</th>
+                                <th>Descripción</th>
+                                <th>Valor Normal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>pH</td>
+                                <td>Acidez/alcalinidad de la sangre</td>
+                                <td class="normal">7.35 - 7.45</td>
+                            </tr>
+                            <tr>
+                                <td>PaO₂</td>
+                                <td>Presión parcial de oxígeno</td>
+                                <td class="normal">≥ 80 mmHg</td>
+                            </tr>
+                            <tr>
+                                <td>PaCO₂</td>
+                                <td>Presión parcial de CO₂</td>
+                                <td class="normal">35 - 45 mmHg</td>
+                            </tr>
+                            <tr>
+                                <td>HCO₃⁻</td>
+                                <td>Bicarbonato (componente metabólico)</td>
+                                <td class="normal">22 - 26 mEq/L</td>
+                            </tr>
+                            <tr>
+                                <td>BE</td>
+                                <td>Exceso de bases</td>
+                                <td class="normal">-2 a +2 mEq/L</td>
+                            </tr>
+                            <tr>
+                                <td>SaO₂</td>
+                                <td>Saturación de oxígeno</td>
+                                <td class="normal">≥ 95%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top:16px; font-size:.85rem; color:var(--text-soft);">
+                        <p>* Estos valores pueden variar según el laboratorio y condiciones del paciente (altitud, edad, etc.).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== INFORMACIÓN ADICIONAL ===== -->
+            <section id="informacion-adicional" class="section">
+                <div class="section-header">
+                    <h2>Información Adicional</h2>
+                    <p>Componentes y técnica de la gasometría arterial.</p>
+                </div>
+
+                <div class="comparison-tabs">
+                    <button class="tab active" data-tab="componentes">Componentes</button>
+                    <button class="tab" data-tab="tecnica-medicion">Técnica</button>
+                    <button class="tab" data-tab="indicaciones">Indicaciones</button>
+                </div>
+
+                <div class="tab-content active" id="componentes-content">
+                    <h3>Componentes de la Gasometría Arterial</h3>
+                    <p><strong>pH:</strong> Mide la acidez o alcalinidad de la sangre. Es el indicador principal del equilibrio ácido-base.</p>
+                    <p><strong>PaO₂:</strong> Presión parcial de oxígeno. Evalúa la capacidad de los pulmones para oxigenar la sangre.</p>
+                    <p><strong>PaCO₂:</strong> Presión parcial de CO₂. Evalúa la eficiencia de la ventilación alveolar.</p>
+                    <p><strong>HCO₃⁻:</strong> Bicarbonato. Es el componente metabólico del sistema buffer de la sangre.</p>
+                    <p><strong>BE (Exceso de Bases):</strong> Indica la cantidad de base necesaria para normalizar el pH.</p>
+                    <p><strong>SaO₂:</strong> Saturación de oxígeno. Porcentaje de hemoglobina saturada con oxígeno.</p>
+                </div>
+
+                <div class="tab-content" id="tecnica-medicion-content">
+                    <h3>Técnica de Extracción</h3>
+                    <p><strong>Procedimiento:</strong> Se extrae sangre de una arteria, generalmente la radial (muñeca), femoral (ingle) o braquial (brazo).</p>
+                    <p><strong>Preparación:</strong> Se realiza la prueba de Allen para verificar la circulación colateral en la mano.</p>
+                    <p><strong>Manejo:</strong> La muestra debe procesarse rápidamente o mantenerse en hielo para evitar alteraciones en los gases.</p>
+                    <p><strong>Punción:</strong> La arteria se localiza por palpación y se inserta la aguja con ángulo de 45°.</p>
+                </div>
+
+                <div class="tab-content" id="indicaciones-content">
+                    <h3>Indicaciones Clínicas</h3>
+                    <p><strong>Insuficiencia respiratoria:</strong> Para evaluar la gravedad y el tipo (hipoxémica o hipercápnica).</p>
+                    <p><strong>Enfermedades pulmonares:</strong> EPOC, asma grave, fibrosis pulmonar, neumonía.</p>
+                    <p><strong>Trastornos metabólicos:</strong> Cetoacidosis diabética, insuficiencia renal, acidosis láctica.</p>
+                    <p><strong>Ventilación mecánica:</strong> Para ajustar los parámetros ventilatorios.</p>
+                    <p><strong>Pacientes críticos:</strong> Monitoreo en UCI y unidades de cuidados intensivos.</p>
+                </div>
+            </section>
+
+            <!-- ===== TÉCNICA ===== -->
+            <section id="tecnica" class="section">
+                <div class="section-header">
+                    <h2>Técnica de Extracción</h2>
+                    <p>Conoce el procedimiento paso a paso.</p>
+                </div>
+                <div class="hero-card">
+                    <p>La gasometría arterial se realiza mediante punción arterial. El profesional de salud buscará el pulso arterial y realizará la extracción con una aguja especial.</p>
+
+                    <div class="steps-container" style="margin-top:20px;">
+                        <div class="step">
+                            <div class="step-icon">🔍</div>
+                            <h3>Preparación</h3>
+                            <p>Verificación de la arteria y prueba de Allen.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">🧴</div>
+                            <h3>Limpieza</h3>
+                            <p>Desinfección de la zona con antiséptico.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">💉</div>
+                            <h3>Punción</h3>
+                            <p>Inserción de la aguja en la arteria.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">🧊</div>
+                            <h3>Manejo</h3>
+                            <p>La muestra se procesa inmediatamente o se conserva en hielo.</p>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <h3>Recomendaciones importantes</h3>
+                        <p>La punción arterial puede causar molestia temporal. Es importante mantener la calma y seguir las indicaciones del profesional. Después de la extracción, se debe aplicar presión en el sitio de punción durante varios minutos para evitar hematomas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== INTERPRETACIÓN ===== -->
+            <section id="interpretacion" class="section">
+                <div class="section-header">
+                    <h2>Interpretación Simplificada</h2>
+                    <p>Comprende de forma simple qué puede indicar tu gasometría arterial.</p>
+                </div>
+
+                <div class="interpretation-grid">
+                    <div class="interpretation-card">
+                        <h4>Acidosis Respiratoria</h4>
+                        <p style="font-size:.85rem; color:var(--text-soft);">pH ↓, PaCO₂ ↑</p>
+                        <p style="font-size:.85rem; color:var(--text-soft);">Retención de CO₂. Común en EPOC, depresión respiratoria.</p>
+                        <span class="badge acidosis">ACIDOSIS</span>
+                    </div>
+                    <div class="interpretation-card">
+                        <h4>Alcalosis Respiratoria</h4>
+                        <p style="font-size:.85rem; color:var(--text-soft);">pH ↑, PaCO₂ ↓</p>
+                        <p style="font-size:.85rem; color:var(--text-soft);">Hiperventilación. Común en ansiedad, hipoxia, asma.</p>
+                        <span class="badge alcalosis">ALCALOSIS</span>
+                    </div>
+                    <div class="interpretation-card">
+                        <h4>Acidosis Metabólica</h4>
+                        <p style="font-size:.85rem; color:var(--text-soft);">pH ↓, HCO₃⁻ ↓</p>
+                        <p style="font-size:.85rem; color:var(--text-soft);">Cetoacidosis, insuficiencia renal, acidosis láctica.</p>
+                        <span class="badge acidosis">ACIDOSIS</span>
+                    </div>
+                    <div class="interpretation-card">
+                        <h4>Alcalosis Metabólica</h4>
+                        <p style="font-size:.85rem; color:var(--text-soft);">pH ↑, HCO₃⁻ ↑</p>
+                        <p style="font-size:.85rem; color:var(--text-soft);">Vómitos, diuréticos, pérdida de ácidos.</p>
+                        <span class="badge alcalosis">ALCALOSIS</span>
+                    </div>
+                    <div class="interpretation-card">
+                        <h4>Gasometría Normal</h4>
+                        <p style="font-size:.85rem; color:var(--text-soft);">pH 7.35-7.45, PaCO₂ 35-45, HCO₃⁻ 22-26</p>
+                        <p style="font-size:.85rem; color:var(--text-soft);">Todos los parámetros dentro de los rangos esperados.</p>
+                        <span class="badge normal">NORMAL</span>
+                    </div>
+                    <div class="interpretation-card">
+                        <h4>Hipoxemia</h4>
+                        <p style="font-size:.85rem; color:var(--text-soft);">PaO₂ &lt; 80 mmHg</p>
+                        <p style="font-size:.85rem; color:var(--text-soft);">Disminución de oxígeno en sangre. Requiere evaluación de la causa.</p>
+                        <span class="badge acidosis">HIPOXEMIA</span>
+                    </div>
+                </div>
+
+                <div class="hero-card" style="margin-top:24px;">
+                    <h3>Importante</h3>
+                    <p style="margin-top:12px;">La interpretación de la gasometría arterial debe realizarse siempre en conjunto con la historia clínica, síntomas y otros exámenes complementarios. Esta información es educativa y no reemplaza la evaluación profesional.</p>
+                </div>
+            </section>
+
+            <!-- ===== FAQ ===== -->
+            <section id="faq" class="section">
+                <div class="section-header">
+                    <h2>Preguntas Frecuentes</h2>
+                </div>
+                <div class="hero-card">
+                    <div class="faq-item">
+                        <div class="faq-question">¿Duele la punción arterial? <span>+</span></div>
+                        <div class="faq-answer">
+                            <p>La punción arterial puede causar una molestia similar a la de un análisis de sangre convencional, pero generalmente es bien tolerada. El dolor es breve y desaparece rápidamente.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">¿Qué riesgos tiene la gasometría arterial? <span>+</span></div>
+                        <div class="faq-answer">
+                            <p>Los riesgos son mínimos. Pueden incluir hematoma local, dolor leve o, raramente, sangrado o infección. La prueba es segura y se realiza bajo condiciones estériles.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">¿Cuánto tiempo tardan los resultados? <span>+</span></div>
+                        <div class="faq-answer">
+                            <p>Los resultados de la gasometría arterial suelen estar disponibles en 15 a 30 minutos después de la extracción, ya que se procesan en analizadores de gases sanguíneos.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">¿Necesito alguna preparación especial? <span>+</span></div>
+                        <div class="faq-answer">
+                            <p>No requiere preparación especial. Se recomienda mantener la calma y evitar mover el brazo durante la punción. Si estás en tratamiento con oxígeno, informa al profesional sobre el flujo de O₂ que recibes.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">¿Por qué se usa sangre arterial y no venosa? <span>+</span></div>
+                        <div class="faq-answer">
+                            <p>La sangre arterial refleja directamente el intercambio gaseoso en los pulmones y la oxigenación de los tejidos. La sangre venosa tiene valores muy diferentes y no es útil para evaluar la función respiratoria.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">¿Qué significa si mi PaO₂ está baja? <span>+</span></div>
+                        <div class="faq-answer">
+                            <p>Una PaO₂ baja (hipoxemia) indica que los pulmones no están transfiriendo suficiente oxígeno a la sangre. Puede deberse a enfermedades pulmonares, problemas cardíacos o ventilación inadecuada.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <p><b>FPAIR</b> — Educación y entrenamiento respiratorio basado en estándares internacionales ATS/ERS.</p>
+    </footer>
+
+    <script>
+        // ============================================================
+        // VOLVER AL INICIO
+        // ============================================================
+        document.getElementById('backHome').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = 'fpair-rediseno.html';
+        });
+
+        // ============================================================
+        // CAROUSEL
+        // ============================================================
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        let currentSlide = 0;
+        let carouselInterval;
+
+        function showSlide(n) {
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            slides[n].classList.add('active');
+            dots[n].classList.add('active');
+            currentSlide = n;
+        }
+
+        function nextSlide() {
+            showSlide((currentSlide + 1) % slides.length);
+        }
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                clearInterval(carouselInterval);
+                showSlide(i);
+                carouselInterval = setInterval(nextSlide, 5000);
+            });
+        });
+
+        carouselInterval = setInterval(nextSlide, 5000);
+
+        // ============================================================
+        // TABS
+        // ============================================================
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                const target = document.getElementById(tab.dataset.tab + '-content');
+                if (target) target.classList.add('active');
+            });
+        });
+
+        // ============================================================
+        // FAQ
+        // ============================================================
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const answer = q.nextElementSibling;
+                const isOpen = answer.classList.contains('active');
+                document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('active'));
+                document.querySelectorAll('.faq-question span').forEach(s => s.textContent = '+');
+                if (!isOpen) {
+                    answer.classList.add('active');
+                    q.querySelector('span').textContent = '-';
+                }
+            });
+        });
+
+        // ============================================================
+        // MODO OSCURO/CLARO
+        // ============================================================
+        function getPreferredTheme() {
+            const saved = localStorage.getItem('fpair:theme');
+            if (saved) return saved;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem('fpair:theme', theme);
+        }
+
+        applyTheme(getPreferredTheme());
+
+        // Toggle con doble clic en el título del hero
+        document.querySelector('.exam-hero h1')?.addEventListener('dblclick', () => {
+            const current = document.body.getAttribute('data-theme');
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        console.log('✅ Gasometría Arterial - FPAIR cargado correctamente');
+    </script>
+
+</body>
+</html>
