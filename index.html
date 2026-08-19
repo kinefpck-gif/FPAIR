@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   :root{
     --bg:#F3FBFA; --bg-alt:#E7F6F4; --surface:#FFFFFF; --surface-alt:#F0FBF9;
@@ -84,21 +85,72 @@
   .hero h1{font-size:clamp(2.1rem, 4vw, 3.1rem); line-height:1.08; margin-bottom:18px;}
   .hero h1 em{font-style:normal; color:var(--primary-strong);}
   .hero p.lead{font-size:1.08rem; color:var(--text-soft); max-width:52ch; margin-bottom:28px;}
-  .hero-ctas{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:30px;}
+  .hero-ctas{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:30px; position:relative;}
+  
+  /* ---------- DROPDOWN MENU ---------- */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    background: var(--surface);
+    min-width: 200px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    z-index: 100;
+    padding: 6px 0;
+  }
+  .dropdown-content a {
+    display: block;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: .9rem;
+    color: var(--text);
+    transition: background .2s ease;
+  }
+  .dropdown-content a:hover {
+    background: var(--accent-soft);
+    color: var(--primary-strong);
+  }
+  .dropdown-content a i {
+    margin-right: 10px;
+    color: var(--primary);
+  }
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  .dropdown .btn-arrow {
+    font-size: .7rem;
+    margin-left: 4px;
+    transition: transform .2s ease;
+  }
+  .dropdown:hover .btn-arrow {
+    transform: rotate(180deg);
+  }
+
   .hero-stats{display:flex; gap:28px; flex-wrap:wrap;}
   .hero-stat b{display:block; font-family:'IBM Plex Mono',monospace; font-size:1.4rem; color:var(--primary-strong);}
   .hero-stat span{font-size:.78rem; color:var(--text-soft);}
+  
+  /* ---------- WAVE CARD CON ESPIROGRAMA ---------- */
   .wave-card{
     background:var(--surface); border:1px solid var(--border); border-radius:24px; padding:28px;
     box-shadow:var(--shadow); position:relative;
   }
   .wave-card h3{font-size:1rem; margin-bottom:4px;}
   .wave-card p{font-size:.85rem; color:var(--text-soft); margin-bottom:16px;}
-  .wave-svg{width:100%; height:110px;}
-  .wave-path{fill:none; stroke:var(--primary); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round;}
-  .wave-anim{stroke-dasharray:6 520; stroke-dashoffset:0; animation:breathe 4.2s linear infinite;}
-  @keyframes breathe{ to{ stroke-dashoffset:-526; } }
-  @media (prefers-reduced-motion:reduce){ .wave-anim{animation:none;} }
+  .chart-container{
+    width:100%; height:200px; background:var(--bg-alt); border-radius:12px; padding:8px; position:relative;
+  }
+  .chart-container canvas{
+    width:100% !important; height:100% !important;
+  }
 
   /* ---------- SECTION GENERIC ---------- */
   section{padding:56px 0;}
@@ -209,11 +261,20 @@
     .exam-grid{grid-template-columns:repeat(2,1fr);}
     .checklist{grid-template-columns:repeat(2,1fr);}
     .split{grid-template-columns:1fr;}
+    .dropdown-content {
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
   @media (max-width: 480px){
     .exam-grid{grid-template-columns:1fr;}
     .checklist{grid-template-columns:1fr;}
     .hero-ctas{flex-direction:column; align-items:stretch;}
+    .dropdown-content {
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 180px;
+    }
   }
 </style>
 </head>
@@ -229,6 +290,7 @@
     </div>
     <nav class="main-nav">
       <a href="#examenes">Exámenes</a>
+      <a href="#examenes-ninos">Exámenes Pediátricos</a>
       <a href="#preparacion">Preparación</a>
       <a href="#entrenamiento">Técnica guiada</a>
       <a href="#interpretacion">Interpretación</a>
@@ -251,7 +313,17 @@
       <h1>Prepárate para tu examen pulmonar <em>con confianza</em></h1>
       <p class="lead">Aprende cómo prepararte, practica la técnica correcta y comprende tus resultados respiratorios paso a paso — antes incluso de pisar el laboratorio.</p>
       <div class="hero-ctas">
-        <a href="#preparacion" class="btn btn-primary">Preparar mi examen</a>
+        <!-- DROPDOWN: Preparar mi examen -->
+        <div class="dropdown">
+          <button class="btn btn-primary" id="btnPrepararExamen">
+            Preparar mi examen
+            <span class="btn-arrow">▼</span>
+          </button>
+          <div class="dropdown-content">
+            <a href="#examenes"><i class="fa-solid fa-user"></i> Adulto</a>
+            <a href="#examenes-ninos"><i class="fa-solid fa-child"></i> Pediátrico</a>
+          </div>
+        </div>
         <a href="#entrenamiento" class="btn btn-ghost">Practicar técnica</a>
       </div>
       <div class="hero-stats">
@@ -261,12 +333,11 @@
       </div>
     </div>
     <div class="wave-card">
-      <h3>Curva respiratoria en vivo</h3>
+      <h3>Espirograma - Curva Volumen/Tiempo</h3>
       <p>Así se ve una espiración forzada bien ejecutada.</p>
-      <svg class="wave-svg" viewBox="0 0 400 110" preserveAspectRatio="none">
-        <path class="wave-path" d="M0,80 C20,80 30,20 55,20 C90,20 100,95 140,95 C180,95 190,45 230,45 C270,45 280,70 320,70 C350,70 360,55 400,55"/>
-        <path class="wave-path wave-anim" d="M0,80 C20,80 30,20 55,20 C90,20 100,95 140,95 C180,95 190,45 230,45 C270,45 280,70 320,70 C350,70 360,55 400,55" stroke="var(--accent)" opacity="0.9"/>
-      </svg>
+      <div class="chart-container">
+        <canvas id="espirogramaChart"></canvas>
+      </div>
     </div>
   </div>
 </section>
@@ -279,6 +350,18 @@
       <p>Cómo prepararte y qué técnica realizar antes de asistir al laboratorio.</p>
     </div>
     <div class="exam-grid" id="examGrid"></div>
+  </div>
+</section>
+
+<!-- ===== EXÁMENES PEDIÁTRICOS ===== -->
+<section id="examenes-ninos" style="background:var(--bg-alt);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Exámenes adaptados para los más pequeños</span>
+      <h2>Exámenes para niños (Pediátrico)</h2>
+      <p>Pruebas respiratorias diseñadas pensando en el confort y la comprensión de los niños.</p>
+    </div>
+    <div class="exam-grid" id="examGridNinos"></div>
   </div>
 </section>
 
@@ -404,7 +487,6 @@
 /* ============ DATOS DE EXÁMENES ============ */
 const EXAMS = [
   {name:"Espirometría", desc:"Evalúa cuánto aire puedes expulsar y qué tan rápido.", icon:"lungs", link:"espirometria_info.html"},
-  {name:"Espirometría Pediatrica", desc:"Evalúa cuánto aire puede expulsar un infante.", icon:"wind", link:"espirometria_ninos.html"},
   {name:"DLCO", desc:"Evalúa intercambio gaseoso pulmonar.", icon:"drop", link:"difusion_info.html"},
   {name:"Pletismografía corporal", desc:"Evalúa volúmenes pulmonares completos.", icon:"box", link:"volumenes_info.html"},
   {name:"IOS", desc:"Oscilometría respiratoria sin esfuerzo.", icon:"wave", link:"oscilometria_info.html"},
@@ -416,6 +498,16 @@ const EXAMS = [
   {name:"Gasometría arterial", desc:"Evalúa oxígeno, CO₂ y equilibrio ácido-base.", icon:"drop", link:"gasometria_info.html"},
   {name:"Test cardiopulmonar (CPET)", desc:"Evalúa respuesta cardiorrespiratoria al esfuerzo.", icon:"heart", link:"cardiopulmonar_info.html"},
 ];
+
+const EXAMS_NINOS = [
+  {name:"Espirometría Pediátrica", desc:"Evalúa la función pulmonar en niños de forma lúdica y adaptada.", icon:"wind", link:"espirometria_ninos.html"},
+  {name:"DLCO Pediátrico", desc:"Evalúa el intercambio gaseoso en niños con enfermedades respiratorias.", icon:"drop", link:"dlco_ninos.html"},
+  {name:"IOS Pediátrico", desc:"Oscilometría sin esfuerzo, ideal para niños pequeños.", icon:"wave", link:"ios_ninos.html"},
+  {name:"FENO Pediátrico", desc:"Mide inflamación de vías respiratorias en niños.", icon:"flame", link:"feno_ninos.html"},
+  {name:"Test de Ejercicio Pediátrico", desc:"Evalúa la respuesta al ejercicio en niños.", icon:"walk", link:"test_ejercicio_ninos.html"},
+  {name:"Provocación Bronquial Pediátrica", desc:"Estudia hiperreactividad bronquial en niños.", icon:"alert", link:"provocacion_ninos.html"},
+];
+
 const ICONS = {
   lungs:'<path d="M9 3v7c0 2-2 3-4 3s-3-2-3-5 2-6 4-6h3zm6 0v7c0 2 2 3 4 3s3-2 3-5-2-6-4-6h-3z"/>',
   wind:'<path d="M3 9h11a3 3 0 100-6M3 15h15a3 3 0 110 6M3 12h8"/>',
@@ -429,23 +521,29 @@ const ICONS = {
   walk:'<path d="M13 4a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 21l2-6 2 2 2 4M8 13l3-4 3 1 3-2"/>',
   heart:'<path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-10 11z"/>'
 };
-const examGrid = document.getElementById('examGrid');
-EXAMS.forEach(e=>{
-  const card = document.createElement('div');
-  card.className = 'exam-card';
-  card.innerHTML = `
-    <span class="exam-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[e.icon]}</svg></span>
-    <h3>${e.name}</h3>
-    <p>${e.desc}</p>
-    <span class="exam-link">Aprender examen →</span>`;
-  // Redirección directa con window.location
-  card.addEventListener('click', function() {
-    if (e.link) {
-      window.location.href = e.link;
-    }
+
+function renderExamGrid(gridId, exams) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  exams.forEach(e=>{
+    const card = document.createElement('div');
+    card.className = 'exam-card';
+    card.innerHTML = `
+      <span class="exam-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[e.icon]}</svg></span>
+      <h3>${e.name}</h3>
+      <p>${e.desc}</p>
+      <span class="exam-link">Aprender examen →</span>`;
+    card.addEventListener('click', function() {
+      if (e.link) {
+        window.location.href = e.link;
+      }
+    });
+    grid.appendChild(card);
   });
-  examGrid.appendChild(card);
-});
+}
+
+renderExamGrid('examGrid', EXAMS);
+renderExamGrid('examGridNinos', EXAMS_NINOS);
 
 /* ============ MODO CLARO / OSCURO ============ */
 const themeToggle = document.getElementById('themeToggle');
@@ -640,11 +738,145 @@ function interpretExam(item){
     box.innerHTML = '<div class="ai-result">No pudimos extraer texto legible de este PDF (puede ser una imagen escaneada). Prueba subir un PDF con texto seleccionable.</div>';
     return;
   }
-  // Simulación de respuesta (la API de Anthropic necesita API key)
   setTimeout(() => {
     box.innerHTML = `<div class="ai-result">📋 Análisis educativo del examen:\n\n${extracted.slice(0, 500)}...\n\n⚠️ Esta es una interpretación preliminar. Consulta siempre con tu médico para un diagnóstico preciso.</div>`;
   }, 1500);
 }
+
+/* ============ ESPIROGRAMA CON CHART.JS ============ */
+function generarEspirograma() {
+  const puntos = 800;
+  const t = [];
+  const volumen = [];
+  const base_level = 1.2;
+  
+  for (let i = 0; i <= puntos; i++) {
+    const tiempo = (i / puntos) * 40;
+    t.push(tiempo);
+    let vol = base_level;
+    
+    if (tiempo < 20) {
+      const fase = tiempo % 5;
+      vol = 2.5 + 0.2 * Math.sin(2 * Math.PI * fase / 5);
+    }
+    else if (tiempo >= 20 && tiempo < 23) {
+      const x = tiempo - 20;
+      vol = 2.5 + 2.5 * (1 - Math.exp(-x / 0.4));
+    }
+    else if (tiempo >= 23 && tiempo < 34) {
+      const x = tiempo - 23;
+      vol = 3.8 * Math.pow(1 - x / 11, 2) + 1.2;
+      vol = Math.max(1.2, Math.min(5, vol));
+    }
+    else if (tiempo >= 34 && tiempo < 35.8) {
+      vol = 1.2;
+    }
+    else if (tiempo >= 35.8 && tiempo < 37.8) {
+      const x = tiempo - 35.8;
+      vol = 1.2 + 3.8 * (1 - Math.exp(-x / 0.5));
+    }
+    else if (tiempo >= 37.8 && tiempo <= 40) {
+      vol = 5.0;
+    }
+    
+    volumen.push(vol);
+  }
+  
+  return { t, volumen };
+}
+
+function renderizarEspirograma() {
+  const canvas = document.getElementById('espirogramaChart');
+  if (!canvas) return;
+  
+  const data = generarEspirograma();
+  const ctx = canvas.getContext('2d');
+  
+  const isDark = document.body.getAttribute('data-theme') === 'dark';
+  const textColor = isDark ? '#8FBDB8' : '#4B6B6D';
+  const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+  const lineColor = isDark ? '#2FE0C3' : '#1e90ff';
+  const fillColor = isDark ? 'rgba(47, 224, 195, 0.1)' : 'rgba(30, 144, 255, 0.1)';
+  
+  new Chart(ctx, {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: 'Volumen (L)',
+        data: data.t.map((t, i) => ({ x: t, y: data.volumen[i] })),
+        borderColor: lineColor,
+        backgroundColor: fillColor,
+        showLine: true,
+        fill: true,
+        tension: 0.2,
+        pointRadius: 0,
+        borderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return 'Volumen: ' + context.parsed.y.toFixed(2) + ' L';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          position: 'bottom',
+          title: {
+            display: true,
+            text: 'Tiempo (segundos)',
+            color: textColor,
+            font: { family: 'Inter', size: 11 }
+          },
+          min: 0,
+          max: 40,
+          ticks: { stepSize: 5, color: textColor },
+          grid: { color: gridColor }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Volumen (L)',
+            color: textColor,
+            font: { family: 'Inter', size: 11 }
+          },
+          min: 0,
+          max: 6,
+          ticks: { stepSize: 1, color: textColor },
+          grid: { color: gridColor }
+        }
+      }
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(renderizarEspirograma, 300);
+});
+
+const themeObserver = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    if (mutation.attributeName === 'data-theme') {
+      const canvas = document.getElementById('espirogramaChart');
+      if (canvas) {
+        const parent = canvas.parentElement;
+        const newCanvas = document.createElement('canvas');
+        newCanvas.id = 'espirogramaChart';
+        parent.replaceChild(newCanvas, canvas);
+        setTimeout(renderizarEspirograma, 100);
+      }
+    }
+  });
+});
+themeObserver.observe(document.body, { attributes: true });
 </script>
 </body>
 </html>
