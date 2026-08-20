@@ -254,6 +254,30 @@
   .spinner{width:16px; height:16px; border:2px solid rgba(255,255,255,.4); border-top-color:#04211E; border-radius:50%; animation:spin .7s linear infinite; display:inline-block;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
+  /* ---------- ENLACES "MÁS INFORMACIÓN" ---------- */
+  .more-info-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: .92rem;
+    color: var(--primary-strong);
+    transition: gap .2s ease, color .2s ease;
+    cursor: pointer;
+  }
+  .more-info-link:hover {
+    gap: 12px;
+    color: var(--primary);
+  }
+  .more-info-link i {
+    font-size: .8rem;
+    transition: transform .2s ease;
+  }
+  .more-info-link:hover i {
+    transform: translateX(3px);
+  }
+
   @media (max-width: 880px){
     nav.main-nav{display:none;}
     .navburger{display:block;}
@@ -377,6 +401,13 @@
       <div class="check-item"><span class="dot">✓</span>Evitar ejercicio intenso</div>
       <div class="check-item"><span class="dot">✓</span>Ropa cómoda</div>
     </div>
+    <!-- ===== ENLACE "MÁS INFORMACIÓN" ===== -->
+    <div style="display:flex; justify-content:flex-end; margin-top:16px;">
+      <a href="preparacion_detallada.html" class="more-info-link">
+        Más información
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -388,6 +419,13 @@
       <div class="step-row"><span class="step-num">01</span><div class="step-text"><b>Inspira a fondo</b><span>Llena por completo los pulmones sin prisa.</span></div></div>
       <div class="step-row"><span class="step-num">02</span><div class="step-text"><b>Exhala con fuerza y rápido</b><span>El inicio explosivo es lo que más se mide.</span></div></div>
       <div class="step-row"><span class="step-num">03</span><div class="step-text"><b>Sostén hasta el final</b><span>No cortes la maniobra antes de tiempo.</span></div></div>
+      <!-- ===== ENLACE "MÁS INFORMACIÓN" ===== -->
+      <div style="display:flex; justify-content:flex-end; margin-top:16px;">
+        <a href="tecnicas_guiadas.html" class="more-info-link">
+          Más información
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
     </div>
     <div>
       <h2 style="font-size:1.6rem; margin-bottom:12px;">Aprende paso a paso cómo respirar correctamente</h2>
@@ -403,6 +441,13 @@
       <h2 style="font-size:1.6rem; margin-bottom:12px;">Qué significa cada parámetro respiratorio</h2>
       <p style="color:var(--text-soft); margin-bottom:20px;">Explicado de forma simple — y si ya subiste un examen a tu cuenta, nuestra IA educativa te ayuda a leerlo.</p>
       <button class="btn btn-primary" id="btnGoInterpret">Interpretar mi examen con IA</button>
+      <!-- ===== ENLACE "MÁS INFORMACIÓN" ===== -->
+      <div style="display:flex; justify-content:flex-start; margin-top:16px;">
+        <a href="interpretacion_ia.html" class="more-info-link">
+          Más información
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
     </div>
     <div class="panel">
       <h3 style="font-size:1rem; margin-bottom:10px;">Ejemplo: FEV1/FVC</h3>
