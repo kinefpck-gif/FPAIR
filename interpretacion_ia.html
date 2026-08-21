@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0E8A82">
+    <title>Interpretación con IA | FPAIR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <style>
+        /* ===== VARIABLES FPAIR ===== */
+        :root {
+            --bg: #F3FBFA;
+            --bg-alt: #E7F6F4;
+            --surface: #FFFFFF;
+            --surface-alt: #F0FBF9;
+            --border: #D3EDE9;
+            --text: #0B2530;
+            --text-soft: #4B6B6D;
+            --primary: #0E8A82;
+            --primary-strong: #086B64;
+            --accent: #22D3B8;
+            --accent-soft: #C8F5EC;
+            --shadow: 0 12px 32px -12px rgba(14,138,130,.22);
+            --radius: 16px;
+            --danger: #C24444;
+            --warn: #C2760C;
+            --success: #1e9e63;
+        }
+
+        [data-theme="dark"] {
+            --bg: #06191B;
+            --bg-alt: #0A2224;
+            --surface: #0D2B2D;
+            --surface-alt: #0F3335;
+            --border: #164448;
+            --text: #E6F7F4;
+            --text-soft: #8FBDB8;
+            --primary: #2FE0C3;
+            --primary-strong: #63F0D6;
+            --accent: #14B8A6;
+            --accent-soft: #0F3B3A;
+            --shadow: 0 12px 32px -12px rgba(0,0,0,.55);
+            --danger: #EF7B7B;
+            --warn: #E8B14A;
+            --success: #21d07a;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            transition: background .35s ease, color .35s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.02em; }
+        a { color: inherit; text-decoration: none; }
+
+        /* ===== LAYOUT ===== */
+        .exam-layout {
+            display: flex;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .exam-sidebar {
+            width: 240px;
+            flex-shrink: 0;
+            padding: 30px 0;
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        .exam-main {
+            flex: 1;
+            padding: 30px 0;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-soft);
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: color .2s;
+            cursor: pointer;
+        }
+        .back-home:hover {
+            color: var(--primary-strong);
+        }
+
+        .exam-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .exam-logo .logo-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #04211E;
+            font-weight: 800;
+            font-size: 1.1rem;
+            font-family: 'Manrope', sans-serif;
+        }
+        .exam-logo h3 { font-size: 1.1rem; line-height: 1.2; }
+        .exam-logo p { font-size: .85rem; color: var(--text-soft); }
+
+        .exam-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .exam-nav a {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            color: var(--text-soft);
+            transition: all .2s;
+            cursor: pointer;
+        }
+        .exam-nav a:hover {
+            background: var(--accent-soft);
+            color: var(--primary-strong);
+        }
+        .exam-nav a.active {
+            background: var(--accent-soft);
+            color: var(--primary-strong);
+        }
+
+        /* ===== SECCIONES ===== */
+        .section {
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        .section:last-child { border-bottom: none; }
+
+        .section-header {
+            margin-bottom: 24px;
+        }
+        .section-header h2 {
+            font-size: clamp(1.5rem, 2.6vw, 2rem);
+            color: var(--primary-strong);
+        }
+        .section-header p {
+            color: var(--text-soft);
+            margin-top: 6px;
+        }
+
+        .hero-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+        .hero-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--primary-strong);
+        }
+        .hero-card p {
+            color: var(--text-soft);
+            margin-bottom: 12px;
+        }
+
+        .highlight-box {
+            background: var(--accent-soft);
+            border-left: 4px solid var(--primary);
+            padding: 18px 22px;
+            margin: 20px 0 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box h3 { margin-top: 0; }
+        .highlight-box p { margin-bottom: 0; }
+
+        .warning-box {
+            background: color-mix(in srgb, var(--danger) 8%, transparent);
+            border-left: 4px solid var(--danger);
+            padding: 18px 22px;
+            margin: 20px 0 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box h3 { margin-top: 0; color: var(--danger); }
+
+        /* ===== UPLOAD ZONE ===== */
+        .upload-zone {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            background: var(--surface-alt);
+            transition: border-color .2s ease, background .2s ease;
+            margin: 16px 0;
+        }
+        .upload-zone:hover {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+        }
+        .upload-zone .icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        .upload-zone h3 {
+            font-size: 1.1rem;
+            color: var(--primary-strong);
+        }
+        .upload-zone p {
+            color: var(--text-soft);
+            font-size: .9rem;
+        }
+
+        /* ===== RESULTADOS ===== */
+        .result-container {
+            margin-top: 20px;
+            display: none;
+        }
+        .result-container.show {
+            display: block;
+        }
+
+        .result-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+        }
+        .result-card .file-name {
+            font-weight: 700;
+            color: var(--primary-strong);
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+        .result-card .file-meta {
+            font-size: .8rem;
+            color: var(--text-soft);
+            margin-bottom: 12px;
+        }
+
+        /* ===== INTERPRETACIÓN IA ===== */
+        .ai-result {
+            background: var(--surface-alt);
+            border: 1px solid var(--accent-soft);
+            border-radius: 12px;
+            padding: 20px;
+            font-size: .95rem;
+            margin-top: 14px;
+            white-space: pre-wrap;
+            line-height: 1.7;
+            min-height: 100px;
+        }
+        .ai-result .loading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-soft);
+        }
+        .ai-result .loading .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .ai-result .empty-state {
+            color: var(--text-soft);
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* ===== PARÁMETROS DESTACADOS ===== */
+        .params-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .param-card {
+            background: var(--bg-alt);
+            border-radius: 10px;
+            padding: 12px 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .param-card .label {
+            font-size: .7rem;
+            text-transform: uppercase;
+            color: var(--text-soft);
+            letter-spacing: .5px;
+        }
+        .param-card .value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-strong);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+        .param-card .value.normal {
+            color: var(--success);
+        }
+        .param-card .value.abnormal {
+            color: var(--danger);
+        }
+
+        /* ===== BOTONES ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: .95rem;
+            padding: 12px 22px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: transform .15s ease, box-shadow .15s ease, background .2s ease;
+        }
+        .btn:active { transform: scale(.97); }
+        .btn-primary {
+            background: var(--primary);
+            color: #04211E;
+            box-shadow: var(--shadow);
+        }
+        .btn-primary:hover {
+            background: var(--primary-strong);
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border-color: var(--border);
+        }
+        .btn-ghost:hover {
+            background: var(--surface-alt);
+        }
+        .btn-outline {
+            background: var(--surface);
+            color: var(--primary-strong);
+            border-color: var(--accent-soft);
+        }
+        .btn-outline:hover {
+            background: var(--accent-soft);
+        }
+        .btn-sm { padding: 8px 16px; font-size: .82rem; }
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+        .btn-danger:hover {
+            opacity: .85;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        /* ===== DISCLAIMER ===== */
+        .disclaimer {
+            font-size: .78rem;
+            color: var(--text-soft);
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .exam-layout { flex-direction: column; }
+            .exam-sidebar { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .exam-layout { padding: 0 16px; }
+            .exam-main { padding: 20px 0; }
+            .section { padding: 24px 0; }
+            .hero-card { padding: 20px; }
+            .upload-zone { padding: 30px 20px; }
+            .params-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .params-grid { grid-template-columns: 1fr; }
+            .btn-group { flex-direction: column; }
+            .btn { justify-content: center; }
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <div class="exam-layout">
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="exam-sidebar">
+            <a href="fpair-rediseno.html" class="back-home" id="backHome">
+                <i class="fa-solid fa-arrow-left"></i>
+                Volver al inicio
+            </a>
+
+            <div class="exam-logo">
+                <div class="logo-box">FP</div>
+                <div>
+                    <h3>FPAIR</h3>
+                    <p>Interpretación IA</p>
+                </div>
+            </div>
+
+            <nav class="exam-nav">
+                <a class="active" data-section="subir">Subir examen</a>
+                <a data-section="historial">Historial</a>
+                <a data-section="como-funciona">Cómo funciona</a>
+            </nav>
+        </aside>
+
+        <!-- ===== MAIN ===== -->
+        <main class="exam-main">
+
+            <!-- ===== HERO ===== -->
+            <section class="exam-hero" style="display:flex; gap:40px; align-items:center; padding:20px 0 30px;">
+                <div class="exam-hero-content" style="flex:1;">
+                    <span class="hero-badge" style="display:inline-block; background:var(--accent-soft); color:var(--primary-strong); padding:6px 14px; border-radius:999px; font-size:.78rem; font-weight:700; margin-bottom:16px;">
+                        IA educativa para tus resultados
+                    </span>
+                    <h1 style="font-size:clamp(2.5rem,4vw,3.5rem); line-height:1.08; margin-bottom:16px;">Interpretación con IA</h1>
+                    <p style="font-size:1.08rem; color:var(--text-soft); max-width:48ch; margin-bottom:24px;">
+                        Sube tu examen en PDF y nuestra IA te ayudará a entender qué significan tus resultados respiratorios, de forma simple y educativa.
+                    </p>
+                </div>
+                <div class="exam-hero-image" style="flex-shrink:0; width:200px; height:200px; background:var(--accent-soft); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:5rem; color:var(--primary);">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+            </section>
+
+            <!-- ===== SECCIÓN 1: SUBIR EXAMEN ===== -->
+            <section id="subir" class="section active">
+                <div class="section-header">
+                    <h2>Sube tu examen para interpretación</h2>
+                    <p>La IA analizará tu PDF y te entregará una explicación educativa de tus resultados.</p>
+                </div>
+
+                <div class="hero-card">
+                    <h3>📄 ¿Qué tipo de exámenes puedes subir?</h3>
+                    <p>Puedes subir informes de función pulmonar en formato PDF, como:</p>
+                    <ul style="padding-left:20px; color:var(--text-soft); margin:8px 0 16px;">
+                        <li>Espirometría (con o sin broncodilatador)</li>
+                        <li>DLCO (Capacidad de difusión)</li>
+                        <li>Pletismografía corporal (volúmenes pulmonares)</li>
+                        <li>Gasometría arterial</li>
+                        <li>Test de provocación bronquial</li>
+                        <li>Y otros exámenes de función pulmonar</li>
+                    </ul>
+                    <div class="warning-box">
+                        <h3>⚠️ Importante</h3>
+                        <p>La interpretación de la IA es <strong>educativa</strong> y no reemplaza la evaluación de un profesional de la salud. Siempre consulta a tu médico o kinesiólogo para un diagnóstico preciso.</p>
+                    </div>
+                </div>
+
+                <!-- ZONA DE SUBIDA -->
+                <div class="upload-zone" id="uploadZone">
+                    <div class="icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                    <h3>Toca para subir tu PDF</h3>
+                    <p>Selecciona el archivo de tu examen respiratorio</p>
+                    <input type="file" id="pdfInput" accept="application/pdf" style="display:none;">
+                </div>
+
+                <!-- CONTENEDOR DE RESULTADOS -->
+                <div class="result-container" id="resultContainer">
+                    <div class="result-card">
+                        <div class="file-name" id="fileName">archivo.pdf</div>
+                        <div class="file-meta" id="fileMeta">Subido el --/--/----</div>
+                        <div class="params-grid" id="paramsGrid"></div>
+                        <div id="aiResultBox">
+                            <div class="ai-result">
+                                <div class="empty-state">
+                                    <i class="fa-solid fa-robot" style="font-size:2rem; color:var(--text-soft); display:block; margin-bottom:8px;"></i>
+                                    Esperando análisis del PDF
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-primary btn-sm" id="btnInterpretar" disabled>
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Interpretar con IA
+                            </button>
+                            <button class="btn btn-ghost btn-sm" id="btnLimpiar">
+                                <i class="fa-solid fa-trash-can"></i> Limpiar
+                            </button>
+                            <button class="btn btn-outline btn-sm" id="btnDescargarInterpretacion">
+                                <i class="fa-solid fa-download"></i> Descargar interpretación
+                            </button>
+                        </div>
+                        <div class="disclaimer">
+                            Esta interpretación es educativa y no reemplaza la evaluación de un profesional de la salud. Ante dudas sobre tu resultado, consulta con tu médico o kinesiólogo.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== SECCIÓN 2: HISTORIAL ===== -->
+            <section id="historial" class="section">
+                <div class="section-header">
+                    <h2>Historial de interpretaciones</h2>
+                    <p>Revisa todas las interpretaciones que has realizado anteriormente.</p>
+                </div>
+
+                <div class="hero-card">
+                    <div id="historialList">
+                        <p style="color:var(--text-soft); text-align:center; padding:30px 0;">
+                            <i class="fa-solid fa-clock" style="display:block; font-size:2rem; margin-bottom:8px;"></i>
+                            No tienes interpretaciones guardadas.
+                        </p>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-danger btn-sm" id="btnLimpiarHistorial">
+                            <i class="fa-solid fa-trash-can"></i> Limpiar historial
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== SECCIÓN 3: CÓMO FUNCIONA ===== -->
+            <section id="como-funciona" class="section">
+                <div class="section-header">
+                    <h2>¿Cómo funciona la interpretación con IA?</h2>
+                    <p>Conoce el proceso paso a paso.</p>
+                </div>
+
+                <div class="hero-card">
+                    <h3>🤖 La IA educativa de FPAIR</h3>
+                    <p>Nuestra inteligencia artificial está entrenada para leer informes de función pulmonar y traducirlos a un lenguaje sencillo y comprensible para pacientes.</p>
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin-top:16px;">
+                    <div class="exam-card" style="cursor:default; border-top:4px solid var(--primary);">
+                        <div style="font-size:2.5rem; text-align:center;">📄</div>
+                        <h3 style="text-align:center;">1. Sube tu PDF</h3>
+                        <p style="text-align:center; font-size:.9rem;">Selecciona el archivo de tu examen respiratorio desde tu dispositivo.</p>
+                    </div>
+                    <div class="exam-card" style="cursor:default; border-top:4px solid var(--accent);">
+                        <div style="font-size:2.5rem; text-align:center;">🔍</div>
+                        <h3 style="text-align:center;">2. Extracción de datos</h3>
+                        <p style="text-align:center; font-size:.9rem;">La IA extrae la información relevante de tu informe, como valores y parámetros.</p>
+                    </div>
+                    <div class="exam-card" style="cursor:default; border-top:4px solid var(--warn);">
+                        <div style="font-size:2.5rem; text-align:center;">🧠</div>
+                        <h3 style="text-align:center;">3. Análisis inteligente</h3>
+                        <p style="text-align:center; font-size:.9rem;">La IA interpreta los resultados y los explica en términos simples y educativos.</p>
+                    </div>
+                    <div class="exam-card" style="cursor:default; border-top:4px solid var(--success);">
+                        <div style="font-size:2.5rem; text-align:center;">📋</div>
+                        <h3 style="text-align:center;">4. Resultados claros</h3>
+                        <p style="text-align:center; font-size:.9rem;">Recibe una explicación comprensible y preguntas sugeridas para llevar a tu médico.</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top:20px;">
+                    <h3>🔒 Privacidad y seguridad</h3>
+                    <p>Tus datos son procesados de forma segura. Los archivos subidos no se almacenan en nuestros servidores después de la interpretación.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer style="text-align:center; padding:30px 24px; color:var(--text-soft); font-size:.85rem; border-top:1px solid var(--border); margin-top:20px;">
+        <p><b>FPAIR</b> — Educación y entrenamiento respiratorio basado en estándares internacionales ATS/ERS.</p>
+    </footer>
+
+    <script>
+        // ============================================================
+        // NAVEGACIÓN POR SIDEBAR
+        // ============================================================
+        const navLinks = document.querySelectorAll('.exam-nav a');
+        const sections = {
+            'subir': document.getElementById('subir'),
+            'historial': document.getElementById('historial'),
+            'como-funciona': document.getElementById('como-funciona')
+        };
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.dataset.section;
+
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+
+                Object.keys(sections).forEach(key => {
+                    if (sections[key]) {
+                        sections[key].classList.toggle('active', key === sectionId);
+                    }
+                });
+            });
+        });
+
+        // ============================================================
+        // VOLVER AL INICIO
+        // ============================================================
+        document.getElementById('backHome').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (document.referrer && document.referrer.length > 0) {
+                window.location.href = document.referrer;
+            } else {
+                window.location.href = 'fpair-rediseno.html';
+            }
+        });
+
+        // ============================================================
+        // SUBIDA DE PDF Y EXTRACCIÓN DE TEXTO
+        // ============================================================
+        if (window.pdfjsLib) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+
+        let currentFile = null;
+        let currentText = '';
+        let historial = JSON.parse(localStorage.getItem('fpair_interpretaciones') || '[]');
+
+        const uploadZone = document.getElementById('uploadZone');
+        const pdfInput = document.getElementById('pdfInput');
+        const resultContainer = document.getElementById('resultContainer');
+        const fileName = document.getElementById('fileName');
+        const fileMeta = document.getElementById('fileMeta');
+        const aiResultBox = document.getElementById('aiResultBox');
+        const btnInterpretar = document.getElementById('btnInterpretar');
+        const btnLimpiar = document.getElementById('btnLimpiar');
+        const btnDescargarInterpretacion = document.getElementById('btnDescargarInterpretacion');
+        const paramsGrid = document.getElementById('paramsGrid');
+        const historialList = document.getElementById('historialList');
+
+        // Clic en zona de subida
+        uploadZone.addEventListener('click', () => pdfInput.click());
+
+        // Selección de archivo
+        pdfInput.addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Verificar que sea PDF
+            if (file.type !== 'application/pdf') {
+                alert('Por favor, selecciona un archivo PDF válido.');
+                return;
+            }
+
+            currentFile = file;
+            fileName.textContent = file.name;
+            fileMeta.textContent = `Subido el ${new Date().toLocaleDateString('es-CL')} a las ${new Date().toLocaleTimeString('es-CL')}`;
+            resultContainer.classList.add('show');
+
+            // Limpiar resultado anterior
+            aiResultBox.innerHTML = `<div class="ai-result"><div class="empty-state"><i class="fa-solid fa-robot" style="font-size:2rem; color:var(--text-soft); display:block; margin-bottom:8px;"></i>Leyendo el PDF...</div></div>`;
+            btnInterpretar.disabled = true;
+            paramsGrid.innerHTML = '';
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                let text = '';
+
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const content = await page.getTextContent();
+                    text += content.items.map(item => item.str).join(' ') + '\n';
+                }
+
+                currentText = text.trim();
+
+                if (currentText.length < 20) {
+                    aiResultBox.innerHTML = `<div class="ai-result"><div class="empty-state" style="color:var(--danger);"><i class="fa-solid fa-triangle-exclamation" style="font-size:2rem; display:block; margin-bottom:8px;"></i>No pudimos extraer texto legible de este PDF. Puede ser una imagen escaneada. Prueba con un PDF que contenga texto seleccionable.</div></div>`;
+                    btnInterpretar.disabled = true;
+                    return;
+                }
+
+                // Mostrar el texto extraído (resumido)
+                const preview = currentText.length > 300 ? currentText.substring(0, 300) + '...' : currentText;
+                aiResultBox.innerHTML = `<div class="ai-result" style="background:var(--bg-alt);"><strong>📄 Texto extraído del PDF:</strong><br><br><span style="font-size:.85rem; color:var(--text-soft);">${preview.replace(/</g, '&lt;')}</span><br><br><span style="font-size:.8rem; color:var(--text-soft);"><i class="fa-solid fa-check-circle" style="color:var(--success);"></i> ${currentText.length} caracteres extraídos. Listo para interpretar.</span></div>`;
+                btnInterpretar.disabled = false;
+
+                // Buscar parámetros comunes en el texto
+                extraerParametros(currentText);
+
+            } catch (error) {
+                console.error('Error al leer PDF:', error);
+                aiResultBox.innerHTML = `<div class="ai-result"><div class="empty-state" style="color:var(--danger);"><i class="fa-solid fa-triangle-exclamation" style="font-size:2rem; display:block; margin-bottom:8px;"></i>Error al leer el PDF. Intenta con otro archivo.</div></div>`;
+                btnInterpretar.disabled = true;
+            }
+        });
+
+        // ============================================================
+        // EXTRACCIÓN DE PARÁMETROS (simple)
+        // ============================================================
+        function extraerParametros(text) {
+            const params = [];
+            const patterns = [
+                { label: 'VEF1', regex: /VEF1\s*[:=]\s*([\d.,]+)/i },
+                { label: 'CVF', regex: /CVF\s*[:=]\s*([\d.,]+)/i },
+                { label: 'FEV1/FVC', regex: /FEV1\/FVC\s*[:=]\s*([\d.,]+)/i },
+                { label: 'PaO₂', regex: /PaO2\s*[:=]\s*([\d.,]+)/i },
+                { label: 'PaCO₂', regex: /PaCO2\s*[:=]\s*([\d.,]+)/i },
+                { label: 'pH', regex: /pH\s*[:=]\s*([\d.,]+)/i },
+                { label: 'HCO₃⁻', regex: /HCO3\s*[:=]\s*([\d.,]+)/i },
+                { label: 'DLCO', regex: /DLCO\s*[:=]\s*([\d.,]+)/i },
+                { label: 'VR', regex: /VR\s*[:=]\s*([\d.,]+)/i },
+                { label: 'CPT', regex: /CPT\s*[:=]\s*([\d.,]+)/i }
+            ];
+
+            patterns.forEach(p => {
+                const match = text.match(p.regex);
+                if (match) {
+                    params.push({ label: p.label, value: match[1] });
+                }
+            });
+
+            if (params.length > 0) {
+                paramsGrid.innerHTML = params.map(p => `
+                    <div class="param-card">
+                        <div class="label">${p.label}</div>
+                        <div class="value">${p.value}</div>
+                    </div>
+                `).join('');
+            } else {
+                paramsGrid.innerHTML = '<p style="color:var(--text-soft); font-size:.9rem; grid-column:1/-1; text-align:center;">No se encontraron parámetros específicos en el PDF. La IA los identificará automáticamente.</p>';
+            }
+        }
+
+        // ============================================================
+        // INTERPRETACIÓN CON IA (simulada)
+        // ============================================================
+        btnInterpretar.addEventListener('click', async function() {
+            if (!currentText) {
+                alert('Primero sube un archivo PDF.');
+                return;
+            }
+
+            btnInterpretar.disabled = true;
+            btnInterpretar.innerHTML = '<span class="spinner" style="width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#04211E;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;"></span> Interpretando...';
+
+            aiResultBox.innerHTML = `
+                <div class="ai-result">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <span>Analizando tu examen con IA... Esto puede tomar unos segundos.</span>
+                    </div>
+                </div>
+            `;
+
+            // Simular tiempo de procesamiento de la IA
+            setTimeout(() => {
+                const interpretacion = generarInterpretacion(currentText);
+                aiResultBox.innerHTML = `<div class="ai-result">${interpretacion}</div>`;
+
+                // Guardar en historial
+                const entry = {
+                    id: Date.now(),
+                    fecha: new Date().toISOString(),
+                    nombre: currentFile ? currentFile.name : 'Examen sin nombre',
+                    texto: currentText.slice(0, 2000),
+                    interpretacion: interpretacion
+                };
+                historial.push(entry);
+                localStorage.setItem('fpair_interpretaciones', JSON.stringify(historial));
+                renderHistorial();
+
+                btnInterpretar.disabled = false;
+                btnInterpretar.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Interpretar con IA';
+
+                // Scroll al resultado
+                document.getElementById('aiResultBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 2000 + Math.random() * 1000);
+        });
+
+        // ============================================================
+        // GENERADOR DE INTERPRETACIÓN (simulada)
+        // ============================================================
+        function generarInterpretacion(texto) {
+            const tieneVEF1 = /VEF1/i.test(texto);
+            const tieneCVF = /CVF/i.test(texto);
+            const tieneDLCO = /DLCO/i.test(texto);
+            const tieneGasometria = /PaO2|PaCO2|pH/i.test(texto);
+
+            let partes = [];
+
+            partes.push(`📋 <strong>Análisis educativo de tu examen respiratorio</strong>\n\n`);
+
+            if (tieneVEF1 && tieneCVF) {
+                partes.push(`🔍 <strong>Parámetros principales detectados:</strong> VEF1 y CVF\n\n`);
+                partes.push(`La <strong>espirometría</strong> evalúa cuánto aire puedes expulsar y qué tan rápido.\n\n`);
+                partes.push(`• <strong>VEF1</strong>: Es la cantidad de aire que expulsas en el primer segundo. Es un indicador clave de la obstrucción de las vías respiratorias.\n`);
+                partes.push(`• <strong>CVF</strong>: Es la cantidad total de aire que puedes expulsar en una espiración forzada.\n\n`);
+                partes.push(`La relación <strong>VEF1/CVF</strong> ayuda a diferenciar entre patrones obstructivos y restrictivos.\n\n`);
+            }
+
+            if (tieneDLCO) {
+                partes.push(`🔍 <strong>DLCO (Capacidad de Difusión):</strong>\n\n`);
+                partes.push(`Este parámetro mide cuán bien los pulmones transfieren el oxígeno desde el aire que respiras hacia la sangre.\n\n`);
+                partes.push(`Un DLCO disminuido puede sugerir alteraciones en el intercambio gaseoso, como en enfermedades intersticiales o enfisema.\n\n`);
+            }
+
+            if (tieneGasometria) {
+                partes.push(`🔍 <strong>Gasometría Arterial:</strong>\n\n`);
+                partes.push(`Evalúa el equilibrio ácido-base y la oxigenación de tu sangre:\n\n`);
+                partes.push(`• <strong>PaO₂</strong>: Mide el oxígeno en sangre. Valores bajos sugieren hipoxemia.\n`);
+                partes.push(`• <strong>PaCO₂</strong>: Mide el dióxido de carbono. Valores altos sugieren retención de CO₂.\n`);
+                partes.push(`• <strong>pH</strong>: Indica la acidez o alcalinidad de la sangre.\n\n`);
+            }
+
+            partes.push(`💡 <strong>¿Qué preguntas llevar a tu médico?</strong>\n\n`);
+            partes.push(`1. ¿Mis resultados están dentro de lo esperado para mi edad y sexo?\n`);
+            partes.push(`2. ¿Qué significan mis valores principales (VEF1, CVF, DLCO, PaO₂)?\n`);
+            partes.push(`3. ¿Necesito realizar algún estudio adicional?\n`);
+            partes.push(`4. ¿Cómo afectan estos resultados a mi tratamiento actual?\n\n`);
+
+            partes.push(`⚠️ <strong>Recuerda:</strong> Esta es una interpretación educativa. Siempre consulta a tu médico o kinesiólogo para un diagnóstico y tratamiento adecuado.`);
+
+            return partes.join('').replace(/</g, '&lt;');
+        }
+
+        // ============================================================
+        // LIMPIAR
+        // ============================================================
+        btnLimpiar.addEventListener('click', function() {
+            currentFile = null;
+            currentText = '';
+            resultContainer.classList.remove('show');
+            pdfInput.value = '';
+            btnInterpretar.disabled = true;
+            paramsGrid.innerHTML = '';
+            aiResultBox.innerHTML = `
+                <div class="ai-result">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-robot" style="font-size:2rem; color:var(--text-soft); display:block; margin-bottom:8px;"></i>
+                        Esperando análisis del PDF
+                    </div>
+                </div>
+            `;
+        });
+
+        // ============================================================
+        // DESCARGAR INTERPRETACIÓN
+        // ============================================================
+        btnDescargarInterpretacion.addEventListener('click', function() {
+            const contenido = aiResultBox.textContent;
+            if (!contenido || contenido.includes('Esperando análisis del PDF')) {
+                alert('Primero debes interpretar un examen.');
+                return;
+            }
+
+            const blob = new Blob([contenido], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `interpretacion_fpair_${new Date().toISOString().slice(0,10)}.txt`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        });
+
+        // ============================================================
+        // HISTORIAL
+        // ============================================================
+        function renderHistorial() {
+            if (historial.length === 0) {
+                historialList.innerHTML = `
+                    <p style="color:var(--text-soft); text-align:center; padding:30px 0;">
+                        <i class="fa-solid fa-clock" style="display:block; font-size:2rem; margin-bottom:8px;"></i>
+                        No tienes interpretaciones guardadas.
+                    </p>
+                `;
+                return;
+            }
+
+            historialList.innerHTML = historial.slice().reverse().map(item => `
+                <div style="background:var(--surface-alt); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
+                        <div>
+                            <strong style="color:var(--primary-strong);">${item.nombre}</strong>
+                            <div style="font-size:.8rem; color:var(--text-soft);">${new Date(item.fecha).toLocaleString('es-CL')}</div>
+                        </div>
+                        <button class="btn btn-outline btn-sm ver-interpretacion" data-id="${item.id}">
+                            <i class="fa-solid fa-eye"></i> Ver
+                        </button>
+                    </div>
+                    <div style="font-size:.85rem; color:var(--text-soft); margin-top:8px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+                        ${item.interpretacion.replace(/</g, '&lt;').slice(0, 200)}...
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.ver-interpretacion').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.dataset.id);
+                    const item = historial.find(h => h.id === id);
+                    if (item) {
+                        // Mostrar en la sección de subir
+                        document.querySelector('[data-section="subir"]').click();
+                        resultContainer.classList.add('show');
+                        fileName.textContent = item.nombre;
+                        fileMeta.textContent = `Interpretado el ${new Date(item.fecha).toLocaleString('es-CL')}`;
+                        aiResultBox.innerHTML = `<div class="ai-result">${item.interpretacion}</div>`;
+                        paramsGrid.innerHTML = '<p style="color:var(--text-soft); font-size:.9rem; grid-column:1/-1; text-align:center;">Datos del historial</p>';
+                    }
+                });
+            });
+        }
+
+        document.getElementById('btnLimpiarHistorial').addEventListener('click', function() {
+            if (confirm('¿Eliminar todo el historial de interpretaciones?')) {
+                historial = [];
+                localStorage.setItem('fpair_interpretaciones', JSON.stringify(historial));
+                renderHistorial();
+            }
+        });
+
+        // ============================================================
+        // MODO OSCURO/CLARO
+        // ============================================================
+        function getPreferredTheme() {
+            const saved = localStorage.getItem('fpair:theme');
+            if (saved) return saved;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem('fpair:theme', theme);
+        }
+
+        applyTheme(getPreferredTheme());
+
+        document.querySelector('.exam-hero h1')?.addEventListener('dblclick', () => {
+            const current = document.body.getAttribute('data-theme');
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        // ============================================================
+        // INICIALIZAR
+        // ============================================================
+        renderHistorial();
+
+        console.log('✅ Interpretación con IA - FPAIR cargado correctamente');
+    </script>
+
+</body>
+</html>
