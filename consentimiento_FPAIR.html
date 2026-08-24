@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consentimiento Informado - Función Pulmonar</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root{
+    --primary-color:#1a5276;
+    --secondary-color:#2e86c1;
+    --accent-color:#3498db;
+    --light-bg:#f8f9fa;
+    --border-color:#d6dbdf;
+    --success-color:#27ae60;
+    --warning-color:#e74c3c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    line-height:1.6;
+    background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);
+    color:#333;
+    padding:20px;
+    min-height:100vh;
+  }
+  .medical-container{
+    max-width:900px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.1);
+    overflow:hidden;
+    border:1px solid var(--border-color);
+  }
+  .medical-header{
+    background:linear-gradient(135deg,var(--primary-color) 0%,var(--secondary-color) 100%);
+    color:#fff;
+    padding:25px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:15px;
+  }
+  .logo-icon{
+    width:56px;height:56px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.15);
+    border-radius:50%;
+  }
+  .logo-icon svg{width:32px;height:32px;fill:#fff;}
+  .header-title{text-align:center;flex-grow:1;min-width:220px;}
+  .header-title h1{font-size:20px;margin-bottom:4px;font-weight:600;letter-spacing:.3px;}
+  .header-title h2{font-size:15px;font-weight:400;opacity:.9;}
+  .medical-badge{
+    background:rgba(255,255,255,.2);
+    padding:8px 15px;border-radius:20px;font-size:13px;font-weight:500;white-space:nowrap;
+  }
+  .form-container{padding:30px;}
+  .lab-field{
+    margin-bottom:25px;
+    background:var(--light-bg);
+    border:1px dashed var(--border-color);
+    padding:15px 20px;
+    border-radius:8px;
+  }
+  .lab-field label{display:block;font-weight:600;color:var(--primary-color);margin-bottom:6px;font-size:13px;text-transform:uppercase;letter-spacing:.5px;}
+  .lab-field input{width:100%;padding:10px 12px;border:1px solid var(--border-color);border-radius:6px;font-size:15px;}
+  .consent-section{
+    background:var(--light-bg);
+    border-left:5px solid var(--accent-color);
+    padding:20px;margin-bottom:25px;border-radius:0 8px 8px 0;
+    box-shadow:0 2px 5px rgba(0,0,0,.05);
+  }
+  .section-title{
+    color:var(--primary-color);margin-bottom:15px;font-size:18px;font-weight:600;
+    display:flex;align-items:center;gap:10px;
+  }
+  .section-title .icon{display:inline-flex;width:22px;height:22px;}
+  .section-title .icon svg{width:100%;height:100%;fill:var(--primary-color);}
+  .consent-text{margin-bottom:15px;text-align:justify;}
+  .highlight{background-color:#e8f4fc;padding:2px 5px;border-radius:3px;font-weight:600;}
+  .checkbox-group{display:flex;gap:20px;margin-top:10px;flex-wrap:wrap;}
+  .checkbox-item{display:flex;align-items:center;gap:8px;}
+  .checkbox-item input[type="radio"]{width:18px;height:18px;accent-color:var(--primary-color);}
+  .checkbox-item label{font-weight:500;cursor:pointer;}
+  .instructions-box{
+    background:#fff;border:1px solid var(--border-color);border-radius:8px;
+    padding:20px;margin:20px 0;box-shadow:0 2px 10px rgba(0,0,0,.05);
+  }
+  .instructions-title{
+    color:var(--primary-color);font-weight:600;margin-bottom:15px;font-size:17px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .instructions-title .icon{display:inline-flex;width:22px;height:22px;}
+  .instructions-title .icon svg{width:100%;height:100%;fill:var(--primary-color);}
+  .question-item{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:12px 0;border-bottom:1px solid #eee;flex-wrap:wrap;gap:10px;
+  }
+  .question-text{flex:1;font-weight:500;min-width:200px;}
+  .question-options{display:flex;gap:20px;}
+  .question-option{display:flex;align-items:center;gap:5px;}
+  .question-option input{accent-color:var(--primary-color);}
+  .medication-table{width:100%;border-collapse:collapse;margin:20px 0;box-shadow:0 2px 8px rgba(0,0,0,.1);border-radius:8px;overflow:hidden;}
+  .medication-table th{background:var(--primary-color);color:#fff;padding:12px 15px;text-align:left;font-weight:600;font-size:14px;}
+  .medication-table td{padding:12px 15px;border-bottom:1px solid var(--border-color);vertical-align:top;}
+  .medication-table tr:hover td{background-color:#e8f4fc;}
+  .inhaler-checkbox{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .inhaler-checkbox input{accent-color:var(--primary-color);}
+  .patient-form{margin-top:30px;padding-top:20px;border-top:2px dashed var(--border-color);}
+  .form-row{display:flex;gap:20px;margin-bottom:20px;flex-wrap:wrap;}
+  .form-group{flex:1;min-width:200px;}
+  .form-group label{display:block;margin-bottom:8px;font-weight:600;color:var(--primary-color);}
+  .form-group input{width:100%;padding:12px 15px;border:1px solid var(--border-color);border-radius:6px;font-size:16px;transition:all .3s;}
+  .form-group input:focus{outline:none;border-color:var(--accent-color);box-shadow:0 0 0 3px rgba(52,152,219,.2);}
+  .signature-container{margin-top:20px;}
+  .signature-pad-container{border:1px solid var(--border-color);border-radius:6px;margin-top:10px;background:#fff;box-shadow:inset 0 1px 3px rgba(0,0,0,.1);}
+  .signature-pad{width:100%;height:150px;cursor:crosshair;touch-action:none;}
+  .signature-actions{margin-top:10px;display:flex;gap:10px;}
+  .button-group{display:flex;gap:15px;margin-top:30px;flex-wrap:wrap;}
+  .btn{padding:14px 25px;border:none;border-radius:6px;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px;flex:1;min-width:200px;}
+  .btn:disabled{opacity:.6;cursor:not-allowed;}
+  .btn svg{width:18px;height:18px;fill:currentColor;}
+  .btn-download{background:var(--success-color);color:#fff;}
+  .btn-download:hover:not(:disabled){background:#219653;transform:translateY(-2px);box-shadow:0 4px 8px rgba(39,174,96,.3);}
+  .btn-email{background:var(--secondary-color);color:#fff;}
+  .btn-email:hover:not(:disabled){background:#2874a6;transform:translateY(-2px);box-shadow:0 4px 8px rgba(46,134,193,.3);}
+  .btn-clear{background:var(--warning-color);color:#fff;flex:0 0 auto;min-width:auto;padding:10px 18px;font-size:14px;}
+  .btn-clear:hover{background:#cb4335;}
+  .loading{display:none;text-align:center;padding:15px;color:var(--primary-color);font-weight:500;}
+  .status-message{margin-top:15px;padding:12px 15px;border-radius:6px;text-align:center;font-weight:500;}
+  .success{background-color:#d5f4e6;color:#155724;border:1px solid #c3e6cb;}
+  .error{background-color:#f8d7da;color:#721c24;border:1px solid #f5c6cb;}
+  .info{background-color:#e8f4fc;color:#154360;border:1px solid #aed6f1;}
+  .qr-preview{
+    display:none;margin-top:20px;padding:20px;background:var(--light-bg);
+    border:1px solid var(--border-color);border-radius:8px;text-align:center;
+  }
+  .qr-preview img{width:140px;height:140px;border:1px solid var(--border-color);border-radius:6px;background:#fff;padding:8px;}
+  .qr-preview p{margin-top:10px;font-size:13px;color:#555;}
+  .footer-note{text-align:center;margin-top:20px;padding:15px;background:var(--light-bg);border-radius:6px;font-size:13px;color:#666;}
+  #qrcode-hidden{position:absolute;left:-9999px;top:-9999px;}
+
+  /* --- MEJORAS VISUALES PARA LA TABLA DE INHALADORES --- */
+  .instructions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 10px;
+  }
+  @media (max-width: 600px) {
+    .instructions-grid { grid-template-columns: 1fr; gap: 15px; }
+  }
+
+  .pre-exam-card {
+    background: #fafbfc;
+    border-radius: 10px;
+    padding: 15px 18px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  }
+  .pre-exam-card .card-title {
+    font-weight: 600;
+    color: #1a5276;
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    border-bottom: 2px solid #d6dbdf;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .pre-exam-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f2f4;
+  }
+  .pre-exam-item:last-child { border-bottom: none; }
+  .pre-exam-item .label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2c3e50;
+  }
+  .pre-exam-item .options {
+    display: flex;
+    gap: 18px;
+  }
+  .pre-exam-item .options label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #5d6d7e;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .pre-exam-item .options input[type="radio"] {
+    accent-color: #1a5276;
+    width: 16px;
+    height: 16px;
+    margin-right: 2px;
+  }
+
+  .inhaler-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  @media (max-width: 500px) {
+    .inhaler-grid { grid-template-columns: 1fr; }
+  }
+  .inhaler-time-group {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px 14px;
+    border: 1px solid #e9ecef;
+  }
+  .inhaler-time-group .time-label {
+    font-weight: 600;
+    color: #1a5276;
+    font-size: 13px;
+    margin-bottom: 6px;
+    display: block;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed #d6dbdf;
+  }
+  .inhaler-checkbox-modern {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0;
+  }
+  .inhaler-checkbox-modern input[type="checkbox"] {
+    accent-color: #1a5276;
+    width: 15px;
+    height: 15px;
+    margin-right: 2px;
+  }
+  .inhaler-checkbox-modern label {
+    font-size: 13px;
+    color: #2c3e50;
+    cursor: pointer;
+  }
+
+  .badge-inhaler {
+    display: inline-block;
+    background: #d4e6f1;
+    color: #1a5276;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 4px;
+  }
+
+  @media (max-width: 768px){
+    .medical-header{flex-direction:column;text-align:center;}
+    .form-row{flex-direction:column;gap:15px;}
+    .button-group{flex-direction:column;}
+    .btn{min-width:100%;}
+    .question-item{flex-direction:column;align-items:flex-start;}
+    .question-options{align-self:flex-end;}
+  }
+  @media print{
+    body{background:#fff;padding:0;}
+    .medical-container{box-shadow:none;border:none;}
+    .button-group,.footer-note{display:none;}
+  }
+</style>
+</head>
+<body>
+  <div class="medical-container">
+    <div class="medical-header">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M6.5 2C5.67 2 5 2.67 5 3.5v6.24c0 1.87-.66 3.68-1.87 5.11C2.4 15.75 2 17.14 2 18.5 2 20.43 3.57 22 5.5 22c1.77 0 3.24-1.32 3.47-3.03.2-1.45 1.02-2.7 2.19-3.5.62-.42 1-1.12 1-1.87v-3.1c0-.55-.45-1-1-1s-1 .45-1 1v3.1c0 .09-.05.18-.13.23-1.62 1.11-2.73 2.79-3 4.7-.1.68-.68 1.17-1.53 1.17-.83 0-1.5-.67-1.5-1.5 0-.94.29-1.85.83-2.62C5.5 13.86 6.31 11.63 6.31 9.74V3.5c0-.28.22-.5.5-.5s.5.22.5.5v4.75c0 .55.45 1 1 1s1-.45 1-1V3.5C9.31 2.67 8.64 2 7.81 2H6.5zm10.19 0h-1.31c-.83 0-1.5.67-1.5 1.5v4.75c0 .55.45 1 1 1s1-.45 1-1V3.5c0-.28.22-.5.5-.5s.5.22.5.5v6.24c0 1.89.81 4.12 2.14 5.94.54.77.83 1.68.83 2.62 0 .83-.67 1.5-1.5 1.5-.85 0-1.43-.49-1.53-1.17-.27-1.91-1.38-3.59-3-4.7-.08-.05-.13-.14-.13-.23v-3.1c0-.55-.45-1-1-1s-1 .45-1 1v3.1c0 .75.38 1.45 1 1.87 1.17.8 1.99 2.05 2.19 3.5C15.26 20.68 16.73 22 18.5 22c1.93 0 3.5-1.57 3.5-3.5 0-1.36-.4-2.75-1.13-3.65-1.21-1.43-1.87-3.24-1.87-5.11V3.5c0-.83-.67-1.5-1.5-1.5h-.81z"/></svg>
+      </div>
+      <div class="header-title">
+        <h1>INSTRUCTIVO PARA EXAMEN DE FUNCIÓN PULMONAR</h1>
+        <h2>Consentimiento Informado</h2>
+      </div>
+      <div class="medical-badge">Laboratorio de Fisiopatología Pulmonar</div>
+    </div>
+
+    <div class="form-container">
+      <form id="consentForm">
+
+        <div class="lab-field">
+          <label for="labNombre">Nombre del establecimiento / laboratorio que aplica el examen</label>
+          <input type="text" id="labNombre" name="labNombre" placeholder="Ej: Centro Médico XXXX - Laboratorio de Fisiopatología" required>
+        </div>
+
+        <div class="consent-section">
+          <div class="section-title">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span>
+            Consentimiento Informado
+          </div>
+          <p class="consent-text">
+            <strong>1.-</strong> El examen a realizar hoy <span class="highlight">es dependiente de su esfuerzo, porque se espera conocer su mayor capacidad respiratoria</span>. Para lograrlo, recibirá instrucciones claras y fuertes del personal, quienes le solicitarán tomar y botar aire en varias ocasiones. Se requiere de <span class="highlight">su máxima cooperación</span> para que el examen se realice de la mejor manera, y así obtener un resultado que sirva para su tratamiento. Entre cada maniobra de esfuerzo tendrá el tiempo necesario para descansar.
+          </p>
+          <div class="form-group">
+            <label>Autorización:</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="radio" id="auth1-yes" name="auth1" value="si" required>
+                <label for="auth1-yes">Sí, autorizo</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="radio" id="auth1-no" name="auth1" value="no">
+                <label for="auth1-no">No autorizo</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="consent-section">
+          <p class="consent-text">
+            <strong>2.-</strong> Si usted autoriza de ser necesario a usar el resultado de alguno de sus exámenes de Función Pulmonar con fines científicos o publicaciones médicas, sin revelar su identidad o ningún dato confidencial.
+          </p>
+          <div class="form-group">
+            <label>Autorización:</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="radio" id="auth2-yes" name="auth2" value="si" required>
+                <label for="auth2-yes">Sí, autorizo</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="radio" id="auth2-no" name="auth2" value="no">
+                <label for="auth2-no">No autorizo</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN MEJORADA: PRE-EXAMEN + INHALADORES -->
+        <div class="instructions-box">
+          <div class="instructions-title">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg></span>
+            Verificación Pre-Examen e Inhaladores
+          </div>
+
+          <div class="instructions-grid">
+
+            <!-- Columna izquierda: Pre-examen -->
+            <div class="pre-exam-card">
+              <div class="card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#1a5276"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                3. Verificación Pre-Examen
+              </div>
+
+              <div class="pre-exam-item">
+                <span class="label">¿Fumó en la última hora?</span>
+                <div class="options">
+                  <label><input type="radio" name="fumado" value="si" required> Sí</label>
+                  <label><input type="radio" name="fumado" value="no"> No</label>
+                </div>
+              </div>
+              <div class="pre-exam-item">
+                <span class="label">¿Suspendió medicamentos?</span>
+                <div class="options">
+                  <label><input type="radio" name="medicamentos" value="si" required> Sí</label>
+                  <label><input type="radio" name="medicamentos" value="no"> No</label>
+                </div>
+              </div>
+              <div class="pre-exam-item">
+                <span class="label">¿Usó lápiz labial?</span>
+                <div class="options">
+                  <label><input type="radio" name="labial" value="si" required> Sí</label>
+                  <label><input type="radio" name="labial" value="no"> No</label>
+                </div>
+              </div>
+              <div class="pre-exam-item">
+                <span class="label">¿Desayunó o comió ligero?</span>
+                <div class="options">
+                  <label><input type="radio" name="comida" value="si" required> Sí</label>
+                  <label><input type="radio" name="comida" value="no"> No</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Columna derecha: Inhaladores -->
+            <div class="pre-exam-card">
+              <div class="card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#1a5276"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z"/></svg>
+                4. Suspensión de Inhaladores
+              </div>
+              <p style="font-size:13px; color:#4a5b6b; margin-bottom:12px;">Marque los que suspendió según las horas indicadas:</p>
+
+              <div class="inhaler-grid">
+                <!-- 6-8 hrs -->
+                <div class="inhaler-time-group">
+                  <span class="time-label">⏱ 6-8 hrs.</span>
+                  <div class="inhaler-checkbox-modern"><input type="checkbox" id="salbutamol" name="inhaladores" value="Salbutamol"><label for="salbutamol">Salbutamol</label></div>
+                  <div class="inhaler-checkbox-modern"><input type="checkbox" id="fenoterol" name="inhaladores" value="Fenoterol"><label for="fenoterol">Fenoterol</label></div>
+                  <div class="inhaler-checkbox-modern"><input type="checkbox" id="ipratropio" name="inhaladores" value="Bromuro de Ipratropio"><label for="ipratropio">Bromuro de Ipratropio</label></div>
+                </div>
+                <!-- 12 hrs -->
+                <div class="inhaler-time-group">
+                  <span class="time-label">⏱ 12 hrs.</span>
+                  <div class="inhaler-checkbox-modern"><input type="checkbox" id="salmeterol" name="inhaladores" value="Salmeterol"><label for="salmeterol">Salmeterol</label></div>
+                  <div class="inhaler-checkbox-modern"><input type="checkbox" id="formoterol" name="inhaladores" value="Formoterol"><label for="formoterol">Formoterol</label></div>
+                  <div class="inhaler-checkbox-modern"><input type="checkbox" id="aclidinio" name="inhaladores" value="Aclidinio"><label for="aclidinio">Aclidinio</label></div>
+                </div>
+                <!-- 24 hrs -->
+                <div class="inhaler-time-group">
+                  <span class="time-label">⏱ 24 hrs.</span>
+                  <div class="inhaler-checkbox-modern"><input type="checkbox" id="vilanterol" name="inhaladores" value="Vilanterol"><label for="vilanterol">Vilanterol</label></div>
+                  <div class="inhaler-checkbox-modern"><input type="checkbox" id="olodaterol" name="inhaladores" value="Olodaterol"><label for="olodaterol">Olodaterol</label></div>
+                  <div class="inhaler-checkbox-modern"><input type="checkbox" id="indacaterol" name="inhaladores" value="Indacaterol"><label for="indacaterol">Indacaterol</label></div>
+                </div>
+                <!-- 48 hrs -->
+                <div class="inhaler-time-group">
+                  <span class="time-label">⏱ 48 hrs.</span>
+                  <div class="inhaler-checkbox-modern"><input type="checkbox" id="tiotropio" name="inhaladores" value="Tiotropio"><label for="tiotropio">Tiotropio</label></div>
+                  <div class="inhaler-checkbox-modern"><input type="checkbox" id="glicopirronio" name="inhaladores" value="Glicopirronio"><label for="glicopirronio">Glicopirronio</label></div>
+                  <div class="inhaler-checkbox-modern"><input type="checkbox" id="umeclidinio" name="inhaladores" value="Umeclidinio"><label for="umeclidinio">Umeclidinio</label></div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- fin grid -->
+        </div><!-- fin instructions-box -->
+
+
+        <div class="patient-form">
+          <div class="section-title">
+            <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></span>
+            Datos del Paciente y Firma
+          </div>
+          <p style="margin-bottom:20px;font-style:italic;">
+            Debe leer y entregar firmada estas indicaciones. Si tiene cualquier duda consulte antes de firmar, es necesario que Ud. conozca lo que deberá realizar.
+          </p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre">NOMBRE COMPLETO</label>
+              <input type="text" id="nombre" name="nombre" required placeholder="Ingrese su nombre completo">
+            </div>
+            <div class="form-group">
+              <label for="identidad">CÉDULA DE IDENTIDAD</label>
+              <input type="text" id="identidad" name="identidad" required placeholder="Número de identificación">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fecha">FECHA</label>
+              <input type="date" id="fecha" name="fecha" required>
+            </div>
+            <div class="form-group">
+              <label for="hora">HORA</label>
+              <input type="time" id="hora" name="hora" required>
+            </div>
+            <div class="form-group">
+              <label for="correoEnvio">CORREO PARA ENVÍO (opcional)</label>
+              <input type="email" id="correoEnvio" name="correoEnvio" placeholder="paciente@correo.com">
+            </div>
+          </div>
+
+          <div class="form-group signature-container">
+            <label>FIRMA DEL PACIENTE</label>
+            <div class="signature-pad-container">
+              <canvas id="signature-pad" class="signature-pad"></canvas>
+            </div>
+            <div class="signature-actions">
+              <button type="button" id="clear-signature" class="btn btn-clear">Limpiar Firma</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="loading" id="loading"><p>Generando documento PDF...</p></div>
+        <div id="status-message"></div>
+
+        <div class="qr-preview" id="qr-preview">
+          <img id="qr-img" alt="Código QR de verificación">
+          <p>Código QR de verificación del consentimiento.<br>Este código contiene un resumen de los datos firmados y queda incluido en el PDF.</p>
+        </div>
+
+        <div class="button-group">
+          <button type="button" id="generate-pdf" class="btn btn-download">
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Descargar PDF
+          </button>
+          <button type="button" id="send-email" class="btn btn-email">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            Enviar por Correo
+          </button>
+        </div>
+
+        <div class="footer-note">
+          <strong>Nota legal: Este documento digital cumple con la Ley N.º 20.584 (Derechos y Deberes del Paciente) y la Ley N.º 19.799 (Documentos y Firma Electrónica). Tiene la misma validez jurídica que un consentimiento en papel, siempre que contenga la identidad verificable del paciente y su firma digital.</strong>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="qrcode-hidden"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  const canvas = document.getElementById('signature-pad');
+  const signaturePad = new SignaturePad(canvas, {
+    minWidth: 1, maxWidth: 3, penColor: 'rgb(0,0,0)', backgroundColor: 'rgb(255,255,255)'
+  });
+
+  function resizeCanvas(){
+    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+    const data = signaturePad.isEmpty() ? null : signaturePad.toData();
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+    canvas.getContext('2d').scale(ratio, ratio);
+    signaturePad.clear();
+    if (data) signaturePad.fromData(data);
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  document.getElementById('clear-signature').addEventListener('click', () => signaturePad.clear());
+
+  function showStatus(message, type){
+    const el = document.getElementById('status-message');
+    el.innerHTML = '<div class="status-message ' + type + '">' + message + '</div>';
+    window.clearTimeout(showStatus._t);
+    showStatus._t = window.setTimeout(() => { el.innerHTML = ''; }, 6000);
+  }
+
+  const FIELD_LABELS = {
+    labNombre: 'Nombre del establecimiento / laboratorio',
+    nombre: 'Nombre completo',
+    identidad: 'Cédula de identidad',
+    fecha: 'Fecha',
+    hora: 'Hora'
+  };
+
+  const INHALER_TIME = {
+    'Salbutamol':'6-8 hrs.', 'Fenoterol':'6-8 hrs.', 'Bromuro de Ipratropio':'6-8 hrs.',
+    'Salmeterol':'12 hrs.', 'Formoterol':'12 hrs.', 'Aclidinio':'12 hrs.',
+    'Vilanterol':'24 hrs.', 'Olodaterol':'24 hrs.', 'Indacaterol':'24 hrs.',
+    'Tiotropio':'48 hrs.', 'Glicopirronio':'48 hrs.', 'Umeclidinio':'48 hrs.'
+  };
+  const TIME_COLUMNS = ['6-8 hrs.','12 hrs.','24 hrs.','48 hrs.'];
+
+  function validateForm(){
+    for (const field of Object.keys(FIELD_LABELS)){
+      const el = document.getElementById(field);
+      if (!el.value || !el.value.trim()){
+        alert('Por favor, complete el campo: ' + FIELD_LABELS[field]);
+        el.focus();
+        return false;
+      }
+    }
+    if (!document.querySelector('input[name="auth1"]:checked') || !document.querySelector('input[name="auth2"]:checked')){
+      alert('Por favor, responda ambas autorizaciones.');
+      return false;
+    }
+    for (const q of ['fumado','medicamentos','labial','comida']){
+      if (!document.querySelector('input[name="' + q + '"]:checked')){
+        alert('Por favor, responda todas las preguntas de verificación.');
+        return false;
+      }
+    }
+    if (signaturePad.isEmpty()){
+      alert('Por favor, proporcione su firma.');
+      return false;
+    }
+    return true;
+  }
+
+  function collectData(){
+    const inhaladores = Array.from(document.querySelectorAll('input[name="inhaladores"]:checked')).map(c => c.value);
+    return {
+      labNombre: document.getElementById('labNombre').value.trim(),
+      nombre: document.getElementById('nombre').value.trim(),
+      identidad: document.getElementById('identidad').value.trim(),
+      fecha: document.getElementById('fecha').value,
+      hora: document.getElementById('hora').value,
+      correoEnvio: document.getElementById('correoEnvio').value.trim(),
+      auth1: document.querySelector('input[name="auth1"]:checked').value,
+      auth2: document.querySelector('input[name="auth2"]:checked').value,
+      fumado: document.querySelector('input[name="fumado"]:checked').value,
+      medicamentos: document.querySelector('input[name="medicamentos"]:checked').value,
+      labial: document.querySelector('input[name="labial"]:checked').value,
+      comida: document.querySelector('input[name="comida"]:checked').value,
+      inhaladores: inhaladores,
+      firma: signaturePad.toDataURL('image/png')
+    };
+  }
+
+  function buildQrText(data){
+    const lines = [
+      'CONSENTIMIENTO INFORMADO - FUNCION PULMONAR',
+      'Establecimiento: ' + data.labNombre,
+      'Paciente: ' + data.nombre,
+      'ID: ' + data.identidad,
+      'Fecha/Hora: ' + data.fecha + ' ' + data.hora,
+      'Autoriza examen: ' + (data.auth1 === 'si' ? 'SI' : 'NO'),
+      'Autoriza uso cientifico: ' + (data.auth2 === 'si' ? 'SI' : 'NO'),
+      'Fumo: ' + data.fumado.toUpperCase() + ' | Susp. medicamentos: ' + data.medicamentos.toUpperCase() + ' | Lapiz labial: ' + data.labial.toUpperCase() + ' | Comio: ' + data.comida.toUpperCase(),
+      'Inhaladores suspendidos: ' + (data.inhaladores.length ? data.inhaladores.join(', ') : 'Ninguno'),
+      'Documento generado: ' + new Date().toLocaleString('es-CL')
+    ];
+    return lines.join('\n');
+  }
+
+  function generateQrDataUrl(text){
+    return new Promise((resolve, reject) => {
+      const holder = document.getElementById('qrcode-hidden');
+      holder.innerHTML = '';
+      try{
+        new QRCode(holder, { text: text, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
+      }catch(e){ reject(e); return; }
+      let attempts = 0;
+      const check = () => {
+        attempts++;
+        const img = holder.querySelector('img');
+        const cnv = holder.querySelector('canvas');
+        if (img && img.src && img.src.startsWith('data:')){
+          resolve(img.src);
+        } else if (cnv){
+          resolve(cnv.toDataURL('image/png'));
+        } else if (attempts < 40){
+          setTimeout(check, 50);
+        } else {
+          reject(new Error('No se pudo generar el código QR'));
+        }
+      };
+      setTimeout(check, 50);
+    });
+  }
+
+  function drawCheckbox(doc, x, y, size, checked, color){
+    doc.setDrawColor(120,120,120);
+    doc.setLineWidth(0.3);
+    doc.rect(x, y, size, size);
+    if (checked){
+      doc.setFillColor(color[0], color[1], color[2]);
+      doc.rect(x, y, size, size, 'F');
+      doc.setDrawColor(255,255,255);
+      doc.setLineWidth(0.5);
+      doc.line(x + size*0.2, y + size*0.55, x + size*0.42, y + size*0.8);
+      doc.line(x + size*0.42, y + size*0.8, x + size*0.85, y + size*0.18);
+    }
+  }
+
+  async function generatePdf(data){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    const pageWidth = 210, pageHeight = 297, marginX = 18;
+    const primary = [26,82,118], secondary = [46,134,193], success = [39,174,96], danger = [231,76,60], gray = [90,90,90];
+
+    let y = 0;
+
+    function ensureSpace(needed){
+      if (y + needed > pageHeight - 20){
+        addFooter();
+        doc.addPage();
+        y = 20;
+      }
+    }
+
+    function addFooter(){
+      const page = doc.internal.getCurrentPageInfo().pageNumber;
+      doc.setFontSize(8);
+      doc.setTextColor(150,150,150);
+      doc.text('Documento generado electrónicamente - ' + new Date().toLocaleString('es-CL'), marginX, pageHeight - 10);
+      doc.text('Página ' + page, pageWidth - marginX, pageHeight - 10, { align: 'right' });
+    }
+
+    // Header band
+    doc.setFillColor(primary[0], primary[1], primary[2]);
+    doc.rect(0, 0, pageWidth, 32, 'F');
+    doc.setTextColor(255,255,255);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(15);
+    doc.text('CONSENTIMIENTO INFORMADO', pageWidth/2, 14, { align:'center' });
+    doc.setFontSize(11);
+    doc.setFont('helvetica','normal');
+    doc.text('Examen de Función Pulmonar', pageWidth/2, 21, { align:'center' });
+    doc.setFontSize(9.5);
+    doc.text(data.labNombre, pageWidth/2, 27.5, { align:'center' });
+
+    y = 40;
+
+    // Consent 1
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(11.5);
+    doc.setTextColor(primary[0],primary[1],primary[2]);
+    doc.text('1. Consentimiento para la realización del examen', marginX, y);
+    y += 6;
+
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(9.5);
+    doc.setTextColor(40,40,40);
+    const text1 = 'El examen a realizar es dependiente de su esfuerzo, porque se espera conocer su mayor capacidad respiratoria. Para lograrlo, recibirá instrucciones claras y fuertes del personal, quienes le solicitarán tomar y botar aire en varias ocasiones. Se requiere de su máxima cooperación para que el examen se realice de la mejor manera, y así obtener un resultado que sirva para su tratamiento. Entre cada maniobra de esfuerzo tendrá el tiempo necesario para descansar.';
+    const split1 = doc.splitTextToSize(text1, pageWidth - marginX*2);
+    doc.text(split1, marginX, y);
+    y += split1.length * 4.3 + 4;
+
+    drawCheckbox(doc, marginX, y-3.2, 4, data.auth1==='si', success);
+    doc.setFont('helvetica','bold');
+    doc.setTextColor(data.auth1==='si'?success[0]:danger[0], data.auth1==='si'?success[1]:danger[1], data.auth1==='si'?success[2]:danger[2]);
+    doc.setFontSize(9.5);
+    doc.text('Sí, autorizo', marginX + 7, y);
+    drawCheckbox(doc, marginX + 45, y-3.2, 4, data.auth1==='no', danger);
+    doc.text('No autorizo', marginX + 52, y);
+    y += 10;
+
+    // Consent 2
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(11.5);
+    doc.setTextColor(primary[0],primary[1],primary[2]);
+    doc.text('2. Consentimiento para uso científico de los resultados', marginX, y);
+    y += 6;
+
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(9.5);
+    doc.setTextColor(40,40,40);
+    const text2 = 'Autoriza, de ser necesario, a usar el resultado de alguno de sus exámenes de Función Pulmonar con fines científicos o publicaciones médicas, sin revelar su identidad ni ningún dato confidencial.';
+    const split2 = doc.splitTextToSize(text2, pageWidth - marginX*2);
+    doc.text(split2, marginX, y);
+    y += split2.length * 4.3 + 4;
+
+    drawCheckbox(doc, marginX, y-3.2, 4, data.auth2==='si', success);
+    doc.setFont('helvetica','bold');
+    doc.setTextColor(data.auth2==='si'?success[0]:danger[0], data.auth2==='si'?success[1]:danger[1], data.auth2==='si'?success[2]:danger[2]);
+    doc.setFontSize(9.5);
+    doc.text('Sí, autorizo', marginX + 7, y);
+    drawCheckbox(doc, marginX + 45, y-3.2, 4, data.auth2==='no', danger);
+    doc.text('No autorizo', marginX + 52, y);
+    y += 12;
+
+    // Verificación pre-examen + inhaladores (dos columnas)
+    ensureSpace(60);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(11.5);
+    doc.setTextColor(primary[0],primary[1],primary[2]);
+    doc.text('3. Verificación Pre-Examen', marginX, y);
+    const colRightX = marginX + 95;
+    doc.text('4. Inhaladores Suspendidos', colRightX, y);
+    y += 7;
+
+    const questions = [
+      ['¿Fumó en la última hora?', data.fumado],
+      ['¿Suspendió medicamentos?', data.medicamentos],
+      ['¿Usó lápiz labial?', data.labial],
+      ['¿Desayunó o comió?', data.comida]
+    ];
+    let qy = y;
+    doc.setFontSize(9);
+    questions.forEach(([label, val]) => {
+      drawCheckbox(doc, marginX, qy - 3.2, 3.8, val === 'si', primary);
+      doc.setFont('helvetica','normal');
+      doc.setTextColor(40,40,40);
+      doc.text(label, marginX + 6.5, qy);
+      doc.setFont('helvetica','bold');
+      doc.setTextColor(val==='si'?danger[0]:success[0], val==='si'?danger[1]:success[1], val==='si'?danger[2]:success[2]);
+      doc.text(val === 'si' ? 'SÍ' : 'NO', marginX + 82, qy, { align:'right' });
+      qy += 7;
+    });
+
+    let ry = y;
+    doc.setFontSize(9);
+    if (data.inhaladores.length === 0){
+      doc.setFont('helvetica','italic');
+      doc.setTextColor(gray[0],gray[1],gray[2]);
+      doc.text('No se registraron inhaladores suspendidos.', colRightX, ry);
+      ry += 7;
+    } else {
+      TIME_COLUMNS.forEach(col => {
+        const items = data.inhaladores.filter(n => INHALER_TIME[n] === col);
+        if (items.length === 0) return;
+        doc.setFont('helvetica','bold');
+        doc.setTextColor(secondary[0],secondary[1],secondary[2]);
+        doc.text(col, colRightX, ry);
+        ry += 5;
+        doc.setFont('helvetica','normal');
+        doc.setTextColor(40,40,40);
+        items.forEach(it => {
+          drawCheckbox(doc, colRightX, ry - 3.2, 3.2, true, primary);
+          doc.text(it, colRightX + 6, ry);
+          ry += 5;
+        });
+        ry += 1;
+      });
+    }
+
+    y = Math.max(qy, ry) + 6;
+
+    // Datos del paciente
+    ensureSpace(55);
+    doc.setDrawColor(210,215,220);
+    doc.setLineWidth(0.3);
+    doc.line(marginX, y, pageWidth - marginX, y);
+    y += 8;
+
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(11.5);
+    doc.setTextColor(primary[0],primary[1],primary[2]);
+    doc.text('5. Datos del Paciente', marginX, y);
+    y += 7;
+
+    doc.setFillColor(248,249,250);
+    doc.roundedRect(marginX, y - 4.5, pageWidth - marginX*2, 22, 2, 2, 'F');
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(9.5);
+    doc.setTextColor(40,40,40);
+    doc.text('Nombre completo: ' + data.nombre, marginX + 4, y + 1.5);
+    doc.text('Cédula de identidad: ' + data.identidad, marginX + 4, y + 8);
+    doc.text('Fecha: ' + data.fecha + '    Hora: ' + data.hora, marginX + 4, y + 14.5);
+    y += 26;
+
+    // Firma
+    ensureSpace(55);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(10.5);
+    doc.setTextColor(primary[0],primary[1],primary[2]);
+    doc.text('Firma del paciente', marginX, y);
+    y += 3;
+    doc.setDrawColor(210,215,220);
+    doc.rect(marginX, y, 80, 32);
+    try{ doc.addImage(data.firma, 'PNG', marginX + 2, y + 2, 76, 28); }catch(e){}
+    doc.setDrawColor(150,150,150);
+    doc.line(marginX, y + 32, marginX + 80, y + 32);
+
+    // QR code
+    if (data.qrDataUrl){
+      const qrX = pageWidth - marginX - 32;
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(9);
+      doc.setTextColor(primary[0],primary[1],primary[2]);
+      doc.text('Código de verificación', qrX + 16, y - 1, { align:'center' });
+      doc.addImage(data.qrDataUrl, 'PNG', qrX, y, 32, 32);
+    }
+    y += 40;
+
+    // Nota legal
+    ensureSpace(20);
+    doc.setDrawColor(210,215,220);
+    doc.line(marginX, y, pageWidth - marginX, y);
+    y += 5;
+    doc.setFont('helvetica','italic');
+    doc.setFontSize(7.5);
+    doc.setTextColor(gray[0],gray[1],gray[2]);
+    const legal = 'Nota legal: Este documento digital cumple con la Ley N.º 20.584 (Derechos y Deberes del Paciente) y la Ley N.º 19.799 (Documentos y Firma Electrónica). Tiene la misma validez jurídica que un consentimiento en papel, siempre que contenga la identidad verificable del paciente y su firma digital.';
+    const splitLegal = doc.splitTextToSize(legal, pageWidth - marginX*2);
+    doc.text(splitLegal, marginX, y);
+
+    addFooter();
+
+    return doc;
+  }
+
+  function fileNameFor(data){
+    const safe = (data.nombre || 'paciente').replace(/[^a-zA-Z0-9]+/g,'_');
+    return 'Consentimiento_Funcion_Pulmonar_' + safe + '.pdf';
+  }
+
+  async function buildDocument(){
+    const data = collectData();
+    const qrText = buildQrText(data);
+    const qrDataUrl = await generateQrDataUrl(qrText);
+    data.qrDataUrl = qrDataUrl;
+
+    document.getElementById('qr-img').src = qrDataUrl;
+    document.getElementById('qr-preview').style.display = 'block';
+
+    const doc = await generatePdf(data);
+    return { doc, data };
+  }
+
+  document.getElementById('generate-pdf').addEventListener('click', async function(){
+    if (!validateForm()) return;
+    const btn = this;
+    const loading = document.getElementById('loading');
+    try{
+      btn.disabled = true;
+      loading.style.display = 'block';
+      const { doc, data } = await buildDocument();
+      doc.save(fileNameFor(data));
+      showStatus('PDF generado y descargado correctamente.', 'success');
+    }catch(err){
+      showStatus('Error al generar el PDF: ' + err.message, 'error');
+    }finally{
+      btn.disabled = false;
+      loading.style.display = 'none';
+    }
+  });
+
+  document.getElementById('send-email').addEventListener('click', async function(){
+    if (!validateForm()) return;
+    const btn = this;
+    const loading = document.getElementById('loading');
+    try{
+      btn.disabled = true;
+      loading.style.display = 'block';
+      const { doc, data } = await buildDocument();
+      const fileName = fileNameFor(data);
+      const blob = doc.output('blob');
+      const file = new File([blob], fileName, { type: 'application/pdf' });
+
+      let shared = false;
+      if (navigator.canShare && navigator.canShare({ files: [file] })){
+        try{
+          await navigator.share({
+            files: [file],
+            title: 'Consentimiento Informado - Función Pulmonar',
+            text: 'Consentimiento informado de ' + data.nombre
+          });
+          shared = true;
+          showStatus('Documento compartido correctamente.', 'success');
+        }catch(shareErr){
+          if (shareErr && shareErr.name === 'AbortError'){
+            showStatus('Envío cancelado por el usuario.', 'info');
+            return;
+          }
+        }
+      }
+
+      if (!shared){
+        doc.save(fileName);
+        const destinatario = data.correoEnvio || '';
+        const subject = encodeURIComponent('Consentimiento Informado - Función Pulmonar');
+        const body = encodeURIComponent(
+          'Se adjunta el consentimiento informado del examen de función pulmonar.\n\n' +
+          'Paciente: ' + data.nombre + '\n' +
+          'Cédula: ' + data.identidad + '\n' +
+          'Fecha: ' + data.fecha + ' ' + data.hora + '\n\n' +
+          'IMPORTANTE: el PDF se descargó a su dispositivo (' + fileName + '). Por favor adjúntelo manualmente a este correo, ya que el navegador no permite adjuntar archivos de forma automática mediante enlaces mailto.'
+        );
+        window.location.href = 'mailto:' + destinatario + '?subject=' + subject + '&body=' + body;
+        showStatus('PDF descargado. Se abrió su cliente de correo: adjunte el archivo ' + fileName + ' antes de enviarlo.', 'info');
+      }
+    }catch(err){
+      showStatus('Error al preparar el envío: ' + err.message, 'error');
+    }finally{
+      btn.disabled = false;
+      loading.style.display = 'none';
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', function(){
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('fecha').value = today;
+    const now = new Date();
+    document.getElementById('hora').value =
+      now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  });
+})();
+</script>
+</body>
+</html>
