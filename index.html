@@ -2,926 +2,9253 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0E8A82">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+  name="theme-color"
+  content="#0E8A82"
+>
+
+<meta
+  name="description"
+  content="FPAIR — Educación y entrenamiento respiratorio. Aprende, prepárate y practica tus exámenes de función pulmonar."
+>
+
+
+<meta name="application-name" content="FPAIR">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="index,follow">
 <title>FPAIR — Educación y entrenamiento respiratorio</title>
-<link rel="manifest" href="manifest.json">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+  rel="stylesheet"
+>
+
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
 <style>
-  :root{
-    --bg:#F3FBFA; --bg-alt:#E7F6F4; --surface:#FFFFFF; --surface-alt:#F0FBF9;
-    --border:#D3EDE9; --text:#0B2530; --text-soft:#4B6B6D;
-    --primary:#0E8A82; --primary-strong:#086B64; --accent:#22D3B8; --accent-soft:#C8F5EC;
-    --warn:#C2760C; --danger:#C24444; --shadow:0 12px 32px -12px rgba(14,138,130,.22);
-    --radius:16px;
-  }
-  [data-theme="dark"]{
-    --bg:#06191B; --bg-alt:#0A2224; --surface:#0D2B2D; --surface-alt:#0F3335;
-    --border:#164448; --text:#E6F7F4; --text-soft:#8FBDB8;
-    --primary:#2FE0C3; --primary-strong:#63F0D6; --accent:#14B8A6; --accent-soft:#0F3B3A;
-    --warn:#E8B14A; --danger:#EF7B7B; --shadow:0 12px 32px -12px rgba(0,0,0,.55);
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  body{
-    background:var(--bg); color:var(--text);
-    font-family:'Inter',sans-serif; line-height:1.5;
-    transition:background .35s ease, color .35s ease;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3,.display{font-family:'Manrope',sans-serif; font-weight:800; letter-spacing:-0.02em;}
-  .mono{font-family:'IBM Plex Mono',monospace;}
-  a{color:inherit; text-decoration:none;}
-  img{max-width:100%; display:block;}
-  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
-  .btn{
-    display:inline-flex; align-items:center; gap:8px; font-family:'Manrope',sans-serif; font-weight:700;
-    font-size:.95rem; padding:12px 22px; border-radius:999px; border:1px solid transparent; cursor:pointer;
-    transition:transform .15s ease, box-shadow .15s ease, background .2s ease; white-space:nowrap;
-  }
-  .btn:active{transform:scale(.97);}
-  .btn-primary{background:var(--primary); color:#04211E; box-shadow:var(--shadow);}
-  .btn-primary:hover{background:var(--primary-strong);}
-  .btn-ghost{background:transparent; color:var(--text); border-color:var(--border);}
-  .btn-ghost:hover{background:var(--surface-alt);}
-  .btn-outline{background:var(--surface); color:var(--primary-strong); border-color:var(--accent-soft);}
-  .btn-outline:hover{background:var(--accent-soft);}
-  .btn-sm{padding:8px 16px; font-size:.82rem;}
-  .btn:focus-visible, a:focus-visible, input:focus-visible, button:focus-visible{outline:2px solid var(--primary); outline-offset:2px;}
 
-  /* ---------- HEADER ---------- */
-  header.site{
-    position:sticky; top:0; z-index:50; background:color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter:blur(10px); border-bottom:1px solid var(--border);
-  }
-  .header-row{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:16px;}
-  .brand{display:flex; align-items:center; gap:10px; font-family:'Manrope',sans-serif; font-weight:800; font-size:1.25rem;}
-  .brand-mark{width:34px; height:34px; border-radius:10px; background:linear-gradient(145deg, var(--accent), var(--primary)); display:flex; align-items:center; justify-content:center;}
-  nav.main-nav{display:flex; gap:26px; font-size:.92rem; font-weight:600; color:var(--text-soft);}
-  nav.main-nav a:hover{color:var(--primary-strong);}
-  .header-actions{display:flex; align-items:center; gap:10px;}
-  .theme-toggle{
-    width:44px; height:26px; border-radius:999px; background:var(--surface-alt); border:1px solid var(--border);
-    position:relative; cursor:pointer; flex-shrink:0;
-  }
-  .theme-toggle::after{
-    content:''; position:absolute; top:2px; left:2px; width:20px; height:20px; border-radius:50%;
-    background:var(--primary); transition:transform .25s ease; box-shadow:0 1px 4px rgba(0,0,0,.25);
-  }
-  [data-theme="dark"] .theme-toggle::after{ transform:translateX(18px); }
-  .navburger{display:none; background:none; border:none; cursor:pointer; padding:6px;}
-  .navburger span{display:block; width:22px; height:2px; background:var(--text); margin:5px 0; border-radius:2px;}
+/* ============================================================
+   FPAIR
+   INDEX INTERACTIVO — VERSIÓN TOTEM
+   ============================================================ */
 
-  /* ---------- HERO ---------- */
-  .hero{position:relative; overflow:hidden; padding:64px 0 40px;}
-  .hero-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center;}
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px; font-size:.78rem; font-weight:700; color:var(--primary-strong);
-    background:var(--accent-soft); padding:6px 14px; border-radius:999px; margin-bottom:18px;
-  }
-  .hero h1{font-size:clamp(2.1rem, 4vw, 3.1rem); line-height:1.08; margin-bottom:18px;}
-  .hero h1 em{font-style:normal; color:var(--primary-strong);}
-  .hero p.lead{font-size:1.08rem; color:var(--text-soft); max-width:52ch; margin-bottom:28px;}
-  .hero-ctas{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:30px; position:relative;}
-  
-  /* ---------- DROPDOWN MENU ---------- */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    background: var(--surface);
-    min-width: 200px;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border);
-    overflow: hidden;
-    z-index: 100;
-    padding: 6px 0;
-  }
-  .dropdown-content a {
-    display: block;
-    padding: 10px 20px;
-    font-weight: 600;
-    font-size: .9rem;
-    color: var(--text);
-    transition: background .2s ease;
-  }
-  .dropdown-content a:hover {
-    background: var(--accent-soft);
-    color: var(--primary-strong);
-  }
-  .dropdown-content a i {
-    margin-right: 10px;
-    color: var(--primary);
-  }
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  .dropdown .btn-arrow {
-    font-size: .7rem;
-    margin-left: 4px;
-    transition: transform .2s ease;
-  }
-  .dropdown:hover .btn-arrow {
-    transform: rotate(180deg);
+/* ============================================================
+   VARIABLES
+   ============================================================ */
+
+:root {
+
+  --bg:#F3FBFA;
+  --bg-alt:#E7F6F4;
+
+  --surface:#FFFFFF;
+  --surface-alt:#F0FBF9;
+
+  --border:#D3EDE9;
+
+  --text:#0B2530;
+  --text-soft:#4B6B6D;
+
+  --primary:#0E8A82;
+  --primary-strong:#086B64;
+
+  --accent:#22D3B8;
+  --accent-soft:#C8F5EC;
+
+  --warn:#C2760C;
+  --danger:#C24444;
+
+  --shadow:0 12px 32px -12px rgba(14,138,130,.22);
+
+  --radius:16px;
+
+  --header-height:76px;
+}
+
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+
+html.dark {
+
+  --bg:#06191B;
+  --bg-alt:#0A2224;
+
+  --surface:#0D2B2D;
+  --surface-alt:#0F3335;
+
+  --border:#164448;
+
+  --text:#E6F7F4;
+  --text-soft:#8FBDB8;
+
+  --primary:#2FE0C3;
+  --primary-strong:#63F0D6;
+
+  --accent:#14B8A6;
+  --accent-soft:#0F3B3A;
+
+  --warn:#E8B14A;
+  --danger:#EF7B7B;
+
+  --shadow:0 12px 32px -12px rgba(0,0,0,.55);
+}
+
+
+/* ============================================================
+   RESET
+   ============================================================ */
+
+* {
+  box-sizing:border-box;
+}
+
+html {
+  scroll-behavior:smooth;
+}
+
+body {
+
+  margin:0;
+
+  background:
+    radial-gradient(
+      circle at 80% -10%,
+      rgba(34,211,184,.10),
+      transparent 30%
+    ),
+    var(--bg);
+
+  color:var(--text);
+
+  font-family:
+    Inter,
+    Manrope,
+    Arial,
+    sans-serif;
+
+  line-height:1.55;
+
+  min-height:100vh;
+}
+
+button,
+input,
+select {
+  font:inherit;
+}
+
+button {
+  cursor:pointer;
+}
+
+a {
+  color:inherit;
+  text-decoration:none;
+}
+
+img {
+  max-width:100%;
+  display:block;
+}
+
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+
+  outline:3px solid var(--accent);
+
+  outline-offset:3px;
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.site-header {
+
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  height:var(--header-height);
+
+  background:
+    color-mix(
+      in srgb,
+      var(--surface) 94%,
+      transparent
+    );
+
+  backdrop-filter:blur(18px);
+
+  border-bottom:1px solid var(--border);
+}
+
+.header-inner {
+
+  max-width:1400px;
+
+  height:100%;
+
+  margin:auto;
+
+  padding:
+    0 24px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:20px;
+}
+
+
+/* ============================================================
+   BRAND
+   ============================================================ */
+
+.brand {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  min-width:220px;
+}
+
+.brand-mark {
+
+  width:42px;
+  height:42px;
+
+  border-radius:13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      var(--accent)
+    );
+
+  display:grid;
+  place-items:center;
+
+  color:white;
+
+  font-weight:800;
+
+  letter-spacing:-1px;
+
+  box-shadow:
+    0 8px 22px
+    rgba(14,138,130,.25);
+}
+
+
+/*
+   ============================================================
+   ESPACIO RESERVADO PARA LOGO FPAIR
+
+   Si quieres usar tu logo real:
+
+   1. Coloca la imagen, por ejemplo:
+      assets/images/logo/fpair-logo.png
+
+   2. Reemplaza el contenido de .brand-mark por:
+
+      <img
+        src="assets/images/logo/fpair-logo.png"
+        alt="FPAIR"
+      >
+
+   ============================================================
+*/
+
+.brand-text {
+
+  display:flex;
+  flex-direction:column;
+
+  line-height:1.1;
+}
+
+.brand-name {
+
+  font-weight:800;
+
+  font-size:17px;
+
+  letter-spacing:-.4px;
+}
+
+.brand-sub {
+
+  color:var(--text-soft);
+
+  font-size:11px;
+
+  margin-top:4px;
+}
+
+
+/* ============================================================
+   NAV
+   ============================================================ */
+
+.main-nav {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:5px;
+}
+
+.main-nav a {
+
+  padding:
+    8px 11px;
+
+  border-radius:10px;
+
+  color:var(--text-soft);
+
+  font-size:13px;
+
+  font-weight:600;
+
+  transition:
+    background .2s ease,
+    color .2s ease;
+}
+
+.main-nav a:hover {
+
+  color:var(--primary);
+
+  background:var(--surface-alt);
+}
+
+
+/* ============================================================
+   HEADER ACTIONS
+   ============================================================ */
+
+.header-actions {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+}
+
+.icon-button {
+
+  width:40px;
+  height:40px;
+
+  border:1px solid var(--border);
+
+  background:var(--surface);
+
+  color:var(--text);
+
+  border-radius:11px;
+
+  display:grid;
+
+  place-items:center;
+
+  transition:.2s;
+}
+
+.icon-button:hover {
+
+  border-color:var(--primary);
+
+  transform:translateY(-1px);
+}
+
+
+/* ============================================================
+   MOBILE MENU
+   ============================================================ */
+
+.mobile-menu-button {
+  display:none;
+}
+
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+
+main {
+  overflow:hidden;
+}
+
+.container {
+
+  width:min(
+    1240px,
+    calc(100% - 40px)
+  );
+
+  margin:auto;
+}
+
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.hero {
+
+  padding:
+    72px 0 54px;
+
+  position:relative;
+}
+
+.hero-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    minmax(0,1.05fr)
+    minmax(420px,.95fr);
+
+  gap:55px;
+
+  align-items:center;
+}
+
+.eyebrow {
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  padding:
+    7px 11px;
+
+  border-radius:999px;
+
+  background:var(--accent-soft);
+
+  color:var(--primary-strong);
+
+  font-size:12px;
+
+  font-weight:700;
+
+  margin-bottom:20px;
+}
+
+.eyebrow-dot {
+
+  width:7px;
+  height:7px;
+
+  border-radius:50%;
+
+  background:var(--accent);
+}
+
+.hero h1 {
+
+  margin:0;
+
+  max-width:760px;
+
+  font-size:
+    clamp(38px,5vw,66px);
+
+  line-height:1.03;
+
+  letter-spacing:-2.5px;
+
+  font-weight:800;
+}
+
+.hero h1 span {
+
+  color:var(--primary);
+}
+
+.hero-lead {
+
+  margin:
+    24px 0 0;
+
+  max-width:650px;
+
+  font-size:18px;
+
+  line-height:1.7;
+
+  color:var(--text-soft);
+}
+
+.hero-actions {
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:12px;
+
+  margin-top:30px;
+}
+
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn {
+
+  border:0;
+
+  border-radius:12px;
+
+  padding:
+    13px 18px;
+
+  font-size:14px;
+
+  font-weight:700;
+
+  display:inline-flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:8px;
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
+}
+
+.btn:hover {
+
+  transform:translateY(-2px);
+}
+
+.btn-primary {
+
+  background:var(--primary);
+
+  color:white;
+
+  box-shadow:
+    0 9px 24px
+    rgba(14,138,130,.22);
+}
+
+.btn-primary:hover {
+
+  background:var(--primary-strong);
+}
+
+.btn-secondary {
+
+  background:var(--surface);
+
+  border:1px solid var(--border);
+
+  color:var(--text);
+}
+
+.btn-secondary:hover {
+
+  border-color:var(--primary);
+
+  color:var(--primary);
+}
+
+.btn-soft {
+
+  background:var(--accent-soft);
+
+  color:var(--primary-strong);
+}
+
+
+/* ============================================================
+   HERO STATS
+   ============================================================ */
+
+.hero-stats {
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:24px;
+
+  margin-top:34px;
+}
+
+.hero-stat {
+
+  display:flex;
+
+  flex-direction:column;
+}
+
+.hero-stat strong {
+
+  font-size:20px;
+
+  font-weight:800;
+}
+
+.hero-stat span {
+
+  color:var(--text-soft);
+
+  font-size:11px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.08em;
+}
+
+
+/* ============================================================
+   HERO CHART CARD
+   ============================================================ */
+
+.hero-visual {
+
+  background:var(--surface);
+
+  border:1px solid var(--border);
+
+  border-radius:24px;
+
+  padding:24px;
+
+  box-shadow:var(--shadow);
+
+  position:relative;
+}
+
+.hero-visual-header {
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  margin-bottom:20px;
+}
+
+.hero-visual-title {
+
+  font-weight:800;
+
+  font-size:15px;
+}
+
+.hero-visual-sub {
+
+  color:var(--text-soft);
+
+  font-size:11px;
+}
+
+.chart-container {
+
+  height:280px;
+}
+
+
+/* ============================================================
+   INTERACTIVE TOTEM
+   ============================================================ */
+
+.totem-section {
+
+  padding:
+    35px 0 90px;
+}
+
+.totem-shell {
+
+  background:var(--surface);
+
+  border:1px solid var(--border);
+
+  border-radius:28px;
+
+  box-shadow:var(--shadow);
+
+  overflow:hidden;
+}
+
+
+/* ============================================================
+   TOTEM HEADER
+   ============================================================ */
+
+.totem-header {
+
+  padding:
+    34px 34px 26px;
+
+  border-bottom:1px solid var(--border);
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--surface-alt),
+      var(--surface)
+    );
+}
+
+.totem-header-top {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:25px;
+
+  align-items:flex-start;
+}
+
+.totem-kicker {
+
+  color:var(--primary);
+
+  font-size:11px;
+
+  font-family:"IBM Plex Mono", monospace;
+
+  text-transform:uppercase;
+
+  letter-spacing:.12em;
+
+  font-weight:600;
+}
+
+.totem-title {
+
+  margin:
+    7px 0 5px;
+
+  font-size:
+    clamp(25px,3vw,38px);
+
+  line-height:1.1;
+
+  letter-spacing:-1px;
+
+  font-weight:800;
+}
+
+.totem-description {
+
+  margin:0;
+
+  color:var(--text-soft);
+
+  max-width:720px;
+
+  font-size:15px;
+}
+
+
+/* ============================================================
+   PROGRESS
+   ============================================================ */
+
+.progress-area {
+
+  min-width:230px;
+
+  max-width:300px;
+
+  width:100%;
+}
+
+.progress-label {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  margin-bottom:8px;
+
+  font-size:11px;
+
+  color:var(--text-soft);
+
+  font-weight:700;
+}
+
+.progress-track {
+
+  height:7px;
+
+  background:var(--bg-alt);
+
+  border-radius:999px;
+
+  overflow:hidden;
+}
+
+.progress-bar {
+
+  height:100%;
+
+  width:25%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--primary),
+      var(--accent)
+    );
+
+  border-radius:999px;
+
+  transition:
+    width .35s ease;
+}
+
+
+/* ============================================================
+   TOTEM BODY
+   ============================================================ */
+
+.totem-body {
+
+  padding:34px;
+}
+
+
+/* ============================================================
+   BACK BAR
+   ============================================================ */
+
+.context-toolbar {
+
+  min-height:44px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:12px;
+
+  margin-bottom:22px;
+}
+
+.breadcrumb {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  flex-wrap:wrap;
+
+  font-size:12px;
+
+  color:var(--text-soft);
+}
+
+.breadcrumb-current {
+
+  color:var(--text);
+
+  font-weight:700;
+}
+
+.back-button {
+
+  border:1px solid var(--border);
+
+  background:var(--surface);
+
+  color:var(--text);
+
+  border-radius:10px;
+
+  padding:9px 13px;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  transition:.2s;
+}
+
+.back-button:hover {
+
+  border-color:var(--primary);
+
+  color:var(--primary);
+}
+
+
+/* ============================================================
+   AUDIENCE SELECTOR
+   ============================================================ */
+
+.audience-selector {
+
+  display:flex;
+
+  gap:8px;
+
+  padding:5px;
+
+  width:max-content;
+
+  background:var(--bg-alt);
+
+  border-radius:13px;
+
+  margin-bottom:27px;
+}
+
+.audience-button {
+
+  border:0;
+
+  background:transparent;
+
+  color:var(--text-soft);
+
+  padding:
+    10px 17px;
+
+  border-radius:9px;
+
+  font-size:13px;
+
+  font-weight:700;
+
+  transition:.2s;
+}
+
+.audience-button.active {
+
+  background:var(--surface);
+
+  color:var(--primary);
+
+  box-shadow:
+    0 3px 12px
+    rgba(0,0,0,.06);
+}
+
+
+/* ============================================================
+   EXAM SELECTOR
+   ============================================================ */
+
+.exam-selector-title {
+
+  margin-bottom:18px;
+}
+
+.exam-selector-title h3 {
+
+  margin:0;
+
+  font-size:21px;
+
+  letter-spacing:-.5px;
+}
+
+.exam-selector-title p {
+
+  margin:5px 0 0;
+
+  color:var(--text-soft);
+
+  font-size:13px;
+}
+
+.exam-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,minmax(0,1fr));
+
+  gap:13px;
+}
+
+
+/* ============================================================
+   EXAM CARD
+   ============================================================ */
+
+.exam-card {
+
+  appearance:none;
+
+  text-align:left;
+
+  border:1px solid var(--border);
+
+  background:var(--surface);
+
+  color:var(--text);
+
+  border-radius:17px;
+
+  padding:18px;
+
+  min-height:168px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:space-between;
+
+  transition:
+    transform .22s ease,
+    border-color .22s ease,
+    box-shadow .22s ease,
+    background .22s ease;
+}
+
+.exam-card:hover {
+
+  transform:translateY(-4px);
+
+  border-color:var(--primary);
+
+  box-shadow:
+    0 12px 26px
+    rgba(14,138,130,.12);
+}
+
+.exam-card.active {
+
+  border-color:var(--primary);
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--surface),
+      var(--surface-alt)
+    );
+
+  box-shadow:
+    0 12px 30px
+    rgba(14,138,130,.14);
+}
+
+.exam-card-top {
+
+  display:flex;
+
+  align-items:flex-start;
+
+  justify-content:space-between;
+
+  gap:10px;
+}
+
+
+/* ============================================================
+   MEDIA PLACEHOLDER — ICONOS
+   ============================================================ */
+
+.media-slot-icon {
+
+  width:48px;
+  height:48px;
+
+  flex:none;
+
+  border-radius:14px;
+
+  border:1px dashed var(--border);
+
+  background:var(--surface-alt);
+
+  color:var(--text-soft);
+
+  display:grid;
+
+  place-items:center;
+
+  text-align:center;
+
+  font-size:8px;
+
+  line-height:1.1;
+
+  font-family:
+    "IBM Plex Mono",
+    monospace;
+
+  text-transform:uppercase;
+
+  overflow:hidden;
+}
+
+.media-slot-icon img {
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+}
+
+
+/*
+   ============================================================
+   PARA AGREGAR UN ICONO:
+
+   En la información del examen:
+
+   icon:
+   "assets/images/icons/espirometria.png"
+
+   El sistema lo mostrará automáticamente.
+
+   ============================================================
+*/
+
+.exam-number {
+
+  color:var(--text-soft);
+
+  font-family:
+    "IBM Plex Mono",
+    monospace;
+
+  font-size:10px;
+}
+
+.exam-card h4 {
+
+  margin:
+    15px 0 6px;
+
+  font-size:15px;
+
+  line-height:1.25;
+
+  letter-spacing:-.2px;
+}
+
+.exam-card p {
+
+  margin:0;
+
+  color:var(--text-soft);
+
+  font-size:12px;
+
+  line-height:1.5;
+}
+
+.exam-card-arrow {
+
+  margin-top:15px;
+
+  color:var(--primary);
+
+  font-size:12px;
+
+  font-weight:800;
+}
+
+
+/* ============================================================
+   NERVOUS CARD
+   ============================================================ */
+
+.nervous-entry {
+
+  margin-top:22px;
+
+  border:1px solid var(--border);
+
+  background:
+    linear-gradient(
+      120deg,
+      var(--surface-alt),
+      var(--surface)
+    );
+
+  border-radius:18px;
+
+  padding:19px 21px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:20px;
+}
+
+.nervous-entry-content {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:15px;
+}
+
+.nervous-dot {
+
+  width:42px;
+  height:42px;
+
+  border-radius:50%;
+
+  background:var(--accent-soft);
+
+  display:grid;
+
+  place-items:center;
+
+  color:var(--primary);
+
+  font-size:19px;
+}
+
+.nervous-entry strong {
+
+  display:block;
+
+  font-size:14px;
+}
+
+.nervous-entry span {
+
+  display:block;
+
+  color:var(--text-soft);
+
+  font-size:12px;
+
+  margin-top:3px;
+}
+
+
+/* ============================================================
+   CONTEXT VIEW
+   ============================================================ */
+
+.context-view {
+
+  animation:
+    contextIn .3s ease;
+}
+
+@keyframes contextIn {
+
+  from {
+    opacity:0;
+    transform:translateY(8px);
   }
 
-  .hero-stats{display:flex; gap:28px; flex-wrap:wrap;}
-  .hero-stat b{display:block; font-family:'IBM Plex Mono',monospace; font-size:1.4rem; color:var(--primary-strong);}
-  .hero-stat span{font-size:.78rem; color:var(--text-soft);}
-  
-  /* ---------- WAVE CARD CON ESPIROGRAMA ---------- */
-  .wave-card{
-    background:var(--surface); border:1px solid var(--border); border-radius:24px; padding:28px;
-    box-shadow:var(--shadow); position:relative;
+  to {
+    opacity:1;
+    transform:none;
   }
-  .wave-card h3{font-size:1rem; margin-bottom:4px;}
-  .wave-card p{font-size:.85rem; color:var(--text-soft); margin-bottom:16px;}
-  .chart-container{
-    width:100%; height:200px; background:var(--bg-alt); border-radius:12px; padding:8px; position:relative;
-  }
-  .chart-container canvas{
-    width:100% !important; height:100% !important;
+}
+
+.context-hero {
+
+  display:grid;
+
+  grid-template-columns:
+    minmax(250px,.75fr)
+    minmax(0,1.25fr);
+
+  gap:28px;
+
+  align-items:stretch;
+
+  margin-bottom:30px;
+}
+
+
+/* ============================================================
+   LARGE MEDIA PLACEHOLDER
+   ============================================================ */
+
+.media-slot-large {
+
+  min-height:290px;
+
+  border-radius:22px;
+
+  border:1px dashed var(--border);
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--surface-alt),
+      var(--bg-alt)
+    );
+
+  display:grid;
+
+  place-items:center;
+
+  text-align:center;
+
+  color:var(--text-soft);
+
+  padding:20px;
+
+  overflow:hidden;
+}
+
+.media-slot-large img {
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+}
+
+
+/*
+   ============================================================
+   ESPACIO PARA IMAGEN PRINCIPAL DEL EXAMEN
+
+   Puedes utilizar:
+
+   media:
+   "assets/images/exams/spirometry.png"
+
+   o:
+
+   media:
+   "assets/images/exams/spirometry.gif"
+
+   ============================================================
+*/
+
+.media-placeholder-content {
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  gap:6px;
+}
+
+.media-placeholder-content strong {
+
+  font-size:11px;
+
+  font-family:
+    "IBM Plex Mono",
+    monospace;
+
+  letter-spacing:.08em;
+}
+
+.media-placeholder-content span {
+
+  font-size:11px;
+
+  opacity:.75;
+}
+
+
+/* ============================================================
+   CONTEXT INTRO
+   ============================================================ */
+
+.context-intro {
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+}
+
+.context-label {
+
+  color:var(--primary);
+
+  font-family:
+    "IBM Plex Mono",
+    monospace;
+
+  font-size:10px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.1em;
+
+  font-weight:600;
+}
+
+.context-intro h2 {
+
+  margin:
+    7px 0 12px;
+
+  font-size:
+    clamp(27px,3vw,42px);
+
+  line-height:1.06;
+
+  letter-spacing:-1.2px;
+}
+
+.context-intro > p {
+
+  margin:0;
+
+  color:var(--text-soft);
+
+  max-width:680px;
+
+  font-size:15px;
+
+  line-height:1.7;
+}
+
+
+/* ============================================================
+   PATHWAY
+   ============================================================ */
+
+.pathway-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:10px;
+
+  margin-top:25px;
+}
+
+.pathway-button {
+
+  border:1px solid var(--border);
+
+  background:var(--surface);
+
+  color:var(--text);
+
+  border-radius:14px;
+
+  padding:15px;
+
+  text-align:left;
+
+  transition:.2s;
+}
+
+.pathway-button:hover {
+
+  border-color:var(--primary);
+
+  transform:translateY(-2px);
+}
+
+.pathway-button.active {
+
+  border-color:var(--primary);
+
+  background:var(--accent-soft);
+
+  color:var(--primary-strong);
+}
+
+.pathway-number {
+
+  font-family:
+    "IBM Plex Mono",
+    monospace;
+
+  font-size:10px;
+
+  color:var(--text-soft);
+}
+
+.pathway-button strong {
+
+  display:block;
+
+  margin-top:5px;
+
+  font-size:13px;
+}
+
+.pathway-button span {
+
+  display:block;
+
+  margin-top:3px;
+
+  font-size:11px;
+
+  color:var(--text-soft);
+}
+
+
+/* ============================================================
+   INFORMATION PANEL
+   ============================================================ */
+
+.info-panel {
+
+  margin-top:22px;
+
+  border:1px solid var(--border);
+
+  border-radius:20px;
+
+  padding:26px;
+
+  background:var(--surface-alt);
+}
+
+.info-panel-header {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
+  gap:20px;
+
+  margin-bottom:20px;
+}
+
+.info-panel h3 {
+
+  margin:0;
+
+  font-size:22px;
+
+  letter-spacing:-.5px;
+}
+
+.info-panel-intro {
+
+  margin:5px 0 0;
+
+  color:var(--text-soft);
+
+  font-size:13px;
+}
+
+/* ============================================================
+   PREPARATION HUB — BEFORE STEP
+   ============================================================ */
+
+.prep-hub {
+  margin-top:22px;
+  border-top:1px solid var(--border);
+  padding-top:22px;
+}
+
+.prep-hub-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:18px;
+  margin-bottom:16px;
+}
+
+.prep-hub-head h4 {
+  margin:0 0 5px;
+  font-size:16px;
+  letter-spacing:-.2px;
+}
+
+.prep-hub-head p {
+  margin:0;
+  color:var(--text-soft);
+  font-size:12px;
+  max-width:720px;
+}
+
+.prep-hub-badge {
+  flex:none;
+  padding:6px 10px;
+  border-radius:999px;
+  background:var(--accent-soft);
+  color:var(--primary-strong);
+  font-size:10px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+
+.prep-task-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+
+.prep-task {
+  display:flex;
+  flex-direction:column;
+  min-height:190px;
+  padding:17px;
+  border-radius:15px;
+  border:1px solid var(--border);
+  background:var(--surface);
+}
+
+.prep-task-icon {
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  margin-bottom:13px;
+  background:var(--accent-soft);
+  color:var(--primary-strong);
+  font-size:17px;
+}
+
+.prep-task strong {
+  display:block;
+  margin-bottom:6px;
+  font-size:13px;
+}
+
+.prep-task p {
+  margin:0 0 16px;
+  color:var(--text-soft);
+  font-size:11.5px;
+  line-height:1.55;
+  flex:1;
+}
+
+.prep-task-link {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  width:max-content;
+  color:var(--primary-strong);
+  font-size:11.5px;
+  font-weight:800;
+}
+
+.prep-task-link:hover {
+  text-decoration:underline;
+}
+
+.prep-hub-footer {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-top:15px;
+  padding:14px 15px;
+  border-radius:14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+}
+
+.prep-hub-footer p {
+  margin:0;
+  color:var(--text-soft);
+  font-size:11.5px;
+}
+
+@media (max-width: 780px) {
+  .prep-task-grid { grid-template-columns:1fr; }
+  .prep-hub-head,
+  .prep-hub-footer { align-items:stretch; flex-direction:column; }
+  .prep-hub-badge { width:max-content; }
+}
+
+.info-list {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:10px;
+}
+
+.info-item {
+
+  display:flex;
+
+  align-items:flex-start;
+
+  gap:10px;
+
+  background:var(--surface);
+
+  border:1px solid var(--border);
+
+  border-radius:13px;
+
+  padding:13px;
+}
+
+.info-check {
+
+  width:23px;
+  height:23px;
+
+  flex:none;
+
+  border-radius:50%;
+
+  background:var(--accent-soft);
+
+  color:var(--primary);
+
+  display:grid;
+
+  place-items:center;
+
+  font-size:11px;
+
+  font-weight:800;
+}
+
+.info-item strong {
+
+  display:block;
+
+  font-size:12px;
+}
+
+.info-item span {
+
+  display:block;
+
+  color:var(--text-soft);
+
+  font-size:11px;
+
+  margin-top:2px;
+
+  line-height:1.45;
+}
+
+
+/* ============================================================
+   ACTION ROW
+   ============================================================ */
+
+.context-actions {
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:10px;
+
+  margin-top:22px;
+}
+
+
+/* ============================================================
+   RELATED EXAMS
+   ============================================================ */
+
+.related-section {
+
+  margin-top:32px;
+
+  padding-top:27px;
+
+  border-top:1px solid var(--border);
+}
+
+.related-header {
+
+  display:flex;
+
+  align-items:flex-end;
+
+  justify-content:space-between;
+
+  gap:20px;
+
+  margin-bottom:15px;
+}
+
+.related-header h3 {
+
+  margin:0;
+
+  font-size:18px;
+}
+
+.related-header p {
+
+  margin:4px 0 0;
+
+  color:var(--text-soft);
+
+  font-size:12px;
+}
+
+.related-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:11px;
+}
+
+.related-card {
+
+  border:1px solid var(--border);
+
+  background:var(--surface);
+
+  border-radius:15px;
+
+  padding:15px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  color:var(--text);
+
+  text-align:left;
+
+  transition:.2s;
+}
+
+.related-card:hover {
+
+  border-color:var(--primary);
+
+  transform:translateY(-2px);
+}
+
+.related-card .media-slot-icon {
+
+  width:40px;
+  height:40px;
+
+  border-radius:11px;
+}
+
+.related-card strong {
+
+  display:block;
+
+  font-size:12px;
+}
+
+.related-card span {
+
+  display:block;
+
+  color:var(--text-soft);
+
+  font-size:10px;
+
+  margin-top:2px;
+}
+
+
+/* ============================================================
+   NERVOUS VIEW
+   ============================================================ */
+
+.nervous-view {
+
+  display:grid;
+
+  grid-template-columns:
+    minmax(250px,.7fr)
+    minmax(0,1.3fr);
+
+  gap:30px;
+
+  align-items:center;
+}
+
+.nervous-view h2 {
+
+  margin:
+    8px 0 12px;
+
+  font-size:
+    clamp(28px,3.5vw,46px);
+
+  line-height:1.05;
+
+  letter-spacing:-1.2px;
+}
+
+.nervous-view p {
+
+  color:var(--text-soft);
+
+  font-size:15px;
+
+  line-height:1.7;
+}
+
+.reassurance-list {
+
+  display:grid;
+
+  gap:10px;
+
+  margin-top:20px;
+}
+
+.reassurance {
+
+  background:var(--surface-alt);
+
+  border:1px solid var(--border);
+
+  border-radius:13px;
+
+  padding:13px;
+
+  display:flex;
+
+  align-items:flex-start;
+
+  gap:11px;
+}
+
+.reassurance-mark {
+
+  width:24px;
+  height:24px;
+
+  border-radius:50%;
+
+  background:var(--accent-soft);
+
+  color:var(--primary);
+
+  display:grid;
+
+  place-items:center;
+
+  flex:none;
+
+  font-size:11px;
+}
+
+.reassurance strong {
+
+  display:block;
+
+  font-size:12px;
+}
+
+.reassurance span {
+
+  display:block;
+
+  color:var(--text-soft);
+
+  font-size:11px;
+
+  margin-top:2px;
+}
+
+
+/* ============================================================
+   NERVOUS VIDEO SLOT
+   ============================================================ */
+
+.media-slot-video {
+
+  min-height:390px;
+
+  border-radius:23px;
+
+  border:1px dashed var(--border);
+
+  background:
+    radial-gradient(
+      circle at center,
+      var(--surface-alt),
+      var(--bg-alt)
+    );
+
+  display:grid;
+
+  place-items:center;
+
+  overflow:hidden;
+
+  color:var(--text-soft);
+}
+
+.media-slot-video video {
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+}
+
+
+/*
+   ============================================================
+   VIDEO FPAIR
+
+   Puedes posteriormente reemplazar el contenido por:
+
+   <video controls>
+     <source
+       src="assets/videos/fpair-nervios.mp4"
+       type="video/mp4"
+     >
+   </video>
+
+   ============================================================
+*/
+
+
+/* ============================================================
+   STATIC SECTIONS
+   ============================================================ */
+
+.section {
+
+  padding:
+    75px 0;
+}
+
+.section-alt {
+
+  background:var(--bg-alt);
+
+  border-top:1px solid var(--border);
+
+  border-bottom:1px solid var(--border);
+}
+
+.section-header {
+
+  max-width:700px;
+
+  margin-bottom:32px;
+}
+
+.section-header .eyebrow {
+
+  margin-bottom:12px;
+}
+
+.section-header h2 {
+
+  margin:0;
+
+  font-size:
+    clamp(28px,4vw,43px);
+
+  line-height:1.08;
+
+  letter-spacing:-1.2px;
+}
+
+.section-header p {
+
+  color:var(--text-soft);
+
+  margin:
+    12px 0 0;
+
+  font-size:15px;
+}
+
+
+/* ============================================================
+   PREPARATION
+   ============================================================ */
+
+.preparation-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:13px;
+}
+
+.preparation-card {
+
+  background:var(--surface);
+
+  border:1px solid var(--border);
+
+  border-radius:17px;
+
+  padding:21px;
+}
+
+.preparation-card h3 {
+
+  margin:
+    15px 0 7px;
+
+  font-size:15px;
+}
+
+.preparation-card p {
+
+  margin:0;
+
+  color:var(--text-soft);
+
+  font-size:12px;
+
+  line-height:1.6;
+}
+
+.step-badge {
+
+  width:38px;
+  height:38px;
+
+  border-radius:12px;
+
+  background:var(--accent-soft);
+
+  color:var(--primary);
+
+  display:grid;
+
+  place-items:center;
+
+  font-family:
+    "IBM Plex Mono",
+    monospace;
+
+  font-weight:700;
+
+  font-size:11px;
+}
+
+
+/* ============================================================
+   TRAINING
+   ============================================================ */
+
+.training-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:20px;
+}
+
+.training-card {
+
+  background:var(--surface);
+
+  border:1px solid var(--border);
+
+  border-radius:21px;
+
+  padding:26px;
+
+  box-shadow:var(--shadow);
+}
+
+.training-step {
+
+  display:flex;
+
+  align-items:flex-start;
+
+  gap:14px;
+
+  padding:
+    16px 0;
+
+  border-bottom:1px solid var(--border);
+}
+
+.training-step:last-child {
+
+  border-bottom:0;
+}
+
+.training-number {
+
+  width:31px;
+  height:31px;
+
+  border-radius:10px;
+
+  background:var(--accent-soft);
+
+  color:var(--primary);
+
+  display:grid;
+
+  place-items:center;
+
+  font-family:
+    "IBM Plex Mono",
+    monospace;
+
+  font-size:10px;
+
+  font-weight:700;
+
+  flex:none;
+}
+
+.training-step strong {
+
+  display:block;
+
+  font-size:13px;
+}
+
+.training-step span {
+
+  display:block;
+
+  color:var(--text-soft);
+
+  font-size:11px;
+
+  margin-top:3px;
+}
+
+.training-media {
+
+  min-height:350px;
+
+  border:1px dashed var(--border);
+
+  border-radius:18px;
+
+  background:var(--surface-alt);
+
+  display:grid;
+
+  place-items:center;
+
+  color:var(--text-soft);
+
+  text-align:center;
+}
+
+
+/* ============================================================
+   INTERPRETATION
+   ============================================================ */
+
+.interpretation-box {
+
+  display:grid;
+
+  grid-template-columns:
+    .8fr 1.2fr;
+
+  gap:25px;
+
+  background:var(--surface);
+
+  border:1px solid var(--border);
+
+  border-radius:23px;
+
+  padding:27px;
+
+  box-shadow:var(--shadow);
+}
+
+.parameter-list {
+
+  display:grid;
+
+  gap:10px;
+}
+
+.parameter {
+
+  border:1px solid var(--border);
+
+  border-radius:13px;
+
+  padding:14px;
+
+  background:var(--surface-alt);
+}
+
+.parameter strong {
+
+  font-size:13px;
+
+  display:block;
+}
+
+.parameter span {
+
+  color:var(--text-soft);
+
+  font-size:11px;
+
+  display:block;
+
+  margin-top:3px;
+}
+
+.interpretation-chart {
+
+  min-height:310px;
+}
+
+
+/* ============================================================
+   TRUST
+   ============================================================ */
+
+.trust-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:14px;
+}
+
+.trust-card {
+
+  background:var(--surface);
+
+  border:1px solid var(--border);
+
+  border-radius:17px;
+
+  padding:23px;
+}
+
+.trust-card h3 {
+
+  margin:
+    13px 0 6px;
+
+  font-size:15px;
+}
+
+.trust-card p {
+
+  margin:0;
+
+  color:var(--text-soft);
+
+  font-size:12px;
+}
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+footer {
+
+  border-top:1px solid var(--border);
+
+  padding:
+    35px 0;
+
+  background:var(--surface);
+}
+
+.footer-inner {
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:20px;
+}
+
+.footer-brand {
+
+  font-size:13px;
+
+  font-weight:800;
+}
+
+.footer-note {
+
+  color:var(--text-soft);
+
+  font-size:11px;
+
+  max-width:600px;
+}
+
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+.modal-overlay {
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:2000;
+
+  background:
+    rgba(0,0,0,.55);
+
+  backdrop-filter:blur(7px);
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:20px;
+}
+
+.modal-overlay.open {
+
+  display:flex;
+}
+
+.modal {
+
+  width:min(
+    500px,
+    100%
+  );
+
+  max-height:
+    calc(100vh - 40px);
+
+  overflow:auto;
+
+  background:var(--surface);
+
+  border:1px solid var(--border);
+
+  border-radius:22px;
+
+  padding:25px;
+
+  box-shadow:
+    0 30px 80px
+    rgba(0,0,0,.3);
+}
+
+.modal-header {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:20px;
+
+  align-items:flex-start;
+}
+
+.modal-header h3 {
+
+  margin:0;
+
+  font-size:21px;
+}
+
+.close-modal {
+
+  border:0;
+
+  background:transparent;
+
+  color:var(--text-soft);
+
+  font-size:20px;
+}
+
+.form-group {
+
+  margin-top:16px;
+}
+
+.form-group label {
+
+  display:block;
+
+  margin-bottom:6px;
+
+  font-size:11px;
+
+  font-weight:700;
+
+  color:var(--text-soft);
+}
+
+.form-group input {
+
+  width:100%;
+
+  border:1px solid var(--border);
+
+  border-radius:10px;
+
+  padding:12px;
+
+  background:var(--surface);
+
+  color:var(--text);
+}
+
+.form-actions {
+
+  margin-top:20px;
+
+  display:flex;
+
+  gap:10px;
+}
+
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+
+.toast {
+
+  position:fixed;
+
+  right:20px;
+
+  bottom:20px;
+
+  z-index:3000;
+
+  max-width:360px;
+
+  background:var(--surface);
+
+  border:1px solid var(--border);
+
+  box-shadow:var(--shadow);
+
+  border-radius:13px;
+
+  padding:13px 16px;
+
+  color:var(--text);
+
+  font-size:12px;
+
+  transform:
+    translateY(20px);
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:.25s;
+}
+
+.toast.show {
+
+  transform:none;
+
+  opacity:1;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width:1100px) {
+
+  .main-nav {
+    display:none;
   }
 
-  /* ---------- SECTION GENERIC ---------- */
-  section{padding:56px 0;}
-  .section-head{max-width:640px; margin-bottom:34px;}
-  .section-head .eyebrow{margin-bottom:12px;}
-  .section-head h2{font-size:clamp(1.5rem,2.6vw,2rem); margin-bottom:8px;}
-  .section-head p{color:var(--text-soft); font-size:1rem;}
-
-  /* ---------- EXAM GRID ---------- */
-  .exam-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:16px;}
-  .exam-card{
-    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px;
-    display:flex; flex-direction:column; gap:10px; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    cursor:pointer;
-  }
-  .exam-card:hover{transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--accent-soft);}
-  .exam-icon{
-    width:42px; height:42px; border-radius:12px; background:var(--accent-soft); color:var(--primary-strong);
-    display:flex; align-items:center; justify-content:center;
-  }
-  .exam-card h3{font-size:1rem; font-family:'Manrope',sans-serif; font-weight:700;}
-  .exam-card p{font-size:.85rem; color:var(--text-soft); flex-grow:1;}
-  .exam-card .exam-link{font-size:.82rem; font-weight:700; color:var(--primary-strong); display:inline-flex; align-items:center; gap:4px;}
-
-  /* ---------- CHECKLIST ---------- */
-  .checklist{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
-  .check-item{
-    background:var(--surface-alt); border:1px solid var(--border); border-radius:14px; padding:18px;
-    display:flex; align-items:flex-start; gap:12px; font-weight:600; font-size:.92rem;
-  }
-  .check-item .dot{width:22px; height:22px; border-radius:50%; background:var(--primary); flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#04211E; font-size:.7rem; margin-top:1px;}
-
-  /* ---------- TRAINING / RESULTS split ---------- */
-  .split{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;}
-  .split .panel{
-    background:linear-gradient(160deg, var(--surface), var(--surface-alt)); border:1px solid var(--border);
-    border-radius:22px; padding:30px; box-shadow:var(--shadow);
-  }
-  .step-row{display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--border);}
-  .step-row:last-child{border-bottom:none;}
-  .step-num{font-family:'IBM Plex Mono',monospace; color:var(--primary-strong); font-weight:600; font-size:.85rem;}
-  .step-text b{display:block; font-size:.92rem;}
-  .step-text span{font-size:.82rem; color:var(--text-soft);}
-
-  /* ---------- TRUST ---------- */
-  .trust{background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);}
-  .trust-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;}
-  .trust-badges{display:flex; gap:12px; flex-wrap:wrap;}
-  .badge{background:var(--surface); border:1px solid var(--border); border-radius:999px; padding:8px 16px; font-size:.8rem; font-weight:700; color:var(--primary-strong);}
-
-  /* ---------- FOOTER ---------- */
-  footer{padding:40px 0 30px; text-align:center; color:var(--text-soft); font-size:.85rem;}
-
-  /* ---------- MODALES ---------- */
-  .overlay{
-    position:fixed; inset:0; background:rgba(4,15,16,.55); backdrop-filter:blur(3px);
-    display:none; align-items:center; justify-content:center; z-index:200; padding:20px;
-  }
-  .overlay.show{display:flex;}
-  .modal{
-    background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:28px;
-    width:100%; max-width:420px; box-shadow:var(--shadow); max-height:88vh; overflow-y:auto;
-  }
-  .modal.wide{max-width:640px;}
-  .modal-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;}
-  .modal-head h3{font-size:1.15rem;}
-  .close-x{background:none; border:none; cursor:pointer; color:var(--text-soft); font-size:1.3rem; line-height:1;}
-  .field{margin-bottom:14px;}
-  .field label{display:block; font-size:.82rem; font-weight:600; margin-bottom:6px; color:var(--text-soft);}
-  .field input{
-    width:100%; padding:11px 14px; border-radius:10px; border:1px solid var(--border);
-    background:var(--bg); color:var(--text); font-size:.92rem; font-family:'Inter',sans-serif;
-  }
-  .field input:focus-visible{outline:2px solid var(--primary);}
-  .switch-line{font-size:.85rem; color:var(--text-soft); margin-top:14px; text-align:center;}
-  .switch-line a{color:var(--primary-strong); font-weight:700;}
-  .form-msg{font-size:.82rem; padding:10px 12px; border-radius:10px; margin-bottom:14px; display:none;}
-  .form-msg.err{display:block; background:color-mix(in srgb, var(--danger) 15%, transparent); color:var(--danger);}
-  .form-msg.ok{display:block; background:color-mix(in srgb, var(--primary) 15%, transparent); color:var(--primary-strong);}
-
-  /* dashboard */
-  .id-pill{display:inline-flex; align-items:center; gap:8px; background:var(--accent-soft); color:var(--primary-strong); padding:6px 14px; border-radius:999px; font-family:'IBM Plex Mono',monospace; font-size:.8rem; font-weight:600;}
-  .upload-zone{
-    border:2px dashed var(--border); border-radius:16px; padding:26px; text-align:center; cursor:pointer;
-    background:var(--surface-alt); margin:16px 0; transition:border-color .2s ease;
-  }
-  .upload-zone:hover{border-color:var(--accent);}
-  .exam-list{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
-  .exam-row{
-    display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface-alt);
-    border:1px solid var(--border); border-radius:12px; padding:12px 14px;
-  }
-  .exam-row .meta b{display:block; font-size:.88rem;}
-  .exam-row .meta span{font-size:.76rem; color:var(--text-soft);}
-  .empty-note{font-size:.85rem; color:var(--text-soft); text-align:center; padding:20px 0;}
-  .ai-result{
-    background:var(--surface-alt); border:1px solid var(--accent-soft); border-radius:12px; padding:16px;
-    font-size:.88rem; margin-top:14px; white-space:pre-wrap; line-height:1.6;
-  }
-  .disclaimer{font-size:.74rem; color:var(--text-soft); margin-top:10px; border-top:1px solid var(--border); padding-top:10px;}
-  .spinner{width:16px; height:16px; border:2px solid rgba(255,255,255,.4); border-top-color:#04211E; border-radius:50%; animation:spin .7s linear infinite; display:inline-block;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-
-  /* ---------- ENLACES "MÁS INFORMACIÓN" ---------- */
-  .more-info-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 20px;
-    font-weight: 700;
-    font-size: .92rem;
-    color: var(--primary-strong);
-    transition: gap .2s ease, color .2s ease;
-    cursor: pointer;
-  }
-  .more-info-link:hover {
-    gap: 12px;
-    color: var(--primary);
-  }
-  .more-info-link i {
-    font-size: .8rem;
-    transition: transform .2s ease;
-  }
-  .more-info-link:hover i {
-    transform: translateX(3px);
+  .mobile-menu-button {
+    display:grid;
   }
 
-  @media (max-width: 880px){
-    nav.main-nav{display:none;}
-    .navburger{display:block;}
-    .hero-grid{grid-template-columns:1fr;}
-    .exam-grid{grid-template-columns:repeat(2,1fr);}
-    .checklist{grid-template-columns:repeat(2,1fr);}
-    .split{grid-template-columns:1fr;}
-    .dropdown-content {
-      left: 50%;
-      transform: translateX(-50%);
-    }
+  .header-inner {
+    padding:0 18px;
   }
-  @media (max-width: 480px){
-    .exam-grid{grid-template-columns:1fr;}
-    .checklist{grid-template-columns:1fr;}
-    .hero-ctas{flex-direction:column; align-items:stretch;}
-    .dropdown-content {
-      left: 50%;
-      transform: translateX(-50%);
-      min-width: 180px;
-    }
+
+  .hero-grid {
+
+    grid-template-columns:1fr;
+
   }
+
+  .hero-visual {
+
+    max-width:800px;
+  }
+
+  .exam-grid {
+
+    grid-template-columns:
+      repeat(3,1fr);
+  }
+
+  .preparation-grid {
+
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+}
+
+
+@media (max-width:800px) {
+
+  .container {
+
+    width:
+      min(
+        calc(100% - 28px),
+        700px
+      );
+  }
+
+  .hero {
+
+    padding-top:48px;
+  }
+
+  .hero h1 {
+
+    letter-spacing:-1.6px;
+  }
+
+  .hero-lead {
+
+    font-size:15px;
+  }
+
+  .totem-header,
+  .totem-body {
+
+    padding:22px;
+  }
+
+  .totem-header-top {
+
+    flex-direction:column;
+  }
+
+  .progress-area {
+
+    max-width:none;
+  }
+
+  .exam-grid {
+
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .context-hero {
+
+    grid-template-columns:1fr;
+  }
+
+  .media-slot-large {
+
+    min-height:230px;
+  }
+
+  .pathway-grid {
+
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .info-list {
+
+    grid-template-columns:1fr;
+  }
+
+  .related-grid {
+
+    grid-template-columns:1fr;
+  }
+
+  .nervous-view {
+
+    grid-template-columns:1fr;
+  }
+
+  .training-grid {
+
+    grid-template-columns:1fr;
+  }
+
+  .interpretation-box {
+
+    grid-template-columns:1fr;
+  }
+
+  .trust-grid {
+
+    grid-template-columns:1fr;
+  }
+}
+
+
+@media (max-width:560px) {
+
+  .brand {
+
+    min-width:auto;
+  }
+
+  .brand-text {
+
+    display:none;
+  }
+
+  .header-actions .btn {
+
+    display:none;
+  }
+
+  .hero-actions {
+
+    flex-direction:column;
+  }
+
+  .hero-actions .btn {
+
+    width:100%;
+  }
+
+  .exam-grid {
+
+    grid-template-columns:1fr;
+  }
+
+  .exam-card {
+
+    min-height:135px;
+  }
+
+  .audience-selector {
+
+    width:100%;
+  }
+
+  .audience-button {
+
+    flex:1;
+  }
+
+  .nervous-entry {
+
+    align-items:flex-start;
+
+    flex-direction:column;
+  }
+
+  .nervous-entry .btn {
+
+    width:100%;
+  }
+
+  .pathway-grid {
+
+    grid-template-columns:1fr;
+  }
+
+  .preparation-grid {
+
+    grid-template-columns:1fr;
+  }
+
+  .footer-inner {
+
+    flex-direction:column;
+
+    align-items:flex-start;
+  }
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion:reduce) {
+
+  *,
+  *::before,
+  *::after {
+
+    scroll-behavior:auto !important;
+
+    animation-duration:.01ms !important;
+
+    transition-duration:.01ms !important;
+  }
+}
+
+
+
+/* ============================================================
+   ROBUSTEZ / ACCESIBILIDAD
+   ============================================================ */
+
+.js-fallback {
+  margin:20px auto;
+  width:min(1240px,calc(100% - 40px));
+  padding:14px 16px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--surface);
+  color:var(--text);
+}
+
+.chart-fallback {
+  min-height:220px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  color:var(--text-soft);
+  border:1px dashed var(--border);
+  border-radius:14px;
+  padding:20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto; }
+  *, *::before, *::after {
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+
 </style>
 </head>
-<body data-theme="light">
 
-<header class="site">
-  <div class="wrap header-row">
-    <div class="brand">
-      <span class="brand-mark">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 12c1.5-4 3-6 6-6s4.5 2 6 6-3 6-6 6-7.5-2-6-6z" stroke="#04211E" stroke-width="1.8"/></svg>
-      </span>
-      FPAIR
-    </div>
-    <nav class="main-nav">
-      <a href="#examenes">Exámenes</a>
-      <a href="#examenes-ninos">Exámenes Pediátricos</a>
-      <a href="#preparacion">Preparación</a>
-      <a href="#entrenamiento">Técnica guiada</a>
-      <a href="#interpretacion">Interpretación</a>
-      <a href="#confianza">Confianza clínica</a>
-    </nav>
-    <div class="header-actions">
-      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar entre modo claro y oscuro"></button>
-      <button class="btn btn-ghost btn-sm" id="btnLogin">Iniciar sesión</button>
-      <button class="btn btn-primary btn-sm" id="btnRegister">Registrarme</button>
-      <button class="btn btn-outline btn-sm" id="btnDashboard" style="display:none;">Mis exámenes</button>
-      <button class="navburger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
-    </div>
+
+<body>
+<noscript>
+  <div class="js-fallback" role="status">
+    FPAIR necesita JavaScript para el índice interactivo. Las páginas informativas individuales siguen disponibles desde sus enlaces directos.
   </div>
+</noscript>
+
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+
+<header class="site-header">
+
+  <div class="header-inner">
+
+    <a
+      href="#fpair/home"
+      class="brand"
+      aria-label="FPAIR inicio"
+    >
+
+      <!-- ======================================================
+           ESPACIO LOGO FPAIR
+           ====================================================== -->
+
+      <div class="brand-mark">
+
+        <!--
+        <img
+          src="assets/images/logo/fpair-logo.png"
+          alt="FPAIR"
+        >
+        -->
+
+        F
+      </div>
+
+      <div class="brand-text">
+
+        <div class="brand-name">
+          FPAIR
+        </div>
+
+        <div class="brand-sub">
+          Educación y entrenamiento respiratorio
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <nav
+      class="main-nav"
+      aria-label="Navegación principal"
+    >
+
+      <a href="#examenes">
+        Exámenes
+      </a>
+
+      <a href="#preparacion">
+        Preparación
+      </a>
+
+      <a href="#entrenamiento">
+        Técnica guiada
+      </a>
+
+      <a href="#interpretacion">
+        Interpretación
+      </a>
+
+      <a href="#confianza">
+        Confianza clínica
+      </a>
+
+    </nav>
+
+
+    <div class="header-actions">
+
+      <button
+        class="icon-button"
+        id="themeToggle"
+        type="button"
+        aria-label="Cambiar tema"
+        title="Cambiar tema"
+      >
+        ◐
+      </button>
+
+      <button
+        class="icon-button mobile-menu-button"
+        id="mobileMenuButton"
+        type="button"
+        aria-label="Abrir menú"
+      >
+        ☰
+      </button>
+
+    </div>
+
+  </div>
+
 </header>
 
+
+<!-- ============================================================
+     MAIN
+     ============================================================ -->
+
+<main>
+
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+
 <section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">Basado en estándares internacionales ATS/ERS</span>
-      <h1>Prepárate para tu examen pulmonar <em>con confianza</em></h1>
-      <p class="lead">Aprende cómo prepararte, practica la técnica correcta y comprende tus resultados respiratorios paso a paso — antes incluso de pisar el laboratorio.</p>
-      <div class="hero-ctas">
-        <!-- DROPDOWN: Preparar mi examen -->
-        <div class="dropdown">
-          <button class="btn btn-primary" id="btnPrepararExamen">
-            Preparar mi examen
-            <span class="btn-arrow">▼</span>
-          </button>
-          <div class="dropdown-content">
-            <a href="#examenes"><i class="fa-solid fa-user"></i> Adulto</a>
-            <a href="#examenes-ninos"><i class="fa-solid fa-child"></i> Pediátrico</a>
-          </div>
+
+  <div class="container">
+
+    <div class="hero-grid">
+
+
+      <div>
+
+        <div class="eyebrow">
+
+          <span class="eyebrow-dot"></span>
+
+          Basado en estándares internacionales ATS/ERS
+
         </div>
-        <a href="#entrenamiento" class="btn btn-ghost">Practicar técnica</a>
+
+
+        <h1>
+
+          Prepárate para tu
+          <span>examen pulmonar</span>
+          con confianza.
+
+        </h1>
+
+
+        <p class="hero-lead">
+
+          En FPAIR puedes conocer tu examen,
+          saber cómo prepararte, practicar la técnica
+          y comprender mejor lo que ocurre durante la evaluación.
+
+          <strong>
+            Sin necesidad de saber medicina.
+          </strong>
+
+        </p>
+
+
+        <div class="hero-actions">
+
+          <button
+            class="btn btn-primary"
+            type="button"
+            id="heroChooseExam"
+          >
+            🫁 Elegir mi examen
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            type="button"
+            id="heroNervous"
+          >
+            😌 Estoy nervioso
+          </button>
+
+          <button
+            class="btn btn-soft"
+            type="button"
+            id="heroPractice"
+          >
+            Practicar técnica
+          </button>
+
+        </div>
+
+
+        <div class="hero-stats">
+
+          <div class="hero-stat">
+
+            <strong>8+</strong>
+
+            <span>
+              exámenes explicados
+            </span>
+
+          </div>
+
+          <div class="hero-stat">
+
+            <strong>ATS/ERS</strong>
+
+            <span>
+              orientación técnica
+            </span>
+
+          </div>
+
+          <div class="hero-stat">
+
+            <strong>24/7</strong>
+
+            <span>
+              acceso educativo
+            </span>
+
+          </div>
+
+        </div>
+
       </div>
-      <div class="hero-stats">
-        <div class="hero-stat"><b>8+</b><span>Exámenes</span></div>
-        <div class="hero-stat"><b>ATS</b><span>Estándares</span></div>
-        <div class="hero-stat"><b>24/7</b><span>Educación</span></div>
+
+
+      <!-- ======================================================
+           HERO VISUAL
+           ====================================================== -->
+
+      <div class="hero-visual">
+
+        <div class="hero-visual-header">
+
+          <div>
+
+            <div class="hero-visual-title">
+              Espirograma - Curva Volumen/Tiempo
+            </div>
+
+            <div class="hero-visual-sub">
+              Así se ve una espiración forzada bien ejecutada.
+            </div>
+
+          </div>
+
+          <span class="exam-number">
+            FPAIR / ESPIRO
+          </span>
+
+        </div>
+
+
+        <div class="chart-container">
+
+          <canvas
+            id="heroChart"
+            aria-label="Curva respiratoria educativa"
+          ></canvas>
+
+        </div>
+
       </div>
+
     </div>
-    <div class="wave-card">
-      <h3>Espirograma - Curva Volumen/Tiempo</h3>
-      <p>Así se ve una espiración forzada bien ejecutada.</p>
-      <div class="chart-container">
-        <canvas id="espirogramaChart"></canvas>
+
+  </div>
+
+</section>
+
+
+
+<!-- ============================================================
+     TOTEM INTERACTIVO
+     ============================================================ -->
+
+<section
+  class="totem-section"
+  id="examenes"
+>
+
+  <div class="container">
+
+    <div
+      class="totem-shell"
+      id="totemShell"
+    >
+
+      <!-- ======================================================
+           HEADER DEL TOTEM
+           ====================================================== -->
+
+      <div class="totem-header">
+
+        <div class="totem-header-top">
+
+          <div>
+
+            <div class="totem-kicker">
+              FPAIR / ORIENTACIÓN DEL PACIENTE
+            </div>
+
+            <h2 class="totem-title">
+              ¿Qué examen te realizarás?
+            </h2>
+
+            <p class="totem-description">
+              Elige tu examen y FPAIR te mostrará
+              qué puedes esperar antes, durante y después.
+            </p>
+
+          </div>
+
+
+          <div class="progress-area">
+
+            <div class="progress-label">
+
+              <span>
+                Tu recorrido FPAIR
+              </span>
+
+              <span id="progressText">
+                1 de 4
+              </span>
+
+            </div>
+
+            <div class="progress-track">
+
+              <div
+                class="progress-bar"
+                id="progressBar"
+              ></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
-    </div>
-  </div>
-</section>
 
-<section id="examenes">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Explora tus exámenes respiratorios</span>
-      <h2>Aprende qué mide cada examen</h2>
-      <p>Cómo prepararte y qué técnica realizar antes de asistir al laboratorio.</p>
-    </div>
-    <div class="exam-grid" id="examGrid"></div>
-  </div>
-</section>
 
-<!-- ===== EXÁMENES PEDIÁTRICOS ===== -->
-<section id="examenes-ninos" style="background:var(--bg-alt);">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Exámenes adaptados para los más pequeños</span>
-      <h2>Exámenes para niños (Pediátrico)</h2>
-      <p>Pruebas respiratorias diseñadas pensando en el confort y la comprensión de los niños.</p>
-    </div>
-    <div class="exam-grid" id="examGridNinos"></div>
-  </div>
-</section>
+      <!-- ======================================================
+           BODY
+           ====================================================== -->
 
-<section id="preparacion" style="background:var(--bg-alt);">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Checklist de preparación</span>
-      <h2>Sigue estas recomendaciones antes de tu examen</h2>
-    </div>
-    <div class="checklist">
-      <div class="check-item"><span class="dot">✓</span>Suspensión de inhaladores</div>
-      <div class="check-item"><span class="dot">✓</span>Evitar tabaco</div>
-      <div class="check-item"><span class="dot">✓</span>Evitar ejercicio intenso</div>
-      <div class="check-item"><span class="dot">✓</span>Ropa cómoda</div>
-    </div>
-    <!-- ===== ENLACE "MÁS INFORMACIÓN" ===== -->
-    <div style="display:flex; justify-content:flex-end; margin-top:16px;">
-      <a href="preparacion_info.html" class="more-info-link">
-        Más información
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
-    </div>
-  </div>
-</section>
+      <div
+        class="totem-body"
+        id="totemBody"
+      >
 
-<section id="entrenamiento">
-  <div class="wrap split">
-    <div class="panel">
-      <span class="eyebrow">Practica antes de tu examen</span>
-      <h2 style="font-size:1.4rem; margin-bottom:14px;">Entrenamiento respiratorio FPAIR</h2>
-      <div class="step-row"><span class="step-num">01</span><div class="step-text"><b>Inspira a fondo</b><span>Llena por completo los pulmones sin prisa.</span></div></div>
-      <div class="step-row"><span class="step-num">02</span><div class="step-text"><b>Exhala con fuerza y rápido</b><span>El inicio explosivo es lo que más se mide.</span></div></div>
-      <div class="step-row"><span class="step-num">03</span><div class="step-text"><b>Sostén hasta el final</b><span>No cortes la maniobra antes de tiempo.</span></div></div>
-      <!-- ===== ENLACE "MÁS INFORMACIÓN" ===== -->
-      <div style="display:flex; justify-content:flex-end; margin-top:16px;">
-        <a href="tecnicas_guiadas.html" class="more-info-link">
-          Más información
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
+        <!-- El contenido será generado por JavaScript -->
+
       </div>
+
     </div>
-    <div>
-      <h2 style="font-size:1.6rem; margin-bottom:12px;">Aprende paso a paso cómo respirar correctamente</h2>
-      <p style="color:var(--text-soft);">Qué errores evitar y cómo mejorar tu técnica antes de que un error de ejecución te obligue a repetir el examen.</p>
-    </div>
+
   </div>
+
 </section>
 
-<section id="interpretacion" style="background:var(--bg-alt);">
-  <div class="wrap split">
-    <div>
-      <span class="eyebrow">Comprende tus resultados</span>
-      <h2 style="font-size:1.6rem; margin-bottom:12px;">Qué significa cada parámetro respiratorio</h2>
-      <p style="color:var(--text-soft); margin-bottom:20px;">Explicado de forma simple — y si ya subiste un examen a tu cuenta, nuestra IA educativa te ayuda a leerlo.</p>
-      <button class="btn btn-primary" id="btnGoInterpret">Interpretar mi examen con IA</button>
-      <!-- ===== ENLACE "MÁS INFORMACIÓN" ===== -->
-      <div style="display:flex; justify-content:flex-start; margin-top:16px;">
-        <a href="interpretacion_ia.html" class="more-info-link">
-          Más información
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
+
+
+<!-- ============================================================
+     PREPARACIÓN
+     ============================================================ -->
+
+<section
+  class="section section-alt"
+  id="preparacion"
+>
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+
+        <span class="eyebrow-dot"></span>
+
+        Antes del examen
+
       </div>
+
+      <h2>
+        Llegar preparado ayuda a realizar mejor el examen.
+      </h2>
+
+      <p>
+        Las indicaciones pueden variar según el examen
+        y el laboratorio. Siempre sigue las instrucciones
+        específicas que te entregue tu equipo de salud.
+      </p>
+
     </div>
-    <div class="panel">
-      <h3 style="font-size:1rem; margin-bottom:10px;">Ejemplo: FEV1/FVC</h3>
-      <p style="font-size:.88rem; color:var(--text-soft); margin-bottom:14px;">La proporción entre lo que expulsas en el primer segundo y el total. Un valor bajo sugiere obstrucción de la vía aérea.</p>
-      <div class="mono" style="font-size:.82rem; color:var(--primary-strong);">FEV1/FVC ≥ 0.70 → dentro de rango esperado</div>
+
+
+    <div class="preparation-grid">
+
+
+      <article class="preparation-card">
+
+        <div class="step-badge">
+          01
+        </div>
+
+        <h3>
+          Medicamentos
+        </h3>
+
+        <p>
+          Si utilizas inhaladores u otros medicamentos,
+          consulta previamente si debes modificarlos.
+          No los suspendas por tu cuenta.
+        </p>
+
+      </article>
+
+
+      <article class="preparation-card">
+
+        <div class="step-badge">
+          02
+        </div>
+
+        <h3>
+          Tabaco
+        </h3>
+
+        <p>
+          Sigue las indicaciones entregadas por el laboratorio
+          respecto al consumo de tabaco antes del examen.
+        </p>
+
+      </article>
+
+
+      <article class="preparation-card">
+
+        <div class="step-badge">
+          03
+        </div>
+
+        <h3>
+          Ejercicio
+        </h3>
+
+        <p>
+          Algunos estudios requieren evitar ejercicio intenso
+          antes de la evaluación.
+        </p>
+
+      </article>
+
+
+      <article class="preparation-card">
+
+        <div class="step-badge">
+          04
+        </div>
+
+        <h3>
+          Ropa cómoda
+        </h3>
+
+        <p>
+          Una ropa que permita respirar y moverse cómodamente
+          facilita la realización de determinadas pruebas.
+        </p>
+
+      </article>
+
     </div>
+
   </div>
+
 </section>
 
-<section class="trust" id="confianza">
-  <div class="wrap trust-row">
-    <div>
-      <h2 style="font-size:1.2rem;">FPAIR está diseñado para educación y entrenamiento respiratorio</h2>
-      <p style="color:var(--text-soft); font-size:.9rem;">Basado en estándares internacionales ATS/ERS.</p>
+
+
+<!-- ============================================================
+     ENTRENAMIENTO
+     ============================================================ -->
+
+<section
+  class="section"
+  id="entrenamiento"
+>
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+
+        <span class="eyebrow-dot"></span>
+
+        Técnica guiada
+
+      </div>
+
+      <h2>
+        No tienes que saber hacerlo antes de llegar.
+      </h2>
+
+      <p>
+        El profesional te explicará y acompañará durante
+        la maniobra. FPAIR puede ayudarte a familiarizarte
+        previamente con el proceso.
+      </p>
+
     </div>
-    <div class="trust-badges">
-      <span class="badge">ATS/ERS</span>
-      <span class="badge">Educación respiratoria</span>
-      <span class="badge">Entrenamiento guiado</span>
+
+
+    <div class="training-grid">
+
+
+      <div class="training-card">
+
+
+        <div class="training-step">
+
+          <div class="training-number">
+            01
+          </div>
+
+          <div>
+
+            <strong>
+              Inspira profundamente
+            </strong>
+
+            <span>
+              Prepárate según las instrucciones del profesional.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="training-step">
+
+          <div class="training-number">
+            02
+          </div>
+
+          <div>
+
+            <strong>
+              Exhala con decisión
+            </strong>
+
+            <span>
+              Sigue las indicaciones sobre cómo comenzar
+              y mantener el esfuerzo.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="training-step">
+
+          <div class="training-number">
+            03
+          </div>
+
+          <div>
+
+            <strong>
+              Continúa hasta que te indiquen
+            </strong>
+
+            <span>
+              El tiempo y el esfuerzo necesarios pueden
+              variar entre personas y exámenes.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="training-step">
+
+          <div class="training-number">
+            04
+          </div>
+
+          <div>
+
+            <strong>
+              Si algo te incomoda, comunícalo
+            </strong>
+
+            <span>
+              El profesional está ahí para acompañarte.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="context-actions">
+
+          <button
+            class="btn btn-primary"
+            type="button"
+            id="practiceFromSection"
+          >
+            Practicar con FPAIR
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ======================================================
+           ESPACIO PARA VIDEO / GIF
+           ====================================================== -->
+
+      <div class="training-media">
+
+        <div class="media-placeholder-content">
+
+          <strong>
+            ESPACIO PARA VIDEO / GIF
+          </strong>
+
+          <span>
+            Agregar aquí material FPAIR
+          </span>
+
+          <!--
+          EJEMPLO:
+
+          <video controls>
+            <source
+              src="assets/videos/tecnica-espirometria.mp4"
+              type="video/mp4"
+            >
+          </video>
+
+          O:
+
+          <img
+            src="assets/images/gifs/espirometria.gif"
+            alt="Técnica de espirometría"
+          >
+
+          -->
+
+        </div>
+
+      </div>
+
     </div>
+
   </div>
+
 </section>
+
+
+
+<!-- ============================================================
+     INTERPRETACIÓN
+     ============================================================ -->
+
+<section
+  class="section section-alt"
+  id="interpretacion"
+>
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+
+        <span class="eyebrow-dot"></span>
+
+        Comprender
+
+      </div>
+
+      <h2>
+        Tus resultados contienen información.
+      </h2>
+
+      <p>
+        FPAIR puede ayudarte a entender qué significa cada
+        parámetro de manera sencilla, sin reemplazar
+        la interpretación del profesional de salud.
+      </p>
+
+    </div>
+
+
+    <div class="interpretation-box">
+
+
+      <div>
+
+        <div class="parameter-list">
+
+          <div class="parameter">
+
+            <strong>
+              CVF
+            </strong>
+
+            <span>
+              Cantidad total de aire que puedes expulsar
+              después de una inspiración máxima.
+            </span>
+
+          </div>
+
+
+          <div class="parameter">
+
+            <strong>
+              VEF1
+            </strong>
+
+            <span>
+              Volumen de aire expulsado durante el primer
+              segundo de una maniobra forzada.
+            </span>
+
+          </div>
+
+
+          <div class="parameter">
+
+            <strong>
+              VEF1/CVF
+            </strong>
+
+            <span>
+              Relación entre el volumen expulsado durante
+              el primer segundo y la capacidad vital forzada.
+            </span>
+
+          </div>
+
+
+          <div class="parameter">
+
+            <strong>
+              Z-score
+            </strong>
+
+            <span>
+              Permite comparar un resultado con el rango
+              esperado para personas con características similares.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="context-actions">
+
+          <button
+            class="btn btn-primary"
+            type="button"
+            id="openInterpretation"
+          >
+            Explorar interpretación
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="interpretation-chart">
+
+        <canvas
+          id="interpretationChart"
+          aria-label="Ejemplo educativo de distribución de resultados"
+        ></canvas>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ============================================================
+     CONFIANZA
+     ============================================================ -->
+
+<section
+  class="section"
+  id="confianza"
+>
+
+  <div class="container">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+
+        <span class="eyebrow-dot"></span>
+
+        FPAIR
+
+      </div>
+
+      <h2>
+        Educación antes, durante y después del examen.
+      </h2>
+
+      <p>
+        El objetivo es que comprendas el proceso y puedas
+        participar con mayor tranquilidad.
+      </p>
+
+    </div>
+
+
+    <div class="trust-grid">
+
+
+      <article class="trust-card">
+
+        <div class="step-badge">
+          ATS
+        </div>
+
+        <h3>
+          Orientación técnica
+        </h3>
+
+        <p>
+          Contenido educativo basado en principios y
+          estándares internacionales de función pulmonar.
+        </p>
+
+      </article>
+
+
+      <article class="trust-card">
+
+        <div class="step-badge">
+          EDU
+        </div>
+
+        <h3>
+          Lenguaje simple
+        </h3>
+
+        <p>
+          La información está pensada para personas
+          sin formación médica.
+        </p>
+
+      </article>
+
+
+      <article class="trust-card">
+
+        <div class="step-badge">
+          +1
+        </div>
+
+        <h3>
+          Acompañamiento
+        </h3>
+
+        <p>
+          FPAIR no reemplaza al profesional: ayuda a que
+          el paciente llegue más preparado y tranquilo.
+        </p>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
 
 <footer>
-  <div class="wrap">
-    <p><b>FPAIR</b> — Educación y entrenamiento respiratorio basado en estándares internacionales ATS/ERS.</p>
+
+  <div class="container">
+
+    <div class="footer-inner">
+
+      <div>
+
+        <div class="footer-brand">
+          FPAIR — Educación y entrenamiento respiratorio
+        </div>
+
+        <div class="footer-note">
+          Material educativo. No reemplaza la evaluación,
+          indicación ni interpretación realizada por profesionales
+          de la salud.
+        </div>
+
+      </div>
+
+      <div class="footer-note">
+        FPAIR
+      </div>
+
+    </div>
+
   </div>
+
 </footer>
 
-<!-- ===================== MODALES ===================== -->
 
-<div class="overlay" id="overlayAuth">
-  <div class="modal">
-    <div class="modal-head">
-      <h3 id="authTitle">Iniciar sesión</h3>
-      <button class="close-x" data-close>×</button>
+
+<!-- ============================================================
+     MODAL SIMPLE
+     ============================================================ -->
+
+<div
+  class="modal-overlay"
+  id="modalOverlay"
+  aria-hidden="true"
+>
+
+  <div
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+  >
+
+    <div class="modal-header">
+
+      <h3 id="modalTitle">
+        FPAIR
+      </h3>
+
+      <button
+        class="close-modal"
+        type="button"
+        id="closeModal"
+        aria-label="Cerrar"
+      >
+        ×
+      </button>
+
     </div>
-    <div class="form-msg" id="authMsg"></div>
-    <div class="field" id="fieldName" style="display:none;">
-      <label for="regName">Nombre completo</label>
-      <input type="text" id="regName" placeholder="Ej: María Pérez">
-    </div>
-    <div class="field">
-      <label for="authEmail">Correo electrónico</label>
-      <input type="email" id="authEmail" placeholder="tucorreo@ejemplo.com">
-    </div>
-    <div class="field">
-      <label for="authPass">Contraseña</label>
-      <input type="password" id="authPass" placeholder="••••••••">
-    </div>
-    <button class="btn btn-primary" style="width:100%; justify-content:center;" id="authSubmit">Iniciar sesión</button>
-    <p class="switch-line" id="authSwitch">¿No tienes cuenta? <a href="#" id="toRegister">Regístrate</a></p>
+
+    <div id="modalContent"></div>
+
   </div>
+
 </div>
 
-<div class="overlay" id="overlayDash">
-  <div class="modal wide">
-    <div class="modal-head">
-      <h3>Mis exámenes</h3>
-      <button class="close-x" data-close>×</button>
-    </div>
-    <p style="font-size:.85rem; color:var(--text-soft); margin-bottom:8px;">Tu ID de paciente:</p>
-    <span class="id-pill" id="patientIdShow"></span>
 
-    <div class="upload-zone" id="uploadZone">
-      <p style="font-weight:700; margin-bottom:4px;">Sube un examen en PDF</p>
-      <p style="font-size:.82rem; color:var(--text-soft);">Espirometría, DLCO, gasometría, etc. Toca para elegir un archivo.</p>
-      <input type="file" id="pdfInput" accept="application/pdf" style="display:none;">
-    </div>
 
-    <div class="exam-list" id="examListWrap">
-      <p class="empty-note">Todavía no has subido exámenes. Sube tu primer PDF arriba.</p>
-    </div>
+<!-- ============================================================
+     TOAST
+     ============================================================ -->
 
-    <div id="aiResultBox"></div>
-    <p class="disclaimer">Esta interpretación es educativa y no reemplaza la evaluación de un profesional de la salud. Ante dudas sobre tu resultado, consulta con tu médico o kinesiólogo.</p>
-    <button class="btn btn-ghost btn-sm" id="btnLogout" style="margin-top:14px;">Cerrar sesión</button>
-  </div>
-</div>
+<div
+  class="toast"
+  id="toast"
+  role="status"
+  aria-live="polite"
+></div>
+
+
 
 <script>
-/* ============ DATOS DE EXÁMENES ============ */
-const EXAMS = [
-  {name:"Espirometría", desc:"Evalúa cuánto aire puedes expulsar y qué tan rápido.", icon:"lungs", link:"espirometria_info.html"},
-  {name:"DLCO", desc:"Evalúa intercambio gaseoso pulmonar.", icon:"drop", link:"difusion_info.html"},
-  {name:"Pletismografía corporal", desc:"Evalúa volúmenes pulmonares completos.", icon:"box", link:"volumenes_info.html"},
-  {name:"IOS", desc:"Oscilometría respiratoria sin esfuerzo.", icon:"wave", link:"oscilometria_info.html"},
-  {name:"FENO", desc:"Evalúa inflamación respiratoria.", icon:"flame", link:"feno_info.html"},
-  {name:"PIM / PEM", desc:"Evalúa fuerza muscular respiratoria.", icon:"gauge", link:"pim_pem_info.html"},
-  {name:"Test de provocación bronquial", desc:"Estudia hiperreactividad bronquial.", icon:"alert", link:"provocacion_info.html"},
-  {name:"SHUNT", desc:"Evalúa alteraciones de oxigenación.", icon:"circle", link:"shunt_info.html"},
-  {name:"Caminata 6 minutos", desc:"Evalúa tolerancia al ejercicio.", icon:"walk", link:"test_caminata_info.html"},
-  {name:"Gasometría arterial", desc:"Evalúa oxígeno, CO₂ y equilibrio ácido-base.", icon:"drop", link:"gasometria_info.html"},
-  {name:"Test cardiopulmonar (CPET)", desc:"Evalúa respuesta cardiorrespiratoria al esfuerzo.", icon:"heart", link:"cardiopulmonar_info.html"},
-];
 
-const EXAMS_NINOS = [
-  {name:"Espirometría Pediátrica", desc:"Evalúa la función pulmonar en niños de forma lúdica y adaptada.", icon:"wind", link:"espirometria_ninos.html"},
-  {name:"DLCO Pediátrico", desc:"Evalúa el intercambio gaseoso en niños con enfermedades respiratorias.", icon:"drop", link:"dlco_ninos.html"},
-  {name:"IOS Pediátrico", desc:"Oscilometría sin esfuerzo, ideal para niños pequeños.", icon:"wave", link:"ios_ninos.html"},
-  {name:"FENO Pediátrico", desc:"Mide inflamación de vías respiratorias en niños.", icon:"flame", link:"feno_ninos.html"},
-  {name:"Test de Ejercicio Pediátrico", desc:"Evalúa la respuesta al ejercicio en niños.", icon:"walk", link:"test_ejercicio_ninos.html"},
-  {name:"Provocación Bronquial Pediátrica", desc:"Estudia hiperreactividad bronquial en niños.", icon:"alert", link:"provocacion_ninos.html"},
-];
+/* ============================================================
+   FPAIR — MOTOR INTERACTIVO
+   ============================================================ */
 
-const ICONS = {
-  lungs:'<path d="M9 3v7c0 2-2 3-4 3s-3-2-3-5 2-6 4-6h3zm6 0v7c0 2 2 3 4 3s3-2 3-5-2-6-4-6h-3z"/>',
-  wind:'<path d="M3 9h11a3 3 0 100-6M3 15h15a3 3 0 110 6M3 12h8"/>',
-  drop:'<path d="M12 3s6 7 6 11a6 6 0 11-12 0c0-4 6-11 6-11z"/>',
-  box:'<path d="M3 8l9-5 9 5-9 5-9-5zm0 0v8l9 5 9-5V8M12 13v8"/>',
-  wave:'<path d="M2 12c2-6 4 6 6 0s4-6 6 0 4 6 6 0"/>',
-  flame:'<path d="M12 3c1 4-3 5-3 9a3 3 0 006 0c0-2-1-2-1-4 2 1 3 3 3 6a5 5 0 01-10 0c0-5 3-6 5-11z"/>',
-  gauge:'<path d="M4 15a8 8 0 1116 0M12 15l4-5"/>',
-  alert:'<path d="M12 3l10 18H2L12 3zm0 7v4m0 3h.01"/>',
-  circle:'<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
-  walk:'<path d="M13 4a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 21l2-6 2 2 2 4M8 13l3-4 3 1 3-2"/>',
-  heart:'<path d="M12 21s-8-5-8-11a5 5 0 019-3 5 5 0 019 3c0 6-8 11-10 11z"/>'
+
+/* ============================================================
+   CONFIGURACIÓN DE IMÁGENES
+   ============================================================ */
+
+/*
+   IMPORTANTE:
+
+   Puedes agregar las imágenes posteriormente modificando
+   solamente los campos "icon" y "media".
+
+   Ejemplo:
+
+   icon:
+   "assets/images/icons/espirometria.png"
+
+   media:
+   "assets/images/exams/spirometry.png"
+
+   No necesitas modificar el resto del código.
+*/
+
+
+/* ============================================================
+   BASE DE DATOS DE EXÁMENES
+   ============================================================ */
+
+const EXAMS = {
+
+  espirometria: {
+
+    id:"espirometria",
+
+    number:"01",
+
+    name:"Espirometría",
+
+    short:
+      "Evalúa cuánto aire puedes expulsar y qué tan rápido.",
+
+    icon:"",
+
+    media:"",
+
+    link:"espirometria_info.html",
+
+    audience:"adult",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "La preparación puede variar según las indicaciones del laboratorio.",
+
+        items:[
+
+          [
+            "Sigue las indicaciones",
+            "El profesional te explicará si necesitas alguna preparación especial."
+          ],
+
+          [
+            "Medicamentos",
+            "Consulta específicamente si debes modificar el uso de inhaladores."
+          ],
+
+          [
+            "Evita improvisar",
+            "No suspendas medicamentos por tu cuenta."
+          ],
+
+          [
+            "Llega tranquilo",
+            "No necesitas conocer la maniobra antes de realizarla."
+          ]
+
+        ]
+
+      },
+
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "El profesional te irá guiando durante cada maniobra.",
+
+        items:[
+
+          [
+            "Posición",
+            "Adopta la posición indicada por el profesional."
+          ],
+
+          [
+            "Inspiración",
+            "Prepárate realizando la inspiración que te indiquen."
+          ],
+
+          [
+            "Exhalación",
+            "Sigue las instrucciones sobre fuerza, velocidad y duración."
+          ],
+
+          [
+            "Repetición",
+            "Es normal realizar varias maniobras para obtener mediciones confiables."
+          ]
+
+        ]
+
+      },
+
+
+      practice: {
+
+        title:"Practicar la técnica",
+
+        intro:
+          "Puedes familiarizarte con la secuencia antes de tu examen.",
+
+        items:[
+
+          [
+            "Paso 1",
+            "Inspira según la indicación."
+          ],
+
+          [
+            "Paso 2",
+            "Comienza la exhalación cuando te indiquen."
+          ],
+
+          [
+            "Paso 3",
+            "Mantén el esfuerzo hasta que el profesional indique finalizar."
+          ],
+
+          [
+            "Paso 4",
+            "Si necesitas detenerte o sientes molestias, comunícalo."
+          ]
+
+        ]
+
+      },
+
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "Los resultados incluyen varios parámetros que se interpretan en conjunto.",
+
+        items:[
+
+          [
+            "CVF",
+            "Volumen total expulsado durante la maniobra."
+          ],
+
+          [
+            "VEF1",
+            "Volumen expulsado durante el primer segundo."
+          ],
+
+          [
+            "VEF1/CVF",
+            "Relación entre ambos parámetros."
+          ],
+
+          [
+            "Z-score",
+            "Permite comparar el resultado con valores de referencia."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "pletismografia",
+      "dlco",
+      "ios",
+      "feno"
+    ]
+
+  },
+
+
+  dlco: {
+
+    id:"dlco",
+
+    number:"02",
+
+    name:"DLCO",
+
+    short:
+      "Evalúa el intercambio de gases a través del pulmón.",
+
+    icon:"",
+
+    media:"",
+
+    link:"difusion_info.html",
+
+    audience:"adult",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "El laboratorio puede entregar indicaciones específicas antes de realizar la prueba.",
+
+        items:[
+
+          [
+            "Sigue las instrucciones",
+            "La preparación depende del protocolo utilizado."
+          ],
+
+          [
+            "Medicamentos",
+            "Consulta cualquier indicación relacionada con medicamentos."
+          ],
+
+          [
+            "Actividad",
+            "Pregunta si debes evitar ejercicio intenso antes del examen."
+          ],
+
+          [
+            "Tranquilidad",
+            "El profesional explicará la maniobra antes de comenzar."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "La prueba requiere seguir una secuencia respiratoria específica.",
+
+        items:[
+
+          [
+            "Respiración",
+            "Respira siguiendo las indicaciones del profesional."
+          ],
+
+          [
+            "Inspiración",
+            "Realiza la inspiración indicada."
+          ],
+
+          [
+            "Pausa",
+            "En determinadas maniobras se solicita mantener el aire durante un período breve."
+          ],
+
+          [
+            "Exhalación",
+            "Luego se elimina el aire siguiendo la instrucción recibida."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Familiarizarte con la maniobra",
+
+        intro:
+          "La práctica puede ayudarte a entender la secuencia.",
+
+        items:[
+
+          [
+            "Respira normalmente",
+            "Primero familiarízate con el equipo."
+          ],
+
+          [
+            "Inspira",
+            "Sigue la indicación del profesional."
+          ],
+
+          [
+            "Mantén",
+            "Realiza la pausa solicitada."
+          ],
+
+          [
+            "Exhala",
+            "Finaliza según la indicación."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "La DLCO aporta información relacionada con la transferencia de gases.",
+
+        items:[
+
+          [
+            "DLCO",
+            "Estimación de la capacidad de transferencia de monóxido de carbono."
+          ],
+
+          [
+            "VA",
+            "Volumen alveolar utilizado en el cálculo."
+          ],
+
+          [
+            "KCO",
+            "Índice relacionado con la transferencia por unidad de volumen."
+          ],
+
+          [
+            "Interpretación",
+            "Debe realizarse considerando el conjunto de resultados."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "espirometria",
+      "pletismografia",
+      "gasometria"
+    ]
+
+  },
+
+
+  pletismografia: {
+
+    id:"pletismografia",
+
+    number:"03",
+
+    name:"Pletismografía corporal",
+
+    short:
+      "Evalúa volúmenes pulmonares que no pueden medirse solamente con una espirometría.",
+
+    icon:"",
+
+    media:"",
+
+    link:"volumenes_info.html",
+
+    audience:"adult",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "El profesional te explicará cómo permanecer dentro de la cabina.",
+
+        items:[
+
+          [
+            "Ropa cómoda",
+            "La comodidad facilita la realización del examen."
+          ],
+
+          [
+            "Indicaciones",
+            "Sigue las instrucciones específicas del laboratorio."
+          ],
+
+          [
+            "Cabina",
+            "El examen se realiza dentro de una cabina transparente."
+          ],
+
+          [
+            "Tranquilidad",
+            "Puedes comunicar cualquier incomodidad al profesional."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "El examen combina respiraciones controladas con mediciones dentro de la cabina.",
+
+        items:[
+
+          [
+            "Respira",
+            "Realiza las respiraciones que indique el profesional."
+          ],
+
+          [
+            "Boquilla",
+            "Mantén un buen sellado alrededor de la boquilla."
+          ],
+
+          [
+            "Cabina",
+            "Permanece dentro de la cabina durante las maniobras indicadas."
+          ],
+
+          [
+            "Sigue instrucciones",
+            "El profesional te indicará cuándo respirar y cuándo realizar cada maniobra."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Familiarizarte con el examen",
+
+        intro:
+          "Conocer previamente el proceso puede reducir la incertidumbre.",
+
+        items:[
+
+          [
+            "Cabina",
+            "La cabina permite observar el exterior."
+          ],
+
+          [
+            "Boquilla",
+            "El profesional te mostrará cómo utilizarla."
+          ],
+
+          [
+            "Respiración",
+            "Las maniobras son guiadas."
+          ],
+
+          [
+            "Comunicación",
+            "Puedes avisar si algo te incomoda."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "Permite estudiar diferentes volúmenes pulmonares.",
+
+        items:[
+
+          [
+            "TLC",
+            "Capacidad pulmonar total."
+          ],
+
+          [
+            "RV",
+            "Volumen residual."
+          ],
+
+          [
+            "FRC",
+            "Capacidad residual funcional."
+          ],
+
+          [
+            "Interpretación",
+            "Los volúmenes deben analizarse junto a otros resultados."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "espirometria",
+      "dlco",
+      "ios"
+    ]
+
+  },
+
+
+  ios: {
+
+    id:"ios",
+
+    number:"04",
+
+    name:"IOS",
+
+    short:
+      "Evalúa la respuesta mecánica del sistema respiratorio mediante pequeñas oscilaciones de presión.",
+
+    icon:"",
+
+    media:"",
+
+    link:"oscilometria_info.html",
+
+    audience:"adult",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "La IOS es una prueba sencilla y generalmente requiere poca colaboración activa.",
+
+        items:[
+
+          [
+            "Respiración",
+            "La prueba se realiza respirando de acuerdo con las indicaciones."
+          ],
+
+          [
+            "Postura",
+            "Adopta la posición indicada por el profesional."
+          ],
+
+          [
+            "Boquilla",
+            "Es importante mantener un buen sellado."
+          ],
+
+          [
+            "Preparación",
+            "Sigue cualquier indicación específica entregada por el laboratorio."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "La prueba registra cómo responde el sistema respiratorio a pequeñas oscilaciones.",
+
+        items:[
+
+          [
+            "Respira normalmente",
+            "No necesitas realizar una espiración forzada."
+          ],
+
+          [
+            "Mejillas",
+            "El profesional puede indicarte cómo apoyar las mejillas."
+          ],
+
+          [
+            "Boquilla",
+            "Mantén el sellado indicado."
+          ],
+
+          [
+            "Quietud",
+            "Evita hablar o realizar movimientos durante la medición."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Practicar",
+
+        intro:
+          "La principal meta es familiarizarte con respirar tranquilamente durante la medición.",
+
+        items:[
+
+          [
+            "Relájate",
+            "Mantén una respiración cómoda."
+          ],
+
+          [
+            "No fuerces",
+            "No necesitas soplar con fuerza como en una espirometría."
+          ],
+
+          [
+            "Mantén el sellado",
+            "Evita fugas alrededor de la boquilla."
+          ],
+
+          [
+            "Sigue al profesional",
+            "Las instrucciones serán breves y sencillas."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "La IOS entrega diferentes parámetros relacionados con la impedancia respiratoria.",
+
+        items:[
+
+          [
+            "R5",
+            "Representa la resistencia medida a una frecuencia determinada."
+          ],
+
+          [
+            "R20",
+            "Resistencia medida a una frecuencia mayor."
+          ],
+
+          [
+            "X5",
+            "Componente reactivo del sistema respiratorio."
+          ],
+
+          [
+            "AX",
+            "Área de reactancia integrada."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "espirometria",
+      "feno",
+      "pletismografia"
+    ]
+
+  },
+
+
+  feno: {
+
+    id:"feno",
+
+    number:"05",
+
+    name:"FENO",
+
+    short:
+      "Evalúa de forma no invasiva un marcador relacionado con inflamación de la vía aérea.",
+
+    icon:"",
+
+    media:"",
+
+    link:"feno_info.html",
+
+    audience:"adult",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "Algunos factores pueden influir en la medición.",
+
+        items:[
+
+          [
+            "Sigue las indicaciones",
+            "El laboratorio puede entregar recomendaciones específicas."
+          ],
+
+          [
+            "Alimentos",
+            "Pregunta si debes evitar determinados alimentos o bebidas."
+          ],
+
+          [
+            "Ejercicio",
+            "Consulta si debes evitar ejercicio antes de la medición."
+          ],
+
+          [
+            "Tabaco",
+            "Sigue las indicaciones relacionadas con el consumo de tabaco."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "La medición se realiza mediante una maniobra respiratoria controlada.",
+
+        items:[
+
+          [
+            "Inspira",
+            "Realiza la inspiración indicada."
+          ],
+
+          [
+            "Boquilla",
+            "Mantén un sellado adecuado."
+          ],
+
+          [
+            "Exhala",
+            "Exhala siguiendo las instrucciones."
+          ],
+
+          [
+            "Mantén el flujo",
+            "El profesional te ayudará a mantener la maniobra correctamente."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Practicar",
+
+        intro:
+          "Puedes familiarizarte con la sensación de exhalar de forma controlada.",
+
+        items:[
+
+          [
+            "Inspira",
+            "Llena los pulmones según la indicación."
+          ],
+
+          [
+            "Sella",
+            "Mantén la boca correctamente sobre la boquilla."
+          ],
+
+          [
+            "Exhala",
+            "Realiza una exhalación controlada."
+          ],
+
+          [
+            "Mantén",
+            "Sigue el ritmo indicado por el equipo."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "El resultado se expresa habitualmente como una concentración de óxido nítrico exhalado.",
+
+        items:[
+
+          [
+            "FeNO",
+            "Corresponde al óxido nítrico exhalado medido en la respiración."
+          ],
+
+          [
+            "Inflamación",
+            "Puede aportar información relacionada con inflamación eosinofílica de la vía aérea."
+          ],
+
+          [
+            "Contexto",
+            "Debe interpretarse junto con antecedentes y otros resultados."
+          ],
+
+          [
+            "No es un diagnóstico aislado",
+            "Un valor por sí solo no determina una enfermedad."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "espirometria",
+      "ios",
+      "provocacion"
+    ]
+
+  },
+
+
+  pimpem: {
+
+    id:"pimpem",
+
+    number:"06",
+
+    name:"PIM / PEM",
+
+    short:
+      "Evalúa la fuerza de los músculos respiratorios.",
+
+    icon:"",
+
+    media:"",
+
+    link:"pim_pem_info.html",
+
+    audience:"adult",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "El profesional te explicará las maniobras antes de comenzar.",
+
+        items:[
+
+          [
+            "Comprender la maniobra",
+            "Es importante saber cuándo inspirar y cuándo realizar el esfuerzo."
+          ],
+
+          [
+            "Posición",
+            "Adopta la posición indicada."
+          ],
+
+          [
+            "Esfuerzo",
+            "El resultado depende de realizar un esfuerzo máximo adecuado."
+          ],
+
+          [
+            "Comunicación",
+            "Informa si tienes dolor o alguna dificultad."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "Se realizan esfuerzos respiratorios máximos contra una vía ocluida.",
+
+        items:[
+
+          [
+            "PIM",
+            "Evalúa la presión generada durante una inspiración máxima."
+          ],
+
+          [
+            "PEM",
+            "Evalúa la presión generada durante una espiración máxima."
+          ],
+
+          [
+            "Repetición",
+            "Pueden realizarse varias maniobras."
+          ],
+
+          [
+            "Descanso",
+            "El profesional puede permitir descansos entre esfuerzos."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Familiarizarte con el esfuerzo",
+
+        intro:
+          "La técnica requiere comprender claramente cuándo realizar el esfuerzo máximo.",
+
+        items:[
+
+          [
+            "Inspira",
+            "Prepárate siguiendo la instrucción."
+          ],
+
+          [
+            "Esfuerzo",
+            "Realiza el máximo esfuerzo que puedas de forma segura."
+          ],
+
+          [
+            "Descansa",
+            "Recupera la respiración entre maniobras."
+          ],
+
+          [
+            "Repite",
+            "Sigue las indicaciones del profesional."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "Los resultados reflejan la presión generada por los músculos respiratorios.",
+
+        items:[
+
+          [
+            "PIM",
+            "Presión inspiratoria máxima."
+          ],
+
+          [
+            "PEM",
+            "Presión espiratoria máxima."
+          ],
+
+          [
+            "Esfuerzo",
+            "La calidad de la maniobra es importante."
+          ],
+
+          [
+            "Interpretación",
+            "Debe considerarse el contexto clínico."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "espirometria",
+      "caminata",
+      "cpet"
+    ]
+
+  },
+
+
+  provocacion: {
+
+    id:"provocacion",
+
+    number:"07",
+
+    name:"Test de provocación bronquial",
+
+    short:
+      "Evalúa la respuesta de las vías respiratorias frente a un estímulo específico.",
+
+    icon:"",
+
+    media:"",
+
+    link:"provocacion_info.html",
+
+    audience:"adult",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "Este examen requiere seguir cuidadosamente las instrucciones del laboratorio.",
+
+        items:[
+
+          [
+            "Medicamentos",
+            "El profesional te indicará si algún medicamento debe modificarse."
+          ],
+
+          [
+            "No suspendas por tu cuenta",
+            "Sigue exactamente las indicaciones recibidas."
+          ],
+
+          [
+            "Alimentos",
+            "Consulta cualquier restricción previa al examen."
+          ],
+
+          [
+            "Tiempo",
+            "Reserva tiempo suficiente para completar el protocolo."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "La respuesta respiratoria se controla durante todo el procedimiento.",
+
+        items:[
+
+          [
+            "Medición inicial",
+            "Primero se obtiene una medición basal."
+          ],
+
+          [
+            "Estímulo",
+            "Se administra el estímulo según el protocolo."
+          ],
+
+          [
+            "Control",
+            "Se repiten las mediciones para observar la respuesta."
+          ],
+
+          [
+            "Supervisión",
+            "El procedimiento se realiza bajo supervisión profesional."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Prepararte mentalmente",
+
+        intro:
+          "No necesitas memorizar una técnica compleja antes de acudir.",
+
+        items:[
+
+          [
+            "Respira",
+            "Sigue las indicaciones del profesional."
+          ],
+
+          [
+            "Comunica",
+            "Informa cualquier síntoma."
+          ],
+
+          [
+            "Mantén la calma",
+            "El equipo monitoriza el procedimiento."
+          ],
+
+          [
+            "Pregunta",
+            "Puedes pedir que te expliquen cada etapa."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "Se analiza cómo cambian las mediciones respiratorias durante el protocolo.",
+
+        items:[
+
+          [
+            "Respuesta",
+            "Se compara con la medición basal."
+          ],
+
+          [
+            "Espirometría",
+            "Puede utilizarse para controlar la respuesta."
+          ],
+
+          [
+            "Contexto",
+            "Los resultados deben interpretarse considerando el protocolo."
+          ],
+
+          [
+            "Conclusión",
+            "La interpretación corresponde al profesional responsable."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "espirometria",
+      "feno",
+      "ios"
+    ]
+
+  },
+
+
+  shunt: {
+
+    id:"shunt",
+
+    number:"08",
+
+    name:"SHUNT",
+
+    short:
+      "Estudia alteraciones relacionadas con la oxigenación y el intercambio gaseoso.",
+
+    icon:"",
+
+    media:"",
+
+    link:"shunt_info.html",
+
+    audience:"adult",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "Recibirás instrucciones específicas según el protocolo.",
+
+        items:[
+
+          [
+            "Indicaciones",
+            "Sigue las instrucciones del laboratorio."
+          ],
+
+          [
+            "Medicamentos",
+            "Consulta cualquier indicación previa."
+          ],
+
+          [
+            "Alimentación",
+            "Pregunta si existe alguna restricción."
+          ],
+
+          [
+            "Tranquilidad",
+            "El profesional te explicará el procedimiento."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "El procedimiento puede combinar diferentes mediciones respiratorias y de gases.",
+
+        items:[
+
+          [
+            "Preparación",
+            "El profesional preparará el equipo necesario."
+          ],
+
+          [
+            "Muestras",
+            "Según el protocolo pueden requerirse mediciones específicas."
+          ],
+
+          [
+            "Respiración",
+            "Sigue las indicaciones entregadas."
+          ],
+
+          [
+            "Supervisión",
+            "Todo el proceso se realiza bajo supervisión profesional."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Prepararte",
+
+        intro:
+          "La mejor preparación es conocer previamente la secuencia.",
+
+        items:[
+
+          [
+            "Escucha",
+            "Presta atención a las instrucciones."
+          ],
+
+          [
+            "Pregunta",
+            "Si no entiendes una indicación, puedes pedir que la repitan."
+          ],
+
+          [
+            "Comunica",
+            "Informa cualquier molestia."
+          ],
+
+          [
+            "Respira",
+            "Mantén la calma durante el procedimiento."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "La información se interpreta junto a otras variables clínicas.",
+
+        items:[
+
+          [
+            "Oxigenación",
+            "Permite estudiar aspectos relacionados con el transporte de oxígeno."
+          ],
+
+          [
+            "Intercambio gaseoso",
+            "Aporta información sobre la transferencia de gases."
+          ],
+
+          [
+            "Contexto",
+            "El resultado debe interpretarse de manera integral."
+          ],
+
+          [
+            "Informe",
+            "La conclusión corresponde al profesional."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "gasometria",
+      "dlco",
+      "cpet"
+    ]
+
+  },
+
+
+  caminata: {
+
+    id:"caminata",
+
+    number:"09",
+
+    name:"Caminata 6 minutos",
+
+    short:
+      "Evalúa la respuesta del organismo durante una caminata controlada.",
+
+    icon:"",
+
+    media:"",
+
+    link:"test_caminata_info.html",
+
+    audience:"adult",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "El profesional verificará las condiciones necesarias para realizar la prueba.",
+
+        items:[
+
+          [
+            "Ropa cómoda",
+            "Utiliza ropa y calzado adecuados para caminar."
+          ],
+
+          [
+            "Medicamentos",
+            "Sigue las indicaciones específicas recibidas."
+          ],
+
+          [
+            "Alimentación",
+            "Consulta si existe alguna recomendación previa."
+          ],
+
+          [
+            "Descanso",
+            "Llega con el nivel de descanso indicado por el equipo."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "Caminarás durante un período definido mientras se controlan diferentes variables.",
+
+        items:[
+
+          [
+            "Camina",
+            "Camina a tu ritmo siguiendo las instrucciones."
+          ],
+
+          [
+            "Síntomas",
+            "Comunica si aparece dificultad respiratoria, dolor o malestar."
+          ],
+
+          [
+            "Pausas",
+            "El protocolo puede contemplar pausas según la situación."
+          ],
+
+          [
+            "Control",
+            "El equipo puede controlar saturación y frecuencia cardíaca."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Prepararte",
+
+        intro:
+          "No necesitas entrenar específicamente para realizar la prueba.",
+
+        items:[
+
+          [
+            "Camina cómodo",
+            "Utiliza calzado adecuado."
+          ],
+
+          [
+            "Ritmo",
+            "Sigue las indicaciones del profesional."
+          ],
+
+          [
+            "Comunicación",
+            "Informa cualquier síntoma."
+          ],
+
+          [
+            "Seguridad",
+            "La prueba se realiza con supervisión."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "Se analizan variables relacionadas con la respuesta al ejercicio.",
+
+        items:[
+
+          [
+            "Distancia",
+            "Se registra la distancia recorrida."
+          ],
+
+          [
+            "Saturación",
+            "Puede observarse la respuesta de la oxigenación."
+          ],
+
+          [
+            "Frecuencia cardíaca",
+            "Permite estudiar la respuesta cardiovascular."
+          ],
+
+          [
+            "Síntomas",
+            "También puede considerarse la percepción de esfuerzo y disnea."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "cpet",
+      "pimpem",
+      "gasometria"
+    ]
+
+  },
+
+
+  gasometria: {
+
+    id:"gasometria",
+
+    number:"10",
+
+    name:"Gasometría arterial",
+
+    short:
+      "Evalúa oxígeno, dióxido de carbono y equilibrio ácido-base.",
+
+    icon:"",
+
+    media:"",
+
+    link:"gasometria_info.html",
+
+    audience:"adult",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "El profesional indicará cualquier preparación necesaria.",
+
+        items:[
+
+          [
+            "Consulta",
+            "Informa sobre medicamentos y condiciones relevantes."
+          ],
+
+          [
+            "Respiración",
+            "Sigue las indicaciones del profesional."
+          ],
+
+          [
+            "Posición",
+            "Adopta la posición indicada."
+          ],
+
+          [
+            "Tranquilidad",
+            "El procedimiento será explicado antes de realizarlo."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "Se obtiene una muestra de sangre arterial para analizar gases y equilibrio ácido-base.",
+
+        items:[
+
+          [
+            "Preparación",
+            "El profesional prepara el sitio de obtención de la muestra."
+          ],
+
+          [
+            "Muestra",
+            "Se obtiene una pequeña cantidad de sangre."
+          ],
+
+          [
+            "Presión",
+            "Después puede aplicarse presión durante algunos minutos."
+          ],
+
+          [
+            "Comunica molestias",
+            "Informa si sientes dolor importante o malestar."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Prepararte",
+
+        intro:
+          "No requiere practicar una maniobra respiratoria compleja.",
+
+        items:[
+
+          [
+            "Relájate",
+            "Respira normalmente."
+          ],
+
+          [
+            "Sigue instrucciones",
+            "El profesional indicará lo necesario."
+          ],
+
+          [
+            "Comunica",
+            "Informa cualquier molestia."
+          ],
+
+          [
+            "Después",
+            "Sigue las indicaciones posteriores a la toma de muestra."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "La gasometría permite evaluar diferentes componentes de la sangre arterial.",
+
+        items:[
+
+          [
+            "PaO₂",
+            "Presión parcial de oxígeno."
+          ],
+
+          [
+            "PaCO₂",
+            "Presión parcial de dióxido de carbono."
+          ],
+
+          [
+            "pH",
+            "Ayuda a evaluar el equilibrio ácido-base."
+          ],
+
+          [
+            "HCO₃⁻",
+            "Componente importante del equilibrio ácido-base."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "shunt",
+      "dlco",
+      "cpet"
+    ]
+
+  },
+
+
+  cpet: {
+
+    id:"cpet",
+
+    number:"11",
+
+    name:"Test cardiopulmonar de ejercicio",
+
+    short:
+      "Evalúa la respuesta cardiorrespiratoria durante el ejercicio.",
+
+    icon:"",
+
+    media:"",
+
+    link:"cardiopulmonar_info.html",
+
+    audience:"adult",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "Recibirás instrucciones específicas antes de comenzar el ejercicio.",
+
+        items:[
+
+          [
+            "Ropa",
+            "Utiliza ropa y calzado adecuados."
+          ],
+
+          [
+            "Medicamentos",
+            "Consulta las instrucciones específicas."
+          ],
+
+          [
+            "Alimentación",
+            "Sigue las indicaciones del laboratorio."
+          ],
+
+          [
+            "Descanso",
+            "Llega con el nivel de descanso indicado."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "Realizarás ejercicio mientras se registran diferentes variables.",
+
+        items:[
+
+          [
+            "Ejercicio",
+            "La carga aumenta de acuerdo con el protocolo."
+          ],
+
+          [
+            "Respiración",
+            "Puede utilizarse una boquilla o mascarilla."
+          ],
+
+          [
+            "Monitoreo",
+            "Se controlan variables respiratorias y cardiovasculares."
+          ],
+
+          [
+            "Síntomas",
+            "Comunica inmediatamente cualquier síntoma importante."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Prepararte",
+
+        intro:
+          "La familiarización con el equipo puede disminuir la incertidumbre.",
+
+        items:[
+
+          [
+            "Equipo",
+            "Conocerás previamente la bicicleta o cinta."
+          ],
+
+          [
+            "Mascarilla",
+            "El profesional explicará su colocación si corresponde."
+          ],
+
+          [
+            "Ritmo",
+            "No necesitas adivinar cuánto esfuerzo realizar."
+          ],
+
+          [
+            "Comunicación",
+            "El equipo estará pendiente de tu respuesta."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "El CPET integra información respiratoria, cardiovascular y metabólica.",
+
+        items:[
+
+          [
+            "VO₂",
+            "Consumo de oxígeno durante el ejercicio."
+          ],
+
+          [
+            "VCO₂",
+            "Producción de dióxido de carbono."
+          ],
+
+          [
+            "Frecuencia cardíaca",
+            "Respuesta cardiovascular al ejercicio."
+          ],
+
+          [
+            "Ventilación",
+            "Respuesta del sistema respiratorio al esfuerzo."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "caminata",
+      "pimpem",
+      "espirometria"
+    ]
+
+  }
+
 };
 
-function renderExamGrid(gridId, exams) {
-  const grid = document.getElementById(gridId);
-  if (!grid) return;
-  exams.forEach(e=>{
-    const card = document.createElement('div');
-    card.className = 'exam-card';
-    card.innerHTML = `
-      <span class="exam-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[e.icon]}</svg></span>
-      <h3>${e.name}</h3>
-      <p>${e.desc}</p>
-      <span class="exam-link">Aprender examen →</span>`;
-    card.addEventListener('click', function() {
-      if (e.link) {
-        window.location.href = e.link;
+
+/* ============================================================
+   EXÁMENES PEDIÁTRICOS
+   ============================================================ */
+
+const PEDIATRIC_EXAMS = {
+
+  espirometria_ninos: {
+
+    id:"espirometria_ninos",
+
+    number:"P01",
+
+    name:"Espirometría pediátrica",
+
+    short:
+      "Una evaluación adaptada para que niños y niñas puedan aprender la maniobra.",
+
+    icon:"",
+
+    media:"",
+
+    link:"espirometria_ninos.html",
+
+    audience:"pediatric",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "La preparación comienza explicando al niño qué ocurrirá.",
+
+        items:[
+
+          [
+            "Explicación simple",
+            "No es necesario utilizar términos médicos."
+          ],
+
+          [
+            "Juego",
+            "Puede ayudar imaginar que se está inflando o apagando algo con la respiración."
+          ],
+
+          [
+            "Tranquilidad",
+            "No esperamos que todo salga perfecto a la primera."
+          ],
+
+          [
+            "Acompañamiento",
+            "El profesional enseñará la maniobra."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "La técnica se adapta a la edad y capacidad de colaboración.",
+
+        items:[
+
+          [
+            "Inspira",
+            "El profesional puede utilizar instrucciones sencillas."
+          ],
+
+          [
+            "Sopla",
+            "Se enseña cómo comenzar la maniobra."
+          ],
+
+          [
+            "Continúa",
+            "Se anima al niño a mantener el esfuerzo."
+          ],
+
+          [
+            "Repite",
+            "Puede ser necesario repetir las maniobras."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Practicar como juego",
+
+        intro:
+          "La práctica puede transformar una prueba desconocida en algo familiar.",
+
+        items:[
+
+          [
+            "Respira",
+            "Practica inspiraciones profundas."
+          ],
+
+          [
+            "Sopla",
+            "Juega a mover aire de forma controlada."
+          ],
+
+          [
+            "Continúa",
+            "Practica mantener el soplido."
+          ],
+
+          [
+            "Celebra",
+            "Cada intento ayuda a aprender."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "Los resultados se interpretan considerando edad, tamaño corporal y otros factores.",
+
+        items:[
+
+          [
+            "CVF",
+            "Volumen expulsado durante la maniobra."
+          ],
+
+          [
+            "VEF1",
+            "Volumen expulsado durante el primer segundo."
+          ],
+
+          [
+            "Relación",
+            "Se analizan distintos parámetros en conjunto."
+          ],
+
+          [
+            "Interpretación",
+            "El profesional explicará el resultado."
+          ]
+
+        ]
+
       }
-    });
-    grid.appendChild(card);
-  });
-}
 
-renderExamGrid('examGrid', EXAMS);
-renderExamGrid('examGridNinos', EXAMS_NINOS);
+    },
 
-/* ============ MODO CLARO / OSCURO ============ */
-const themeToggle = document.getElementById('themeToggle');
-function applyTheme(t){
-  document.body.setAttribute('data-theme', t);
-  try { localStorage.setItem('fpair:theme', t); } catch(e) {}
-}
-(function initTheme(){
-  let saved = null;
-  try { saved = localStorage.getItem('fpair:theme'); } catch(e) {}
-  const preferred = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  applyTheme(preferred);
-})();
-themeToggle.addEventListener('click', ()=>{
-  const current = document.body.getAttribute('data-theme');
-  applyTheme(current === 'dark' ? 'light' : 'dark');
+    related:[
+      "ios_ninos",
+      "feno_ninos",
+      "test_ejercicio_ninos"
+    ]
+
+  },
+
+
+  dlco_ninos: {
+
+    id:"dlco_ninos",
+
+    number:"P02",
+
+    name:"DLCO pediátrico",
+
+    short:
+      "Evalúa el intercambio gaseoso con una técnica adaptada al paciente pediátrico.",
+
+    icon:"",
+
+    media:"",
+
+    link:"dlco_ninos.html",
+
+    audience:"pediatric",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "El profesional explicará el examen de acuerdo con la edad del niño.",
+
+        items:[
+
+          [
+            "Explicación",
+            "Se utilizará un lenguaje fácil de entender."
+          ],
+
+          [
+            "Práctica",
+            "Puede ensayarse la secuencia antes de comenzar."
+          ],
+
+          [
+            "Respiración",
+            "El niño debe comprender las instrucciones."
+          ],
+
+          [
+            "Acompañamiento",
+            "El adulto puede ayudar a mantener la calma."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "La maniobra será guiada paso a paso.",
+
+        items:[
+
+          [
+            "Inspira",
+            "Se realiza la inspiración indicada."
+          ],
+
+          [
+            "Pausa",
+            "Puede solicitarse una breve pausa respiratoria."
+          ],
+
+          [
+            "Exhala",
+            "Se elimina el aire según las instrucciones."
+          ],
+
+          [
+            "Repetición",
+            "Puede ser necesario repetir la maniobra."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Practicar",
+
+        intro:
+          "Conocer la secuencia puede ayudar a disminuir los nervios.",
+
+        items:[
+
+          [
+            "Inspira",
+            "Practica una inspiración amplia."
+          ],
+
+          [
+            "Mantén",
+            "Practica una breve pausa si el profesional lo solicita."
+          ],
+
+          [
+            "Exhala",
+            "Sigue la indicación."
+          ],
+
+          [
+            "Relájate",
+            "No necesitas realizarlo perfecto inmediatamente."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "El profesional integrará los resultados con otros estudios.",
+
+        items:[
+
+          [
+            "DLCO",
+            "Información sobre transferencia de gases."
+          ],
+
+          [
+            "VA",
+            "Volumen alveolar utilizado en el cálculo."
+          ],
+
+          [
+            "KCO",
+            "Transferencia relativa al volumen alveolar."
+          ],
+
+          [
+            "Contexto",
+            "La interpretación depende del conjunto de información."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "espirometria_ninos",
+      "ios_ninos"
+    ]
+
+  },
+
+
+  ios_ninos: {
+
+    id:"ios_ninos",
+
+    number:"P03",
+
+    name:"IOS pediátrico",
+
+    short:
+      "Evalúa la mecánica respiratoria mediante una técnica sencilla y poco demandante.",
+
+    icon:"",
+
+    media:"",
+
+    link:"ios_ninos.html",
+
+    audience:"pediatric",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "La IOS suele ser fácil de explicar a niños pequeños.",
+
+        items:[
+
+          [
+            "Respira tranquilo",
+            "No es necesario soplar fuerte."
+          ],
+
+          [
+            "Boquilla",
+            "El profesional enseñará cómo colocarla."
+          ],
+
+          [
+            "Juego",
+            "Puede explicarse como respirar por un pequeño tubo."
+          ],
+
+          [
+            "Calma",
+            "La medición suele durar poco tiempo."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "El niño respira tranquilamente mientras el equipo realiza las mediciones.",
+
+        items:[
+
+          [
+            "Respira",
+            "Mantén una respiración cómoda."
+          ],
+
+          [
+            "No hables",
+            "Evita hablar durante la medición."
+          ],
+
+          [
+            "Boquilla",
+            "Mantén un buen sellado."
+          ],
+
+          [
+            "Quieto",
+            "Permanece tranquilo durante el registro."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Practicar",
+
+        intro:
+          "La práctica consiste principalmente en aprender a respirar tranquilamente con la boquilla.",
+
+        items:[
+
+          [
+            "Respira",
+            "Respira suavemente."
+          ],
+
+          [
+            "No soples",
+            "No necesitas hacer una maniobra forzada."
+          ],
+
+          [
+            "Mantén",
+            "Mantén la posición indicada."
+          ],
+
+          [
+            "Listo",
+            "El equipo realizará la medición."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "Los resultados permiten estudiar diferentes componentes de la mecánica respiratoria.",
+
+        items:[
+
+          [
+            "R5",
+            "Resistencia respiratoria."
+          ],
+
+          [
+            "R20",
+            "Resistencia a otra frecuencia."
+          ],
+
+          [
+            "X5",
+            "Reactancia respiratoria."
+          ],
+
+          [
+            "AX",
+            "Área de reactancia."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "espirometria_ninos",
+      "feno_ninos",
+      "dlco_ninos"
+    ]
+
+  },
+
+
+  feno_ninos: {
+
+    id:"feno_ninos",
+
+    number:"P04",
+
+    name:"FENO pediátrico",
+
+    short:
+      "Evalúa un marcador relacionado con inflamación de la vía aérea mediante una maniobra adaptada.",
+
+    icon:"",
+
+    media:"",
+
+    link:"feno_ninos.html",
+
+    audience:"pediatric",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "El examen puede explicarse como un ejercicio de respiración.",
+
+        items:[
+
+          [
+            "Explicación",
+            "El profesional enseñará la maniobra."
+          ],
+
+          [
+            "Respiración",
+            "El niño debe seguir una secuencia sencilla."
+          ],
+
+          [
+            "Alimentos",
+            "Sigue las indicaciones entregadas por el laboratorio."
+          ],
+
+          [
+            "Tranquilidad",
+            "La prueba es guiada."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "Se realiza una maniobra respiratoria controlada.",
+
+        items:[
+
+          [
+            "Inspira",
+            "Realiza la inspiración indicada."
+          ],
+
+          [
+            "Boquilla",
+            "Mantén el sellado."
+          ],
+
+          [
+            "Sopla",
+            "Exhala de la forma que indique el equipo."
+          ],
+
+          [
+            "Continúa",
+            "Mantén el flujo durante el tiempo indicado."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Practicar",
+
+        intro:
+          "Puede practicarse como un juego de respiración.",
+
+        items:[
+
+          [
+            "Inspira",
+            "Llena los pulmones."
+          ],
+
+          [
+            "Sopla",
+            "Exhala de manera controlada."
+          ],
+
+          [
+            "Mantén",
+            "Sigue la indicación."
+          ],
+
+          [
+            "Repite",
+            "Si es necesario, se puede volver a intentar."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "El resultado debe interpretarse junto con la historia clínica.",
+
+        items:[
+
+          [
+            "FeNO",
+            "Cantidad de óxido nítrico exhalado."
+          ],
+
+          [
+            "Inflamación",
+            "Puede aportar información sobre inflamación de la vía aérea."
+          ],
+
+          [
+            "Contexto",
+            "No debe interpretarse de forma aislada."
+          ],
+
+          [
+            "Profesional",
+            "El equipo de salud explicará el significado."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "espirometria_ninos",
+      "ios_ninos",
+      "provocacion_ninos"
+    ]
+
+  },
+
+
+  test_ejercicio_ninos: {
+
+    id:"test_ejercicio_ninos",
+
+    number:"P05",
+
+    name:"Test de ejercicio pediátrico",
+
+    short:
+      "Evalúa cómo responde la respiración durante una actividad física controlada.",
+
+    icon:"",
+
+    media:"",
+
+    link:"test_ejercicio_ninos.html",
+
+    audience:"pediatric",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "El examen puede explicarse como una actividad física acompañada.",
+
+        items:[
+
+          [
+            "Ropa cómoda",
+            "Utiliza ropa y calzado adecuados."
+          ],
+
+          [
+            "Explicación",
+            "El profesional contará qué ocurrirá."
+          ],
+
+          [
+            "Medicamentos",
+            "Sigue las indicaciones específicas."
+          ],
+
+          [
+            "Tranquilidad",
+            "No necesitas saber previamente cómo utilizar el equipo."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "Se realiza ejercicio mientras el equipo controla la respuesta respiratoria.",
+
+        items:[
+
+          [
+            "Movimiento",
+            "Puede utilizarse una bicicleta o caminadora."
+          ],
+
+          [
+            "Respiración",
+            "Se pueden realizar mediciones durante el ejercicio."
+          ],
+
+          [
+            "Control",
+            "El profesional controla diferentes variables."
+          ],
+
+          [
+            "Síntomas",
+            "Informa cualquier molestia."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Prepararte",
+
+        intro:
+          "La familiarización con el equipo puede hacer que el examen sea más entretenido.",
+
+        items:[
+
+          [
+            "Equipo",
+            "Conoce previamente la bicicleta o caminadora."
+          ],
+
+          [
+            "Ritmo",
+            "Sigue las instrucciones."
+          ],
+
+          [
+            "Respira",
+            "Mantén una respiración cómoda."
+          ],
+
+          [
+            "Comunica",
+            "Habla si algo te molesta."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "Se analiza la respuesta respiratoria y funcional al ejercicio.",
+
+        items:[
+
+          [
+            "Ejercicio",
+            "Se observa la respuesta durante la actividad."
+          ],
+
+          [
+            "Saturación",
+            "Puede controlarse la oxigenación."
+          ],
+
+          [
+            "Frecuencia cardíaca",
+            "Se puede registrar la respuesta cardiovascular."
+          ],
+
+          [
+            "Síntomas",
+            "También se considera cómo se siente el paciente."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "espirometria_ninos",
+      "ios_ninos",
+      "feno_ninos"
+    ]
+
+  },
+
+
+  provocacion_ninos: {
+
+    id:"provocacion_ninos",
+
+    number:"P06",
+
+    name:"Provocación bronquial pediátrica",
+
+    short:
+      "Estudia la respuesta de las vías respiratorias mediante un protocolo controlado.",
+
+    icon:"",
+
+    media:"",
+
+    link:"provocacion_ninos.html",
+
+    audience:"pediatric",
+
+    steps: {
+
+      before: {
+
+        title:"Antes del examen",
+
+        intro:
+          "El profesional explicará el procedimiento adaptándolo a la edad.",
+
+        items:[
+
+          [
+            "Explicación",
+            "Se puede utilizar lenguaje simple o juegos."
+          ],
+
+          [
+            "Medicamentos",
+            "Sigue las instrucciones específicas del equipo."
+          ],
+
+          [
+            "Tiempo",
+            "La prueba puede requerir varias mediciones."
+          ],
+
+          [
+            "Acompañamiento",
+            "El niño estará supervisado durante el procedimiento."
+          ]
+
+        ]
+
+      },
+
+      during: {
+
+        title:"Durante el examen",
+
+        intro:
+          "Se realizan mediciones respiratorias antes y después del estímulo.",
+
+        items:[
+
+          [
+            "Medición inicial",
+            "Se obtiene una medición basal."
+          ],
+
+          [
+            "Estímulo",
+            "Se aplica el protocolo indicado."
+          ],
+
+          [
+            "Control",
+            "Se repiten las mediciones."
+          ],
+
+          [
+            "Supervisión",
+            "El profesional controla el procedimiento."
+          ]
+
+        ]
+
+      },
+
+      practice: {
+
+        title:"Prepararte",
+
+        intro:
+          "No necesitas memorizar las instrucciones.",
+
+        items:[
+
+          [
+            "Escucha",
+            "Presta atención a cada indicación."
+          ],
+
+          [
+            "Respira",
+            "Sigue el ritmo indicado."
+          ],
+
+          [
+            "Comunica",
+            "Cuenta si aparece algún síntoma."
+          ],
+
+          [
+            "Pregunta",
+            "Puedes pedir que te expliquen nuevamente."
+          ]
+
+        ]
+
+      },
+
+      results: {
+
+        title:"Comprender los resultados",
+
+        intro:
+          "El profesional compara las mediciones obtenidas durante el protocolo.",
+
+        items:[
+
+          [
+            "Medición basal",
+            "Sirve como punto de comparación."
+          ],
+
+          [
+            "Respuesta",
+            "Se observa el cambio producido durante la prueba."
+          ],
+
+          [
+            "Contexto",
+            "El resultado se interpreta con otros antecedentes."
+          ],
+
+          [
+            "Informe",
+            "El profesional explicará la conclusión."
+          ]
+
+        ]
+
+      }
+
+    },
+
+    related:[
+      "espirometria_ninos",
+      "feno_ninos",
+      "ios_ninos"
+    ]
+
+  }
+
+};
+
+
+/* ============================================================
+   UNIFICAR BASE DE DATOS
+   ============================================================ */
+
+/* ============================================================
+   UTILIDADES DE ROBUSTEZ
+   ============================================================ */
+
+const storage = {
+  get(key, fallback = null) {
+    try {
+      const value = window.localStorage.getItem(key);
+      return value === null ? fallback : value;
+    } catch (error) {
+      console.warn("FPAIR: localStorage no disponible", error);
+      return fallback;
+    }
+  },
+
+  set(key, value) {
+    try {
+      window.localStorage.setItem(key, String(value));
+      return true;
+    } catch (error) {
+      console.warn("FPAIR: no fue posible guardar preferencia", error);
+      return false;
+    }
+  }
+};
+
+const ROUTE_STEP_ALIASES = Object.freeze({
+  before:"before",
+  antes:"before",
+  during:"during",
+  durante:"during",
+  practice:"practice",
+  practicar:"practice",
+  results:"results",
+  comprender:"results",
+  resultados:"results"
 });
 
-/* ============ AUTENTICACIÓN ============ */
-let currentUser = null;
-const overlayAuth = document.getElementById('overlayAuth');
-const overlayDash = document.getElementById('overlayDash');
-let authMode = 'login';
+function normalizeStepRoute(value) {
+  return ROUTE_STEP_ALIASES[String(value || "").toLowerCase()] || "before";
+}
 
-// Funciones de almacenamiento con localStorage
-function getStorage(key) {
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? { key, value: raw } : null;
-  } catch { return null; }
+function safeRoutePart(value) {
+  return encodeURIComponent(String(value || "").trim());
 }
-function setStorage(key, value) {
-  try { localStorage.setItem(key, value); return true; } catch { return false; }
+
+const ALL_EXAMS = {
+
+  ...EXAMS,
+  ...PEDIATRIC_EXAMS
+
+};
+
+
+/* ============================================================
+   ESTADO
+   ============================================================ */
+
+const state = {
+
+  audience:
+    storage.get("fpair:audience") || "adult",
+
+  examId:null,
+
+  step:"before"
+
+};
+
+
+/* ============================================================
+   ELEMENTOS
+   ============================================================ */
+
+const totemBody =
+  document.getElementById("totemBody");
+
+const progressBar =
+  document.getElementById("progressBar");
+
+const progressText =
+  document.getElementById("progressText");
+
+const themeToggle =
+  document.getElementById("themeToggle");
+
+const modalOverlay =
+  document.getElementById("modalOverlay");
+
+const modalContent =
+  document.getElementById("modalContent");
+
+const modalTitle =
+  document.getElementById("modalTitle");
+
+const toast =
+  document.getElementById("toast");
+
+
+/* ============================================================
+   MEDIA SLOT
+   ============================================================ */
+
+function renderIcon(exam) {
+
+  if (exam.icon) {
+
+    return `
+      <div class="media-slot-icon">
+        <img
+          src="${exam.icon}"
+          alt=""
+          loading="lazy"
+        >
+      </div>
+    `;
+
+  }
+
+  return `
+    <div
+      class="media-slot-icon"
+      aria-label="Espacio reservado para icono"
+    >
+      <span>ICONO</span>
+    </div>
+  `;
+
 }
-function deleteStorage(key) {
-  try { localStorage.removeItem(key); return true; } catch { return false; }
+
+
+function renderLargeMedia(exam) {
+
+  if (exam.media) {
+
+    return `
+      <div class="media-slot-large">
+
+        <img
+          src="${exam.media}"
+          alt="${exam.name}"
+          loading="lazy"
+        >
+
+      </div>
+    `;
+
+  }
+
+  return `
+    <div
+      class="media-slot-large"
+      aria-label="Espacio reservado para imagen del examen"
+    >
+
+      <div class="media-placeholder-content">
+
+        <strong>
+          ESPACIO PARA IMAGEN
+        </strong>
+
+        <span>
+          ${exam.name}
+        </span>
+
+        <!--
+        Agregar aquí posteriormente:
+
+        <img
+          src="assets/images/exams/..."
+          alt="${exam.name}"
+        >
+        -->
+
+      </div>
+
+    </div>
+  `;
+
 }
-function listStorage(prefix) {
-  try {
-    const keys = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (k && k.startsWith(prefix)) keys.push(k);
+
+
+/* ============================================================
+   OBTENER EXÁMENES POR AUDIENCIA
+   ============================================================ */
+
+function getAudienceExams(audience) {
+
+  return Object.values(ALL_EXAMS)
+    .filter(
+      exam =>
+        exam.audience === audience
+    );
+
+}
+
+
+/* ============================================================
+   NOMBRE AUDIENCIA
+   ============================================================ */
+
+function audienceName(audience) {
+
+  return audience === "pediatric"
+    ? "Pediatría"
+    : "Adultos";
+
+}
+
+
+/* ============================================================
+   RENDER PRINCIPAL
+   ============================================================ */
+
+function renderTotem() {
+
+  if (!state.examId) {
+
+    renderExamSelector();
+
+  } else {
+
+    const exam =
+      ALL_EXAMS[state.examId];
+
+    if (!exam) {
+
+      state.examId = null;
+
+      renderExamSelector();
+
+      return;
+
     }
-    return { keys };
-  } catch { return { keys: [] }; }
-}
 
-function openAuth(mode){
-  authMode = mode;
-  document.getElementById('authMsg').className = 'form-msg';
-  document.getElementById('fieldName').style.display = mode === 'register' ? 'block' : 'none';
-  document.getElementById('authTitle').textContent = mode === 'register' ? 'Crear cuenta' : 'Iniciar sesión';
-  document.getElementById('authSubmit').textContent = mode === 'register' ? 'Registrarme' : 'Iniciar sesión';
-  document.getElementById('authSwitch').innerHTML = mode === 'register'
-    ? '¿Ya tienes cuenta? <a href="#" id="toRegister">Inicia sesión</a>'
-    : '¿No tienes cuenta? <a href="#" id="toRegister">Regístrate</a>';
-  document.getElementById('toRegister').onclick = (ev)=>{ ev.preventDefault(); openAuth(mode === 'register' ? 'login' : 'register'); };
-  overlayAuth.classList.add('show');
-}
-function closeAll(){ overlayAuth.classList.remove('show'); overlayDash.classList.remove('show'); }
-document.getElementById('btnLogin').onclick = ()=>openAuth('login');
-document.getElementById('btnRegister').onclick = ()=>openAuth('register');
-document.querySelectorAll('[data-close]').forEach(b=>b.onclick = closeAll);
-[overlayAuth, overlayDash].forEach(ov=> ov.addEventListener('click', e=>{ if(e.target === ov) closeAll(); }));
+    renderExamContext(exam);
 
-function genId(){
-  return 'FP-' + Math.random().toString(36).slice(2,6).toUpperCase() + '-' + Date.now().toString(36).slice(-4).toUpperCase();
-}
-
-document.getElementById('authSubmit').onclick = function(){
-  const email = document.getElementById('authEmail').value.trim().toLowerCase();
-  const pass = document.getElementById('authPass').value;
-  const name = document.getElementById('regName').value.trim();
-  const msg = document.getElementById('authMsg');
-  if(!email || !pass || (authMode==='register' && !name)){
-    msg.textContent = 'Completa todos los campos.'; msg.className = 'form-msg err'; return;
   }
-  try {
-    const key = 'user:' + email;
-    if(authMode === 'register'){
-      if(getStorage(key)){ msg.textContent = 'Ya existe una cuenta con ese correo.'; msg.className = 'form-msg err'; return; }
-      const user = { name, email, pass, id: genId(), createdAt: new Date().toISOString() };
-      setStorage(key, JSON.stringify(user));
-      currentUser = user;
-    } else {
-      const existing = getStorage(key);
-      if(!existing){ msg.textContent = 'No encontramos una cuenta con ese correo.'; msg.className = 'form-msg err'; return; }
-      const user = JSON.parse(existing.value);
-      if(user.pass !== pass){ msg.textContent = 'Contraseña incorrecta.'; msg.className = 'form-msg err'; return; }
-      currentUser = user;
-    }
-    setStorage('fpair:session', JSON.stringify(currentUser));
-    msg.textContent = '¡Listo! Ingresando…'; msg.className = 'form-msg ok';
-    setTimeout(()=>{ closeAll(); refreshAuthUI(); }, 500);
-  } catch(err){
-    msg.textContent = 'Ocurrió un error. Intenta de nuevo.'; msg.className = 'form-msg err';
+
+}
+
+
+/* ============================================================
+   SELECTOR DE EXÁMENES
+   ============================================================ */
+
+function renderExamSelector() {
+
+  const exams =
+    getAudienceExams(
+      state.audience
+    );
+
+  progressBar.style.width = "25%";
+
+  progressText.textContent =
+    "1 de 4";
+
+
+  totemBody.innerHTML = `
+
+    <div class="audience-selector">
+
+      <button
+        class="audience-button ${state.audience === "adult" ? "active" : ""}"
+        data-audience="adult"
+        type="button"
+      >
+        Adultos
+      </button>
+
+      <button
+        class="audience-button ${state.audience === "pediatric" ? "active" : ""}"
+        data-audience="pediatric"
+        type="button"
+      >
+        Pediatría
+      </button>
+
+    </div>
+
+
+    <div class="exam-selector-title">
+
+      <h3>
+        Selecciona tu examen
+      </h3>
+
+      <p>
+        No necesitas saber cuál es el más adecuado:
+        elige el nombre que aparece en tu orden o indicación.
+      </p>
+
+    </div>
+
+
+    <div class="exam-grid">
+
+      ${exams.map(
+        exam => `
+
+          <button
+            class="exam-card"
+            type="button"
+            data-exam-id="${exam.id}"
+          >
+
+            <div class="exam-card-top">
+
+              ${renderIcon(exam)}
+
+              <span class="exam-number">
+                ${exam.number}
+              </span>
+
+            </div>
+
+
+            <div>
+
+              <h4>
+                ${exam.name}
+              </h4>
+
+              <p>
+                ${exam.short}
+              </p>
+
+            </div>
+
+
+            <div class="exam-card-arrow">
+              Conocer mi examen →
+            </div>
+
+          </button>
+
+        `
+      ).join("")}
+
+    </div>
+
+
+    <div class="nervous-entry">
+
+      <div class="nervous-entry-content">
+
+        <div class="nervous-dot">
+          🙂
+        </div>
+
+        <div>
+
+          <strong>
+            ¿Estás nervioso por tu examen?
+          </strong>
+
+          <span>
+            Es completamente normal. Podemos recorrer el proceso contigo.
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="btn btn-soft"
+        type="button"
+        id="nervousButton"
+      >
+        Necesito tranquilidad
+      </button>
+
+    </div>
+
+  `;
+
+
+  bindSelectorEvents();
+
+}
+
+
+/* ============================================================
+   EVENTOS DEL SELECTOR
+   ============================================================ */
+
+function bindSelectorEvents() {
+
+  document
+    .querySelectorAll("[data-audience]")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const audience =
+            button.dataset.audience;
+
+          state.audience =
+            audience;
+
+          storage.set(
+            "fpair:audience",
+            audience
+          );
+
+          navigate(
+            `#fpair/examenes/${audience}`
+          );
+
+        }
+      );
+
+    });
+
+
+  document
+    .querySelectorAll("[data-exam-id]")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          openExam(
+            button.dataset.examId
+          );
+
+        }
+      );
+
+    });
+
+
+  const nervousButton =
+    document.getElementById(
+      "nervousButton"
+    );
+
+  if (nervousButton) {
+
+    nervousButton.addEventListener(
+      "click",
+      openNervous
+    );
+
   }
-};
 
-function refreshAuthUI(){
-  document.getElementById('btnLogin').style.display = currentUser ? 'none' : 'inline-flex';
-  document.getElementById('btnRegister').style.display = currentUser ? 'none' : 'inline-flex';
-  document.getElementById('btnDashboard').style.display = currentUser ? 'inline-flex' : 'none';
-}
-(function restoreSession(){
-  try {
-    const r = getStorage('fpair:session');
-    if(r){ currentUser = JSON.parse(r.value); refreshAuthUI(); }
-  } catch(e) {}
-})();
-
-document.getElementById('btnLogout').onclick = function(){
-  currentUser = null;
-  deleteStorage('fpair:session');
-  refreshAuthUI(); closeAll();
-};
-document.getElementById('btnGoInterpret').onclick = function(){
-  if(!currentUser){ openAuth('login'); return; }
-  openDashboard();
-};
-
-/* ============ DASHBOARD ============ */
-document.getElementById('btnDashboard').onclick = openDashboard;
-function openDashboard(){
-  if(!currentUser){ openAuth('login'); return; }
-  document.getElementById('patientIdShow').textContent = currentUser.id;
-  overlayDash.classList.add('show');
-  renderExamList();
-}
-function renderExamList(){
-  const wrap = document.getElementById('examListWrap');
-  const prefix = 'exam:' + currentUser.id + ':';
-  const result = listStorage(prefix);
-  const keys = result.keys || [];
-  if(!keys.length){ wrap.innerHTML = '<p class="empty-note">Todavía no has subido exámenes. Sube tu primer PDF arriba.</p>'; return; }
-  const items = [];
-  for(const k of keys){
-    try { const r = getStorage(k); if(r) items.push(JSON.parse(r.value)); } catch(e) {}
-  }
-  items.sort((a,b)=> new Date(b.uploadedAt) - new Date(a.uploadedAt));
-  wrap.innerHTML = '';
-  items.forEach(item=>{
-    const row = document.createElement('div');
-    row.className = 'exam-row';
-    row.innerHTML = `
-      <div class="meta"><b>${item.filename}</b><span>Subido ${new Date(item.uploadedAt).toLocaleDateString('es-CL')}</span></div>
-      <button class="btn btn-outline btn-sm" data-key="${item.key}">Interpretar con IA</button>`;
-    row.querySelector('button').onclick = ()=>interpretExam(item);
-    wrap.appendChild(row);
-  });
 }
 
-if(window.pdfjsLib){
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+/* ============================================================
+   ABRIR EXAMEN
+   ============================================================ */
+
+function openExam(examId) {
+
+  const exam =
+    ALL_EXAMS[examId];
+
+  if (!exam) return;
+
+  state.examId =
+    examId;
+
+  state.step =
+    "before";
+
+  state.audience =
+    exam.audience;
+
+  storage.set(
+    "fpair:lastExam",
+    examId
+  );
+
+  storage.set(
+    "fpair:audience",
+    exam.audience
+  );
+
+  navigate(
+    `#fpair/examenes/${exam.audience}/${exam.id}/antes`
+  );
+
 }
-document.getElementById('uploadZone').onclick = ()=>document.getElementById('pdfInput').click();
-document.getElementById('pdfInput').onchange = async function(e){
-  const file = e.target.files[0];
-  if(!file) return;
-  const zone = document.getElementById('uploadZone');
-  const original = zone.innerHTML;
-  zone.innerHTML = '<p style="font-weight:700;">Leyendo PDF…</p>';
-  try{
-    const buf = await file.arrayBuffer();
-    let text = '';
-    if(window.pdfjsLib){
-      const pdf = await pdfjsLib.getDocument({data: buf}).promise;
-      for(let p=1; p<=pdf.numPages; p++){
-        const page = await pdf.getPage(p);
-        const content = await page.getTextContent();
-        text += content.items.map(i=>i.str).join(' ') + '\n';
+
+
+/* ============================================================
+   RENDER CONTEXTO DEL EXAMEN
+   ============================================================ */
+
+function renderExamContext(exam) {
+
+  const stepNames = {
+
+    before:"Antes",
+
+    during:"Durante",
+
+    practice:"Practicar",
+
+    results:"Comprender"
+
+  };
+
+
+  const step =
+    exam.steps[state.step]
+      ? state.step
+      : "before";
+
+
+  state.step = step;
+
+
+  const stepData =
+    exam.steps[step];
+
+
+  const stepIndex =
+    Object.keys(stepNames)
+      .indexOf(step);
+
+
+  progressBar.style.width =
+    `${((stepIndex + 1) / 4) * 100}%`;
+
+  progressText.textContent =
+    `${stepIndex + 1} de 4`;
+
+
+  const related =
+    (exam.related || [])
+      .map(
+        id => ALL_EXAMS[id]
+      )
+      .filter(Boolean);
+
+
+  totemBody.innerHTML = `
+
+    <div class="context-toolbar">
+
+      <div class="breadcrumb">
+
+        <span>
+          ${audienceName(exam.audience)}
+        </span>
+
+        <span>›</span>
+
+        <span class="breadcrumb-current">
+          ${exam.name}
+        </span>
+
+        <span>›</span>
+
+        <span class="breadcrumb-current">
+          ${stepNames[step]}
+        </span>
+
+      </div>
+
+
+      <button
+        class="back-button"
+        type="button"
+        id="contextBack"
+      >
+        ← Atrás
+      </button>
+
+    </div>
+
+
+    <div class="context-view">
+
+
+      <div class="context-hero">
+
+
+        ${renderLargeMedia(exam)}
+
+
+        <div class="context-intro">
+
+          <div class="context-label">
+            FPAIR / ${exam.number}
+          </div>
+
+          <h2>
+            ${exam.name}
+          </h2>
+
+          <p>
+            ${exam.short}
+          </p>
+
+
+          <div class="pathway-grid">
+
+            ${Object.entries(stepNames)
+              .map(
+                ([key,label],index) => `
+
+                  <button
+                    type="button"
+                    class="pathway-button ${key === step ? "active" : ""}"
+                    data-step="${key}"
+                  >
+
+                    <span class="pathway-number">
+                      0${index + 1}
+                    </span>
+
+                    <strong>
+                      ${label}
+                    </strong>
+
+                    <span>
+                      ${
+                        key === "before"
+                          ? "Prepárate"
+                          : key === "during"
+                            ? "Qué ocurrirá"
+                            : key === "practice"
+                              ? "Familiarízate"
+                              : "Entiende"
+                      }
+                    </span>
+
+                  </button>
+
+                `
+              )
+              .join("")}
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="info-panel">
+
+        <div class="info-panel-header">
+
+          <div>
+
+            <h3>
+              ${stepData.title}
+            </h3>
+
+            <p class="info-panel-intro">
+              ${stepData.intro}
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="info-list">
+
+          ${stepData.items
+            .map(
+              item => `
+
+                <div class="info-item">
+
+                  <div class="info-check">
+                    ✓
+                  </div>
+
+                  <div>
+
+                    <strong>
+                      ${item[0]}
+                    </strong>
+
+                    <span>
+                      ${item[1]}
+                    </span>
+
+                  </div>
+
+                </div>
+
+              `
+            )
+            .join("")}
+
+        </div>
+
+        ${
+          step === "before"
+            ? `
+              <div class="prep-hub" aria-label="Recursos de preparación del examen">
+
+                <div class="prep-hub-head">
+                  <div>
+                    <h4>Completa tu preparación antes de venir</h4>
+                    <p>Usa estos recursos para llegar informado, reducir imprevistos y seguir correctamente las indicaciones de tu laboratorio.</p>
+                  </div>
+                  <span class="prep-hub-badge">3 recursos útiles</span>
+                </div>
+
+                <div class="prep-task-grid">
+
+                  <article class="prep-task">
+                    <div class="prep-task-icon" aria-hidden="true">✓</div>
+                    <strong>1. Revisa tus prerrequisitos</strong>
+                    <p>Consulta actividades que debes evitar, contraindicaciones y las indicaciones específicas sobre medicamentos e inhaladores.</p>
+                    <a class="prep-task-link" href="preparacion_info.html#cese-actividades">
+                      Revisar preparación →
+                    </a>
+                  </article>
+
+                  <article class="prep-task">
+                    <div class="prep-task-icon" aria-hidden="true">▤</div>
+                    <strong>2. Completa tu consentimiento</strong>
+                    <p>Lee la información del procedimiento y deja listo el formulario de consentimiento si tu laboratorio lo solicita.</p>
+                    <a class="prep-task-link" href="preparacion_info.html#consentimiento">
+                      Ir al consentimiento →
+                    </a>
+                  </article>
+
+                  <article class="prep-task">
+                    <div class="prep-task-icon" aria-hidden="true">⏰</div>
+                    <strong>3. Programa un recordatorio</strong>
+                    <p>Crea una alarma para recordar las instrucciones previas, incluida la indicación sobre tus inhaladores cuando corresponda.</p>
+                    <a class="prep-task-link" href="preparacion_info.html#recordatorio-alarma">
+                      Crear recordatorio →
+                    </a>
+                  </article>
+
+                </div>
+
+                <div class="prep-hub-footer">
+                  <p><strong>Importante:</strong> no suspendas medicamentos ni inhaladores por tu cuenta. Los tiempos dependen del fármaco, del examen y de la indicación del laboratorio.</p>
+                  <a class="btn btn-primary" href="preparacion_info.html">
+                    Abrir preparación completa →
+                  </a>
+                </div>
+
+              </div>
+            `
+            : ""
+        }
+
+
+        <div class="context-actions">
+
+          ${
+            step === "practice"
+              ? `
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="launchPractice"
+                >
+                  Iniciar práctica FPAIR
+                </button>
+              `
+              : ""
+          }
+
+
+          ${
+            step !== "practice"
+              ? `
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="goPractice"
+                >
+                  Practicar esta técnica
+                </button>
+              `
+              : ""
+          }
+
+
+          <a
+            class="btn btn-secondary"
+            href="${exam.link}"
+          >
+            Ver página completa del examen →
+          </a>
+
+        </div>
+
+      </div>
+
+
+      ${
+        related.length
+          ? `
+
+            <div class="related-section">
+
+              <div class="related-header">
+
+                <div>
+
+                  <h3>
+                    También puede interesarte
+                  </h3>
+
+                  <p>
+                    Estos exámenes entregan información diferente
+                    y pueden complementar la evaluación según cada caso.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="related-grid">
+
+                ${related
+                  .map(
+                    relatedExam => `
+
+                      <button
+                        type="button"
+                        class="related-card"
+                        data-related-id="${relatedExam.id}"
+                      >
+
+                        ${renderIcon(relatedExam)}
+
+                        <div>
+
+                          <strong>
+                            ${relatedExam.name}
+                          </strong>
+
+                          <span>
+                            Conocer este examen →
+                          </span>
+
+                        </div>
+
+                      </button>
+
+                    `
+                  )
+                  .join("")}
+
+              </div>
+
+            </div>
+
+          `
+          : ""
       }
-    }
-    const key = 'exam:' + currentUser.id + ':' + Date.now();
-    const record = { key, filename: file.name, uploadedAt: new Date().toISOString(), text: text.slice(0, 12000) };
-    setStorage(key, JSON.stringify(record));
-    renderExamList();
-  } catch(err){
-    alert('No pudimos leer ese PDF. Prueba con otro archivo.');
-  } finally{
-    zone.innerHTML = original;
-    e.target.value = '';
-  }
-};
 
-function interpretExam(item){
-  const box = document.getElementById('aiResultBox');
-  box.innerHTML = '<div class="ai-result"><span class="spinner"></span> Analizando tu examen…</div>';
-  const extracted = (item.text || '').trim();
-  if(!extracted){
-    box.innerHTML = '<div class="ai-result">No pudimos extraer texto legible de este PDF (puede ser una imagen escaneada). Prueba subir un PDF con texto seleccionable.</div>';
+
+    </div>
+
+  `;
+
+
+  bindContextEvents();
+
+}
+
+
+/* ============================================================
+   EVENTOS DEL CONTEXTO
+   ============================================================ */
+
+function bindContextEvents() {
+
+  const back =
+    document.getElementById(
+      "contextBack"
+    );
+
+  if (back) {
+
+    back.addEventListener(
+      "click",
+      goBack
+    );
+
+  }
+
+
+  document
+    .querySelectorAll("[data-step]")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const step =
+            button.dataset.step;
+
+          navigate(
+            `#fpair/examenes/${state.audience}/${state.examId}/${step}`
+          );
+
+        }
+      );
+
+    });
+
+
+  document
+    .querySelectorAll("[data-related-id]")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          openExam(
+            button.dataset.relatedId
+          );
+
+        }
+      );
+
+    });
+
+
+  const practice =
+    document.getElementById(
+      "goPractice"
+    );
+
+  if (practice) {
+
+    practice.addEventListener(
+      "click",
+      () => {
+
+        navigate(
+          `#fpair/examenes/${state.audience}/${state.examId}/practice`
+        );
+
+      }
+    );
+
+  }
+
+
+  const launchPractice =
+    document.getElementById(
+      "launchPractice"
+    );
+
+  if (launchPractice) {
+
+    launchPractice.addEventListener(
+      "click",
+      openPracticeModal
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   NERVIOS
+   ============================================================ */
+
+function renderNervous() {
+
+  progressBar.style.width =
+    "25%";
+
+  progressText.textContent =
+    "1 de 4";
+
+
+  totemBody.innerHTML = `
+
+    <div class="context-toolbar">
+
+      <div class="breadcrumb">
+
+        <span>
+          FPAIR
+        </span>
+
+        <span>›</span>
+
+        <span class="breadcrumb-current">
+          Tranquilidad
+        </span>
+
+      </div>
+
+
+      <button
+        class="back-button"
+        type="button"
+        id="nervousBack"
+      >
+        ← Atrás
+      </button>
+
+    </div>
+
+
+    <div class="nervous-view">
+
+
+      <div>
+
+        <div class="context-label">
+          FPAIR / TRANQUILIDAD
+        </div>
+
+        <h2>
+          Si estás nervioso,
+          no estás solo.
+        </h2>
+
+        <p>
+          Es normal sentir incertidumbre cuando no sabes
+          exactamente qué va a ocurrir durante un examen.
+          La idea de FPAIR es ayudarte a conocer el proceso
+          antes de llegar.
+        </p>
+
+
+        <div class="reassurance-list">
+
+
+          <div class="reassurance">
+
+            <div class="reassurance-mark">
+              ✓
+            </div>
+
+            <div>
+
+              <strong>
+                No tienes que hacerlo perfecto a la primera.
+              </strong>
+
+              <span>
+                El profesional te enseñará y podrá repetir las instrucciones.
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="reassurance">
+
+            <div class="reassurance-mark">
+              ✓
+            </div>
+
+            <div>
+
+              <strong>
+                Puedes decir que estás nervioso.
+              </strong>
+
+              <span>
+                Informarlo ayuda al profesional a acompañarte mejor.
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="reassurance">
+
+            <div class="reassurance-mark">
+              ✓
+            </div>
+
+            <div>
+
+              <strong>
+                Puedes hacer preguntas.
+              </strong>
+
+              <span>
+                Entender qué ocurrirá puede reducir la incertidumbre.
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="reassurance">
+
+            <div class="reassurance-mark">
+              ✓
+            </div>
+
+            <div>
+
+              <strong>
+                Si algo te molesta, comunícalo.
+              </strong>
+
+              <span>
+                Tu seguridad y bienestar son importantes.
+              </span>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+        <div class="context-actions">
+
+          <button
+            class="btn btn-primary"
+            type="button"
+            id="nervousChooseExam"
+          >
+            Elegir mi examen
+          </button>
+
+          <button
+            class="btn btn-secondary"
+            type="button"
+            id="nervousPractice"
+          >
+            Quiero practicar
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ====================================================
+           ESPACIO VIDEO TRANQUILIDAD
+           ==================================================== -->
+
+      <div class="media-slot-video">
+
+        <div class="media-placeholder-content">
+
+          <strong>
+            ESPACIO PARA VIDEO FPAIR
+          </strong>
+
+          <span>
+            "¿Qué ocurrirá durante mi examen?"
+          </span>
+
+          <!--
+          Aquí puedes colocar posteriormente:
+
+          <video controls>
+            <source
+              src="assets/videos/fpair-tranquilidad.mp4"
+              type="video/mp4"
+            >
+          </video>
+          -->
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  const back =
+    document.getElementById(
+      "nervousBack"
+    );
+
+  if (back) {
+
+    back.addEventListener(
+      "click",
+      goBack
+    );
+
+  }
+
+
+  document
+    .getElementById(
+      "nervousChooseExam"
+    )
+    .addEventListener(
+      "click",
+      () => {
+
+        navigate(
+          `#fpair/examenes/${state.audience}`
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "nervousPractice"
+    )
+    .addEventListener(
+      "click",
+      openPracticeModal
+    );
+
+}
+
+
+/* ============================================================
+   MODAL PRÁCTICA
+   ============================================================ */
+
+function openPracticeModal() {
+
+  modalTitle.textContent =
+    "Práctica FPAIR";
+
+  modalContent.innerHTML = `
+
+    <p
+      style="
+        color:var(--text-soft);
+        font-size:13px;
+        line-height:1.7;
+      "
+    >
+      Este espacio está preparado para incorporar
+      posteriormente el simulador o entrenamiento
+      interactivo de FPAIR.
+    </p>
+
+
+    <div
+      class="media-slot-video"
+      style="min-height:230px;margin-top:15px;"
+    >
+
+      <div class="media-placeholder-content">
+
+        <strong>
+          ESPACIO PARA SIMULADOR
+        </strong>
+
+        <span>
+          Aquí podrás incorporar tu entrenamiento respiratorio.
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="form-actions">
+
+      <button
+        class="btn btn-primary"
+        type="button"
+        id="closePractice"
+      >
+        Entendido
+      </button>
+
+    </div>
+
+  `;
+
+
+  openModal();
+
+
+  document
+    .getElementById(
+      "closePractice"
+    )
+    .addEventListener(
+      "click",
+      closeModal
+    );
+
+}
+
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+function openModal() {
+
+  modalOverlay.classList.add(
+    "open"
+  );
+
+  modalOverlay.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+}
+
+
+function closeModal() {
+
+  modalOverlay.classList.remove(
+    "open"
+  );
+
+  modalOverlay.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+}
+
+
+document
+  .getElementById("closeModal")
+  .addEventListener(
+    "click",
+    closeModal
+  );
+
+
+modalOverlay.addEventListener(
+  "click",
+  event => {
+
+    if (
+      event.target ===
+      modalOverlay
+    ) {
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+/* ============================================================
+   NAVEGACIÓN CON HISTORY API
+   ============================================================ */
+
+/*
+   ESTA ES UNA PARTE CLAVE DEL SISTEMA.
+
+   NO usamos:
+
+   location.href = "index.html"
+
+   para las pantallas internas.
+
+   Utilizamos:
+
+   history.pushState()
+
+   Así el navegador conserva:
+
+   pantalla 1
+      ↓
+   examen
+      ↓
+   antes
+      ↓
+   durante
+      ↓
+   practicar
+
+   Y el botón ← del navegador vuelve realmente
+   al estado anterior.
+*/
+
+
+function navigate(hash, options = {}) {
+
+  const targetHash = String(hash || "#fpair/home").startsWith("#")
+    ? String(hash || "#fpair/home")
+    : `#${hash}`;
+
+  if (window.location.hash === targetHash) {
+    renderFromHash();
     return;
   }
-  setTimeout(() => {
-    box.innerHTML = `<div class="ai-result">📋 Análisis educativo del examen:\n\n${extracted.slice(0, 500)}...\n\n⚠️ Esta es una interpretación preliminar. Consulta siempre con tu médico para un diagnóstico preciso.</div>`;
-  }, 1500);
-}
 
-/* ============ ESPIROGRAMA CON CHART.JS ============ */
-function generarEspirograma() {
-  const puntos = 800;
-  const t = [];
-  const volumen = [];
-  const base_level = 1.2;
-  
-  for (let i = 0; i <= puntos; i++) {
-    const tiempo = (i / puntos) * 40;
-    t.push(tiempo);
-    let vol = base_level;
-    
-    if (tiempo < 20) {
-      const fase = tiempo % 5;
-      vol = 2.5 + 0.2 * Math.sin(2 * Math.PI * fase / 5);
-    }
-    else if (tiempo >= 20 && tiempo < 23) {
-      const x = tiempo - 20;
-      vol = 2.5 + 2.5 * (1 - Math.exp(-x / 0.4));
-    }
-    else if (tiempo >= 23 && tiempo < 34) {
-      const x = tiempo - 23;
-      vol = 3.8 * Math.pow(1 - x / 11, 2) + 1.2;
-      vol = Math.max(1.2, Math.min(5, vol));
-    }
-    else if (tiempo >= 34 && tiempo < 35.8) {
-      vol = 1.2;
-    }
-    else if (tiempo >= 35.8 && tiempo < 37.8) {
-      const x = tiempo - 35.8;
-      vol = 1.2 + 3.8 * (1 - Math.exp(-x / 0.5));
-    }
-    else if (tiempo >= 37.8 && tiempo <= 40) {
-      vol = 5.0;
-    }
-    
-    volumen.push(vol);
+  const currentDepth =
+    history.state && history.state.fpair
+      ? Number(history.state.depth || 0)
+      : 0;
+
+  const nextState = {
+    fpair:true,
+    hash:targetHash,
+    depth: options.replace ? currentDepth : currentDepth + 1
+  };
+
+  if (options.replace) {
+    history.replaceState(nextState, "", targetHash);
+  } else {
+    history.pushState(nextState, "", targetHash);
   }
-  
-  return { t, volumen };
+
+  renderFromHash();
 }
 
-function renderizarEspirograma() {
-  const canvas = document.getElementById('espirogramaChart');
-  if (!canvas) return;
-  
-  const data = generarEspirograma();
-  const ctx = canvas.getContext('2d');
-  
-  const isDark = document.body.getAttribute('data-theme') === 'dark';
-  const textColor = isDark ? '#8FBDB8' : '#4B6B6D';
-  const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
-  const lineColor = isDark ? '#2FE0C3' : '#1e90ff';
-  const fillColor = isDark ? 'rgba(47, 224, 195, 0.1)' : 'rgba(30, 144, 255, 0.1)';
-  
-  new Chart(ctx, {
-    type: 'scatter',
-    data: {
-      datasets: [{
-        label: 'Volumen (L)',
-        data: data.t.map((t, i) => ({ x: t, y: data.volumen[i] })),
-        borderColor: lineColor,
-        backgroundColor: fillColor,
-        showLine: true,
-        fill: true,
-        tension: 0.2,
-        pointRadius: 0,
-        borderWidth: 3
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              return 'Volumen: ' + context.parsed.y.toFixed(2) + ' L';
-            }
-          }
-        }
+
+/* ============================================================
+   ATRÁS
+   ============================================================ */
+
+function goBack() {
+
+  const fpairDepth =
+    history.state && history.state.fpair
+      ? Number(history.state.depth || 0)
+      : 0;
+
+  if (fpairDepth > 0) {
+    history.back();
+    return;
+  }
+
+  /* Entrada directa a una ruta profunda: no abandonamos FPAIR. */
+  const fallback = state.examId
+    ? `#fpair/examenes/${safeRoutePart(state.audience)}`
+    : "#fpair/home";
+
+  navigate(fallback, { replace:true });
+}
+
+
+/* ============================================================
+   PARSEAR HASH
+   ============================================================ */
+
+function parseHash() {
+  const raw = String(window.location.hash || "")
+    .replace(/^#/, "")
+    .split("/")
+    .filter(Boolean);
+
+  return raw.map(part => {
+    try {
+      return decodeURIComponent(part);
+    } catch {
+      return part;
+    }
+  });
+}
+
+
+/* ============================================================
+   RENDER SEGÚN URL
+   ============================================================ */
+
+function renderFromHash() {
+
+  const parts =
+    parseHash();
+
+
+  /*
+     ROOT
+  */
+
+  if (
+    parts.length === 0 ||
+    parts[0] !== "fpair" ||
+    parts[1] === "home"
+  ) {
+
+    state.examId = null;
+
+    renderExamSelector();
+
+    return;
+
+  }
+
+
+  /*
+     NERVIOS
+  */
+
+  if (
+    parts[1] === "nervios"
+  ) {
+
+    state.examId = null;
+
+    renderNervous();
+
+    return;
+
+  }
+
+
+  /*
+     EXÁMENES
+  */
+
+  if (
+    parts[1] === "examenes"
+  ) {
+
+    const audience =
+      parts[2] || "adult";
+
+
+    if (
+      audience !== "adult" &&
+      audience !== "pediatric"
+    ) {
+
+      state.audience =
+        "adult";
+
+    } else {
+
+      state.audience =
+        audience;
+
+    }
+
+
+    /*
+       Solo selector
+    */
+
+    if (
+      !parts[3]
+    ) {
+
+      state.examId = null;
+
+      renderExamSelector();
+
+      return;
+
+    }
+
+
+    /*
+       Examen
+    */
+
+    const examId =
+      parts[3];
+
+    const exam =
+      ALL_EXAMS[examId];
+
+
+    if (!exam) {
+
+      state.examId = null;
+
+      renderExamSelector();
+
+      return;
+
+    }
+
+
+    state.examId =
+      examId;
+
+
+    /*
+       Paso
+    */
+
+    const step = normalizeStepRoute(parts[4]);
+
+    state.step =
+      exam.steps[step]
+        ? step
+        : "before";
+
+
+    renderExamContext(
+      exam
+    );
+
+    return;
+
+  }
+
+
+  /*
+     FALLBACK
+  */
+
+  state.examId = null;
+
+  renderExamSelector();
+
+}
+
+
+/* ============================================================
+   ESTADO INICIAL HISTORY
+   ============================================================ */
+
+function initializeHistory() {
+
+  const currentHash =
+    window.location.hash;
+
+
+  if (
+    !history.state ||
+    !history.state.fpair
+  ) {
+
+    const hash =
+      currentHash ||
+      "#fpair/home";
+
+
+    history.replaceState(
+      {
+        fpair:true,
+        hash:hash,
+        depth:0
       },
-      scales: {
-        x: {
-          type: 'linear',
-          position: 'bottom',
-          title: {
-            display: true,
-            text: 'Tiempo (segundos)',
-            color: textColor,
-            font: { family: 'Inter', size: 11 }
-          },
-          min: 0,
-          max: 40,
-          ticks: { stepSize: 5, color: textColor },
-          grid: { color: gridColor }
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'Volumen (L)',
-            color: textColor,
-            font: { family: 'Inter', size: 11 }
-          },
-          min: 0,
-          max: 6,
-          ticks: { stepSize: 1, color: textColor },
-          grid: { color: gridColor }
-        }
-      }
-    }
+      "",
+      hash
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   EVENTOS HISTORY
+   ============================================================ */
+
+let routeFrame = null;
+
+function scheduleRouteRender() {
+  if (routeFrame) cancelAnimationFrame(routeFrame);
+  routeFrame = requestAnimationFrame(() => {
+    routeFrame = null;
+    renderFromHash();
   });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(renderizarEspirograma, 300);
+window.addEventListener("popstate", scheduleRouteRender);
+window.addEventListener("hashchange", scheduleRouteRender);
+
+
+/* ============================================================
+   SCROLL AL TOTEM
+   ============================================================ */
+
+function scrollToTotem() {
+
+  const shell =
+    document.getElementById(
+      "totemShell"
+    );
+
+  if (!shell) return;
+
+
+  /*
+     No hacemos scroll automático
+     si el usuario simplemente está
+     navegando por el navegador.
+
+     Solo usamos scroll suave en determinadas
+     acciones explícitas.
+  */
+
+}
+
+
+/* ============================================================
+   HERO BUTTONS
+   ============================================================ */
+
+document
+  .getElementById(
+    "heroChooseExam"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      navigate(
+        `#fpair/examenes/${state.audience}`
+      );
+
+      document
+        .getElementById(
+          "totemShell"
+        )
+        .scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "heroNervous"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      navigate(
+        "#fpair/nervios"
+      );
+
+      document
+        .getElementById(
+          "totemShell"
+        )
+        .scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "heroPractice"
+  )
+  .addEventListener(
+    "click",
+    openPracticeModal
+  );
+
+
+document
+  .getElementById(
+    "practiceFromSection"
+  )
+  .addEventListener(
+    "click",
+    openPracticeModal
+  );
+
+
+document
+  .getElementById(
+    "openInterpretation"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      document
+        .getElementById(
+          "interpretacion"
+        )
+        .scrollIntoView({
+          behavior:"smooth"
+        });
+
+    }
+  );
+
+
+/* ============================================================
+   MOBILE MENU
+   ============================================================ */
+
+const mobileMenuButton =
+  document.getElementById(
+    "mobileMenuButton"
+  );
+
+
+mobileMenuButton.addEventListener(
+  "click",
+  () => {
+
+    const nav =
+      document.querySelector(
+        ".main-nav"
+      );
+
+
+    if (
+      nav.style.display === "flex"
+    ) {
+
+      nav.style.display = "";
+
+      return;
+
+    }
+
+
+    nav.style.display =
+      "flex";
+
+    nav.style.position =
+      "absolute";
+
+    nav.style.top =
+      "var(--header-height)";
+
+    nav.style.left =
+      "12px";
+
+    nav.style.right =
+      "12px";
+
+    nav.style.padding =
+      "10px";
+
+    nav.style.background =
+      "var(--surface)";
+
+    nav.style.border =
+      "1px solid var(--border)";
+
+    nav.style.borderRadius =
+      "15px";
+
+    nav.style.flexDirection =
+      "column";
+
+    nav.style.boxShadow =
+      "var(--shadow)";
+
+  }
+);
+
+
+/* ============================================================
+   TEMA
+   ============================================================ */
+
+function applyTheme(theme) {
+
+  if (
+    theme === "dark"
+  ) {
+
+    document.documentElement
+      .classList
+      .add("dark");
+
+  } else {
+
+    document.documentElement
+      .classList
+      .remove("dark");
+
+  }
+
+}
+
+
+function initializeTheme() {
+
+  const saved =
+    storage.get(
+      "fpair:theme"
+    );
+
+
+  if (saved) {
+
+    applyTheme(saved);
+
+    return;
+
+  }
+
+
+  const prefersDark =
+    window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+
+
+  applyTheme(
+    prefersDark
+      ? "dark"
+      : "light"
+  );
+
+}
+
+
+themeToggle.addEventListener(
+  "click",
+  () => {
+
+    const isDark =
+      document.documentElement
+        .classList
+        .contains("dark");
+
+
+    const newTheme =
+      isDark
+        ? "light"
+        : "dark";
+
+
+    applyTheme(
+      newTheme
+    );
+
+
+    storage.set(
+      "fpair:theme",
+      newTheme
+    );
+
+
+    renderCharts();
+
+  }
+);
+
+
+/* ============================================================
+   CHART HERO
+   ============================================================ */
+
+let heroChart = null;
+
+let interpretationChart = null;
+
+
+function getChartTextColor() {
+
+  return getComputedStyle(
+    document.documentElement
+  )
+    .getPropertyValue(
+      "--text-soft"
+    )
+    .trim();
+
+}
+
+
+function getChartGridColor() {
+
+  return getComputedStyle(
+    document.documentElement
+  )
+    .getPropertyValue(
+      "--border"
+    )
+    .trim();
+
+}
+
+
+function getChartPrimary() {
+
+  return getComputedStyle(
+    document.documentElement
+  )
+    .getPropertyValue(
+      "--primary"
+    )
+    .trim();
+
+}
+
+
+function generarEspirograma() {
+
+  const labels = [];
+  const values = [];
+
+  /*
+     Curva educativa similar al espirograma del index original:
+     respiración corriente, inspiración máxima y espiración forzada.
+  */
+  for (let t = 0; t <= 40; t += 0.25) {
+
+    let volume;
+
+    if (t < 20) {
+      // Respiración corriente alrededor de 2.5 L
+      volume = 2.5 + 0.22 * Math.sin((2 * Math.PI / 5) * t);
+
+    } else if (t < 22) {
+      // Inspiración rápida hacia TLC
+      const u = (t - 20) / 2;
+      volume = 2.5 + 2.45 * (1 - Math.pow(1 - u, 3));
+
+    } else if (t < 35) {
+      // Espiración forzada: caída progresiva hacia volumen residual
+      const u = (t - 22) / 13;
+      volume = 1.05 + 3.9 * Math.pow(1 - u, 2.15);
+
+    } else if (t < 37) {
+      // Inspiración final rápida
+      const u = (t - 35) / 2;
+      volume = 1.05 + 3.95 * (1 - Math.pow(1 - u, 3));
+
+    } else {
+      volume = 5.0;
+    }
+
+    labels.push(t.toFixed(2));
+    values.push(Number(volume.toFixed(3)));
+  }
+
+  return { labels, values };
+}
+
+
+function renderCharts() {
+
+  if (typeof window.Chart === "undefined") {
+    const chartContainer = document.querySelector(".chart-container");
+    if (chartContainer && !chartContainer.querySelector(".chart-fallback")) {
+      chartContainer.innerHTML = `
+        <div class="chart-fallback" role="img" aria-label="Visualización respiratoria no disponible">
+          Visualización educativa temporalmente no disponible. El resto de FPAIR funciona con normalidad.
+        </div>`;
+    }
+    return;
+  }
+
+  const heroCanvas =
+    document.getElementById(
+      "heroChart"
+    );
+
+
+  if (
+    !heroCanvas
+  ) return;
+
+
+  if (
+    heroChart
+  ) {
+
+    heroChart.destroy();
+
+  }
+
+
+  const data =
+    generarEspirograma();
+
+
+  heroChart =
+    new Chart(
+      heroCanvas,
+      {
+
+        type:"line",
+
+        data:{
+
+          labels:
+            data.labels,
+
+          datasets:[
+
+            {
+
+              data:
+                data.values,
+
+              borderColor:
+                getChartPrimary(),
+
+              backgroundColor:
+                "rgba(14,138,130,.08)",
+
+              borderWidth:3,
+
+              pointRadius:0,
+
+              tension:.28,
+
+              fill:true
+
+            }
+
+          ]
+
+        },
+
+        options:{
+
+          responsive:true,
+
+          maintainAspectRatio:false,
+
+          animation:{
+
+            duration:1200
+
+          },
+
+          plugins:{
+
+            legend:{
+              display:false
+            }
+
+          },
+
+          scales:{
+
+            x:{
+
+              title:{
+
+                display:true,
+
+                text:"Tiempo (segundos)",
+
+                color:
+                  getChartTextColor()
+
+              },
+
+              ticks:{
+
+                color:
+                  getChartTextColor(),
+
+                maxTicksLimit:9
+
+              },
+
+              grid:{
+
+                color:
+                  getChartGridColor()
+
+              }
+
+            },
+
+            y:{
+
+              title:{
+
+                display:true,
+
+                text:"Volumen (L)",
+
+                color:
+                  getChartTextColor()
+
+              },
+
+              ticks:{
+
+                color:
+                  getChartTextColor()
+
+              },
+
+              grid:{
+
+                color:
+                  getChartGridColor()
+
+              },
+
+              min:0,
+
+              max:6
+
+            }
+
+          }
+
+        }
+
+      }
+    );
+
+
+  const interpretationCanvas =
+    document.getElementById(
+      "interpretationChart"
+    );
+
+
+  if (
+    !interpretationCanvas
+  ) return;
+
+
+  if (
+    interpretationChart
+  ) {
+
+    interpretationChart.destroy();
+
+  }
+
+
+  interpretationChart =
+    new Chart(
+      interpretationCanvas,
+      {
+
+        type:"line",
+
+        data:{
+
+          labels:[
+            "-5",
+            "-4",
+            "-3",
+            "-2",
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+
+          datasets:[
+
+            {
+
+              data:[
+                1,
+                4,
+                8,
+                15,
+                24,
+                28,
+                20,
+                12,
+                5,
+                2
+              ],
+
+              borderColor:
+                getChartPrimary(),
+
+              backgroundColor:
+                "rgba(34,211,184,.10)",
+
+              borderWidth:3,
+
+              pointRadius:3,
+
+              tension:.35,
+
+              fill:true
+
+            }
+
+          ]
+
+        },
+
+        options:{
+
+          responsive:true,
+
+          maintainAspectRatio:false,
+
+          plugins:{
+
+            legend:{
+              display:false
+            }
+
+          },
+
+          scales:{
+
+            x:{
+
+              title:{
+
+                display:true,
+
+                text:"Z-score",
+
+                color:
+                  getChartTextColor()
+
+              },
+
+              ticks:{
+
+                color:
+                  getChartTextColor()
+
+              },
+
+              grid:{
+
+                color:
+                  getChartGridColor()
+
+              }
+
+            },
+
+            y:{
+
+              title:{
+
+                display:true,
+
+                text:"Distribución educativa",
+
+                color:
+                  getChartTextColor()
+
+              },
+
+              ticks:{
+
+                color:
+                  getChartTextColor()
+
+              },
+
+              grid:{
+
+                color:
+                  getChartGridColor()
+
+              },
+
+              beginAtZero:true
+
+            }
+
+          }
+
+        }
+
+      }
+    );
+
+}
+
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+
+let toastTimer = null;
+
+
+function showToast(message) {
+
+  toast.textContent =
+    message;
+
+  toast.classList.add(
+    "show"
+  );
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer =
+    setTimeout(
+      () => {
+
+        toast.classList.remove(
+          "show"
+        );
+
+      },
+      2800
+    );
+
+}
+
+
+/* ============================================================
+   TECLADO / ESC
+   ============================================================ */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Escape"
+    ) {
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+/* ============================================================
+   STORAGE — RECORDAR ÚLTIMO EXAMEN
+   ============================================================ */
+
+function loadLastExam() {
+
+  const last =
+    storage.get(
+      "fpair:lastExam"
+    );
+
+
+  if (
+    !last ||
+    !ALL_EXAMS[last]
+  ) {
+
+    return;
+
+  }
+
+  /*
+     Lo recordamos, pero NO abrimos automáticamente
+     un examen al entrar.
+
+     Así el paciente siempre parte desde el selector.
+  */
+
+}
+
+
+/* ============================================================
+   DIAGNÓSTICO NO INTRUSIVO
+   ============================================================ */
+
+window.addEventListener("error", event => {
+  console.error("FPAIR: error no controlado", event.error || event.message);
 });
 
-const themeObserver = new MutationObserver(function(mutations) {
-  mutations.forEach(function(mutation) {
-    if (mutation.attributeName === 'data-theme') {
-      const canvas = document.getElementById('espirogramaChart');
-      if (canvas) {
-        const parent = canvas.parentElement;
-        const newCanvas = document.createElement('canvas');
-        newCanvas.id = 'espirogramaChart';
-        parent.replaceChild(newCanvas, canvas);
-        setTimeout(renderizarEspirograma, 100);
-      }
-    }
-  });
+window.addEventListener("unhandledrejection", event => {
+  console.error("FPAIR: promesa rechazada", event.reason);
 });
-themeObserver.observe(document.body, { attributes: true });
+
+
+/* ============================================================
+   INICIALIZACIÓN
+   ============================================================ */
+
+function initialize() {
+  try {
+    initializeTheme();
+    initializeHistory();
+    loadLastExam();
+    renderFromHash();
+  } catch (error) {
+    console.error("FPAIR: error de inicialización", error);
+    const body = document.getElementById("totemBody");
+    if (body) {
+      body.innerHTML = `
+        <div class="js-fallback" role="alert">
+          No pudimos cargar el índice interactivo. Recarga la página. Si el problema continúa, utiliza los enlaces informativos del sitio.
+        </div>`;
+    }
+  }
+
+  /* Chart.js es accesorio: si falla el CDN, el tótem sigue operativo. */
+  setTimeout(renderCharts, 80);
+}
+
+
+document.addEventListener(
+  "DOMContentLoaded",
+  initialize
+);
+
+
+/* ============================================================
+   FINAL
+   ============================================================ */
+
 </script>
+
 </body>
 </html>
