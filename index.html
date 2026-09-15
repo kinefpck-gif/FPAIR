@@ -2895,6 +2895,31 @@ footer {
   }
 }
 
+
+
+/* ============================================================
+   FPAIR EXPERIENCE 2026 — INTERACTIVE EXPLORERS
+   ============================================================ */
+.fpair-explorer-shell{overflow:visible;border-radius:30px;box-shadow:0 26px 70px -42px rgba(4,74,70,.42)}
+.fpair-explorer-head{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:28px;align-items:end;padding:34px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,var(--surface-alt),var(--surface) 65%)}
+.fpair-journey-chip{display:grid;grid-template-columns:auto 1fr;gap:8px 9px;align-items:center;padding:12px 14px;border:1px solid var(--border);border-radius:14px;background:var(--surface);font-size:11px;font-weight:800;color:var(--text-soft)}
+.fpair-journey-chip .progress-track{grid-column:1/-1;height:5px}.fpair-journey-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 18%,transparent)}
+.fpair-loading-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.fpair-loading-grid div{height:150px;border-radius:16px;background:linear-gradient(90deg,var(--surface-alt),var(--bg-alt),var(--surface-alt));background-size:220% 100%;animation:fpairShimmer 1.5s infinite}
+@keyframes fpairShimmer{to{background-position:-220% 0}}
+
+.fpair-section-head-wide{max-width:900px}.fpair-prep-section{position:relative;overflow:hidden}.fpair-prep-section:before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,184,.10),transparent 68%);right:-140px;top:80px;pointer-events:none}
+.fpair-explorer{position:relative;display:grid;grid-template-columns:360px minmax(0,1fr);gap:16px;padding:14px;border:1px solid var(--border);border-radius:26px;background:color-mix(in srgb,var(--surface) 86%,transparent);box-shadow:0 22px 70px -48px rgba(4,74,70,.38)}
+.fpair-explorer-nav{display:flex;flex-direction:column;gap:7px}.fpair-explorer-tab{width:100%;display:grid;grid-template-columns:38px 1fr auto;gap:12px;align-items:center;text-align:left;border:1px solid transparent;border-radius:15px;background:transparent;color:var(--text);padding:12px;transition:.22s ease}.fpair-explorer-tab:hover{background:var(--surface);transform:translateX(3px)}.fpair-explorer-tab.active{background:var(--surface);border-color:var(--border);box-shadow:0 12px 30px -24px rgba(14,138,130,.45)}.fpair-tab-icon{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:var(--bg-alt);font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--primary-strong)}.fpair-explorer-tab.active .fpair-tab-icon{background:var(--accent-soft)}.fpair-explorer-tab strong{display:block;font-size:13px}.fpair-explorer-tab small{display:block;margin-top:2px;color:var(--text-soft);font-size:10.5px}.fpair-arrow{color:var(--primary);opacity:.45;transition:.2s}.fpair-explorer-tab.active .fpair-arrow{opacity:1;transform:translateX(2px)}
+.fpair-explorer-stage{min-height:390px;border-radius:19px;padding:30px;background:linear-gradient(145deg,var(--surface),var(--surface-alt));border:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;animation:fpairStageIn .26s ease}.fpair-explorer-stage:after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:-80px;bottom:-100px;background:radial-gradient(circle,var(--accent-soft),transparent 70%);opacity:.75;pointer-events:none}.fpair-stage-topline{display:flex;justify-content:space-between;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.09em;color:var(--primary);font-weight:700}.fpair-stage-icon{width:54px;height:54px;margin:28px 0 16px;border-radius:16px;background:var(--accent-soft);display:grid;place-items:center;color:var(--primary);font-size:26px}.fpair-explorer-stage h3{font-size:clamp(25px,3vw,38px);line-height:1.08;margin:0 0 10px;letter-spacing:-1px}.fpair-explorer-stage>p{max-width:720px;margin:0;color:var(--text-soft);font-size:14px;line-height:1.7}.fpair-stage-points{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.fpair-stage-points span{padding:7px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--border);font-size:10.5px;color:var(--text-soft)}.fpair-stage-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px;z-index:1}.fpair-prep-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:15px;padding:16px 18px;border-radius:16px;border:1px solid var(--border);background:var(--surface)}.fpair-prep-footer strong,.fpair-prep-footer span{display:block}.fpair-prep-footer strong{font-size:12px}.fpair-prep-footer span{font-size:10.5px;color:var(--text-soft);margin-top:2px}.fpair-text-link{font-size:11.5px;font-weight:800;color:var(--primary-strong);white-space:nowrap}
+@keyframes fpairStageIn{from{opacity:.2;transform:translateY(7px)}to{opacity:1;transform:none}}
+
+.fpair-learn-section{background:var(--bg);position:relative}.fpair-learning-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,420px);gap:40px;align-items:end;margin-bottom:28px}.fpair-learning-hero h2{font-size:clamp(30px,4vw,48px);line-height:1.05;letter-spacing:-1.5px;margin:0}.fpair-learning-hero p{color:var(--text-soft);max-width:720px}.fpair-learning-search{height:54px;border:1px solid var(--border);border-radius:16px;background:var(--surface);display:flex;align-items:center;gap:10px;padding:0 16px;box-shadow:0 14px 36px -32px rgba(14,138,130,.6)}.fpair-learning-search span{font-size:20px;color:var(--primary)}.fpair-learning-search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:13px}.fpair-topic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.fpair-topic-card{min-height:220px;display:flex;flex-direction:column;text-align:left;padding:20px;border-radius:19px;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:.24s ease}.fpair-topic-card:hover{transform:translateY(-5px);border-color:var(--primary);box-shadow:0 20px 40px -32px rgba(14,138,130,.55)}.fpair-topic-code{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.1em;color:var(--primary);font-weight:700}.fpair-topic-card strong{font-size:16px;margin-top:48px}.fpair-topic-card>span:not(.fpair-topic-code){font-size:11px;color:var(--text-soft);line-height:1.55;margin-top:7px}.fpair-topic-card em{font-style:normal;font-size:11px;font-weight:800;color:var(--primary-strong);margin-top:auto;padding-top:20px}.fpair-topic-card.filtered-out{display:none}.fpair-learn-panel{margin-top:14px;padding:26px;border:1px solid var(--border);border-radius:20px;background:linear-gradient(135deg,var(--surface-alt),var(--surface));animation:fpairStageIn .24s ease}.fpair-learn-panel h3{font-size:24px;margin:7px 0}.fpair-learn-panel p{color:var(--text-soft);max-width:850px;font-size:13px;line-height:1.7}.fpair-learn-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}.fpair-forum-shell{display:grid;grid-template-columns:60px 1fr auto;gap:18px;align-items:center;margin-top:18px;padding:20px;border:1px dashed color-mix(in srgb,var(--primary) 40%,var(--border));border-radius:20px;background:color-mix(in srgb,var(--accent-soft) 24%,var(--surface))}.fpair-forum-mark{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--primary),var(--accent));display:grid;place-items:center;color:#fff;font-weight:900;font-size:20px}.fpair-forum-shell h3{margin:3px 0 2px;font-size:16px}.fpair-forum-shell p{margin:0;color:var(--text-soft);font-size:11px}.fpair-forum-status{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:800;color:var(--text-soft)}.fpair-forum-status span{width:7px;height:7px;border-radius:50%;background:var(--warn)}
+
+.fpair-journey-explorer{display:grid;grid-template-columns:minmax(420px,.9fr) minmax(0,1.1fr);gap:20px;align-items:stretch}.fpair-journey-rail{display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px}.fpair-journey-step{flex:0 0 105px;border:0;background:transparent;color:var(--text);text-align:center;padding:7px;transition:.2s}.fpair-journey-step>span{width:43px;height:43px;border-radius:14px;margin:0 auto 10px;display:grid;place-items:center;background:var(--bg-alt);font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--primary)}.fpair-journey-step strong,.fpair-journey-step small{display:block}.fpair-journey-step strong{font-size:12px}.fpair-journey-step small{font-size:9.5px;color:var(--text-soft);margin-top:2px}.fpair-journey-step.active>span{background:var(--accent-soft);box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 8%,transparent)}.fpair-journey-step.active strong{color:var(--primary-strong)}.fpair-rail-line{height:1px;flex:1;background:var(--border)}.fpair-journey-panel{min-height:220px;border:1px solid var(--border);border-radius:20px;padding:28px;background:var(--surface);display:flex;flex-direction:column;justify-content:center;animation:fpairStageIn .24s ease}.fpair-journey-panel h3{font-size:28px;margin:6px 0 8px}.fpair-journey-panel p{margin:0;color:var(--text-soft);font-size:13px;line-height:1.7;max-width:700px}.fpair-mini-actions{display:flex;gap:18px;align-items:center;margin-top:18px}.fpair-mini-actions a,.fpair-mini-actions button{border:0;background:transparent;padding:0;color:var(--primary-strong);font-size:11px;font-weight:800;cursor:pointer}
+
+@media(max-width:980px){.fpair-explorer{grid-template-columns:1fr}.fpair-explorer-nav{display:grid;grid-template-columns:repeat(2,1fr)}.fpair-learning-hero{grid-template-columns:1fr}.fpair-topic-grid{grid-template-columns:repeat(2,1fr)}.fpair-journey-explorer{grid-template-columns:1fr}.fpair-explorer-head{grid-template-columns:1fr}.fpair-journey-chip{max-width:320px}}
+@media(max-width:620px){.fpair-explorer-head{padding:22px}.fpair-explorer-nav{grid-template-columns:1fr}.fpair-explorer-stage{padding:22px;min-height:360px}.fpair-stage-actions .btn{width:100%}.fpair-prep-footer{align-items:flex-start;flex-direction:column}.fpair-topic-grid{grid-template-columns:1fr}.fpair-topic-card{min-height:170px}.fpair-topic-card strong{margin-top:28px}.fpair-forum-shell{grid-template-columns:50px 1fr}.fpair-forum-status{grid-column:2}.fpair-journey-rail{padding:18px 10px}.fpair-journey-step{flex-basis:82px}.fpair-journey-step>span{width:38px;height:38px}.fpair-mini-actions{align-items:flex-start;flex-direction:column;gap:10px}}
+
 </style>
 </head>
 
@@ -3172,213 +3197,70 @@ footer {
 
 
 <!-- ============================================================
-     TOTEM INTERACTIVO
+     EXPLORADOR DE EXÁMENES — FPAIR EXPERIENCE
      ============================================================ -->
-
-<section
-  class="totem-section"
-  id="examenes"
->
-
+<section class="totem-section fpair-exam-explorer" id="examenes">
   <div class="container">
-
-    <div
-      class="totem-shell"
-      id="totemShell"
-    >
-
-      <!-- ======================================================
-           HEADER DEL TOTEM
-           ====================================================== -->
-
-      <div class="totem-header">
-
-        <div class="totem-header-top">
-
-          <div>
-
-            <div class="totem-kicker">
-              FPAIR / ORIENTACIÓN DEL PACIENTE
-            </div>
-
-            <h2 class="totem-title">
-              ¿Qué examen te realizarás?
-            </h2>
-
-            <p class="totem-description">
-              Elige tu examen y FPAIR te mostrará
-              qué puedes esperar antes, durante y después.
-            </p>
-
-          </div>
-
-
-          <div class="progress-area">
-
-            <div class="progress-label">
-
-              <span>
-                Tu recorrido FPAIR
-              </span>
-
-              <span id="progressText">
-                1 de 4
-              </span>
-
-            </div>
-
-            <div class="progress-track">
-
-              <div
-                class="progress-bar"
-                id="progressBar"
-              ></div>
-
-            </div>
-
-          </div>
-
+    <div class="totem-shell fpair-explorer-shell" id="totemShell">
+      <div class="fpair-explorer-head">
+        <div>
+          <div class="totem-kicker">FPAIR / EXPLORADOR DE EXÁMENES</div>
+          <h2 class="totem-title">Encuentra tu examen. Nosotros te guiamos en el resto.</h2>
+          <p class="totem-description">Selecciona el nombre que aparece en tu orden. Desde ahí podrás recorrer preparación, técnica y resultados sin salir de la experiencia FPAIR.</p>
         </div>
-
+        <div class="fpair-journey-chip" aria-live="polite">
+          <span class="fpair-journey-dot"></span>
+          <span id="progressText">Inicio</span>
+          <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+        </div>
       </div>
-
-
-      <!-- ======================================================
-           BODY
-           ====================================================== -->
-
-      <div
-        class="totem-body"
-        id="totemBody"
-      >
-
-        <!-- El contenido será generado por JavaScript -->
-
+      <div class="totem-body" id="totemBody">
+        <div class="fpair-loading-grid" aria-hidden="true">
+          <div></div><div></div><div></div><div></div>
+        </div>
       </div>
-
     </div>
-
   </div>
-
 </section>
-
 
 
 <!-- ============================================================
-     PREPARACIÓN
+     PREPARACIÓN — EXPLORADOR INTERACTIVO
      ============================================================ -->
-
-<section
-  class="section section-alt"
-  id="preparacion"
->
-
+<section class="section section-alt fpair-prep-section" id="preparacion">
   <div class="container">
+    <div class="section-header fpair-section-head-wide">
+      <div class="eyebrow"><span class="eyebrow-dot"></span>Antes del examen</div>
+      <h2>Llegar preparado ayuda a realizar mejor el examen.</h2>
+      <p>Deja listos los dos pasos prácticos antes de venir. La información sobre inhaladores, contraindicaciones y otros temas estará disponible en la Biblioteca FPAIR.</p>
+    </div>
 
-    <div class="section-header">
-
-      <div class="eyebrow">
-
-        <span class="eyebrow-dot"></span>
-
-        Antes del examen
-
+    <div class="fpair-explorer" data-explorer="prep">
+      <div class="fpair-explorer-nav" role="tablist" aria-label="Herramientas de preparación">
+        <button class="fpair-explorer-tab active" type="button" role="tab" aria-selected="true" data-prep-topic="consentimiento">
+          <span class="fpair-tab-icon">01</span><span><strong>Consentimiento</strong><small>Revísalo con tiempo</small></span><span class="fpair-arrow">→</span>
+        </button>
+        <button class="fpair-explorer-tab" type="button" role="tab" aria-selected="false" data-prep-topic="alarma">
+          <span class="fpair-tab-icon">02</span><span><strong>Recordatorio con alarma</strong><small>Programa tu preparación</small></span><span class="fpair-arrow">→</span>
+        </button>
       </div>
 
-      <h2>
-        Llegar preparado ayuda a realizar mejor el examen.
-      </h2>
-
-      <p>
-        Las indicaciones pueden variar según el examen
-        y el laboratorio. Siempre sigue las instrucciones
-        específicas que te entregue tu equipo de salud.
-      </p>
-
+      <div class="fpair-explorer-stage" id="prepExplorerStage" aria-live="polite">
+        <div class="fpair-stage-topline"><span>PREPARACIÓN PERSONALIZADA</span><span class="fpair-stage-counter">01 / 02</span></div>
+        <div class="fpair-stage-icon">✓</div>
+        <h3>Lee tu consentimiento antes de venir.</h3>
+        <p>Conocer el procedimiento con anticipación te permite llegar con menos dudas y aprovechar mejor el tiempo en el laboratorio.</p>
+        <div class="fpair-stage-points"><span>Comprende qué examen te realizarán</span><span>Revisa las indicaciones principales</span><span>Anota cualquier duda para el equipo</span></div>
+        <div class="fpair-stage-actions"><a class="btn btn-primary" href="preparacion_info.html#consentimiento">Revisar consentimiento</a></div>
+      </div>
     </div>
 
-
-    <div class="preparation-grid">
-
-
-      <article class="preparation-card">
-
-        <div class="step-badge">
-          01
-        </div>
-
-        <h3>
-          Medicamentos
-        </h3>
-
-        <p>
-          Si utilizas inhaladores u otros medicamentos,
-          consulta previamente si debes modificarlos.
-          No los suspendas por tu cuenta.
-        </p>
-
-      </article>
-
-
-      <article class="preparation-card">
-
-        <div class="step-badge">
-          02
-        </div>
-
-        <h3>
-          Tabaco
-        </h3>
-
-        <p>
-          Sigue las indicaciones entregadas por el laboratorio
-          respecto al consumo de tabaco antes del examen.
-        </p>
-
-      </article>
-
-
-      <article class="preparation-card">
-
-        <div class="step-badge">
-          03
-        </div>
-
-        <h3>
-          Ejercicio
-        </h3>
-
-        <p>
-          Algunos estudios requieren evitar ejercicio intenso
-          antes de la evaluación.
-        </p>
-
-      </article>
-
-
-      <article class="preparation-card">
-
-        <div class="step-badge">
-          04
-        </div>
-
-        <h3>
-          Ropa cómoda
-        </h3>
-
-        <p>
-          Una ropa que permita respirar y moverse cómodamente
-          facilita la realización de determinadas pruebas.
-        </p>
-
-      </article>
-
+    <div class="fpair-prep-footer">
+      <div><strong>Tu seguridad primero.</strong><span>Las indicaciones pueden variar según el examen, tu situación clínica y el laboratorio.</span></div>
+      <a class="fpair-text-link" href="preparacion_info.html">Abrir preparación <span>↗</span></a>
     </div>
-
   </div>
-
 </section>
-
 
 
 <!-- ============================================================
@@ -3701,100 +3583,75 @@ footer {
 
 
 <!-- ============================================================
-     CONFIANZA
+     APRENDER MÁS — BIBLIOTECA / FORO
      ============================================================ -->
-
-<section
-  class="section"
-  id="confianza"
->
-
+<section class="section fpair-learn-section" id="aprender">
   <div class="container">
-
-    <div class="section-header">
-
-      <div class="eyebrow">
-
-        <span class="eyebrow-dot"></span>
-
-        FPAIR
-
+    <div class="fpair-learning-hero">
+      <div>
+        <div class="eyebrow"><span class="eyebrow-dot"></span>¿Quieres aprender más?</div>
+        <h2>Una biblioteca respiratoria que crece contigo.</h2>
+        <p>Explora temas en lenguaje simple. Aquí reuniremos guías, videos, preguntas frecuentes y, más adelante, un espacio de comunidad FPAIR.</p>
       </div>
-
-      <h2>
-        Educación antes, durante y después del examen.
-      </h2>
-
-      <p>
-        El objetivo es que comprendas el proceso y puedas
-        participar con mayor tranquilidad.
-      </p>
-
+      <div class="fpair-learning-search">
+        <span>⌕</span>
+        <input id="fpairTopicSearch" type="search" placeholder="Buscar: inhaladores, espirometría..." aria-label="Buscar temas FPAIR">
+      </div>
     </div>
 
-
-    <div class="trust-grid">
-
-
-      <article class="trust-card">
-
-        <div class="step-badge">
-          ATS
-        </div>
-
-        <h3>
-          Orientación técnica
-        </h3>
-
-        <p>
-          Contenido educativo basado en principios y
-          estándares internacionales de función pulmonar.
-        </p>
-
-      </article>
-
-
-      <article class="trust-card">
-
-        <div class="step-badge">
-          EDU
-        </div>
-
-        <h3>
-          Lenguaje simple
-        </h3>
-
-        <p>
-          La información está pensada para personas
-          sin formación médica.
-        </p>
-
-      </article>
-
-
-      <article class="trust-card">
-
-        <div class="step-badge">
-          +1
-        </div>
-
-        <h3>
-          Acompañamiento
-        </h3>
-
-        <p>
-          FPAIR no reemplaza al profesional: ayuda a que
-          el paciente llegue más preparado y tranquilo.
-        </p>
-
-      </article>
-
+    <div class="fpair-topic-grid" id="fpairTopicGrid">
+      <button class="fpair-topic-card" type="button" data-learn-topic="inhaladores" data-search="inhaladores broncodilatadores medicamentos suspensión">
+        <span class="fpair-topic-code">MED / 01</span><strong>Inhaladores</strong><span>Qué hacen, cuándo informar su uso y cómo prepararte.</span><em>Explorar →</em>
+      </button>
+      <button class="fpair-topic-card" type="button" data-learn-topic="contraindicaciones" data-search="contraindicaciones seguridad síntomas cirugía cardiovascular infección">
+        <span class="fpair-topic-code">SAFE / 02</span><strong>Contraindicaciones</strong><span>Situaciones que debes comunicar antes de una prueba.</span><em>Explorar →</em>
+      </button>
+      <button class="fpair-topic-card" type="button" data-learn-topic="lectura" data-search="pulmones resultados fev1 fvc dlco interpretación curvas">
+        <span class="fpair-topic-code">DATA / 03</span><strong>Cómo leemos tus pulmones</strong><span>Qué significan las curvas, volúmenes y principales parámetros.</span><em>Explorar →</em>
+      </button>
+      <button class="fpair-topic-card" type="button" data-learn-topic="experiencia" data-search="experiencia laboratorio ansiedad nervios examen técnica">
+        <span class="fpair-topic-code">LAB / 04</span><strong>La experiencia en el laboratorio</strong><span>Qué ocurre desde que llegas hasta que termina tu examen.</span><em>Explorar →</em>
+      </button>
     </div>
 
+    <div class="fpair-learn-panel" id="fpairLearnPanel" hidden></div>
+
+    <div class="fpair-forum-shell">
+      <div class="fpair-forum-mark">F</div>
+      <div><span class="fpair-topic-code">PRÓXIMA ETAPA</span><h3>Foro FPAIR</h3><p>Un espacio para preguntas frecuentes, educación respiratoria y contenidos construidos desde las dudas reales de pacientes y laboratorios.</p></div>
+      <div class="fpair-forum-status"><span></span>En desarrollo</div>
+    </div>
   </div>
-
 </section>
 
+<!-- ============================================================
+     EXPERIENCIA FPAIR — ANTES / DURANTE / DESPUÉS
+     ============================================================ -->
+<section class="section section-alt fpair-journey-section" id="confianza">
+  <div class="container">
+    <div class="section-header fpair-section-head-wide">
+      <div class="eyebrow"><span class="eyebrow-dot"></span>FPAIR</div>
+      <h2>Educación antes, durante y después del examen.</h2>
+      <p>No necesitas leerlo todo. Elige el momento que te interesa y FPAIR te muestra solo la información relevante.</p>
+    </div>
+
+    <div class="fpair-journey-explorer">
+      <div class="fpair-journey-rail" role="tablist" aria-label="Momentos del examen">
+        <button class="fpair-journey-step active" type="button" data-journey="antes" aria-selected="true"><span>01</span><strong>Antes</strong><small>Prepárate</small></button>
+        <div class="fpair-rail-line"></div>
+        <button class="fpair-journey-step" type="button" data-journey="durante" aria-selected="false"><span>02</span><strong>Durante</strong><small>Comprende</small></button>
+        <div class="fpair-rail-line"></div>
+        <button class="fpair-journey-step" type="button" data-journey="despues" aria-selected="false"><span>03</span><strong>Después</strong><small>Interpreta</small></button>
+      </div>
+      <div class="fpair-journey-panel" id="journeyPanel" aria-live="polite">
+        <span class="fpair-topic-code">ANTES DEL EXAMEN</span>
+        <h3>Llega con menos incertidumbre.</h3>
+        <p>Revisa indicaciones, medicamentos, contraindicaciones y consentimiento. Si algo no está claro, anótalo para preguntarlo al equipo.</p>
+        <div class="fpair-mini-actions"><a href="#preparacion">Explorar preparación →</a><button type="button" data-scroll-learn="experiencia">Conocer la experiencia →</button></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 </main>
 
@@ -8076,7 +7933,7 @@ document
   );
 
 
-modalOverlay.addEventListener(
+if (modalOverlay) modalOverlay.addEventListener(
   "click",
   event => {
 
@@ -8440,7 +8297,7 @@ document
   .getElementById(
     "heroChooseExam"
   )
-  .addEventListener(
+  ?.addEventListener(
     "click",
     () => {
 
@@ -8465,7 +8322,7 @@ document
   .getElementById(
     "heroNervous"
   )
-  .addEventListener(
+  ?.addEventListener(
     "click",
     () => {
 
@@ -8490,7 +8347,7 @@ document
   .getElementById(
     "heroPractice"
   )
-  .addEventListener(
+  ?.addEventListener(
     "click",
     openPracticeModal
   );
@@ -8500,7 +8357,7 @@ document
   .getElementById(
     "practiceFromSection"
   )
-  .addEventListener(
+  ?.addEventListener(
     "click",
     openPracticeModal
   );
@@ -8510,7 +8367,7 @@ document
   .getElementById(
     "openInterpretation"
   )
-  .addEventListener(
+  ?.addEventListener(
     "click",
     () => {
 
@@ -8536,7 +8393,7 @@ const mobileMenuButton =
   );
 
 
-mobileMenuButton.addEventListener(
+if (mobileMenuButton) mobileMenuButton.addEventListener(
   "click",
   () => {
 
@@ -8651,7 +8508,7 @@ function initializeTheme() {
 }
 
 
-themeToggle.addEventListener(
+if (themeToggle) themeToggle.addEventListener(
   "click",
   () => {
 
@@ -9212,6 +9069,48 @@ window.addEventListener("unhandledrejection", event => {
 });
 
 
+
+
+/* ============================================================
+   FPAIR EXPERIENCE — EXPLORADORES
+   ============================================================ */
+const PREP_EXPLORER = {
+  consentimiento:{n:"01 / 02",icon:"✓",title:"Lee tu consentimiento antes de venir.",text:"Conocer el procedimiento con anticipación te permite llegar con menos dudas y aprovechar mejor el tiempo en el laboratorio.",points:["Comprende qué examen te realizarán","Revisa las indicaciones principales","Anota cualquier duda para el equipo"],actions:`<a class="btn btn-primary" href="preparacion_info.html#consentimiento">Revisar consentimiento</a>`},
+  alarma:{n:"02 / 02",icon:"⌚",title:"Deja que FPAIR te ayude a recordarlo.",text:"Programa una alarma para las indicaciones previas que tu laboratorio te haya entregado y evita depender de la memoria el día antes del examen.",points:["Elige fecha y hora","Escribe la indicación que debes recordar","Revisa tu preparación con anticipación"],actions:`<a class="btn btn-primary" href="preparacion_info.html#alarma">Crear recordatorio</a>`}
+};
+
+function renderPrepExplorer(key){
+  const d=PREP_EXPLORER[key]; const stage=document.getElementById('prepExplorerStage'); if(!d||!stage)return;
+  document.querySelectorAll('[data-prep-topic]').forEach(b=>{const on=b.dataset.prepTopic===key;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});
+  stage.innerHTML=`<div class="fpair-stage-topline"><span>PREPARACIÓN PERSONALIZADA</span><span class="fpair-stage-counter">${d.n}</span></div><div class="fpair-stage-icon">${d.icon}</div><h3>${d.title}</h3><p>${d.text}</p><div class="fpair-stage-points">${d.points.map(x=>`<span>${x}</span>`).join('')}</div><div class="fpair-stage-actions">${d.actions}</div>`;
+}
+
+document.addEventListener('click',e=>{
+  const prep=e.target.closest('[data-prep-topic]'); if(prep){renderPrepExplorer(prep.dataset.prepTopic);return;}
+  const jump=e.target.closest('[data-scroll-learn]'); if(jump){document.getElementById('aprender')?.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>openLearnTopic(jump.dataset.scrollLearn),350);return;}
+  const learn=e.target.closest('[data-learn-topic]'); if(learn){openLearnTopic(learn.dataset.learnTopic);return;}
+  const journey=e.target.closest('[data-journey]'); if(journey){renderJourney(journey.dataset.journey);}
+});
+
+const LEARN_TOPICS={
+ inhaladores:{code:'MED / INHALADORES',title:'Inhaladores, sin confusión.',text:'Aprende a distinguir medicamento, dispositivo y horario de uso. La preparación para una prueba depende del fármaco y del objetivo del examen; la indicación del laboratorio siempre tiene prioridad.',links:'<a class="btn btn-secondary" href="#preparacion">Volver a preparación</a>'},
+ contraindicaciones:{code:'SAFE / SEGURIDAD',title:'Seguridad antes que rendimiento.',text:'Más que memorizar una lista, queremos que sepas qué situaciones recientes vale la pena comunicar al equipo: síntomas importantes, infecciones, procedimientos, eventos cardiovasculares o cambios relevantes en tu estado de salud.',links:'<a class="btn btn-secondary" href="#preparacion">Explorar preparación</a>'},
+ lectura:{code:'DATA / RESULTADOS',title:'Cómo convertimos una respiración en información.',text:'Curvas, flujos, volúmenes y difusión son distintas formas de observar cómo entra, sale y se intercambia el aire. FPAIR irá construyendo esta biblioteca para que puedas entender tus resultados sin reemplazar la interpretación clínica.',links:'<a class="btn btn-secondary" href="#interpretacion">Ver interpretación</a>'},
+ experiencia:{code:'LAB / EXPERIENCIA',title:'Qué ocurre dentro del laboratorio.',text:'Desde la explicación inicial hasta las repeticiones necesarias, cada etapa tiene un propósito. Saber qué viene después reduce incertidumbre y facilita la colaboración con el profesional.',links:'<a class="btn btn-secondary" href="#examenes">Elegir mi examen</a>'}
+};
+function openLearnTopic(key){const d=LEARN_TOPICS[key],p=document.getElementById('fpairLearnPanel');if(!d||!p)return;p.hidden=false;p.innerHTML=`<span class="fpair-topic-code">${d.code}</span><h3>${d.title}</h3><p>${d.text}</p><div class="fpair-learn-links">${d.links}</div>`;p.scrollIntoView({behavior:'smooth',block:'nearest'});}
+
+const JOURNEY={
+ antes:{code:'ANTES DEL EXAMEN',title:'Llega con menos incertidumbre.',text:'Revisa indicaciones, medicamentos, contraindicaciones y consentimiento. Si algo no está claro, anótalo para preguntarlo al equipo.',actions:'<a href="#preparacion">Explorar preparación →</a><button type="button" data-scroll-learn="experiencia">Conocer la experiencia →</button>'},
+ durante:{code:'DURANTE EL EXAMEN',title:'Tu única tarea es seguir la guía.',text:'El profesional te mostrará la maniobra, corregirá la técnica y decidirá cuándo repetirla. Puedes avisar en cualquier momento si tienes dolor, mareo o molestias.',actions:'<a href="#entrenamiento">Practicar técnica →</a><a href="#examenes">Elegir examen →</a>'},
+ despues:{code:'DESPUÉS DEL EXAMEN',title:'Los números necesitan contexto.',text:'Un resultado no debe interpretarse de forma aislada. FPAIR puede ayudarte a entender qué representa cada parámetro y qué preguntas hacer a tu equipo de salud.',actions:'<a href="#interpretacion">Comprender resultados →</a><button type="button" data-scroll-learn="lectura">Cómo leemos tus pulmones →</button>'}
+};
+function renderJourney(key){const d=JOURNEY[key],p=document.getElementById('journeyPanel');if(!d||!p)return;document.querySelectorAll('[data-journey]').forEach(b=>{const on=b.dataset.journey===key;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});p.innerHTML=`<span class="fpair-topic-code">${d.code}</span><h3>${d.title}</h3><p>${d.text}</p><div class="fpair-mini-actions">${d.actions}</div>`;}
+
+const topicSearch=document.getElementById('fpairTopicSearch');
+if(topicSearch){topicSearch.addEventListener('input',()=>{const q=topicSearch.value.trim().toLowerCase();document.querySelectorAll('#fpairTopicGrid [data-search]').forEach(card=>card.classList.toggle('filtered-out',q && !card.dataset.search.toLowerCase().includes(q)));});}
+
+
 /* ============================================================
    INICIALIZACIÓN
    ============================================================ */
@@ -9228,7 +9127,8 @@ function initialize() {
     if (body) {
       body.innerHTML = `
         <div class="js-fallback" role="alert">
-          No pudimos cargar el índice interactivo. Recarga la página. Si el problema continúa, utiliza los enlaces informativos del sitio.
+          <strong>El explorador interactivo no pudo iniciarse.</strong><br>
+          Puedes continuar directamente con <a href="espirometria_info.html">Espirometría</a>, <a href="difusion_info.html">DLCO</a>, <a href="volumenes_info.html">Volúmenes pulmonares</a> u <a href="preparacion_info.html">orientación para tu examen</a>.
         </div>`;
     }
   }
