@@ -3964,18 +3964,18 @@ footer {
     </div>
 
     <div class="fpair-topic-grid" id="fpairTopicGrid">
-      <button class="fpair-topic-card" type="button" data-learn-topic="inhaladores" data-search="inhaladores broncodilatadores medicamentos suspensión">
-        <span class="fpair-topic-code">MED / 01</span><strong>Inhaladores</strong><span>Qué hacen, cuándo informar su uso y cómo prepararte.</span><em>Explorar →</em>
-      </button>
-      <button class="fpair-topic-card" type="button" data-learn-topic="contraindicaciones" data-search="contraindicaciones seguridad síntomas cirugía cardiovascular infección">
-        <span class="fpair-topic-code">SAFE / 02</span><strong>Contraindicaciones</strong><span>Situaciones que debes comunicar antes de una prueba.</span><em>Explorar →</em>
-      </button>
-      <button class="fpair-topic-card" type="button" data-learn-topic="lectura" data-search="pulmones resultados fev1 fvc dlco interpretación curvas">
-        <span class="fpair-topic-code">DATA / 03</span><strong>Cómo leemos tus pulmones</strong><span>Qué significan las curvas, volúmenes y principales parámetros.</span><em>Explorar →</em>
-      </button>
-      <button class="fpair-topic-card" type="button" data-learn-topic="experiencia" data-search="experiencia laboratorio ansiedad nervios examen técnica">
-        <span class="fpair-topic-code">LAB / 04</span><strong>La experiencia en el laboratorio</strong><span>Qué ocurre desde que llegas hasta que termina tu examen.</span><em>Explorar →</em>
-      </button>
+      <a class="fpair-topic-card" href="biblioteca.html#inhaladores" data-search="inhaladores broncodilatadores medicamentos suspensión">
+        <span class="fpair-topic-code">MED / 01</span><strong>Inhaladores</strong><span>Qué hacen, cuándo informar su uso y cómo prepararte.</span><em>Ir a Biblioteca →</em>
+      </a>
+      <a class="fpair-topic-card" href="biblioteca.html#contraindicaciones" data-search="contraindicaciones seguridad síntomas cirugía cardiovascular infección">
+        <span class="fpair-topic-code">SAFE / 02</span><strong>Contraindicaciones</strong><span>Situaciones que debes comunicar antes de una prueba.</span><em>Ir a Biblioteca →</em>
+      </a>
+      <a class="fpair-topic-card" href="biblioteca.html#como-leemos-tus-pulmones" data-search="pulmones resultados fev1 fvc dlco interpretación curvas">
+        <span class="fpair-topic-code">DATA / 03</span><strong>Cómo leemos tus pulmones</strong><span>Qué significan las curvas, volúmenes y principales parámetros.</span><em>Ir a Biblioteca →</em>
+      </a>
+      <a class="fpair-topic-card" href="biblioteca.html#experiencia-laboratorio" data-search="experiencia laboratorio ansiedad nervios examen técnica">
+        <span class="fpair-topic-code">LAB / 04</span><strong>La experiencia en el laboratorio</strong><span>Qué ocurre desde que llegas hasta que termina tu examen.</span><em>Ir a Biblioteca →</em>
+      </a>
     </div>
 
     <div class="fpair-learn-panel" id="fpairLearnPanel" hidden></div>
@@ -3983,7 +3983,7 @@ footer {
     <div class="fpair-forum-shell">
       <div class="fpair-forum-mark">F</div>
       <div><span class="fpair-topic-code">PRÓXIMA ETAPA</span><h3>Foro FPAIR</h3><p>Un espacio para preguntas frecuentes, educación respiratoria y contenidos construidos desde las dudas reales de pacientes y laboratorios.</p></div>
-      <div class="fpair-forum-status"><span></span>En desarrollo</div>
+      <a class="fpair-forum-status" href="foro.html"><span></span>Explorar foro →</a>
     </div>
   </div>
 </section>
@@ -4011,7 +4011,7 @@ footer {
         <span class="fpair-topic-code">ANTES DEL EXAMEN</span>
         <h3>Llega con menos incertidumbre.</h3>
         <p>Revisa indicaciones, medicamentos, contraindicaciones y consentimiento. Si algo no está claro, anótalo para preguntarlo al equipo.</p>
-        <div class="fpair-mini-actions"><a href="#preparacion">Explorar preparación →</a><button type="button" data-scroll-learn="experiencia">Conocer la experiencia →</button></div>
+        <div class="fpair-mini-actions"><a href="#preparacion">Explorar preparación →</a><a href="biblioteca.html#experiencia-laboratorio">Conocer la experiencia →</a></div>
       </div>
     </div>
   </div>
@@ -7005,6 +7005,24 @@ const ALL_EXAMS = {
 
 };
 
+/* ============================================================
+   FPAIR — RUTAS DE MEDIOS
+   No modifica el diseño. Solo permite que al agregar un PNG
+   con el ID del examen aparezca automáticamente.
+   ============================================================ */
+Object.values(ALL_EXAMS).forEach(exam => {
+
+  if (!exam.icon) {
+    exam.icon = `assets/images/icons/${exam.id}.png`;
+  }
+
+  if (!exam.media) {
+    exam.media = `assets/images/exams/${exam.id}.png`;
+  }
+
+});
+
+
 
 /* ============================================================
    ESTADO
@@ -7065,6 +7083,10 @@ function renderIcon(exam) {
           src="${exam.icon}"
           alt=""
           loading="lazy"
+          onerror="
+            this.style.display='none';
+            this.parentElement.classList.add('media-missing');
+          "
         >
       </div>
     `;
@@ -7094,7 +7116,19 @@ function renderLargeMedia(exam) {
           src="${exam.media}"
           alt="${exam.name}"
           loading="lazy"
+          onerror="
+            this.style.display='none';
+            this.nextElementSibling.style.display='grid';
+          "
         >
+
+        <div
+          class="media-placeholder-content"
+          style="display:none"
+        >
+          <strong>ESPACIO PARA IMAGEN</strong>
+          <span>${exam.name}</span>
+        </div>
 
       </div>
     `;
@@ -7378,6 +7412,23 @@ function bindSelectorEvents() {
       button.addEventListener(
         "click",
         () => {
+
+          const exam =
+            ALL_EXAMS[
+              button.dataset.examId
+            ];
+
+          if (
+            exam &&
+            exam.audience === "pediatric" &&
+            exam.link
+          ) {
+
+            window.location.href =
+              exam.link;
+
+            return;
+          }
 
           openExam(
             button.dataset.examId
@@ -9452,7 +9503,6 @@ function renderPrepExplorer(key){
 document.addEventListener('click',e=>{
   const prep=e.target.closest('[data-prep-topic]'); if(prep){renderPrepExplorer(prep.dataset.prepTopic);return;}
   const jump=e.target.closest('[data-scroll-learn]'); if(jump){document.getElementById('aprender')?.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>openLearnTopic(jump.dataset.scrollLearn),350);return;}
-  const learn=e.target.closest('[data-learn-topic]'); if(learn){openLearnTopic(learn.dataset.learnTopic);return;}
   const journey=e.target.closest('[data-journey]'); if(journey){renderJourney(journey.dataset.journey);}
 });
 
@@ -9465,9 +9515,9 @@ const LEARN_TOPICS={
 function openLearnTopic(key){const d=LEARN_TOPICS[key],p=document.getElementById('fpairLearnPanel');if(!d||!p)return;p.hidden=false;p.innerHTML=`<span class="fpair-topic-code">${d.code}</span><h3>${d.title}</h3><p>${d.text}</p><div class="fpair-learn-links">${d.links}</div>`;p.scrollIntoView({behavior:'smooth',block:'nearest'});}
 
 const JOURNEY={
- antes:{code:'ANTES DEL EXAMEN',title:'Llega con menos incertidumbre.',text:'Revisa indicaciones, medicamentos, contraindicaciones y consentimiento. Si algo no está claro, anótalo para preguntarlo al equipo.',actions:'<a href="#preparacion">Explorar preparación →</a><button type="button" data-scroll-learn="experiencia">Conocer la experiencia →</button>'},
+ antes:{code:'ANTES DEL EXAMEN',title:'Llega con menos incertidumbre.',text:'Revisa indicaciones, medicamentos, contraindicaciones y consentimiento. Si algo no está claro, anótalo para preguntarlo al equipo.',actions:'<a href="#preparacion">Explorar preparación →</a><a href="biblioteca.html#experiencia-laboratorio">Conocer la experiencia →</a>'},
  durante:{code:'DURANTE EL EXAMEN',title:'Tu única tarea es seguir la guía.',text:'El profesional te mostrará la maniobra, corregirá la técnica y decidirá cuándo repetirla. Puedes avisar en cualquier momento si tienes dolor, mareo o molestias.',actions:'<a href="#entrenamiento">Practicar técnica →</a><a href="#examenes">Elegir examen →</a>'},
- despues:{code:'DESPUÉS DEL EXAMEN',title:'Los números necesitan contexto.',text:'Un resultado no debe interpretarse de forma aislada. FPAIR puede ayudarte a entender qué representa cada parámetro y qué preguntas hacer a tu equipo de salud.',actions:'<a href="#interpretacion">Comprender resultados →</a><button type="button" data-scroll-learn="lectura">Cómo leemos tus pulmones →</button>'}
+ despues:{code:'DESPUÉS DEL EXAMEN',title:'Los números necesitan contexto.',text:'Un resultado no debe interpretarse de forma aislada. FPAIR puede ayudarte a entender qué representa cada parámetro y qué preguntas hacer a tu equipo de salud.',actions:'<a href="#interpretacion">Comprender resultados →</a><a href="biblioteca.html#como-leemos-tus-pulmones">Cómo leemos tus pulmones →</a>'}
 };
 function renderJourney(key){const d=JOURNEY[key],p=document.getElementById('journeyPanel');if(!d||!p)return;document.querySelectorAll('[data-journey]').forEach(b=>{const on=b.dataset.journey===key;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});p.innerHTML=`<span class="fpair-topic-code">${d.code}</span><h3>${d.title}</h3><p>${d.text}</p><div class="fpair-mini-actions">${d.actions}</div>`;}
 
@@ -9525,5 +9575,6 @@ document.addEventListener(
 
 </script>
 
+<script src="fpair_routes.js"></script>
 </body>
 </html>
