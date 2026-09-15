@@ -1,871 +1,240 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pletismografía - Volúmenes Pulmonares | FPAIR</title>
-    <meta name="description" content="Aprende qué es la pletismografía corporal, cómo se miden los volúmenes pulmonares y cómo prepararte para el examen.">
-    <meta name="theme-color" content="#0E8A82">
-
-    <!-- GOOGLE FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-
-    <!-- FONT AWESOME -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <style>
-        /* ===== VARIABLES FPAIR ===== */
-        :root {
-            --bg: #F3FBFA;
-            --bg-alt: #E7F6F4;
-            --surface: #FFFFFF;
-            --surface-alt: #F0FBF9;
-            --border: #D3EDE9;
-            --text: #0B2530;
-            --text-soft: #4B6B6D;
-            --primary: #0E8A82;
-            --primary-strong: #086B64;
-            --accent: #22D3B8;
-            --accent-soft: #C8F5EC;
-            --shadow: 0 12px 32px -12px rgba(14,138,130,.22);
-            --radius: 16px;
-        }
-
-        [data-theme="dark"] {
-            --bg: #06191B;
-            --bg-alt: #0A2224;
-            --surface: #0D2B2D;
-            --surface-alt: #0F3335;
-            --border: #164448;
-            --text: #E6F7F4;
-            --text-soft: #8FBDB8;
-            --primary: #2FE0C3;
-            --primary-strong: #63F0D6;
-            --accent: #14B8A6;
-            --accent-soft: #0F3B3A;
-            --shadow: 0 12px 32px -12px rgba(0,0,0,.55);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            transition: background .35s ease, color .35s ease;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        h1, h2, h3 { font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.02em; }
-        a { color: inherit; text-decoration: none; }
-
-        /* ===== LAYOUT ===== */
-        .exam-layout {
-            display: flex;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-            gap: 40px;
-            align-items: flex-start;
-        }
-
-        .exam-sidebar {
-            width: 240px;
-            flex-shrink: 0;
-            padding: 30px 0;
-            position: sticky;
-            top: 20px;
-            height: calc(100vh - 40px);
-            overflow-y: auto;
-        }
-
-        .exam-main {
-            flex: 1;
-            padding: 30px 0;
-        }
-
-        /* ===== SIDEBAR ===== */
-        .back-home {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-soft);
-            font-weight: 600;
-            margin-bottom: 30px;
-            transition: color .2s;
-            cursor: pointer;
-        }
-        .back-home:hover {
-            color: var(--primary-strong);
-        }
-
-        .exam-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-        .exam-logo .logo-box {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #04211E;
-            font-weight: 800;
-            font-size: 1.1rem;
-            font-family: 'Manrope', sans-serif;
-        }
-        .exam-logo h3 { font-size: 1.1rem; line-height: 1.2; }
-        .exam-logo p { font-size: .85rem; color: var(--text-soft); }
-
-        .exam-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .exam-nav a {
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-weight: 500;
-            color: var(--text-soft);
-            transition: all .2s;
-        }
-        .exam-nav a:hover {
-            background: var(--accent-soft);
-            color: var(--primary-strong);
-        }
-
-        /* ===== SECCIONES ===== */
-        .section {
-            padding: 40px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .section:last-child { border-bottom: none; }
-
-        .section-header {
-            margin-bottom: 24px;
-        }
-        .section-header h2 {
-            font-size: clamp(1.5rem, 2.6vw, 2rem);
-            color: var(--primary-strong);
-        }
-        .section-header p {
-            color: var(--text-soft);
-            margin-top: 6px;
-        }
-
-        .hero-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-        }
-        .hero-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            color: var(--primary-strong);
-        }
-        .hero-card p {
-            color: var(--text-soft);
-        }
-
-        /* ===== GRID ===== */
-        .exam-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
-        }
-
-        .exam-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            transition: all .2s;
-        }
-        .exam-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow);
-            border-color: var(--accent);
-        }
-        .exam-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-            color: var(--primary-strong);
-        }
-        .exam-card p {
-            font-size: .92rem;
-            color: var(--text-soft);
-        }
-        .exam-card small {
-            font-size: .78rem;
-            color: var(--text-soft);
-            display: block;
-            margin-top: 4px;
-        }
-
-        .checklist-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-        }
-
-        .check-item {
-            background: var(--surface-alt);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-            color: var(--text);
-        }
-        .check-item i {
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-
-        /* ===== CAROUSEL ===== */
-        .carousel-container {
-            position: relative;
-            height: 280px;
-            overflow: hidden;
-            border-radius: 12px;
-            background: var(--bg-alt);
-            border: 1px solid var(--border);
-        }
-        .carousel-slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            padding: 30px 25px;
-            transition: all 0.6s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        .carousel-slide.active { opacity: 1; }
-        .carousel-slide h3 { font-size: 1.2rem; margin-bottom: 8px; }
-        .carousel-slide p { max-width: 500px; margin: 0 auto 8px; }
-
-        .carousel-nav {
-            text-align: center;
-            margin-top: 16px;
-        }
-        .carousel-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-            background: var(--border);
-            margin: 0 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .carousel-dot.active {
-            background: var(--primary);
-        }
-
-        /* ===== TABS ===== */
-        .comparison-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        .tab {
-            flex: 1;
-            min-width: 140px;
-            background: var(--bg-alt);
-            border: none;
-            border-radius: 8px 8px 0 0;
-            padding: 12px 18px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 700;
-            color: var(--text-soft);
-            font-size: 0.95rem;
-            font-family: 'Inter', sans-serif;
-        }
-        .tab.active {
-            background: var(--primary);
-            color: #04211E;
-            box-shadow: var(--shadow);
-        }
-        .tab:hover:not(.active) {
-            background: var(--accent-soft);
-        }
-        .tab-content {
-            display: none;
-            background: var(--surface-alt);
-            border-radius: 0 0 10px 10px;
-            padding: 20px 24px;
-            animation: fadeIn 0.4s ease;
-        }
-        .tab-content.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== PASOS ===== */
-        .steps-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            justify-content: center;
-        }
-        .step {
-            flex: 1;
-            min-width: 180px;
-            max-width: 260px;
-            background: var(--bg-alt);
-            border-radius: 12px;
-            text-align: center;
-            padding: 24px 16px;
-            transition: all 0.3s;
-            border: 1px solid var(--border);
-        }
-        .step:hover {
-            background: var(--accent-soft);
-            transform: translateY(-5px);
-        }
-        .step-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: var(--primary);
-            color: #04211E;
-            font-size: 1.8rem;
-        }
-        .step h3 { font-size: 1rem; margin-bottom: 6px; }
-        .step p { font-size: 0.92rem; margin-bottom: 0; }
-
-        /* ===== TABLA ===== */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 16px;
-            font-size: 0.98rem;
-        }
-        th, td {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border);
-            text-align: left;
-        }
-        th {
-            background: var(--primary);
-            color: #04211E;
-            font-weight: 700;
-        }
-        tr:nth-child(even) {
-            background: var(--bg-alt);
-        }
-
-        /* ===== FAQ ===== */
-        .faq-item {
-            margin-bottom: 12px;
-            border-bottom: 1px solid var(--border);
-        }
-        .faq-question {
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
-            font-weight: 700;
-            color: var(--primary-strong);
-            font-size: 1.02rem;
-        }
-        .faq-question span {
-            font-size: 1.3rem;
-            transition: transform 0.3s;
-            color: var(--text-soft);
-        }
-        .faq-answer {
-            display: none;
-            padding-bottom: 14px;
-            color: var(--text-soft);
-        }
-        .faq-answer.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        /* ===== DESTACADOS ===== */
-        .highlight-box {
-            background: var(--accent-soft);
-            border-left: 4px solid var(--primary);
-            padding: 18px 22px;
-            margin: 20px 0 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .highlight-box h3 { margin-top: 0; }
-        .highlight-box p { margin-bottom: 0; }
-
-        /* ===== FOOTER ===== */
-        footer {
-            text-align: center;
-            padding: 30px 24px;
-            color: var(--text-soft);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border);
-            margin-top: 20px;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .exam-layout { flex-direction: column; }
-            .exam-sidebar { display: none; }
-        }
-
-        @media (max-width: 768px) {
-            .exam-layout { padding: 0 16px; }
-            .exam-main { padding: 20px 0; }
-            .section { padding: 24px 0; }
-            .hero-card { padding: 20px; }
-            .steps-container { flex-direction: column; align-items: center; }
-            .step { max-width: 100%; width: 100%; }
-            .comparison-tabs { flex-direction: column; }
-            .tab { border-radius: 8px; }
-            .carousel-container { height: 320px; }
-            .carousel-slide { padding: 20px 15px; }
-            table { font-size: 0.85rem; }
-            th, td { padding: 8px 10px; }
-            .exam-grid { grid-template-columns: 1fr; }
-            .checklist-grid { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 480px) {
-            .carousel-container { height: 360px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0E8A82">
+<meta name="description" content="FPAIR — Pletismografía corporal: preparación, técnica guiada y comprensión de volúmenes pulmonares y resistencias.">
+<title>Pletismografía | FPAIR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3FBFA;--bg2:#E7F6F4;--surface:#fff;--surface2:#F4FCFB;--text:#0B2530;--muted:#547174;
+  --line:#D3EDE9;--primary:#0E8A82;--primary2:#086B64;--accent:#22D3B8;--accent2:#C8F5EC;
+  --warn:#B86A07;--danger:#B94747;--shadow:0 18px 50px -22px rgba(8,107,100,.28);
+  --r:20px;--header:72px;
+}
+html.dark{--bg:#06191B;--bg2:#0A2224;--surface:#0D2B2D;--surface2:#0F3335;--text:#E6F7F4;--muted:#8FBDB8;--line:#164448;--primary:#2FE0C3;--primary2:#63F0D6;--accent:#14B8A6;--accent2:#0F3B3A;--shadow:0 18px 55px -25px rgba(0,0,0,.75)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 82% -12%,rgba(34,211,184,.11),transparent 28%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;line-height:1.55}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.container{width:min(1220px,calc(100% - 36px));margin:auto}
+.header{position:sticky;top:0;z-index:50;height:var(--header);background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.header-in{height:100%;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:11px}.brandmark{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--primary),var(--accent));display:grid;place-items:center;color:white;font-weight:800}.brand strong{display:block;font-family:Manrope;font-size:16px}.brand span{display:block;color:var(--muted);font-size:10px}
+.header-nav{display:flex;gap:5px}.header-nav a{padding:8px 11px;border-radius:10px;color:var(--muted);font-size:12px;font-weight:700}.header-nav a:hover{background:var(--surface2);color:var(--primary2)}.icon-btn{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--surface);color:var(--text)}
+.hero{padding:58px 0 34px}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:44px;align-items:center}.eyebrow{display:inline-flex;gap:7px;align-items:center;padding:7px 11px;border-radius:999px;background:var(--accent2);color:var(--primary2);font-size:11px;font-weight:800}.dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+h1,h2,h3,h4{font-family:Manrope;margin:0}.hero h1{font-size:clamp(42px,5.6vw,72px);line-height:.98;letter-spacing:-2.8px;margin-top:18px;max-width:760px}.hero h1 span{color:var(--primary)}.lead{font-size:17px;color:var(--muted);max-width:650px;line-height:1.7;margin:22px 0 0}.hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:12px 17px;border:1px solid transparent;font-weight:800;font-size:13px;transition:.2s}.btn:hover{transform:translateY(-2px)}.btn-primary{background:var(--primary);color:white;box-shadow:0 10px 28px rgba(14,138,130,.22)}.btn-secondary{background:var(--surface);border-color:var(--line)}.btn-soft{background:var(--accent2);color:var(--primary2)}
+.hero-card{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:23px;box-shadow:var(--shadow)}.hero-card-top{display:flex;justify-content:space-between;align-items:center;gap:14px}.mini-label{font-family:"IBM Plex Mono";font-size:10px;color:var(--primary);letter-spacing:.08em;text-transform:uppercase}.hero-card h3{font-size:16px;margin-top:5px}.status-pill{padding:6px 9px;border-radius:999px;background:var(--accent2);color:var(--primary2);font-size:9px;font-weight:800}
+.pleth-visual{margin-top:18px;background:linear-gradient(145deg,var(--surface2),var(--bg2));border:1px solid var(--line);border-radius:20px;padding:18px}.pleth-visual svg{width:100%;height:230px;display:block}.graph-note{display:flex;justify-content:space-between;gap:15px;color:var(--muted);font-size:10px;margin-top:6px}
+.journey{padding:22px 0 82px}.shell{background:var(--surface);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}.shell-head{padding:26px 28px 22px;background:linear-gradient(180deg,var(--surface2),var(--surface));border-bottom:1px solid var(--line)}
+.shell-title{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}.shell-title h2{font-size:clamp(25px,3vw,37px);letter-spacing:-1px}.shell-title p{margin:5px 0 0;color:var(--muted);font-size:13px}.progress-wrap{min-width:210px}.progress-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;font-weight:800;margin-bottom:7px}.progress-track{height:6px;background:var(--bg2);border-radius:999px;overflow:hidden}.progress-fill{height:100%;width:20%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:999px;transition:width .35s}
+.stage-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:22px}.stage-btn{appearance:none;text-align:left;padding:13px;border:1px solid var(--line);background:var(--surface);border-radius:14px;color:var(--text);transition:.2s}.stage-btn:hover{border-color:var(--primary);transform:translateY(-2px)}.stage-btn.active{background:var(--accent2);border-color:var(--primary);color:var(--primary2)}.stage-num{font-family:"IBM Plex Mono";font-size:9px;color:var(--muted)}.stage-btn strong{display:block;font-size:12px;margin-top:4px}.stage-btn span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+.shell-body{padding:30px}.panel{display:none;animation:fade .25s ease}.panel.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.panel-hero{display:grid;grid-template-columns:.8fr 1.2fr;gap:24px;align-items:stretch}.visual-card{min-height:285px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,var(--surface2),var(--bg2));display:grid;place-items:center;padding:18px;text-align:center}.lung-orb{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,var(--accent2),transparent 68%);font-size:66px}.content-card{display:flex;flex-direction:column;justify-content:center}.kicker{font-family:"IBM Plex Mono";font-size:9px;color:var(--primary);text-transform:uppercase;letter-spacing:.1em}.content-card h3{font-size:clamp(27px,3vw,42px);line-height:1.05;letter-spacing:-1.2px;margin:8px 0 10px}.content-card>p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+.metric-grid,.action-grid,.learn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:20px}.card{border:1px solid var(--line);background:var(--surface);border-radius:15px;padding:16px}.card-icon{width:35px;height:35px;border-radius:10px;display:grid;place-items:center;background:var(--accent2);color:var(--primary2);font-weight:800;margin-bottom:11px}.card strong{font-size:12px;display:block}.card p{font-size:11px;color:var(--muted);margin:5px 0 0}.card a{display:inline-flex;margin-top:12px;color:var(--primary2);font-weight:800;font-size:11px}
+.note{margin-top:16px;padding:13px 15px;border-radius:13px;background:var(--surface2);border:1px solid var(--line);color:var(--muted);font-size:11px}.note.warn{border-left:4px solid var(--warn)}
+.stepper{display:grid;grid-template-columns:220px 1fr;gap:24px;margin-top:20px}.stepper-side{display:flex;flex-direction:column;gap:8px}.mini-step{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px;text-align:left;color:var(--text)}.mini-step.active{border-color:var(--primary);background:var(--accent2)}.mini-step b{font-size:11px}.mini-step span{display:block;font-size:9px;color:var(--muted);margin-top:2px}
+.stepper-main{border:1px solid var(--line);border-radius:18px;background:var(--surface2);padding:22px}.step-image-slot{position:relative;width:100%;aspect-ratio:16/8.2;min-height:210px;margin:0 0 20px;border:1px dashed var(--line);border-radius:16px;overflow:hidden;background:linear-gradient(145deg,var(--surface),var(--bg2));display:grid;place-items:center}.step-image-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}.step-image-slot.has-image{border-style:solid}.step-image-slot.has-image img{display:block}.step-image-placeholder{text-align:center;color:var(--muted);padding:20px}.step-image-placeholder strong{display:block;font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.08em;color:var(--primary);text-transform:uppercase}.step-image-placeholder span{display:block;font-size:11px;margin-top:7px}.step-image-slot.has-image .step-image-placeholder{display:none}
+.stepper-main .phase{font-family:"IBM Plex Mono";font-size:10px;color:var(--primary)}.stepper-main h3{font-size:25px;margin:7px 0 8px}.stepper-main p{color:var(--muted);font-size:13px}.tipgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.tip{padding:13px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-size:11px;color:var(--muted)}.tip strong{display:block;color:var(--text);margin-bottom:4px}.stepper-controls{display:flex;gap:9px;margin-top:16px}
+.pattern-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:20px}.pattern{border:1px solid var(--line);border-radius:15px;padding:16px;background:var(--surface)}.badge{display:inline-flex;padding:5px 8px;border-radius:999px;background:var(--accent2);color:var(--primary2);font-size:9px;font-weight:800}.pattern h4{font-size:14px;margin:9px 0 5px}.pattern p{margin:0;color:var(--muted);font-size:11px}
+.learn-more{padding:0 0 80px}.learn-shell{border:1px solid var(--line);background:var(--surface);border-radius:24px;padding:26px;box-shadow:var(--shadow)}.learn-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-end}.learn-head h2{font-size:clamp(25px,3vw,38px);margin-top:6px}.learn-head p{margin:7px 0 0;color:var(--muted);font-size:12px}
+.footer{padding:28px 0 38px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:10px}
+@media(max-width:900px){.header-nav{display:none}.hero-grid,.panel-hero{grid-template-columns:1fr}.stage-nav{grid-template-columns:repeat(2,1fr)}.metric-grid,.action-grid,.learn-grid,.pattern-grid{grid-template-columns:1fr 1fr}.stepper{grid-template-columns:1fr}.stepper-side{display:grid;grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.container{width:min(100% - 24px,620px)}.brand span{display:none}.hero{padding-top:38px}.hero h1{font-size:42px}.hero-cta{flex-direction:column}.hero-cta .btn{width:100%}.shell-head,.shell-body{padding:19px}.shell-title{align-items:stretch;flex-direction:column}.progress-wrap{min-width:0}.stage-nav{grid-template-columns:1fr 1fr}.metric-grid,.action-grid,.learn-grid,.pattern-grid,.tipgrid{grid-template-columns:1fr}.stepper-side{grid-template-columns:1fr}.footer,.learn-head{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+</style>
 </head>
-<body data-theme="light">
+<body>
+<header class="header">
+  <div class="container header-in">
+    <a href="index.html" class="brand" aria-label="Volver a FPAIR"><div class="brandmark">F</div><div><strong>FPAIR</strong><span>Educación y entrenamiento respiratorio</span></div></a>
+    <nav class="header-nav"><a href="#recorrido">Recorrido</a><a href="#tecnica">Técnica</a><a href="#comprender">Comprender</a><a href="#aprender">Biblioteca</a></nav>
+    <button class="icon-btn" id="themeToggle" aria-label="Cambiar tema">◐</button>
+  </div>
+</header>
 
-    <div class="exam-layout">
+<main>
+<section class="hero">
+<div class="container hero-grid">
+  <div>
+    <div class="eyebrow"><span class="dot"></span> Examen de función pulmonar · FPAIR</div>
+    <h1>Pletismografía.<br><span>Conoce tus volúmenes pulmonares.</span></h1>
+    <p class="lead">Descubre qué mide la cabina pletismográfica, cómo prepararte, practica la técnica y comprende conceptos como CPT, VR y resistencia de la vía aérea.</p>
+    <div class="hero-cta"><button class="btn btn-primary" data-go="before">Comenzar mi recorrido →</button><button class="btn btn-secondary" data-go="technique">Ver técnica guiada</button><a class="btn btn-soft" href="preparacion_info.html#alarma">Crear recordatorio</a></div>
+  </div>
 
-        <!-- ===== SIDEBAR ===== -->
-        <aside class="exam-sidebar">
-            <a href="index.html" class="back-home" id="backHome">
-                <i class="fa-solid fa-arrow-left"></i>
-                Volver al inicio
-            </a>
-
-            <div class="exam-logo">
-                <div class="logo-box">FP</div>
-                <div>
-                    <h3>FPAIR</h3>
-                    <p>Pletismografía</p>
-                </div>
-            </div>
-
-            <nav class="exam-nav">
-                <a href="#que-es">Qué es</a>
-                <a href="#que-mide">Qué mide</a>
-                <a href="#informacion-adicional">Información adicional</a>
-                <a href="#tecnica">Técnica guiada</a>
-                <a href="#sintomas">Síntomas</a>
-                <a href="#faq">Preguntas frecuentes</a>
-            </nav>
-        </aside>
-
-        <!-- ===== MAIN ===== -->
-        <main class="exam-main">
-
-            <!-- ===== HERO ===== -->
-            <section class="exam-hero" style="display:flex; gap:40px; align-items:center; padding:20px 0 30px;">
-                <div class="exam-hero-content" style="flex:1;">
-                    <span class="hero-badge" style="display:inline-block; background:var(--accent-soft); color:var(--primary-strong); padding:6px 14px; border-radius:999px; font-size:.78rem; font-weight:700; margin-bottom:16px;">
-                        Examen de función pulmonar · ATS/ERS
-                    </span>
-                    <h1 style="font-size:clamp(2.5rem,4vw,3.5rem); line-height:1.08; margin-bottom:16px;">Pletismografía</h1>
-                    <p style="font-size:1.08rem; color:var(--text-soft); max-width:48ch; margin-bottom:24px;">
-                        La pletismografía corporal mide los volúmenes pulmonares y las resistencias de las vías aéreas. Conoce cómo prepararte y qué esperar del examen.
-                    </p>
-                    <div class="hero-buttons" style="display:flex; gap:12px; flex-wrap:wrap;">
-                        <a href="#tecnica"><button class="primary-btn" style="display:inline-flex; align-items:center; gap:8px; font-family:'Manrope',sans-serif; font-weight:700; font-size:.95rem; padding:12px 22px; border-radius:999px; border:1px solid transparent; cursor:pointer; background:var(--primary); color:#04211E; box-shadow:var(--shadow); transition:all .2s;"><i class="fa-solid fa-lungs"></i> Practicar técnica</button></a>
-                        <a href="#que-es"><button class="secondary-btn" style="display:inline-flex; align-items:center; gap:8px; font-family:'Manrope',sans-serif; font-weight:700; font-size:.95rem; padding:12px 22px; border-radius:999px; border:1px solid var(--border); cursor:pointer; background:transparent; color:var(--text); transition:all .2s;"><i class="fa-solid fa-circle-info"></i> Ver información</button></a>
-                    </div>
-                </div>
-                <div class="exam-hero-image" style="flex-shrink:0; width:200px; height:200px; background:var(--accent-soft); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:5rem; color:var(--primary);">
-                    <i class="fa-solid fa-cube"></i>
-                </div>
-            </section>
-
-            <!-- ===== QUÉ ES ===== -->
-            <section id="que-es" class="section">
-                <div class="section-header">
-                    <h2>¿Qué es la Pletismografía?</h2>
-                    <p>Comprende de forma simple qué evalúa este examen.</p>
-                </div>
-                <div class="hero-card">
-                    <p>La pletismografía corporal es una prueba que mide los volúmenes pulmonares, es decir, el tamaño de los pulmones en diferentes fases de la respiración.</p>
-                    <br>
-                    <p>A diferencia de otras pruebas de función pulmonar, la pletismografía puede medir volúmenes que no se pueden medir directamente con la espirometría, como el <strong>volumen residual (VR)</strong> — el aire que queda en los pulmones después de una exhalación completa.</p>
-                    <br>
-                    <p>También mide la <strong>Resistencia de Vías Aéreas (RAW)</strong>, que indica qué tan difícil es para el aire moverse a través de los bronquios y bronquiolos.</p>
-                </div>
-            </section>
-
-            <!-- ===== QUÉ MIDE ===== -->
-            <section id="que-mide" class="section">
-                <div class="section-header">
-                    <h2>¿Qué mide la pletismografía?</h2>
-                    <p>Parámetros respiratorios principales explicados de forma simple.</p>
-                </div>
-                <div class="carousel-container">
-                    <div class="carousel-slide active">
-                        <h3>Volumen Residual (VR)</h3>
-                        <p>Es el aire que queda en los pulmones después de una exhalación completa. Es el volumen que no puede exhalarse y es necesario para mantener la estructura pulmonar y el intercambio gaseoso continuo.</p>
-                    </div>
-                    <div class="carousel-slide">
-                        <h3>Capacidad Pulmonar Total (CPT)</h3>
-                        <p>Mide el volumen máximo de aire que los pulmones pueden contener después de una inhalación completa. Incluye todos los volúmenes pulmonares.</p>
-                    </div>
-                    <div class="carousel-slide">
-                        <h3>Resistencia de Vías Aéreas (RAW)</h3>
-                        <p>Mide la fuerza o resistencia al flujo de aire dentro de las vías respiratorias. Indica qué tan difícil es para el aire moverse a través de los bronquios y bronquiolos.</p>
-                    </div>
-                </div>
-                <div class="carousel-nav">
-                    <span class="carousel-dot active" data-slide="0"></span>
-                    <span class="carousel-dot" data-slide="1"></span>
-                    <span class="carousel-dot" data-slide="2"></span>
-                </div>
-            </section>
-
-            <!-- ===== INFORMACIÓN ADICIONAL ===== -->
-            <section id="informacion-adicional" class="section">
-                <div class="section-header">
-                    <h2>Información Adicional</h2>
-                    <p>Técnica y funcionamiento de la pletismografía.</p>
-                </div>
-
-                <div class="comparison-tabs">
-                    <button class="tab active" data-tab="tecnica">Técnica</button>
-                    <button class="tab" data-tab="funcionamiento">¿Cómo funciona?</button>
-                </div>
-
-                <div class="tab-content active" id="tecnica-content">
-                    <h3>Respiración y esfuerzo normal, su mejor capacidad</h3>
-                    <p><strong>Mide:</strong> CPT, VR, Relación VR/CPT, RAW</p>
-                    <p><strong>Ideal para:</strong> pacientes con todo tipo de enfermedad pulmonar, pues también mide las resistencias de las vías aéreas.</p>
-                    <p>Durante la pletismografía, el paciente respira a través de una boquilla conectada a un sensor de presión.</p>
-                </div>
-
-                <div class="tab-content" id="funcionamiento-content">
-                    <h3>Funcionamiento de la prueba</h3>
-                    <p>La pletismografía utiliza un dispositivo especial llamado cabina pletismográfica, que parece una cabina telefónica pequeña y transparente.</p>
-                    <p>Mediremos los cambios en la presión dentro de la cabina mientras respiras, lo que permite calcular con precisión los volúmenes pulmonares.</p>
-                </div>
-            </section>
-
-            <!-- ===== TÉCNICA GUIADA ===== -->
-            <section id="tecnica" class="section">
-                <div class="section-header">
-                    <h2>Técnica guiada FPAIR</h2>
-                    <p>Practica la maniobra antes del examen.</p>
-                </div>
-                <div class="hero-card">
-                    <p>Al estar sentado en una posición erguida, pondrás el equipo de medición en la boca, sellarás bien los labios y con la palma de ambas manos, mantendrás presionadas tus mejillas durante toda la técnica. Respira normal y constante, el instructor te pedirá el esfuerzo en poco, ¡atento!</p>
-
-                    <div class="steps-container" style="margin-top:20px;">
-                        <div class="step">
-                            <div class="step-icon">🧘</div>
-                            <h3>Preparación</h3>
-                            <p>Siéntate derecho en la cabina y coloca la boquilla correctamente.</p>
-                        </div>
-                        <div class="step">
-                            <div class="step-icon">🤐</div>
-                            <h3>Sellar</h3>
-                            <p>Sella bien los labios en la boquilla y apoya las mejillas con las manos.</p>
-                        </div>
-                        <div class="step">
-                            <div class="step-icon">🌬️</div>
-                            <h3>Respirar</h3>
-                            <p>Respira normalmente y sigue las instrucciones del técnico.</p>
-                        </div>
-                        <div class="step">
-                            <div class="step-icon">🖥️</div>
-                            <h3>Pantalla</h3>
-                            <p>Observa la pantalla y sigue las indicaciones para realizar las maniobras.</p>
-                        </div>
-                    </div>
-
-                    <div class="highlight-box">
-                        <h3>Material de apoyo</h3>
-                        <p><strong>El técnico del examen</strong> lo guiará correctamente durante el esfuerzo a realizar. Deben conseguir mínimo 3 esfuerzos bien realizados para poder confirmar los resultados obtenidos.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ===== SÍNTOMAS ===== -->
-            <section id="sintomas" class="section">
-                <div class="section-header">
-                    <h2>Posibles síntomas durante el examen</h2>
-                    <p>Reacciones que puedes experimentar durante la maniobra.</p>
-                </div>
-                <div class="hero-card">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Síntoma</th>
-                                <th>Descripción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Mareos o vértigo</td>
-                                <td>Sensación de inestabilidad durante o después de las maniobras respiratorias</td>
-                            </tr>
-                            <tr>
-                                <td>Sensación de claustrofobia</td>
-                                <td>Incomodidad por estar dentro de la cabina cerrada</td>
-                            </tr>
-                            <tr>
-                                <td>Fatiga</td>
-                                <td>Cansancio muscular respiratorio</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="highlight-box">
-                        <p><strong>La mayoría de los síntomas son temporales y desaparecen rápidamente.</strong></p>
-                        <p>Aunque es normal experimentar algunos síntomas o sensaciones durante el examen, es importante informar al técnico sobre cualquier molestia o dolor que sientas.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ===== FAQ ===== -->
-            <section id="faq" class="section">
-                <div class="section-header">
-                    <h2>Preguntas Frecuentes</h2>
-                </div>
-                <div class="hero-card">
-                    <div class="faq-item">
-                        <div class="faq-question">¿Me sentiré encerrado en la cabina? <span>+</span></div>
-                        <div class="faq-answer">
-                            <p>La cabina es transparente y el técnico estará en contacto visual constante contigo. Si sientes claustrofobia, infórmalo de inmediato para tomar las medidas necesarias.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Por qué debo presionar mis mejillas con las manos? <span>+</span></div>
-                        <div class="faq-answer">
-                            <p>Esto evita que las mejillas se expandan durante la respiración forzada, lo que podría afectar la precisión de las mediciones de presión dentro de la cabina.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Cuánto dura la prueba? <span>+</span></div>
-                        <div class="faq-answer">
-                            <p>La pletismografía suele durar entre 20 y 30 minutos, dependiendo de cuántos intentos sean necesarios para obtener resultados consistentes.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Es segura la prueba? <span>+</span></div>
-                        <div class="faq-answer">
-                            <p>Sí, es completamente segura. La cabina no está completamente sellada y el técnico puede abrirla en cualquier momento si es necesario.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Por qué debo seguir exactamente el ritmo respiratorio indicado? <span>+</span></div>
-                        <div class="faq-answer"><p>Porque el examen mide cambios muy pequeños de presión.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Qué pasa si me muevo mucho? <span>+</span></div>
-                        <div class="faq-answer"><p>Puede alterar las mediciones.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Por qué algunas respiraciones deben ser suaves? <span>+</span></div>
-                        <div class="faq-answer"><p>Para mantener la precisión del registro.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Qué ocurre si no sigo el ritmo pedido? <span>+</span></div>
-                        <div class="faq-answer"><p>Puede repetirse la maniobra.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Por qué es importante la coordinación? <span>+</span></div>
-                        <div class="faq-answer"><p>Porque influye en la medición de volúmenes pulmonares.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Qué significa una maniobra de buena calidad? <span>+</span></div>
-                        <div class="faq-answer"><p>Que los datos son confiables y consistentes.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Puede un error técnico alterar el resultado? <span>+</span></div>
-                        <div class="faq-answer"><p>Sí, especialmente en mediciones de atrapamiento aéreo.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Por qué repiten ciertas partes? <span>+</span></div>
-                        <div class="faq-answer"><p>Para asegurar resultados reproducibles.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Qué pasa si me río o hablo? <span>+</span></div>
-                        <div class="faq-answer"><p>Puede interferir en la medición.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Por qué algunas mediciones duran pocos segundos? <span>+</span></div>
-                        <div class="faq-answer"><p>Porque registran información muy específica.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Qué ocurre si me siento incómodo? <span>+</span></div>
-                        <div class="faq-answer"><p>Puedes avisar y hacer pausas.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Por qué debo concentrarme tanto? <span>+</span></div>
-                        <div class="faq-answer"><p>La calidad depende mucho de la coordinación respiratoria.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Puede parecer más grave una enfermedad por mala técnica? <span>+</span></div>
-                        <div class="faq-answer"><p>Sí, una técnica incorrecta puede modificar resultados.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Por qué comparan varias maniobras? <span>+</span></div>
-                        <div class="faq-answer"><p>Para confirmar consistencia.</p></div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">¿Qué gana el paciente con una buena calidad? <span>+</span></div>
-                        <div class="faq-answer"><p>Un diagnóstico más confiable y mejores decisiones médicas.</p></div>
-                    </div>
-                </div>
-            </section>
-
-        </main>
+  <div class="hero-card">
+    <div class="hero-card-top"><div><div class="mini-label">FPAIR / visual educativo</div><h3>Cabina pletismográfica · presión y volumen</h3></div><span class="status-pill">Pletismografía</span></div>
+    <div class="pleth-visual">
+      <svg viewBox="0 0 640 250" role="img" aria-label="Esquema educativo de una cabina pletismográfica con cambios de presión">
+        <defs><linearGradient id="cab" x1="0" x2="1"><stop offset="0" stop-color="#C8F5EC" stop-opacity=".65"/><stop offset="1" stop-color="#E7F6F4" stop-opacity=".35"/></linearGradient><linearGradient id="wave" x1="0" x2="1"><stop offset="0" stop-color="#0E8A82"/><stop offset="1" stop-color="#22D3B8"/></linearGradient></defs>
+        <rect x="70" y="28" width="270" height="194" rx="22" fill="url(#cab)" stroke="#0E8A82" stroke-width="3"/>
+        <rect x="102" y="58" width="206" height="130" rx="15" fill="transparent" stroke="currentColor" opacity=".15"/>
+        <circle cx="201" cy="92" r="20" fill="#0E8A82" opacity=".15"/>
+        <path d="M202 113 C182 124,177 154,180 184 M202 113 C224 124,229 153,226 184" stroke="#0E8A82" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <path d="M201 132 L242 119" stroke="#0E8A82" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="249" cy="117" r="8" fill="#22D3B8"/>
+        <path d="M249 117 H350" stroke="#22D3B8" stroke-width="5" stroke-linecap="round"/>
+        <path d="M392 160 C408 104,430 104,446 160 C462 215,484 215,500 160 C516 105,538 105,554 160" fill="none" stroke="url(#wave)" stroke-width="7" stroke-linecap="round"/>
+        <path d="M390 60 C408 47,424 47,442 60 C460 73,476 73,494 60 C512 47,528 47,546 60" fill="none" stroke="#0E8A82" stroke-width="5" opacity=".75"/>
+        <text x="128" y="211" font-size="13" fill="currentColor">Cabina</text>
+        <text x="395" y="86" font-size="12" fill="currentColor">Cambios de presión</text>
+        <text x="402" y="222" font-size="12" fill="currentColor">Señal respiratoria</text>
+      </svg>
+      <div class="graph-note"><span>Cabina transparente</span><span>Presión</span><span>Volúmenes pulmonares</span></div>
     </div>
+  </div>
+</div>
+</section>
 
-    <footer>
-        <p><b>FPAIR</b> — Educación y entrenamiento respiratorio basado en estándares internacionales ATS/ERS.</p>
-    </footer>
+<section class="journey" id="recorrido">
+<div class="container"><div class="shell">
+  <div class="shell-head">
+    <div class="shell-title"><div><div class="mini-label">FPAIR / recorrido del paciente</div><h2>Tu pletismografía, paso a paso.</h2><p>Explora solo lo que necesitas en cada momento.</p></div><div class="progress-wrap"><div class="progress-meta"><span>Tu recorrido FPAIR</span><span id="progressText">1 de 5</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div></div>
+    <div class="stage-nav" role="tablist">
+      <button class="stage-btn active" data-stage="before"><span class="stage-num">01</span><strong>Antes</strong><span>Prepárate</span></button>
+      <button class="stage-btn" data-stage="during"><span class="stage-num">02</span><strong>Durante</strong><span>Qué ocurrirá</span></button>
+      <button class="stage-btn" data-stage="technique"><span class="stage-num">03</span><strong>Técnica</strong><span>Aprende la maniobra</span></button>
+      <button class="stage-btn" data-stage="understand"><span class="stage-num">04</span><strong>Comprender</strong><span>CPT, VR y RAW</span></button>
+      <button class="stage-btn" data-stage="faq"><span class="stage-num">05</span><strong>Dudas</strong><span>Preguntas frecuentes</span></button>
+    </div>
+  </div>
 
-    <script>
-        // ============================================================
-        // VOLVER AL INICIO
-        // ============================================================
-        document.getElementById('backHome').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = 'fpair-rediseno.html';
-        });
+  <div class="shell-body">
+    <section class="panel active" data-panel="before">
+      <div class="panel-hero">
+        <div class="visual-card"><div><div class="lung-orb">🫁</div><div class="mini-label" style="margin-top:10px">ANTES DEL EXAMEN</div></div></div>
+        <div class="content-card"><div class="kicker">FPAIR / preparación</div><h3>Llega preparado sin memorizar instrucciones.</h3><p>Las indicaciones pueden variar según tu laboratorio. FPAIR concentra las acciones prácticas antes de tu visita.</p>
+          <div class="action-grid">
+            <div class="card"><div class="card-icon">✓</div><strong>Consentimiento</strong><p>Revisa la información del procedimiento antes de asistir.</p><a href="preparacion_info.html#consentimiento">Abrir consentimiento →</a></div>
+            <div class="card"><div class="card-icon">⏰</div><strong>Recordatorio</strong><p>Programa una alarma para recordar las indicaciones previas.</p><a href="preparacion_info.html#alarma">Crear recordatorio →</a></div>
+            <div class="card"><div class="card-icon">i</div><strong>Información ampliada</strong><p>Consulta preparación, inhaladores y contraindicaciones en la Biblioteca FPAIR.</p><a href="#aprender">Ir a Biblioteca →</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        // ============================================================
-        // CAROUSEL
-        // ============================================================
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.carousel-dot');
-        let currentSlide = 0;
-        let carouselInterval;
+    <section class="panel" data-panel="during">
+      <div class="panel-hero">
+        <div class="visual-card"><div><div class="lung-orb">🧊</div><div class="mini-label" style="margin-top:10px">DURANTE LA PRUEBA</div></div></div>
+        <div class="content-card"><div class="kicker">FPAIR / qué esperar</div><h3>Estarás dentro de una cabina transparente y en contacto permanente con el técnico.</h3><p>Respirarás a través de una boquilla conectada a sensores de presión. El sistema detecta pequeños cambios de presión para calcular volúmenes pulmonares y resistencia de las vías aéreas.</p>
+          <div class="metric-grid">
+            <div class="card"><div class="card-icon">1</div><strong>Cabina</strong><p>Te sientas dentro de una cabina transparente.</p></div>
+            <div class="card"><div class="card-icon">2</div><strong>Respiración</strong><p>Respiras normalmente siguiendo el ritmo indicado.</p></div>
+            <div class="card"><div class="card-icon">3</div><strong>Repetición</strong><p>Se realizan varias maniobras para confirmar consistencia.</p></div>
+          </div>
+          <div class="note">Si sientes claustrofobia, mareo o incomodidad, avísale al técnico. El contenido fuente señala que la cabina puede abrirse en cualquier momento.</div>
+        </div>
+      </div>
+    </section>
 
-        function showSlide(n) {
-            slides.forEach(s => s.classList.remove('active'));
-            dots.forEach(d => d.classList.remove('active'));
-            slides[n].classList.add('active');
-            dots[n].classList.add('active');
-            currentSlide = n;
-        }
+    <section class="panel" data-panel="technique" id="tecnica">
+      <div class="content-card"><div class="kicker">FPAIR / técnica guiada</div><h3>Una maniobra, cuatro momentos.</h3><p>Selecciona cada paso. Cada etapa ya tiene un espacio preparado para incorporar una imagen o animación educativa.</p></div>
+      <div class="stepper"><div class="stepper-side" id="stepList"></div><div class="stepper-main">
+        <div class="step-image-slot" id="stepImageSlot"><img id="stepImage" alt="" loading="lazy"><div class="step-image-placeholder"><strong>Espacio para imagen del paso</strong><span id="stepImageLabel">Paso 01 · Preparación</span></div></div>
+        <div class="phase" id="stepPhase">PASO 01 / 04</div><h3 id="stepTitle">Preparación</h3><p id="stepDesc"></p>
+        <div class="tipgrid"><div class="tip"><strong>Qué hacer</strong><span id="stepTip"></span></div><div class="tip"><strong>Qué recordar</strong><span id="stepError"></span></div></div>
+        <div class="stepper-controls"><button class="btn btn-secondary" id="prevStep">← Anterior</button><button class="btn btn-primary" id="nextStep">Siguiente →</button></div>
+      </div></div>
+    </section>
 
-        function nextSlide() {
-            showSlide((currentSlide + 1) % slides.length);
-        }
+    <section class="panel" data-panel="understand" id="comprender">
+      <div class="content-card"><div class="kicker">FPAIR / comprender</div><h3>¿Qué mide realmente la pletismografía?</h3><p>La pletismografía permite conocer volúmenes que la espirometría no mide directamente y también aporta información sobre la resistencia de la vía aérea.</p></div>
+      <div class="metric-grid">
+        <div class="card"><div class="card-icon">VR</div><strong>Volumen residual</strong><p>Aire que permanece en los pulmones después de una exhalación completa.</p></div>
+        <div class="card"><div class="card-icon">CPT</div><strong>Capacidad pulmonar total</strong><p>Volumen máximo que pueden contener los pulmones tras una inspiración completa.</p></div>
+        <div class="card"><div class="card-icon">RAW</div><strong>Resistencia de vías aéreas</strong><p>Describe qué tan difícil es el paso del aire a través de bronquios y bronquiolos.</p></div>
+      </div>
+      <div class="pattern-grid">
+        <div class="pattern"><span class="badge">VOLUMEN</span><h4>VR aumentado</h4><p>Puede sugerir mayor cantidad de aire retenido al final de la espiración; la interpretación depende del contexto clínico.</p></div>
+        <div class="pattern"><span class="badge">VOLUMEN</span><h4>CPT reducida</h4><p>Puede apoyar la presencia de un patrón restrictivo cuando se interpreta junto a otros datos.</p></div>
+        <div class="pattern"><span class="badge">RESISTENCIA</span><h4>RAW elevada</h4><p>Indica mayor resistencia al flujo aéreo en las vías respiratorias.</p></div>
+      </div>
+      <div class="note">FPAIR es educativo. La interpretación final debe realizarla un profesional de salud utilizando el examen completo.</div>
+    </section>
 
-        dots.forEach((dot, i) => {
-            dot.addEventListener('click', () => {
-                clearInterval(carouselInterval);
-                showSlide(i);
-                carouselInterval = setInterval(nextSlide, 5000);
-            });
-        });
+    <section class="panel" data-panel="faq">
+      <div class="content-card"><div class="kicker">FPAIR / preguntas frecuentes</div><h3>Respuestas breves antes de entrar a la cabina.</h3></div>
+      <div class="metric-grid">
+        <div class="card"><div class="card-icon">□</div><strong>¿Me sentiré encerrado?</strong><p>La cabina es transparente y el técnico mantiene contacto visual contigo.</p></div>
+        <div class="card"><div class="card-icon">🤲</div><strong>¿Por qué sostener las mejillas?</strong><p>Ayuda a evitar que su movimiento interfiera con las mediciones de presión.</p></div>
+        <div class="card"><div class="card-icon">⏱</div><strong>¿Cuánto dura?</strong><p>El contenido fuente indica alrededor de 20 a 30 minutos, según las repeticiones necesarias.</p></div>
+      </div>
+    </section>
+  </div>
+</div></div>
+</section>
 
-        carouselInterval = setInterval(nextSlide, 5000);
+<section class="learn-more" id="aprender">
+<div class="container"><div class="learn-shell">
+  <div class="learn-head"><div><div class="mini-label">BIBLIOTECA FPAIR</div><h2>¿Quieres aprender más?</h2><p>Contenido complementario para explorar a tu ritmo.</p></div><a class="btn btn-secondary" href="index.html">Volver al inicio</a></div>
+  <div class="learn-grid">
+    <div class="card"><div class="card-icon">📦</div><strong>Volúmenes pulmonares</strong><p>Qué significan VR, CPT y la relación VR/CPT.</p><a href="#">Próximamente en Biblioteca →</a></div>
+    <div class="card"><div class="card-icon">🌬</div><strong>Resistencia de vía aérea</strong><p>Cómo interpretar de forma simple el concepto de RAW.</p><a href="#">Próximamente en Biblioteca →</a></div>
+    <div class="card"><div class="card-icon">📈</div><strong>Cómo leemos tus pulmones</strong><p>Cómo se integran espirometría, volúmenes y difusión.</p><a href="#">Próximamente en Biblioteca →</a></div>
+  </div>
+</div></div>
+</section>
+</main>
 
-        // ============================================================
-        // TABS
-        // ============================================================
-        const tabs = document.querySelectorAll('.tab');
-        const contents = document.querySelectorAll('.tab-content');
+<footer><div class="container footer"><div><strong>FPAIR</strong> · Educación y entrenamiento respiratorio.</div><div>Contenido educativo. No reemplaza indicaciones médicas ni una evaluación clínica.</div></div></footer>
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                contents.forEach(c => c.classList.remove('active'));
-                tab.classList.add('active');
-                const target = document.getElementById(tab.dataset.tab + '-content');
-                if (target) target.classList.add('active');
-            });
-        });
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const store={get(k){try{return localStorage.getItem(k)}catch{return null}},set(k,v){try{localStorage.setItem(k,v)}catch{}}};
+function setTheme(t){document.documentElement.classList.toggle('dark',t==='dark');store.set('fpair:theme',t)}
+setTheme(store.get('fpair:theme') || (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+$('#themeToggle').addEventListener('click',()=>setTheme(document.documentElement.classList.contains('dark')?'light':'dark'));
 
-        // ============================================================
-        // FAQ
-        // ============================================================
-        document.querySelectorAll('.faq-question').forEach(q => {
-            q.addEventListener('click', () => {
-                const answer = q.nextElementSibling;
-                const isOpen = answer.classList.contains('active');
-                document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('active'));
-                document.querySelectorAll('.faq-question span').forEach(s => s.textContent = '+');
-                if (!isOpen) {
-                    answer.classList.add('active');
-                    q.querySelector('span').textContent = '-';
-                }
-            });
-        });
+const stages=['before','during','technique','understand','faq'];
+function openStage(id,scroll=true){
+  const idx=Math.max(0,stages.indexOf(id)); id=stages[idx];
+  $$('.stage-btn').forEach(b=>b.classList.toggle('active',b.dataset.stage===id));
+  $$('.panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===id));
+  $('#progressFill').style.width=((idx+1)/stages.length*100)+'%';
+  $('#progressText').textContent=(idx+1)+' de '+stages.length;
+  store.set('fpair:pleth:stage',id);
+  if(scroll) $('#recorrido').scrollIntoView({behavior:'smooth',block:'start'});
+}
+$$('[data-stage]').forEach(b=>b.addEventListener('click',()=>openStage(b.dataset.stage,false)));
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>openStage(b.dataset.go,true)));
 
-        // ============================================================
-        // MODO OSCURO/CLARO
-        // ============================================================
-        function getPreferredTheme() {
-            const saved = localStorage.getItem('fpair:theme');
-            if (saved) return saved;
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
+const steps=[
+ {title:'Preparación',desc:'Siéntate derecho dentro de la cabina y coloca la boquilla correctamente.',tip:'Mantén una postura estable y cómoda.',error:'Evita moverte innecesariamente durante la medición.',image:''},
+ {title:'Sellar y sostener mejillas',desc:'Sella firmemente los labios alrededor de la boquilla y apoya ambas manos sobre las mejillas.',tip:'Mantén las mejillas firmes durante la maniobra.',error:'Una mala sujeción puede afectar las mediciones de presión.',image:''},
+ {title:'Respiración estable',desc:'Respira normalmente y sigue con precisión el ritmo que te indique el técnico.',tip:'Mantén respiraciones suaves y regulares cuando te lo soliciten.',error:'Hablar, reír o cambiar bruscamente el ritmo puede interferir con el registro.',image:''},
+ {title:'Maniobras guiadas',desc:'Sigue las indicaciones del técnico y de la pantalla para completar las maniobras necesarias.',tip:'Concéntrate en cada instrucción y avisa si necesitas una pausa.',error:'Puede ser necesario repetir maniobras para confirmar resultados consistentes.',image:''}
+];
+let step=0;
+function renderSteps(){
+  $('#stepList').innerHTML=steps.map((s,i)=>`<button class="mini-step ${i===step?'active':''}" data-step="${i}"><b>0${i+1} · ${s.title}</b><span>${i===0?'Prepárate':i===1?'Sella':i===2?'Respira':'Sigue indicaciones'}</span></button>`).join('');
+  $$('[data-step]').forEach(b=>b.addEventListener('click',()=>{step=+b.dataset.step;renderSteps()}));
+  const s=steps[step];
+  $('#stepPhase').textContent=`PASO 0${step+1} / 04`; $('#stepTitle').textContent=s.title; $('#stepDesc').textContent=s.desc; $('#stepTip').textContent=s.tip; $('#stepError').textContent=s.error; $('#stepImageLabel').textContent=`Paso 0${step+1} · ${s.title}`;
+  const slot=$('#stepImageSlot'),img=$('#stepImage');
+  if(s.image){img.src=s.image;img.alt=`Ilustración educativa: ${s.title}`;slot.classList.add('has-image')}else{img.removeAttribute('src');img.alt='';slot.classList.remove('has-image')}
+  $('#prevStep').disabled=step===0; $('#nextStep').disabled=step===steps.length-1;
+}
+$('#prevStep').addEventListener('click',()=>{if(step>0){step--;renderSteps()}});
+$('#nextStep').addEventListener('click',()=>{if(step<steps.length-1){step++;renderSteps()}});
+renderSteps();
+openStage(store.get('fpair:pleth:stage')||'before',false);
+</script>
 
-        function applyTheme(theme) {
-            document.body.setAttribute('data-theme', theme);
-            localStorage.setItem('fpair:theme', theme);
-        }
-
-        applyTheme(getPreferredTheme());
-
-        // Toggle con doble clic en el título del hero
-        document.querySelector('.exam-hero h1')?.addEventListener('dblclick', () => {
-            const current = document.body.getAttribute('data-theme');
-            applyTheme(current === 'dark' ? 'light' : 'dark');
-        });
-
-        console.log('✅ Pletismografía - FPAIR cargado correctamente');
-    </script>
+<script>
+/* FPAIR — comportamiento Atrás: volver directamente al índice */
+(function(){
+  const FPAIR_HOME = 'index.html#fpair/home';
+  try {
+    history.pushState({ fpairExamGuard: true }, '', location.href);
+    window.addEventListener('popstate', function(){
+      location.replace(FPAIR_HOME);
+    });
+  } catch (e) {}
+})();
+</script>
 
 </body>
 </html>
