@@ -2187,6 +2187,112 @@ main {
 }
 
 
+
+/* ============================================================
+   FPAIR — ACCESO AL CENTRO DE ENTRENAMIENTO
+   ============================================================ */
+.fpair-training-entry{
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:28px;
+  align-items:center;
+  margin:0 0 24px;
+  padding:24px 26px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--surface),
+      var(--surface-alt)
+    );
+  box-shadow:
+    0 18px 45px -34px
+    rgba(14,138,130,.42);
+}
+
+.fpair-training-entry::after{
+  content:"";
+  position:absolute;
+  width:230px;
+  height:230px;
+  right:-95px;
+  top:-105px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle,
+      var(--accent-soft),
+      transparent 68%
+    );
+  pointer-events:none;
+}
+
+.fpair-training-entry-content{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+}
+
+.fpair-training-entry-icon{
+  width:48px;
+  height:48px;
+  flex:none;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:var(--accent-soft);
+  color:var(--primary-strong);
+  font-size:21px;
+}
+
+.fpair-training-entry-label{
+  display:block;
+  margin-bottom:4px;
+  color:var(--primary);
+  font-family:"IBM Plex Mono",monospace;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+
+.fpair-training-entry strong{
+  display:block;
+  font-size:16px;
+  line-height:1.3;
+}
+
+.fpair-training-entry p{
+  max-width:690px;
+  margin:6px 0 0;
+  color:var(--text-soft);
+  font-size:12px;
+  line-height:1.6;
+}
+
+.fpair-training-entry .btn{
+  position:relative;
+  z-index:1;
+  white-space:nowrap;
+}
+
+@media (max-width:760px){
+  .fpair-training-entry{
+    grid-template-columns:1fr;
+    align-items:stretch;
+  }
+
+  .fpair-training-entry .btn{
+    width:100%;
+  }
+}
+
+
 /* ============================================================
    TRAINING
    ============================================================ */
@@ -3206,17 +3312,230 @@ footer {
         <div>
           <div class="totem-kicker">FPAIR / EXPLORADOR DE EXÁMENES</div>
           <h2 class="totem-title">Encuentra tu examen. Nosotros te guiamos en el resto.</h2>
-          <p class="totem-description">Selecciona el nombre que aparece en tu orden. Desde ahí podrás recorrer preparación, técnica y resultados sin salir de la experiencia FPAIR.</p>
+          <p class="totem-description">Elige Adultos o Pediatría y selecciona directamente el examen que aparece en tu orden. FPAIR te llevará a su información y recorrido.</p>
         </div>
         <div class="fpair-journey-chip" aria-live="polite">
           <span class="fpair-journey-dot"></span>
-          <span id="progressText">Inicio</span>
+          <span id="progressText">1 de 4</span>
           <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
         </div>
       </div>
       <div class="totem-body" id="totemBody">
-        <div class="fpair-loading-grid" aria-hidden="true">
-          <div></div><div></div><div></div><div></div>
+        <div class="audience-selector">
+          <button
+            class="audience-button active"
+            data-audience="adult"
+            type="button"
+          >
+            Adultos
+          </button>
+          <button
+            class="audience-button"
+            data-audience="pediatric"
+            type="button"
+          >
+            Pediatría
+          </button>
+        </div>
+
+        <div class="exam-selector-title">
+          <h3>Selecciona tu examen</h3>
+          <p>
+            Primero elige Adultos o Pediatría. Luego selecciona directamente
+            el nombre que aparece en tu orden o indicación.
+          </p>
+        </div>
+
+        <div class="exam-grid">
+
+          <button
+            class="exam-card"
+            type="button"
+            data-exam-id="espirometria"
+          >
+            <div class="exam-card-top">
+              <div class="media-slot-icon">ICONO</div>
+              <span class="exam-number">01</span>
+            </div>
+            <div>
+              <h4>Espirometría</h4>
+              <p>Evalúa cuánto aire puedes expulsar y qué tan rápido.</p>
+            </div>
+            <div class="exam-card-arrow">Conocer mi examen →</div>
+          </button>
+
+          <button
+            class="exam-card"
+            type="button"
+            data-exam-id="dlco"
+          >
+            <div class="exam-card-top">
+              <div class="media-slot-icon">ICONO</div>
+              <span class="exam-number">02</span>
+            </div>
+            <div>
+              <h4>DLCO</h4>
+              <p>Evalúa el intercambio de gases a través del pulmón.</p>
+            </div>
+            <div class="exam-card-arrow">Conocer mi examen →</div>
+          </button>
+
+          <button
+            class="exam-card"
+            type="button"
+            data-exam-id="pletismografia"
+          >
+            <div class="exam-card-top">
+              <div class="media-slot-icon">ICONO</div>
+              <span class="exam-number">03</span>
+            </div>
+            <div>
+              <h4>Pletismografía corporal</h4>
+              <p>Evalúa volúmenes pulmonares que no pueden medirse solamente con una espirometría.</p>
+            </div>
+            <div class="exam-card-arrow">Conocer mi examen →</div>
+          </button>
+
+          <button
+            class="exam-card"
+            type="button"
+            data-exam-id="ios"
+          >
+            <div class="exam-card-top">
+              <div class="media-slot-icon">ICONO</div>
+              <span class="exam-number">04</span>
+            </div>
+            <div>
+              <h4>IOS</h4>
+              <p>Evalúa la respuesta mecánica del sistema respiratorio mediante pequeñas oscilaciones de presión.</p>
+            </div>
+            <div class="exam-card-arrow">Conocer mi examen →</div>
+          </button>
+
+          <button
+            class="exam-card"
+            type="button"
+            data-exam-id="feno"
+          >
+            <div class="exam-card-top">
+              <div class="media-slot-icon">ICONO</div>
+              <span class="exam-number">05</span>
+            </div>
+            <div>
+              <h4>FENO</h4>
+              <p>Evalúa de forma no invasiva un marcador relacionado con inflamación de la vía aérea.</p>
+            </div>
+            <div class="exam-card-arrow">Conocer mi examen →</div>
+          </button>
+
+          <button
+            class="exam-card"
+            type="button"
+            data-exam-id="pimpem"
+          >
+            <div class="exam-card-top">
+              <div class="media-slot-icon">ICONO</div>
+              <span class="exam-number">06</span>
+            </div>
+            <div>
+              <h4>PIM / PEM</h4>
+              <p>Evalúa la fuerza de los músculos respiratorios.</p>
+            </div>
+            <div class="exam-card-arrow">Conocer mi examen →</div>
+          </button>
+
+          <button
+            class="exam-card"
+            type="button"
+            data-exam-id="provocacion"
+          >
+            <div class="exam-card-top">
+              <div class="media-slot-icon">ICONO</div>
+              <span class="exam-number">07</span>
+            </div>
+            <div>
+              <h4>Test de provocación bronquial</h4>
+              <p>Evalúa la respuesta de las vías respiratorias frente a un estímulo específico.</p>
+            </div>
+            <div class="exam-card-arrow">Conocer mi examen →</div>
+          </button>
+
+          <button
+            class="exam-card"
+            type="button"
+            data-exam-id="shunt"
+          >
+            <div class="exam-card-top">
+              <div class="media-slot-icon">ICONO</div>
+              <span class="exam-number">08</span>
+            </div>
+            <div>
+              <h4>SHUNT</h4>
+              <p>Estudia alteraciones relacionadas con la oxigenación y el intercambio gaseoso.</p>
+            </div>
+            <div class="exam-card-arrow">Conocer mi examen →</div>
+          </button>
+
+          <button
+            class="exam-card"
+            type="button"
+            data-exam-id="caminata"
+          >
+            <div class="exam-card-top">
+              <div class="media-slot-icon">ICONO</div>
+              <span class="exam-number">09</span>
+            </div>
+            <div>
+              <h4>Caminata 6 minutos</h4>
+              <p>Evalúa la respuesta del organismo durante una caminata controlada.</p>
+            </div>
+            <div class="exam-card-arrow">Conocer mi examen →</div>
+          </button>
+
+          <button
+            class="exam-card"
+            type="button"
+            data-exam-id="gasometria"
+          >
+            <div class="exam-card-top">
+              <div class="media-slot-icon">ICONO</div>
+              <span class="exam-number">10</span>
+            </div>
+            <div>
+              <h4>Gasometría arterial</h4>
+              <p>Evalúa oxígeno, dióxido de carbono y equilibrio ácido-base.</p>
+            </div>
+            <div class="exam-card-arrow">Conocer mi examen →</div>
+          </button>
+
+          <button
+            class="exam-card"
+            type="button"
+            data-exam-id="cpet"
+          >
+            <div class="exam-card-top">
+              <div class="media-slot-icon">ICONO</div>
+              <span class="exam-number">11</span>
+            </div>
+            <div>
+              <h4>Test cardiopulmonar de ejercicio</h4>
+              <p>Evalúa la respuesta cardiorrespiratoria durante el ejercicio.</p>
+            </div>
+            <div class="exam-card-arrow">Conocer mi examen →</div>
+          </button>
+        </div>
+
+        <div class="nervous-entry">
+          <div class="nervous-entry-content">
+            <div class="nervous-dot">🙂</div>
+            <div>
+              <strong>¿Estás nervioso por tu examen?</strong>
+              <span>Es completamente normal. Podemos recorrer el proceso contigo.</span>
+            </div>
+          </div>
+          <button class="btn btn-soft" type="button" id="nervousButton">
+            Necesito tranquilidad
+          </button>
         </div>
       </div>
     </div>
@@ -3293,6 +3612,51 @@ footer {
         la maniobra. FPAIR puede ayudarte a familiarizarte
         previamente con el proceso.
       </p>
+
+    </div>
+
+    <!-- ========================================================
+         ACCESO AL CENTRO DE ENTRENAMIENTO FPAIR
+         Página futura: entrenamiento.html
+         ======================================================== -->
+    <div class="fpair-training-entry">
+
+      <div class="fpair-training-entry-content">
+
+        <div
+          class="fpair-training-entry-icon"
+          aria-hidden="true"
+        >
+          ▶
+        </div>
+
+        <div>
+
+          <span class="fpair-training-entry-label">
+            FPAIR / ENTRENAMIENTO
+          </span>
+
+          <strong>
+            ¿Quieres practicar antes de tu examen?
+          </strong>
+
+          <p>
+            Accede al centro de entrenamiento FPAIR para
+            familiarizarte con las maniobras, practicar a tu ritmo
+            y llegar con mayor confianza al laboratorio.
+          </p>
+
+        </div>
+
+      </div>
+
+      <a
+        class="btn btn-primary"
+        href="entrenamiento.html"
+        aria-label="Abrir centro de entrenamiento FPAIR"
+      >
+        Ir a entrenamiento →
+      </a>
 
     </div>
 
@@ -6877,8 +7241,8 @@ function renderExamSelector() {
       </h3>
 
       <p>
-        No necesitas saber cuál es el más adecuado:
-        elige el nombre que aparece en tu orden o indicación.
+        Primero elige Adultos o Pediatría. Luego selecciona directamente
+        el nombre que aparece en tu orden o indicación.
       </p>
 
     </div>
@@ -9119,17 +9483,28 @@ function initialize() {
   try {
     initializeTheme();
     initializeHistory();
-    loadLastExam();
+    /* El index siempre inicia en la selección directa de exámenes.
+       No restauramos automáticamente el último examen visitado. */
+    state.examId = null;
     renderFromHash();
   } catch (error) {
     console.error("FPAIR: error de inicialización", error);
-    const body = document.getElementById("totemBody");
-    if (body) {
-      body.innerHTML = `
-        <div class="js-fallback" role="alert">
-          <strong>El explorador interactivo no pudo iniciarse.</strong><br>
-          Puedes continuar directamente con <a href="espirometria_info.html">Espirometría</a>, <a href="difusion_info.html">DLCO</a>, <a href="volumenes_info.html">Volúmenes pulmonares</a> u <a href="preparacion_info.html">orientación para tu examen</a>.
-        </div>`;
+
+    /*
+      IMPORTANTE:
+      La grilla de exámenes ya viene renderizada directamente en el HTML.
+      Nunca se reemplaza por un mensaje de error.
+
+      Si alguna parte secundaria de la aplicación falla, intentamos activar
+      nuevamente el selector interactivo. Si eso tampoco es posible,
+      simplemente dejamos visibles y utilizables los cuadros de exámenes
+      que ya están presentes en el documento.
+    */
+    try {
+      state.examId = null;
+      renderExamSelector();
+    } catch (selectorError) {
+      console.error("FPAIR: selector dinámico no disponible; se conserva la grilla estática.", selectorError);
     }
   }
 
