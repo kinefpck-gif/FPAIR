@@ -159,5 +159,19 @@ let audioCtx,analyser,stream,micRaf;async function startMic(){try{stream=await n
 function stopMic(){if(micRaf)cancelAnimationFrame(micRaf);micRaf=null;if(stream)stream.getTracks().forEach(t=>t.stop());if(audioCtx)audioCtx.close();stream=null;audioCtx=null;$('#micMeter').style.width='0%';$('#micState').textContent='Inactivo';$('#micBtn').disabled=false;$('#micStop').disabled=true}
 $('#micBtn').addEventListener('click',startMic);$('#micStop').addEventListener('click',stopMic);window.addEventListener('beforeunload',stopMic);
 </script>
+
+<script>
+/* FPAIR — comportamiento Atrás: volver directamente al índice */
+(function(){
+  const FPAIR_HOME = 'index.html#fpair/home';
+  try {
+    history.pushState({ fpairExamGuard: true }, '', location.href);
+    window.addEventListener('popstate', function(){
+      location.replace(FPAIR_HOME);
+    });
+  } catch (e) {}
+})();
+</script>
+
 </body>
 </html>
