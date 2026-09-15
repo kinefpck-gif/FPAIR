@@ -263,5 +263,19 @@ $('#nextStep').addEventListener('click',()=>{if(step<steps.length-1){step++;rend
 renderSteps();
 openStage(store.get('fpair:dlco:stage')||'before',false);
 </script>
+
+<script>
+/* FPAIR — comportamiento Atrás: volver directamente al índice */
+(function(){
+  const FPAIR_HOME = 'index.html#fpair/home';
+  try {
+    history.pushState({ fpairExamGuard: true }, '', location.href);
+    window.addEventListener('popstate', function(){
+      location.replace(FPAIR_HOME);
+    });
+  } catch (e) {}
+})();
+</script>
+
 </body>
 </html>
