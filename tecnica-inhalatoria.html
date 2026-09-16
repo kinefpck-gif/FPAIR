@@ -13,7 +13,7 @@
   --bg:#F3FBFA;--bg2:#E7F6F4;--surface:#FFFFFF;--surface2:#F6FCFB;
   --text:#0B2530;--muted:#587477;--line:#D3EDE9;
   --primary:#0E8A82;--primary2:#086B64;--accent:#22D3B8;--accent2:#C8F5EC;
-  --danger:#B84A5A;--warning:#A86B12;--shadow:0 20px 55px -38px rgba(8,107,100,.38);
+  --shadow:0 22px 60px -38px rgba(8,107,100,.38);
 }
 [data-theme="dark"]{
   --bg:#06191B;--bg2:#0A2224;--surface:#0D2B2D;--surface2:#0F3335;
@@ -24,222 +24,251 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  margin:0;background:
-  radial-gradient(circle at 88% -8%,rgba(34,211,184,.12),transparent 26%),
-  var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;line-height:1.6;
-  -webkit-font-smoothing:antialiased;
+  margin:0;color:var(--text);background:
+  radial-gradient(circle at 88% -8%,rgba(34,211,184,.12),transparent 27%),
+  var(--bg);
+  font-family:Inter,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;
 }
-a{color:inherit;text-decoration:none}button,input{font:inherit}
-h1,h2,h3,h4{font-family:Manrope,Arial,sans-serif}
-.fpair-topbar{
-  position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--surface) 90%,transparent);
-  backdrop-filter:blur(16px);border-bottom:1px solid var(--line)
-}
-.fpair-topbar-in{width:min(1180px,calc(100% - 32px));min-height:68px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.fpair-brand{display:flex;align-items:center;gap:10px;font-family:Manrope;font-weight:800}
-.fpair-mark{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,var(--primary),var(--accent));display:grid;place-items:center;color:#04211E;font-weight:900}
-.fpair-actions{display:flex;align-items:center;gap:8px}
-.fpair-mini-btn{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:9px 12px;border-radius:11px;font-size:12px;font-weight:800;cursor:pointer}
-.fpair-hero{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:56px 0 28px;display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center}
-.fpair-eyebrow{display:inline-flex;padding:7px 11px;border-radius:999px;background:var(--accent2);color:var(--primary2);font-size:10px;font-weight:900;letter-spacing:.08em}
-.fpair-hero h1{font-size:clamp(42px,6vw,76px);line-height:.98;letter-spacing:-2.2px;margin:15px 0}
-.fpair-hero p{max-width:690px;color:var(--muted);font-size:17px;line-height:1.72;margin:0}
-.fpair-hero-card{min-height:250px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,var(--surface),var(--surface2));box-shadow:var(--shadow);display:grid;place-items:center;position:relative;overflow:hidden}
-.fpair-hero-card::before{content:"";position:absolute;width:190px;height:190px;border:1px solid var(--line);border-radius:50%;animation:pulseRing 5s ease-in-out infinite}
-.fpair-hero-icon{font-size:72px;position:relative;z-index:2;filter:drop-shadow(0 15px 24px rgba(8,107,100,.18))}
-@keyframes pulseRing{0%,100%{transform:scale(.92);opacity:.55}50%{transform:scale(1.08);opacity:1}}
-.fpair-quick{width:min(1180px,calc(100% - 32px));margin:0 auto 8px;border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
-.fpair-quick strong{font-size:11px;color:var(--primary);display:block;margin-bottom:10px}
-.fpair-chips{display:flex;gap:8px;flex-wrap:wrap}
-.fpair-chip{padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:var(--surface2);font-size:11px;font-weight:800;color:var(--muted);transition:.2s}
-.fpair-chip:hover{color:var(--primary);border-color:var(--primary);transform:translateY(-1px)}
-.fpair-progress{height:3px;background:var(--line);position:sticky;top:68px;z-index:49}
-.fpair-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .08s linear}
-.container{max-width:1180px;margin:auto;padding:28px 16px 44px}
-.section{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px;margin-bottom:18px;box-shadow:var(--shadow);transition:transform .2s,border-color .2s;scroll-margin-top:100px}
-.section:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--primary) 45%,var(--line))}
-.section h2{color:var(--text);font-size:clamp(22px,3vw,30px);margin:0 0 16px;border:0;padding:0}
-.section h2::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--accent);margin-right:10px;vertical-align:middle}
-.section h3{color:var(--primary2);font-size:17px;margin:18px 0 10px}
-.section p{color:var(--muted);font-size:14px;margin:0 0 13px}
-.highlight-box{background:var(--accent2);border:1px solid color-mix(in srgb,var(--primary) 20%,var(--line));border-left:4px solid var(--primary);padding:17px;border-radius:14px;margin:18px 0}
-.highlight-box p{color:var(--text)}
-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:16px;overflow:hidden;border:1px solid var(--line);border-radius:14px;font-size:13px}
-th,td{padding:13px;border-bottom:1px solid var(--line);text-align:left}th{background:var(--primary);color:#fff}tr:last-child td{border-bottom:0}tr:nth-child(even) td{background:var(--surface2)}
-.symptoms-list,.simple-list,.benefits-list,.steps-list{list-style:none;padding:0;margin:15px 0}
-.symptoms-list li,.simple-list>li,.benefits-list li,.steps-list li{padding:12px 12px 12px 38px;border-bottom:1px solid var(--line);position:relative;color:var(--muted)}
-.symptoms-list li::before,.benefits-list li::before{content:"✓";position:absolute;left:9px;color:var(--primary);font-weight:900}
-.steps-list{counter-reset:step-counter}.steps-list li{counter-increment:step-counter}.steps-list li::before{content:counter(step-counter);position:absolute;left:4px;top:10px;width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:900;font-size:12px}
-.faq-item{border-bottom:1px solid var(--line)}.faq-question{cursor:pointer;display:flex;justify-content:space-between;gap:14px;align-items:center;padding:15px 0;font-weight:800;color:var(--text)}.faq-answer{display:none;padding:0 0 14px}.faq-answer.active{display:block}
-.comparison-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab{border:1px solid var(--line);background:var(--surface2);color:var(--muted);border-radius:11px;padding:10px 13px;font-weight:800;cursor:pointer}.tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}.tab-content{display:none;background:var(--surface2);border:1px solid var(--line);border-radius:16px;padding:18px}.tab-content.active{display:block}
-.inhalador-layout{display:grid;grid-template-columns:minmax(180px,.7fr) 1.5fr;gap:22px;align-items:start}.inhalador-img{text-align:center}.inhalador-img img,.content-image{max-width:100%;max-height:320px;object-fit:contain;border-radius:14px}
-.inhaladores-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:18px}.inhalador-card{background:var(--surface2);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:.2s}.inhalador-card:hover{transform:translateY(-2px);border-color:var(--primary)}.inhalador-card.selected{outline:2px solid var(--primary)}.inhalador-image{height:170px;background:var(--surface);display:flex;align-items:center;justify-content:center}.inhalador-image img{max-width:82%;max-height:145px;object-fit:contain}.card-content{padding:15px}.card-title{font-family:Manrope;font-weight:800;font-size:16px;color:var(--text)}.badge,.med-badge{display:inline-block;padding:6px 9px;border-radius:999px;background:var(--accent2);color:var(--primary2);font-size:10px;font-weight:800;margin:4px 4px 0 0}.checkbox-area{margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}.checkbox-area label{display:flex;gap:8px;align-items:center;font-size:12px;font-weight:800}.checkbox-area input{width:18px;height:18px;accent-color:var(--primary)}
-.result-card{background:var(--surface2);border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:14px;padding:14px;margin-bottom:10px}.empty-state{text-align:center;color:var(--muted);padding:28px}
-.image-container,.video-container{text-align:center;margin:18px 0}.video-link,.video-button,.next-page-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--primary);color:#fff!important;border-radius:12px;padding:11px 15px;text-decoration:none;font-weight:800;transition:.2s}.video-link:hover,.video-button:hover,.next-page-link:hover{transform:translateY(-2px);background:var(--primary2)}
-.next-page-container{text-align:center;margin:25px 0}
-.fpair-related{width:min(1180px,calc(100% - 32px));margin:0 auto 42px}.fpair-related h2{font-size:22px}.fpair-related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.fpair-related a{border:1px solid var(--line);border-radius:15px;background:var(--surface);padding:15px}.fpair-related a strong{display:block;font-size:13px}.fpair-related a span{display:block;color:var(--muted);font-size:10px;margin-top:4px}
-footer{text-align:center;padding:25px 18px 38px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
-@media(max-width:850px){.fpair-hero{grid-template-columns:1fr}.fpair-hero-card{min-height:190px}.inhalador-layout{grid-template-columns:1fr}.fpair-related-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.fpair-actions .label{display:none}.fpair-hero{padding-top:34px}.fpair-hero h1{font-size:42px}.section{padding:20px}.fpair-related-grid{grid-template-columns:1fr}.inhaladores-grid{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.fpair-hero-card::before{animation:none}}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+h1,h2,h3{font-family:Manrope,Arial,sans-serif}
 
-/* ===== FPAIR UX 2.0 · capa de precisión visual e interacción ===== */
-:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 72%,#fff);outline-offset:3px}
-img{max-width:100%;height:auto}
-.fpair-topbar-in{min-width:0}.fpair-brand{min-width:0}.fpair-brand span:last-child{white-space:nowrap}
-.fpair-brand-logo{width:42px;height:42px;object-fit:contain;display:block}
-.fpair-brand-logo.is-missing{display:none}
-.fpair-main{min-width:0}
-.fpair-hero>*{min-width:0}
-.fpair-hero p{max-width:64ch}
-.section>*:last-child{margin-bottom:0}
-.section ul ul{margin:8px 0 0;padding-left:20px}
-.section li{overflow-wrap:anywhere}
-
-/* asistencia contextual */
-.fpair-assist{width:min(1180px,calc(100% - 32px));margin:14px auto 18px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:15px 16px;box-shadow:var(--shadow)}
-.fpair-assist-icon{width:46px;height:46px;border-radius:14px;background:var(--accent2);display:grid;place-items:center;font-size:24px}
-.fpair-assist-copy strong{display:block;font-family:Manrope;font-size:14px}.fpair-assist-copy span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
-.fpair-assist-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-.fpair-action{border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:11px;padding:9px 11px;font-size:11px;font-weight:800;cursor:pointer;transition:.18s}
-.fpair-action:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-1px)}
-.fpair-action.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
-
-/* navegación de contenidos */
-.fpair-quick{position:sticky;top:71px;z-index:35;padding:11px 13px}
-.fpair-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.fpair-chips::-webkit-scrollbar{display:none}.fpair-chip{white-space:nowrap;flex:0 0 auto}
-.fpair-chip.is-active{background:var(--primary);color:#fff;border-color:var(--primary)}
-
-/* layout y lectura */
-.container{padding-top:22px}.section{overflow:hidden}.section h2{line-height:1.18}.section p{max-width:78ch}
-.table-scroll{overflow-x:auto;border-radius:14px}.table-scroll table{min-width:640px;margin-top:0}
-
-/* imágenes: misma caja visual, sin saltos ni deformación */
-.inhalador-img,.image-container{min-width:0}
-.inhalador-img{border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:14px;min-height:250px;display:grid;place-items:center}
-.inhalador-img img,.content-image{width:100%;height:auto;max-height:320px;object-fit:contain;box-shadow:none!important}
-.inhalador-image{position:relative;aspect-ratio:4/3;height:auto;min-height:190px;padding:14px}
-.inhalador-image img{width:100%;height:100%;max-height:none;object-fit:contain}
-.fpair-img-fallback{display:none;place-items:center;min-height:180px;width:100%;border:1px dashed var(--line);border-radius:13px;color:var(--muted);font-size:11px;text-align:center;padding:16px}
-
-/* tarjetas inhaladores */
-.inhaladores-tools{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;margin:16px 0 4px;align-items:center}
-.inhaladores-search{width:100%;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;padding:12px 13px}
-.selected-counter{border:1px solid var(--line);background:var(--accent2);color:var(--primary2);border-radius:12px;padding:11px 13px;font-size:11px;font-weight:900;white-space:nowrap}
-.inhalador-card{display:flex;flex-direction:column;min-width:0}.card-content{display:flex;flex-direction:column;flex:1}.checkbox-area{margin-top:auto}
-.inhalador-card.is-filtered{display:none}
-.inhalador-card.selected{outline:2px solid var(--primary);outline-offset:2px;background:color-mix(in srgb,var(--accent2) 38%,var(--surface2))}
-
-/* tabs más claras */
-.comparison-tabs{position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px}
-.tab{min-width:0!important;border-radius:12px!important;border:1px solid var(--line)!important;color:var(--muted);background:var(--surface)!important;min-height:48px}
-.tab.active{background:var(--primary)!important;color:#fff!important;border-color:var(--primary)!important}
-.tab-content{border-radius:16px!important;padding:20px!important}
-
-/* Modo práctica */
-.practice-launch{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:16px 0;padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--accent2)}
-.practice-launch strong{font-size:12px}.practice-launch span{display:block;color:var(--muted);font-size:10px;margin-top:2px}
-.practice-panel{display:none;margin-top:14px;border:1px solid var(--line);border-radius:17px;background:var(--surface);padding:18px}.practice-panel.active{display:block;animation:fadeIn .25s ease}
-.practice-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.practice-count{font:800 10px 'IBM Plex Mono',monospace;color:var(--primary);letter-spacing:.06em}.practice-progress{height:6px;background:var(--line);border-radius:999px;overflow:hidden;margin:10px 0 16px}.practice-progress span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));width:0;transition:width .25s}
-.practice-step{min-height:110px;display:flex;gap:14px;align-items:flex-start}.practice-number{width:42px;height:42px;border-radius:13px;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:900;flex:0 0 auto}.practice-step h4{margin:0 0 5px;font-size:17px}.practice-step p{margin:0;color:var(--muted)}
-.practice-controls{display:flex;justify-content:space-between;gap:10px;margin-top:16px}.practice-controls button{border:1px solid var(--line);border-radius:11px;background:var(--surface2);color:var(--text);padding:9px 12px;font-weight:800;cursor:pointer}.practice-controls button:last-child{background:var(--primary);color:#fff;border-color:var(--primary)}.practice-controls button:disabled{opacity:.45;cursor:not-allowed}
-
-/* videos pendientes no deben saltar arriba */
-.video-button.is-pending,.video-link.is-pending{background:var(--surface2)!important;color:var(--primary)!important;border:1px dashed var(--primary)!important}
-
-/* FAQ */
-.faq-question{border-radius:10px;padding-left:8px;padding-right:8px}.faq-question:hover{background:var(--surface2)}.faq-question span{width:28px;height:28px;border:1px solid var(--line);border-radius:9px;display:grid;place-items:center;flex:0 0 auto}
-
-/* toast */
-.fpair-toast{position:fixed;left:50%;bottom:22px;z-index:100;transform:translate(-50%,18px);opacity:0;pointer-events:none;background:var(--text);color:var(--bg);border-radius:13px;padding:11px 14px;font-size:11px;font-weight:800;box-shadow:0 16px 36px rgba(0,0,0,.24);transition:.22s;max-width:min(430px,calc(100% - 28px));text-align:center}.fpair-toast.show{opacity:1;transform:translate(-50%,0)}
-
-/* móvil */
-@media(max-width:850px){.fpair-quick{top:68px}.fpair-assist{grid-template-columns:auto 1fr}.fpair-assist-actions{grid-column:1/-1;justify-content:stretch}.fpair-assist-actions .fpair-action{flex:1}.inhaladores-tools{grid-template-columns:1fr}.selected-counter{justify-self:start}.comparison-tabs{display:flex;overflow-x:auto;flex-wrap:nowrap}.tab{flex:0 0 auto;min-width:150px!important}.inhalador-img{min-height:210px}}
-@media(max-width:560px){.fpair-topbar-in{width:min(100% - 20px,1180px)}.fpair-assist{width:min(100% - 20px,1180px)}.fpair-hero,.fpair-quick,.fpair-related{width:min(100% - 20px,1180px)}.fpair-actions{gap:5px}.fpair-mini-btn{padding:8px 9px}.fpair-hero-card{min-height:160px}.fpair-hero-icon{font-size:58px}.section{padding:18px;border-radius:16px}.section h2{font-size:22px}.practice-launch{align-items:flex-start;flex-direction:column}.practice-launch .fpair-action{width:100%}.practice-controls button{flex:1}.inhalador-image{min-height:160px}}
-
-
+/* ===== FPAIR HEADER ===== */
 .fpair-topbar{
   position:sticky;top:0;z-index:60;
   background:color-mix(in srgb,var(--surface) 94%,transparent);
   backdrop-filter:blur(14px);
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
 }
 .fpair-topbar-in{
-  width:min(1400px,calc(100% - 20px));
-  min-height:72px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  align-items:center;
-  gap:24px;
+  width:min(1400px,calc(100% - 20px));min-height:72px;margin:auto;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;
 }
-.fpair-brand{
-  display:flex;align-items:center;gap:12px;
-  min-width:max-content;
-}
+.fpair-brand{display:flex;align-items:center;gap:12px;min-width:max-content}
 .fpair-mark{
   width:42px;height:42px;border-radius:12px;
   background:linear-gradient(135deg,#0E8A82,#22D3B8);
-  color:#fff;display:grid;place-items:center;
-  font-family:Manrope,Arial,sans-serif;font-weight:800;font-size:16px;
+  color:#fff;display:grid;place-items:center;font-family:Manrope;font-weight:800;
   box-shadow:0 10px 24px -12px rgba(14,138,130,.65);
 }
 .fpair-brand-text{display:flex;flex-direction:column;line-height:1.1}
-.fpair-brand-text strong{
-  font-family:Manrope,Arial,sans-serif;
-  font-size:17px;color:var(--text);letter-spacing:-.2px
-}
-.fpair-brand-text small{
-  margin-top:5px;color:var(--muted);font-size:11px;font-weight:500
-}
-.fpair-main-nav{
-  display:flex;justify-content:center;align-items:center;gap:26px;
-  min-width:0
-}
-.fpair-main-nav a{
-  color:var(--muted);font-size:12px;font-weight:700;
-  white-space:nowrap;transition:.2s
-}
+.fpair-brand-text strong{font-family:Manrope;font-size:17px}
+.fpair-brand-text small{margin-top:5px;color:var(--muted);font-size:11px}
+.fpair-main-nav{display:flex;justify-content:center;align-items:center;gap:26px}
+.fpair-main-nav a{color:var(--muted);font-size:12px;font-weight:700;white-space:nowrap}
 .fpair-main-nav a:hover{color:var(--primary)}
 .fpair-actions{display:flex;align-items:center;gap:9px}
-.fpair-back-library{
-  display:inline-flex;align-items:center;justify-content:center;
-  padding:9px 12px;border:1px solid var(--line);
-  border-radius:11px;background:var(--surface);
-  color:var(--muted);font-size:11px;font-weight:800;
-  transition:.2s;white-space:nowrap
+.fpair-back-library,.fpair-theme-btn{
+  border:1px solid var(--line);background:var(--surface);color:var(--text);
+  border-radius:11px;font-weight:800
 }
-.fpair-back-library:hover{color:var(--primary);border-color:var(--primary)}
-.fpair-theme-btn{
-  width:40px;height:40px;border:1px solid var(--line);
-  border-radius:11px;background:var(--surface);color:var(--text);
-  cursor:pointer;font-weight:800
+.fpair-back-library{padding:9px 12px;font-size:11px;color:var(--muted)}
+.fpair-theme-btn{width:40px;height:40px;cursor:pointer}
+.fpair-back-library:hover,.fpair-theme-btn:hover{border-color:var(--primary);color:var(--primary)}
+.fpair-progress{height:3px;background:var(--line);position:sticky;top:72px;z-index:55}
+.fpair-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--accent))}
+
+/* ===== HERO ===== */
+.fpair-hero{
+  width:min(1180px,calc(100% - 32px));margin:auto;padding:56px 0 28px;
+  display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center;
 }
-.fpair-theme-btn:hover{border-color:var(--primary)}
+.fpair-eyebrow{
+  display:inline-flex;padding:7px 11px;border-radius:999px;background:var(--accent2);
+  color:var(--primary2);font-size:10px;font-weight:900;letter-spacing:.08em
+}
+.fpair-hero h1{font-size:clamp(42px,6vw,76px);line-height:.98;letter-spacing:-2.2px;margin:15px 0}
+.fpair-hero p{max-width:700px;color:var(--muted);font-size:17px;line-height:1.72;margin:0}
+.fpair-hero-card{
+  min-height:250px;border:1px solid var(--line);border-radius:28px;
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  box-shadow:var(--shadow);display:grid;place-items:center;position:relative;overflow:hidden;
+}
+.fpair-hero-card::before{
+  content:"";position:absolute;width:190px;height:190px;border:1px solid var(--line);
+  border-radius:50%;animation:pulseRing 5s ease-in-out infinite;
+}
+.fpair-hero-icon{font-size:72px;position:relative;z-index:2}
+@keyframes pulseRing{0%,100%{transform:scale(.92);opacity:.55}50%{transform:scale(1.08);opacity:1}}
+
+.fpair-quick{
+  width:min(1180px,calc(100% - 32px));margin:0 auto 10px;
+  border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:14px;
+  box-shadow:var(--shadow);
+}
+.fpair-quick strong{display:block;color:var(--primary);font-size:10px;margin-bottom:10px}
+.fpair-chips{display:flex;gap:8px;flex-wrap:wrap}
+.fpair-chip{
+  padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:var(--surface2);
+  color:var(--muted);font-size:11px;font-weight:800
+}
+.fpair-chip:hover{color:var(--primary);border-color:var(--primary)}
+
+/* ===== CONTENT ===== */
+.container{max-width:1180px;margin:auto;padding:28px 16px 44px}
+.section{
+  background:var(--surface);border:1px solid var(--line);border-radius:20px;
+  padding:28px;margin-bottom:18px;box-shadow:var(--shadow);scroll-margin-top:108px;
+}
+.section h2{font-size:clamp(22px,3vw,30px);margin:0 0 16px;color:var(--text)}
+.section h2::before{
+  content:"";display:inline-block;width:9px;height:9px;border-radius:50%;
+  background:var(--accent);margin-right:10px;vertical-align:middle
+}
+.section h3{font-size:17px;color:var(--primary2);margin:18px 0 10px}
+.section p{color:var(--muted);font-size:14px;margin:0 0 13px}
+.highlight-box{
+  background:var(--accent2);border:1px solid color-mix(in srgb,var(--primary) 20%,var(--line));
+  border-left:4px solid var(--primary);padding:17px;border-radius:14px;margin:18px 0
+}
+.highlight-box p{color:var(--text)}
+
+/* ===== DEVICE SELECTOR / TABS ===== */
+.comparison-tabs{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
+  margin:18px 0 22px
+}
+.tab{
+  min-height:52px;border:1px solid var(--line);background:var(--surface2);
+  color:var(--muted);border-radius:13px;padding:12px 14px;font-weight:800;
+  cursor:pointer;transition:.2s
+}
+.tab:hover{border-color:var(--primary);color:var(--primary)}
+.tab.active{background:var(--primary);border-color:var(--primary);color:white;box-shadow:0 10px 24px -16px rgba(14,138,130,.7)}
+.tab-content{display:none}
+.tab-content.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+.inhalador-layout{
+  display:grid;grid-template-columns:minmax(220px,.75fr) minmax(0,1.5fr);
+  gap:28px;align-items:start
+}
+.inhalador-img{
+  min-height:280px;border:1px solid var(--line);border-radius:18px;background:var(--surface2);
+  display:flex;align-items:center;justify-content:center;padding:18px;position:sticky;top:110px
+}
+.inhalador-img img{
+  width:100%;max-width:320px;height:240px;object-fit:contain;border-radius:12px;
+  box-shadow:none
+}
+.inhalador-img.is-missing::after{
+  content:"Imagen FPAIR pendiente";color:var(--muted);font-size:12px;font-weight:700
+}
+
+/* ===== STEPS ===== */
+.steps-list{list-style:none;padding:0;margin:14px 0;counter-reset:step-counter}
+.steps-list li{
+  position:relative;padding:14px 14px 14px 46px;border-bottom:1px solid var(--line);
+  color:var(--muted);counter-increment:step-counter
+}
+.steps-list li::before{
+  content:counter(step-counter);position:absolute;left:7px;top:12px;width:27px;height:27px;
+  border-radius:50%;display:grid;place-items:center;background:var(--primary);color:white;
+  font-size:12px;font-weight:900
+}
+.practice-shell{
+  margin:18px 0;border:1px solid var(--line);background:var(--surface2);
+  border-radius:18px;padding:18px
+}
+.practice-head{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:12px}
+.practice-head strong{font-family:Manrope}
+.practice-counter{font-size:11px;color:var(--primary);font-weight:900}
+.practice-step{min-height:92px;display:flex;align-items:center;gap:14px}
+.practice-number{
+  width:42px;height:42px;flex:0 0 42px;border-radius:13px;background:var(--primary);
+  color:#fff;display:grid;place-items:center;font-weight:900
+}
+.practice-text{font-size:14px;color:var(--text)}
+.practice-actions{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+.practice-btn{
+  border:1px solid var(--line);background:var(--surface);color:var(--text);
+  border-radius:11px;padding:10px 13px;font-weight:800;cursor:pointer
+}
+.practice-btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.practice-btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* ===== BADGES / BUTTONS ===== */
+.med-badge{
+  display:inline-block;padding:6px 9px;border-radius:999px;background:var(--accent2);
+  color:var(--primary2);font-size:10px;font-weight:800;margin:4px 4px 0 0
+}
+.video-button{
+  display:inline-flex;align-items:center;gap:8px;margin-top:16px;
+  background:var(--primary);color:#fff;border:0;border-radius:12px;padding:11px 15px;
+  font-weight:800;cursor:pointer
+}
+.video-button:hover{background:var(--primary2);transform:translateY(-1px)}
+.video-note{display:none;margin-top:10px;color:var(--muted);font-size:11px}
+
+/* ===== TABLE ===== */
+.table-scroll{overflow:auto;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{padding:13px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}
+th{background:var(--primary);color:#fff}
+tr:nth-child(even) td{background:var(--surface2)}
+
+/* ===== FAQ ===== */
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-question{
+  cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;
+  padding:15px 0;font-weight:800;color:var(--text)
+}
+.faq-question span{
+  width:30px;height:30px;border:1px solid var(--line);border-radius:9px;display:grid;place-items:center;flex:0 0 auto
+}
+.faq-answer{display:none;padding:0 0 14px}
+.faq-answer.active{display:block}
+
+/* ===== RELATED ===== */
+.fpair-related{width:min(1180px,calc(100% - 32px));margin:0 auto 42px}
+.fpair-related h2{font-size:22px}
+.fpair-related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.fpair-related a{
+  border:1px solid var(--line);border-radius:15px;background:var(--surface);padding:15px;
+  transition:.2s
+}
+.fpair-related a:hover{border-color:var(--primary);transform:translateY(-2px)}
+.fpair-related a strong{display:block;font-size:13px}
+.fpair-related a span{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+
+.toast{
+  position:fixed;right:18px;bottom:18px;z-index:90;max-width:340px;
+  background:var(--text);color:var(--surface);border-radius:14px;padding:13px 15px;
+  font-size:12px;box-shadow:0 16px 40px -20px rgba(0,0,0,.55);
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.2s
+}
+.toast.show{opacity:1;transform:none}
+footer{text-align:center;padding:26px 18px 38px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
+
 @media(max-width:1050px){
   .fpair-topbar-in{grid-template-columns:auto auto;gap:14px}
   .fpair-main-nav{grid-column:1/-1;order:3;justify-content:flex-start;overflow-x:auto;padding:0 2px 10px;gap:18px;scrollbar-width:none}
   .fpair-main-nav::-webkit-scrollbar{display:none}
   .fpair-actions{justify-self:end}
 }
-@media(max-width:620px){
-  .fpair-topbar-in{width:min(100% - 16px,1400px);min-height:66px}
-  .fpair-brand-text small{display:none}
-  .fpair-brand-text strong{font-size:16px}
-  .fpair-mark{width:40px;height:40px}
-  .fpair-back-library{padding:8px 10px}
-  .fpair-main-nav a{font-size:11px}
+@media(max-width:850px){
+  .fpair-hero{grid-template-columns:1fr}.fpair-hero-card{min-height:190px}
+  .comparison-tabs{grid-template-columns:1fr 1fr}
+  .inhalador-layout{grid-template-columns:1fr}.inhalador-img{position:static;min-height:220px}
+  .fpair-related-grid{grid-template-columns:1fr 1fr}
 }
-
+@media(max-width:560px){
+  .fpair-brand-text small{display:none}.fpair-brand-text strong{font-size:16px}
+  .fpair-mark{width:40px;height:40px}.fpair-back-library{padding:8px 9px}
+  .fpair-hero{padding-top:34px}.fpair-hero h1{font-size:42px}
+  .section{padding:20px}.comparison-tabs{grid-template-columns:1fr}
+  .fpair-related-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important}.fpair-hero-card::before{animation:none}
+}
 </style>
 </head>
 <body>
 
-
 <div class="fpair-topbar">
   <div class="fpair-topbar-in">
-    <a class="fpair-brand" href="app.html#fpair/home" aria-label="Ir al inicio de FPAIR">
+    <a class="fpair-brand" href="app.html#fpair/home" aria-label="Ir al inicio FPAIR">
       <span class="fpair-mark">F</span>
       <span class="fpair-brand-text">
         <strong>FPAIR</strong>
@@ -247,7 +276,7 @@ img{max-width:100%;height:auto}
       </span>
     </a>
 
-    <nav class="fpair-main-nav" aria-label="Navegación principal FPAIR">
+    <nav class="fpair-main-nav" aria-label="Navegación principal">
       <a href="app.html#fpair/examenes/adult">Exámenes</a>
       <a href="preparacion_info.html">Preparación</a>
       <a href="tecnicas_guiadas.html">Técnica guiada</a>
@@ -261,55 +290,35 @@ img{max-width:100%;height:auto}
     </div>
   </div>
 </div>
-
 <div class="fpair-progress"><span id="pageProgress"></span></div>
+
 
 <section class="fpair-hero">
   <div>
     <span class="fpair-eyebrow">APRENDE LA TÉCNICA</span>
     <h1>Técnica inhalatoria</h1>
-    <p>Descubre cómo cambia la técnica según el dispositivo y practica los pasos clave antes de usarlo.</p>
+    <p>Identifica tu dispositivo y practica la forma correcta de inhalar. Cada inhalador funciona de manera distinta: aquí puedes aprenderlo paso a paso.</p>
   </div>
   <div class="fpair-hero-card" aria-hidden="true">
     <div class="fpair-hero-icon">💨</div>
   </div>
 </section>
 
-<nav class="fpair-quick" aria-label="En esta guía">
+<nav class="fpair-quick" aria-label="Explorar esta guía">
   <strong>EXPLORA ESTA GUÍA</strong>
-  <div class="fpair-chips"><a class="fpair-chip" href="#que-es-un-inhalador">¿Qué es un inhalador?</a><a class="fpair-chip" href="#tipos-de-inhaladores-y-tecnica-correcta">Tipos de inhaladores y técnica correcta</a><a class="fpair-chip" href="#resumen-rapido-de-tecnica-inhalatoria">Resumen rápido de técnica inhalatoria</a><a class="fpair-chip" href="#preguntas-frecuentes">Preguntas frecuentes</a></div>
+  <div class="fpair-chips">
+    <a class="fpair-chip" href="#que-es">¿Qué es?</a>
+    <a class="fpair-chip" href="#tipos">Tipos y técnica</a>
+    <a class="fpair-chip" href="#resumen">Resumen rápido</a>
+    <a class="fpair-chip" href="#faq">Preguntas frecuentes</a>
+  </div>
 </nav>
-<section class="fpair-assist" aria-label="Asistente FPAIR"><div class="fpair-assist-icon">✨</div><div class="fpair-assist-copy"><strong>¿No sabes qué técnica corresponde a tu dispositivo?</strong><span>Elige el tipo de inhalador y activa “Modo práctica” para repasarlo paso a paso.</span></div><div class="fpair-assist-actions"><button type="button" class="fpair-action primary" data-assist-target=".comparison-tabs">Elegir dispositivo</button><button type="button" class="fpair-action" data-assist-target="table">Resumen rápido</button></div></section>
 
-
-
-  <!-- HERO -->
-
-  <header>
-
-    <div class="header-content">
-
-      <div class="header-text">
-
-        <h1>TÉCNICAS INHALATORIAS</h1>
-
-        <p>
-          Aprenda el uso correcto de cada inhalador
-          para que el medicamento llegue mejor
-          a sus pulmones.
-        </p>
-
-      </div>
-
-    </div>
-
-  </header>
-
-  <main class="container fpair-main">
+<div class="container">
 
     <!-- INTRODUCCIÓN -->
 
-    <section class="section" id="que-es-un-inhalador">
+    <section class="section" id="que-es">
 
       <h2>¿Qué es un inhalador?</h2>
 
@@ -345,7 +354,7 @@ img{max-width:100%;height:auto}
 
     <!-- TÉCNICAS INHALATORIAS -->
 
-    <section class="section" id="tipos-de-inhaladores-y-tecnica-correcta">
+    <section class="section" id="tipos">
 
       <h2>Tipos de inhaladores y técnica correcta</h2>
 
@@ -492,12 +501,12 @@ img{max-width:100%;height:auto}
 
             </div>
 
-            <a href="#"
-            class="video-button">
+            <button type="button"
+            class="video-button" data-video-pending="true">
 
               ▶ Ver técnica en video
 
-            </a>
+            </button>
 
           </div>
 
@@ -627,12 +636,12 @@ img{max-width:100%;height:auto}
 
             </div>
 
-            <a href="#"
-            class="video-button">
+            <button type="button"
+            class="video-button" data-video-pending="true">
 
               ▶ Ver técnica en video
 
-            </a>
+            </button>
 
           </div>
 
@@ -762,12 +771,12 @@ img{max-width:100%;height:auto}
 
             </div>
 
-            <a href="#"
-            class="video-button">
+            <button type="button"
+            class="video-button" data-video-pending="true">
 
               ▶ Ver técnica en video
 
-            </a>
+            </button>
 
           </div>
 
@@ -908,12 +917,12 @@ img{max-width:100%;height:auto}
 
             </div>
 
-            <a href="#"
-            class="video-button">
+            <button type="button"
+            class="video-button" data-video-pending="true">
 
               ▶ Ver técnica en video
 
-            </a>
+            </button>
 
           </div>
 
@@ -924,7 +933,7 @@ img{max-width:100%;height:auto}
     </section>
         <!-- RESUMEN RÁPIDO -->
 
-    <section class="section" id="resumen-rapido-de-tecnica-inhalatoria">
+    <section class="section" id="resumen">
 
       <h2>Resumen rápido de técnica inhalatoria</h2>
 
@@ -933,7 +942,7 @@ img{max-width:100%;height:auto}
         distinta. Recuerde esta regla simple:
       </p>
 
-      <table>
+      <div class="table-scroll"><table>
 
         <thead>
           <tr>
@@ -1011,13 +1020,13 @@ img{max-width:100%;height:auto}
 
         </tbody>
 
-      </table>
+      </table></div>
 
     </section>
 
     <!-- FAQ -->
 
-    <section class="section" id="preguntas-frecuentes">
+    <section class="section" id="faq">
 
       <h2>
         Preguntas frecuentes
@@ -1123,191 +1132,159 @@ img{max-width:100%;height:auto}
 
     </section>
 
-  </main>
+  </div>
 
-  <script>
+  
 
-    /* ===== TABS ===== */
-
-    const tabs =
-    document.querySelectorAll('.tab');
-
-    const contents =
-    document.querySelectorAll(
-      '.tab-content'
-    );
-
-    tabs.forEach(tab => {
-
-      tab.addEventListener(
-        'click',
-        () => {
-
-        tabs.forEach(t =>
-          t.classList.remove('active')
-        );
-
-        contents.forEach(c =>
-          c.classList.remove('active')
-        );
-
-        tab.classList.add('active');
-
-        document
-        .getElementById(
-          tab.dataset.tab + '-content'
-        )
-        .classList.add('active');
-
-      });
-
-    });
-
-    /* ===== FAQ ===== */
-
-    document
-    .querySelectorAll(
-      '.faq-question'
-    )
-    .forEach(question => {
-
-      question.addEventListener(
-        'click',
-        () => {
-
-        const answer =
-        question.nextElementSibling;
-
-        const isOpen =
-        answer.classList.toggle(
-          'active'
-        );
-
-        question
-        .querySelector('span')
-        .textContent =
-        isOpen ? '-' : '+';
-
-      });
-
-    });
-
-  </script>
+  
 
 
 
 <section class="fpair-related">
   <h2>Sigue explorando FPAIR</h2>
   <div class="fpair-related-grid">
-<a href="info-inhaladores.html"><strong>🫁 Mis inhaladores</strong><span>Identifica los que usas.</span></a><a href="info-suspencion.html"><strong>⏱️ Suspensión</strong><span>Prepárate para tu examen.</span></a><a href="tecnica-inhalatoria.html"><strong>💨 Técnica inhalatoria</strong><span>Aprende cada dispositivo.</span></a><a href="aerocamara-limpieza.html"><strong>🧴 Aerocámara</strong><span>Uso, cuidado y limpieza.</span></a>
+    <a href="info-inhaladores.html"><strong>🫁 Mis inhaladores</strong><span>Identifica los dispositivos que utilizas.</span></a>
+    <a href="info-suspencion.html"><strong>⏱️ Suspensión</strong><span>Prepárate antes de tu examen.</span></a>
+    <a href="aerocamara-limpieza.html"><strong>🧴 Aerocámara</strong><span>Uso, cuidado y limpieza.</span></a>
+    <a href="biblioteca.html"><strong>📚 Biblioteca</strong><span>Continúa explorando educación respiratoria.</span></a>
   </div>
 </section>
-<footer><strong>FPAIR · Función Pulmonar</strong><br>Contenido educativo para acompañar la preparación y el aprendizaje del paciente.</footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<footer><strong>FPAIR · Función Pulmonar</strong><br>Contenido educativo. La técnica puede variar según el dispositivo y las indicaciones del equipo tratante.</footer>
 
 
 <script>
 (function(){
-  const saved = localStorage.getItem('fpair:theme');
-  const preferred = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light');
-  document.documentElement.setAttribute('data-theme', preferred);
+  const root=document.documentElement;
+  const saved=localStorage.getItem('fpair:theme');
+  const preferred=saved || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  root.setAttribute('data-theme',preferred);
 
-  const toggle=document.getElementById('themeToggle');
-  if(toggle) toggle.addEventListener('click',()=>{
-    const next=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
-    document.documentElement.setAttribute('data-theme',next);
+  const theme=document.getElementById('themeToggle');
+  if(theme) theme.addEventListener('click',()=>{
+    const next=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
     localStorage.setItem('fpair:theme',next);
   });
 
-  const bar=document.getElementById('pageProgress');
-  function updateProgress(){
+  const progress=document.getElementById('pageProgress');
+  const updateProgress=()=>{
     const max=document.documentElement.scrollHeight-innerHeight;
-    const pct=max>0?(scrollY/max)*100:0;
-    if(bar) bar.style.width=Math.max(0,Math.min(100,pct))+'%';
-  }
+    if(progress) progress.style.width=(max>0?Math.min(100,(scrollY/max)*100):0)+'%';
+  };
   addEventListener('scroll',updateProgress,{passive:true});
   updateProgress();
-})();
-</script>
 
-<div class="fpair-toast" id="fpairToast" role="status" aria-live="polite"></div>
+  // Tabs with keyboard/accessibility support.
+  const tabs=[...document.querySelectorAll('.tab')];
+  const panels=[...document.querySelectorAll('.tab-content')];
+  tabs.forEach((tab,i)=>{
+    tab.setAttribute('role','tab');
+    tab.setAttribute('aria-selected',tab.classList.contains('active')?'true':'false');
+    tab.setAttribute('tabindex',tab.classList.contains('active')?'0':'-1');
+    tab.addEventListener('click',()=>activateTab(tab));
+    tab.addEventListener('keydown',e=>{
+      if(!['ArrowRight','ArrowLeft','Home','End'].includes(e.key)) return;
+      e.preventDefault();
+      let ni=i;
+      if(e.key==='ArrowRight') ni=(i+1)%tabs.length;
+      if(e.key==='ArrowLeft') ni=(i-1+tabs.length)%tabs.length;
+      if(e.key==='Home') ni=0;
+      if(e.key==='End') ni=tabs.length-1;
+      tabs[ni].focus(); activateTab(tabs[ni]);
+    });
+  });
+  function activateTab(tab){
+    const id=tab.dataset.tab+'-content';
+    tabs.forEach(t=>{
+      const active=t===tab;
+      t.classList.toggle('active',active);
+      t.setAttribute('aria-selected',active?'true':'false');
+      t.setAttribute('tabindex',active?'0':'-1');
+    });
+    panels.forEach(p=>p.classList.toggle('active',p.id===id));
+    const panel=document.getElementById(id);
+    if(panel) enhancePractice(panel);
+  }
 
-<script>
-(function(){
-  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-  const toast=$('#fpairToast');
-  let toastTimer;
-  function notify(msg){if(!toast)return;toast.textContent=msg;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2600)}
+  // FAQ accessible.
+  document.querySelectorAll('.faq-question').forEach(q=>{
+    q.setAttribute('role','button');
+    q.setAttribute('tabindex','0');
+    q.setAttribute('aria-expanded','false');
+    const toggle=()=>{
+      const a=q.nextElementSibling;
+      const open=a.classList.toggle('active');
+      q.setAttribute('aria-expanded',open?'true':'false');
+      const s=q.querySelector('span'); if(s) s.textContent=open?'−':'+';
+    };
+    q.addEventListener('click',toggle);
+    q.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
+  });
 
-  // Images: graceful fallback without broken icon or layout shift.
-  $$('img').forEach(img=>{
+  // Practice mode: converts the current technique list into an optional guided stepper.
+  function enhancePractice(panel){
+    if(!panel || panel.querySelector('.practice-shell')) return;
+    const list=panel.querySelector('.steps-list');
+    if(!list) return;
+    const steps=[...list.querySelectorAll(':scope > li')].map(li=>li.textContent.trim()).filter(Boolean);
+    if(!steps.length) return;
+
+    const shell=document.createElement('div');
+    shell.className='practice-shell';
+    shell.innerHTML=`
+      <div class="practice-head">
+        <strong>Modo práctica FPAIR</strong>
+        <span class="practice-counter"></span>
+      </div>
+      <div class="practice-step">
+        <div class="practice-number"></div>
+        <div class="practice-text"></div>
+      </div>
+      <div class="practice-actions">
+        <button class="practice-btn prev" type="button">← Anterior</button>
+        <button class="practice-btn primary next" type="button">Siguiente →</button>
+      </div>`;
+    list.parentNode.insertBefore(shell,list);
+    list.hidden=true;
+
+    let idx=0;
+    const render=()=>{
+      shell.querySelector('.practice-counter').textContent=`Paso ${idx+1} de ${steps.length}`;
+      shell.querySelector('.practice-number').textContent=idx+1;
+      shell.querySelector('.practice-text').textContent=steps[idx];
+      shell.querySelector('.prev').disabled=idx===0;
+      shell.querySelector('.next').textContent=idx===steps.length-1?'Terminar ✓':'Siguiente →';
+    };
+    shell.querySelector('.prev').addEventListener('click',()=>{if(idx>0){idx--;render();}});
+    shell.querySelector('.next').addEventListener('click',()=>{
+      if(idx<steps.length-1){idx++;render();}
+      else showToast('Práctica completada. Puedes repetirla cuando quieras.');
+    });
+    render();
+  }
+  enhancePractice(document.querySelector('.tab-content.active'));
+
+  // Broken images: keep layout clean.
+  document.querySelectorAll('.inhalador-img img').forEach(img=>{
     img.addEventListener('error',()=>{
       img.style.display='none';
-      let fb=img.parentElement?.querySelector('.fpair-img-fallback');
-      if(!fb && img.parentElement){fb=document.createElement('div');fb.className='fpair-img-fallback';fb.innerHTML='<div><strong>Imagen educativa</strong><br><span>Archivo gráfico pendiente o no disponible.</span></div>';img.parentElement.appendChild(fb)}
-      if(fb)fb.style.display='grid';
-    },{once:true});
+      img.parentElement.classList.add('is-missing');
+    });
   });
 
-  // Active section chip while scrolling.
-  const chips=$$('.fpair-chip[href^="#"]');
-  const sections=chips.map(c=>document.querySelector(c.getAttribute('href'))).filter(Boolean);
-  if('IntersectionObserver' in window && sections.length){
-    const io=new IntersectionObserver(entries=>{
-      const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
-      if(!visible)return;
-      chips.forEach(c=>c.classList.toggle('is-active',c.getAttribute('href')==='#'+visible.target.id));
-    },{rootMargin:'-30% 0px -58% 0px',threshold:[0,.2,.5,1]});
-    sections.forEach(s=>io.observe(s));
-  }
-
-  // Turn tables into horizontally safe blocks on narrow screens.
-  $$('table').forEach(t=>{if(!t.parentElement.classList.contains('table-scroll')){const w=document.createElement('div');w.className='table-scroll';t.parentNode.insertBefore(w,t);w.appendChild(t)}});
-
-  // FAQ accessibility.
-  $$('.faq-question').forEach((q,i)=>{
-    q.setAttribute('role','button'); q.setAttribute('tabindex','0'); q.setAttribute('aria-expanded',q.nextElementSibling?.classList.contains('active')?'true':'false');
-    const activate=()=>setTimeout(()=>q.setAttribute('aria-expanded',q.nextElementSibling?.classList.contains('active')?'true':'false'),0);
-    q.addEventListener('click',activate);
-    q.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();q.click()}});
+  // Pending video buttons must not jump to the top.
+  document.querySelectorAll('[data-video-pending="true"]').forEach(btn=>{
+    btn.addEventListener('click',()=>showToast('Video FPAIR pendiente de incorporar. La técnica escrita ya está disponible.'));
   });
 
-  // Video placeholders: do not jump to top when href="#".
-  $$('a.video-button[href="#"],a.video-link[href="#"]').forEach(a=>{
-    a.classList.add('is-pending'); a.setAttribute('aria-disabled','true');
-    a.addEventListener('click',e=>{e.preventDefault();notify('Video FPAIR: espacio preparado para el enlace de YouTube.')});
-  });
-
-  // Guided practice generated from each technique steps-list.
-  function attachPractice(container){
-    const list=container.querySelector('.steps-list'); if(!list||container.querySelector('.practice-launch'))return;
-    const steps=[...list.querySelectorAll(':scope > li')].map(li=>li.textContent.replace(/\s+/g,' ').trim()).filter(Boolean); if(!steps.length)return;
-    const launch=document.createElement('div');launch.className='practice-launch';launch.innerHTML='<div><strong>🎯 Modo práctica FPAIR</strong><span>Repasa la técnica un paso a la vez antes de usar el dispositivo.</span></div><button type="button" class="fpair-action primary">Practicar paso a paso</button>';
-    const panel=document.createElement('div');panel.className='practice-panel';panel.setAttribute('aria-live','polite');panel.innerHTML='<div class="practice-top"><span class="practice-count"></span><button type="button" class="fpair-action practice-close">Cerrar</button></div><div class="practice-progress"><span></span></div><div class="practice-step"><div class="practice-number"></div><div><h4>Tu siguiente paso</h4><p></p></div></div><div class="practice-controls"><button type="button" class="practice-prev">← Anterior</button><button type="button" class="practice-next">Siguiente →</button></div>';
-    list.parentNode.insertBefore(launch,list);launch.after(panel);
-    let idx=0;
-    const render=()=>{panel.querySelector('.practice-count').textContent=`PASO ${String(idx+1).padStart(2,'0')} / ${String(steps.length).padStart(2,'0')}`;panel.querySelector('.practice-progress span').style.width=((idx+1)/steps.length*100)+'%';panel.querySelector('.practice-number').textContent=idx+1;panel.querySelector('.practice-step p').textContent=steps[idx];panel.querySelector('.practice-prev').disabled=idx===0;panel.querySelector('.practice-next').textContent=idx===steps.length-1?'Terminar ✓':'Siguiente →'};
-    launch.querySelector('button').onclick=()=>{panel.classList.add('active');idx=0;render();panel.scrollIntoView({behavior:'smooth',block:'center'})};
-    panel.querySelector('.practice-close').onclick=()=>panel.classList.remove('active');
-    panel.querySelector('.practice-prev').onclick=()=>{if(idx>0){idx--;render()}};
-    panel.querySelector('.practice-next').onclick=()=>{if(idx<steps.length-1){idx++;render()}else{notify('¡Recorrido completado! Puedes repetirlo cuando quieras.');panel.classList.remove('active')}};
+  function showToast(msg){
+    const t=document.getElementById('toast');
+    if(!t) return;
+    t.textContent=msg;t.classList.add('show');
+    clearTimeout(window.__fpairToast);
+    window.__fpairToast=setTimeout(()=>t.classList.remove('show'),3200);
   }
-  $$('.tab-content').forEach(attachPractice);
-  $$('.section').forEach(sec=>{if(sec.querySelector('.steps-list')&&!sec.closest('.tab-content'))attachPractice(sec)});
-
-  // Inhaler finder: search + selected count.
-  const inhalerGrid=$('.inhaladores-grid');
-  if(inhalerGrid){
-    const tools=document.createElement('div');tools.className='inhaladores-tools';tools.innerHTML='<input class="inhaladores-search" type="search" aria-label="Buscar inhalador" placeholder="Buscar por nombre o medicamento…"><div class="selected-counter"><span>0</span> seleccionados</div>';
-    inhalerGrid.parentNode.insertBefore(tools,inhalerGrid);
-    const search=$('.inhaladores-search',tools), counter=$('.selected-counter span',tools), cards=$$('.inhalador-card',inhalerGrid);
-    const updateCount=()=>{const n=$$('.selector-inhalador:checked',inhalerGrid).length;counter.textContent=n};
-    search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();cards.forEach(c=>c.classList.toggle('is-filtered',q && !c.textContent.toLowerCase().includes(q)))});
-    $$('.selector-inhalador',inhalerGrid).forEach(cb=>{cb.addEventListener('change',()=>{cb.closest('.inhalador-card')?.classList.toggle('selected',cb.checked);updateCount()})});
-    updateCount();
-  }
-
-  // Assistance buttons.
-  $$('[data-assist-target]').forEach(b=>b.addEventListener('click',()=>{const el=document.querySelector(b.dataset.assistTarget);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}));
 })();
 </script>
 
