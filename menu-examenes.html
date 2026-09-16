@@ -1,706 +1,248 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Exámenes - FPAIR</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Variables de color y estilos */
-        :root {
-            --primary: #1a6aa2;
-            --primary-dark: #0d4a75;
-            --primary-light: #4a9bd9;
-            --secondary: #34c7b3;
-            --accent: #ff7e5f;
-            --text-dark: #2c3e50;
-            --text-light: #5a6c7d;
-            --background: #f8fbfe;
-            --white: #ffffff;
-            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
-        }
-        
-        /* Estilos generales */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--background);
-            color: var(--text-dark);
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Header con logo */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            margin-bottom: 10px;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .logo-text h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            letter-spacing: 1px;
-            line-height: 1;
-        }
-        
-        .logo-text h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary-light);
-            letter-spacing: 2px;
-            line-height: 1;
-            margin-top: 5px;
-        }
-        
-        .logo-text h3 {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-light);
-            margin-top: 5px;
-        }
-        
-        /* Logotipo FPAIR en header */
-        .fpair-logo-header {
-            width: 140px;
-            height: auto;
-            margin-right: 20px;
-        }
-        
-        /* Navegación */
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .back-btn {
-            display: flex;
-            align-items: center;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        
-        .back-btn:hover {
-            color: var(--primary-dark);
-        }
-        
-        .back-btn i {
-            margin-right: 8px;
-        }
-        
-        /* Contenido principal */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            padding: 20px 0;
-        }
-        
-        .page-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        /* Pestañas */
-        .tabs-container {
-            background: var(--white);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-        
-        .tabs-header {
-            display: flex;
-            background: var(--primary);
-            overflow-x: auto;
-        }
-        
-        .tab-btn {
-            flex: 1;
-            padding: 18px 20px;
-            background: transparent;
-            border: none;
-            color: var(--white);
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            white-space: nowrap;
-            text-align: center;
-        }
-        
-        .tab-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .tab-btn.active {
-            background: var(--white);
-            color: var(--primary);
-        }
-        
-        .tab-content {
-            display: none;
-            padding: 30px;
-        }
-        
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        /* Lista de exámenes */
-        .exams-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-            gap: 20px;
-        }
-        
-        .exam-card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            cursor: pointer;
-            border-left: 4px solid var(--primary);
-            display: flex;
-            align-items: center;
-            height: 100%;
-        }
-        
-        .exam-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        .exam-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            margin-right: 20px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background-color: #e8f4fc;
-            border: 2px dashed var(--primary-light);
-        }
-        
-        .exam-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .exam-content {
-            flex: 1;
-        }
-        
-        .exam-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-bottom: 8px;
-        }
-        
-        .exam-description {
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-        
-        /* Material de ayuda */
-        .help-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-            gap: 20px;
-        }
-        
-        .help-card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            cursor: pointer;
-            border-top: 4px solid var(--secondary);
-            display: flex;
-            align-items: center;
-        }
-        
-        .help-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        .help-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            margin-right: 20px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background-color: #e8f4fc;
-            border: 2px dashed var(--primary-light);
-        }
-        
-        .help-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .help-content {
-            flex: 1;
-        }
-        
-        .help-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-bottom: 8px;
-        }
-        
-        .help-description {
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 25px 20px;
-            margin-top: 50px;
-            background: var(--white);
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .logo-container {
-                margin-bottom: 15px;
-            }
-            
-            .page-title {
-                font-size: 1.8rem;
-            }
-            
-            .tabs-header {
-                flex-direction: column;
-            }
-            
-            .tab-btn {
-                padding: 15px;
-            }
-            
-            .exams-grid, .help-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .exam-card, .help-card {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .exam-image, .help-image {
-                margin-right: 0;
-                margin-bottom: 15px;
-            }
-            
-            .fpair-logo-header {
-                width: 110px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .page-title {
-                font-size: 1.6rem;
-            }
-            
-            .tab-content {
-                padding: 20px;
-            }
-            
-            .exams-grid, .help-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .fpair-logo-header {
-                width: 90px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header class="header">
-            <div class="logo-container">
-                <!-- LOGO FPAIR -->
-                <img src="logo-fpair-header.png" alt="Logo FPAIR" class="fpair-logo-header">
-                <div class="logo-text">
-                    <h1></h1>
-                    <h2>FPAIR</h2>
-                    <h3>FUNCIÓN PULMONAR</h3>
-                </div>
-            </div>
-        </header>
-        
-        <div class="nav-container">
-            <div class="back-btn" id="back-to-platform">
-                <i class="fas fa-arrow-left"></i> Volver a la Plataforma
-            </div>
-        </div>
-        
-        <main class="main-content">
-            <h1 class="page-title">LISTA DE EXÁMENES</h1>
-            
-            <div class="tabs-container">
-                <div class="tabs-header">
-                    <button class="tab-btn active" data-tab="exams">Exámenes</button>
-                    <button class="tab-btn" data-tab="inhalers">Inhaladores</button>
-                    <button class="tab-btn" data-tab="help">Material de Ayuda</button>
-                </div>
-                
-                <!-- Pestaña de Exámenes -->
-                <div class="tab-content active" id="exams-tab">
-                    <div class="exams-grid">
-                        <!-- Espirometría -->
-                        <div class="exam-card" onclick="window.location.href='espirometria.html'">
-                            <div class="exam-image">
-                                <img src="images/espirometria.png" alt="Espirometría">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">ESPIROMETRÍA</h3>
-                                <p class="exam-description">Mide la cantidad y velocidad del aire que puede inhalar y exhalar.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Capacidad de Difusión -->
-                        <div class="exam-card" onclick="window.location.href='capacidad-difusion.html'">
-                            <div class="exam-image">
-                                <img src="images/difusion.png" alt="Capacidad de Difusión">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">CAPACIDAD DE DIFUSIÓN</h3>
-                                <p class="exam-description">Evalúa la capacidad de los pulmones para transferir gases a la sangre.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Volúmenes Pulmonares -->
-                        <div class="exam-card" onclick="window.location.href='volumenes-pulmonares.html'">
-                            <div class="exam-image">
-                                <img src="images/volumenes.png" alt="Volúmenes Pulmonares">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">VOLÚMENES PULMONARES</h3>
-                                <p class="exam-description">Determina la cantidad de aire que pueden contener los pulmones.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- PIM-PEM -->
-                        <div class="exam-card" onclick="window.location.href='pim-pem.html'">
-                            <div class="exam-image">
-                                <img src="images/pim-pem.png" alt="PIM-PEM">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">PIM-PEM</h3>
-                                <p class="exam-description">Mide la presión inspiratoria y espiratoria máxima.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Oscilometría de Impulso -->
-                        <div class="exam-card" onclick="window.location.href='oscilometria.html'">
-                            <div class="exam-image">
-                                <img src="images/oscilometria.png" alt="Oscilometría de Impulso">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">OSCILOMETRÍA DE IMPULSO</h3>
-                                <p class="exam-description">Evalúa la resistencia de las vías respiratorias mediante oscilaciones.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Test de Caminata 6 Minutos -->
-                        <div class="exam-card" onclick="window.location.href='test-caminata.html'">
-                            <div class="exam-image">
-                                <img src="images/caminata.png" alt="Test de Caminata 6 Minutos">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">TEST DE CAMINATA 6 MINUTOS</h3>
-                                <p class="exam-description">Evalúa la capacidad funcional del paciente durante la caminata.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Test de Provocación -->
-                        <div class="exam-card" onclick="window.location.href='test-provocacion.html'">
-                            <div class="exam-image">
-                                <img src="images/provocacion.png" alt="Test de Provocación">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">TEST DE PROVOCACIÓN</h3>
-                                <p class="exam-description">Evalúa la respuesta bronquial a estímulos específicos.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Test de Ejercicio -->
-                        <div class="exam-card" onclick="window.location.href='test-ejercicio.html'">
-                            <div class="exam-image">
-                                <img src="images/ejercicio.png" alt="Test de Ejercicio">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">TEST DE EJERCICIO</h3>
-                                <p class="exam-description">Evalúa la respuesta cardiorrespiratoria durante el ejercicio.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Test Cardiopulmonar -->
-                        <div class="exam-card" onclick="window.location.href='test-cardiopulmonar.html'">
-                            <div class="exam-image">
-                                <img src="images/cardiopulmonar.png" alt="Test Cardiopulmonar">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">TEST CARDIOPULMONAR</h3>
-                                <p class="exam-description">Evalúa la interacción entre sistemas cardíaco y respiratorio.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Test Shunt (O2) -->
-                        <div class="exam-card" onclick="window.location.href='test-shunt.html'">
-                            <div class="exam-image">
-                                <img src="images/shunt.png" alt="Test Shunt (O2)">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">TEST SHUNT (O2)</h3>
-                                <p class="exam-description">Evalúa el cortocircuito de sangre en los pulmones.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- FeNO -->
-                        <div class="exam-card" onclick="window.location.href='test-feno.html'">
-                            <div class="exam-image">
-                                <img src="images/feno.png" alt="FeNO">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">FeNO</h3>
-                                <p class="exam-description">Mide el óxido nítrico exhalado para evaluar inflamación de las vías respiratorias.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Pestaña de Inhaladores -->
-                <div class="tab-content" id="inhalers-tab">
-                    <div class="exams-grid">
-                        <!-- Información Inhaladores -->
-                        <div class="exam-card" onclick="window.location.href='info-inhaladores.html'">
-                            <div class="exam-image">
-                                <img src="images/inhaladores.gif" alt="Información Inhaladores">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">INFORMACIÓN INHALADORES</h3>
-                                <p class="exam-description">Conoce los diferentes tipos de inhaladores y sus características.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Técnica Inhalatoria -->
-                        <div class="exam-card" onclick="window.location.href='tecnica-inhalatoria.html'">
-                            <div class="exam-image">
-                                <img src="images/tecnica-inhalatoria.png" alt="Técnica Inhalatoria">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">TÉCNICA INHALATORIA</h3>
-                                <p class="exam-description">Aprende la técnica correcta para usar tu inhalador.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- ¿Queda Inhalador? -->
-                        <div class="exam-card" onclick="window.location.href='queda-inhalador.html'">
-                            <div class="exam-image">
-                                <img src="images/queda-inhalador.png" alt="¿Queda Inhalador?">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">¿QUEDA INHALADOR?</h3>
-                                <p class="exam-description">Aprende a verificar si tu inhalador aún tiene medicamento.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Aerocámara y Limpieza -->
-                        <div class="exam-card" onclick="window.location.href='aerocamara-limpieza.html'">
-                            <div class="exam-image">
-                                <img src="images/aerocamara.png" alt="Aerocámara y Limpieza">
-                            </div>
-                            <div class="exam-content">
-                                <h3 class="exam-title">AEROCÁMARA Y LIMPIEZA</h3>
-                                <p class="exam-description">Mantenimiento y limpieza adecuada de tu aerocámara.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Pestaña de Material de Ayuda -->
-                <div class="tab-content" id="help-tab">
-                    <div class="help-grid">
-                        <!-- Postura Recomendada -->
-                        <div class="help-card" onclick="window.location.href='postura-recomendada.html'">
-                            <div class="help-image">
-                                <img src="images/postura.png" alt="Postura Recomendada">
-                            </div>
-                            <div class="help-content">
-                                <h3 class="help-title">Postura Recomendada</h3>
-                                <p class="help-description">Sentado con la espalda recta, sin cruzar las piernas, pies apoyados en el suelo.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Técnica por Examen -->
-                        <div class="help-card" onclick="window.location.href='tecnica-examen.html'">
-                            <div class="help-image">
-                                <img src="images/tecnica-examen.png" alt="Técnica por Examen">
-                            </div>
-                            <div class="help-content">
-                                <h3 class="help-title">Técnica por Examen</h3>
-                                <p class="help-description">Explicamos cómo es el examen y dónde debes realizar el esfuerzo.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Consejos Prácticos -->
-                        <div class="help-card" onclick="window.location.href='consejos-practicos.html'">
-                            <div class="help-image">
-                                <img src="images/consejos.png" alt="Consejos Prácticos">
-                            </div>
-                            <div class="help-content">
-                                <h3 class="help-title">Consejos Prácticos</h3>
-                                <p class="help-description">Consejos simples para mejorar tu experiencia en el laboratorio.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Ejercicios para Practicar -->
-                        <div class="help-card" onclick="window.location.href='ejercicios-practicar.html'">
-                            <div class="help-image">
-                                <img src="images/ejercicios.png" alt="Ejercicios para Practicar">
-                            </div>
-                            <div class="help-content">
-                                <h3 class="help-title">Ejercicios para Practicar</h3>
-                                <p class="help-description">Ejercicios de preparación para mejorar tu examen.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Preguntas Frecuentes -->
-                        <div class="help-card" onclick="window.location.href='preguntas-frecuentes.html'">
-                            <div class="help-image">
-                                <img src="images/preguntas.png" alt="Preguntas Frecuentes">
-                            </div>
-                            <div class="help-content">
-                                <h3 class="help-title">Preguntas Frecuentes</h3>
-                                <p class="help-description">Dudas comunes y sus respuestas para guiarte mejor.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-    
-    <footer>
-        <p>&copy; 2023 FPAIR - Plataforma para el cuidado de la función pulmonar | Diseñado para pacientes y profesionales</p>
-    </footer>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0E8A82"><title>Enciclopedia de exámenes | FPAIR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3FBFA;--bg2:#E7F6F4;--surface:#FFFFFF;--surface2:#F6FCFB;
+  --text:#0B2530;--muted:#587477;--line:#D3EDE9;
+  --primary:#0E8A82;--primary2:#086B64;--accent:#22D3B8;--accent2:#C8F5EC;
+  --danger:#B54B5C;--warn:#B27618;--shadow:0 22px 60px -38px rgba(8,107,100,.38);
+}
+[data-theme="dark"]{
+  --bg:#06191B;--bg2:#0A2224;--surface:#0D2B2D;--surface2:#0F3335;
+  --text:#E6F7F4;--muted:#8FBDB8;--line:#164448;
+  --primary:#2FE0C3;--primary2:#63F0D6;--accent:#14B8A6;--accent2:#0F3B3A;
+  --danger:#FF8EA1;--warn:#FFD47B;--shadow:0 22px 60px -36px rgba(0,0,0,.78);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--text);
+  background:radial-gradient(circle at 88% -8%,rgba(34,211,184,.12),transparent 27%),var(--bg);
+  font-family:Inter,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+h1,h2,h3,h4{font-family:Manrope,Arial,sans-serif}
+img{max-width:100%;display:block}
+.fpair-topbar{
+  position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--surface) 94%,transparent);
+  backdrop-filter:blur(14px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)
+}
+.fpair-topbar-in{
+  width:min(1400px,calc(100% - 20px));min-height:72px;margin:auto;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px
+}
+.fpair-brand{display:flex;align-items:center;gap:12px;min-width:max-content}
+.fpair-mark{
+  width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#0E8A82,#22D3B8);
+  color:#fff;display:grid;place-items:center;font-family:Manrope;font-weight:800;
+  box-shadow:0 10px 24px -12px rgba(14,138,130,.65)
+}
+.fpair-brand-text{display:flex;flex-direction:column;line-height:1.1}
+.fpair-brand-text strong{font-family:Manrope;font-size:17px}
+.fpair-brand-text small{margin-top:5px;color:var(--muted);font-size:11px}
+.fpair-main-nav{display:flex;justify-content:center;align-items:center;gap:26px}
+.fpair-main-nav a{color:var(--muted);font-size:12px;font-weight:700;white-space:nowrap}
+.fpair-main-nav a:hover{color:var(--primary)}
+.fpair-actions{display:flex;align-items:center;gap:9px}
+.fpair-back-library,.fpair-theme-btn{
+  border:1px solid var(--line);background:var(--surface);color:var(--text);
+  border-radius:11px;font-weight:800
+}
+.fpair-back-library{padding:9px 12px;font-size:11px;color:var(--muted)}
+.fpair-theme-btn{width:40px;height:40px;cursor:pointer}
+.fpair-back-library:hover,.fpair-theme-btn:hover{border-color:var(--primary);color:var(--primary)}
+.fpair-progress{height:3px;background:var(--line);position:sticky;top:72px;z-index:65}
+.fpair-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--accent))}
+.hero{
+  width:min(1180px,calc(100% - 32px));margin:auto;padding:58px 0 30px;
+  display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center
+}
+.eyebrow{
+  display:inline-flex;padding:7px 11px;border-radius:999px;background:var(--accent2);
+  color:var(--primary2);font-size:10px;font-weight:900;letter-spacing:.08em
+}
+.hero h1{font-size:clamp(42px,6vw,76px);line-height:.98;letter-spacing:-2.2px;margin:15px 0}
+.hero p{max-width:720px;color:var(--muted);font-size:17px;line-height:1.72;margin:0}
+.hero-visual{
+  min-height:250px;border:1px solid var(--line);border-radius:28px;
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  box-shadow:var(--shadow);display:grid;place-items:center;position:relative;overflow:hidden
+}
+.hero-visual::before{
+  content:"";position:absolute;width:190px;height:190px;border:1px solid var(--line);
+  border-radius:50%;animation:pulseRing 5s ease-in-out infinite
+}
+.hero-icon{font-size:72px;position:relative;z-index:2}
+@keyframes pulseRing{0%,100%{transform:scale(.92);opacity:.55}50%{transform:scale(1.08);opacity:1}}
+.quick{
+  width:min(1180px,calc(100% - 32px));margin:0 auto 10px;
+  border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:14px;
+  box-shadow:var(--shadow)
+}
+.quick strong{display:block;color:var(--primary);font-size:10px;margin-bottom:10px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:var(--surface2);
+  color:var(--muted);font-size:11px;font-weight:800
+}
+.chip:hover{color:var(--primary);border-color:var(--primary)}
+.container{width:min(1180px,calc(100% - 32px));margin:auto;padding:28px 0 44px}
+.section{
+  background:var(--surface);border:1px solid var(--line);border-radius:20px;
+  padding:28px;margin-bottom:18px;box-shadow:var(--shadow);scroll-margin-top:108px
+}
+.section h2{font-size:clamp(22px,3vw,30px);margin:0 0 16px}
+.section h2::before{
+  content:"";display:inline-block;width:9px;height:9px;border-radius:50%;
+  background:var(--accent);margin-right:10px;vertical-align:middle
+}
+.section p{color:var(--muted);font-size:14px;margin:0 0 13px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{
+  border:1px solid var(--line);border-radius:16px;background:var(--surface2);padding:16px;
+  transition:.2s
+}
+.card:hover{transform:translateY(-2px);border-color:var(--primary)}
+.card .code{font-size:9px;font-weight:900;color:var(--primary);letter-spacing:.08em;text-transform:uppercase}
+.card h3{font-size:16px;margin:8px 0 6px}
+.card p{font-size:12px;margin:0;color:var(--muted)}
+.card .go{display:inline-block;margin-top:12px;color:var(--primary);font-size:11px;font-weight:900}
+.callout{
+  border:1px solid color-mix(in srgb,var(--primary) 22%,var(--line));
+  border-left:4px solid var(--primary);background:var(--accent2);border-radius:14px;
+  padding:16px;margin:16px 0
+}
+.callout.warn{border-left-color:var(--warn);background:color-mix(in srgb,var(--surface) 84%,#FFF1CC)}
+.callout.danger{border-left-color:var(--danger);background:color-mix(in srgb,var(--surface) 88%,#FFDDE2)}
+.stepper{display:grid;gap:10px}
+.step{
+  display:grid;grid-template-columns:44px 1fr;gap:13px;align-items:start;
+  border:1px solid var(--line);border-radius:15px;background:var(--surface2);padding:14px
+}
+.step-num{
+  width:34px;height:34px;border-radius:11px;background:var(--primary);color:#fff;
+  display:grid;place-items:center;font-weight:900;font-size:12px
+}
+.step h3{margin:0 0 4px;font-size:15px}.step p{margin:0;font-size:12px}
+.searchbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.searchbar input,.searchbar select{
+  flex:1;min-width:210px;padding:12px 13px;border:1px solid var(--line);border-radius:12px;
+  background:var(--surface);color:var(--text);outline:none
+}
+.searchbar input:focus,.searchbar select:focus{border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 15%,transparent)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.pill{border:1px solid var(--line);background:var(--surface2);color:var(--muted);border-radius:999px;padding:8px 11px;font-size:11px;font-weight:800;cursor:pointer}
+.pill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.accordion{border-top:1px solid var(--line)}
+.acc-item{border-bottom:1px solid var(--line)}
+.acc-q{width:100%;display:flex;justify-content:space-between;gap:14px;align-items:center;padding:15px 0;background:none;border:0;color:var(--text);text-align:left;font-weight:800;cursor:pointer}
+.acc-a{display:none;padding:0 0 15px;color:var(--muted);font-size:13px}.acc-item.open .acc-a{display:block}
+.acc-icon{width:30px;height:30px;border:1px solid var(--line);border-radius:9px;display:grid;place-items:center;flex:0 0 auto}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.timeline .phase{border:1px solid var(--line);border-radius:18px;background:var(--surface2);padding:18px;position:relative}
+.phase-badge{display:inline-flex;padding:6px 9px;border-radius:999px;background:var(--accent2);color:var(--primary2);font-size:9px;font-weight:900}
+.phase h3{font-size:18px;margin:10px 0 8px}.phase ul{padding-left:18px;color:var(--muted);font-size:12px}
+.metric{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface2);padding:13px}
+.metric strong{font-size:14px}.metric span{font-size:11px;color:var(--muted)}
+.kpi{font-family:Manrope;font-size:28px;color:var(--primary);font-weight:800}
+.image-card{
+  border:1px solid var(--line);border-radius:18px;background:var(--surface2);padding:14px;text-align:center
+}
+.image-card img{max-height:360px;margin:auto;object-fit:contain;border-radius:12px}
+.toast{
+  position:fixed;right:18px;bottom:18px;z-index:90;max-width:340px;
+  background:var(--text);color:var(--surface);border-radius:14px;padding:13px 15px;
+  font-size:12px;box-shadow:0 16px 40px -20px rgba(0,0,0,.55);
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.2s
+}
+.toast.show{opacity:1;transform:none}
+footer{text-align:center;padding:26px 18px 38px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
+.hidden{display:none!important}
+@media(max-width:1050px){
+  .fpair-topbar-in{grid-template-columns:auto auto;gap:14px}
+  .fpair-main-nav{grid-column:1/-1;order:3;justify-content:flex-start;overflow-x:auto;padding:0 2px 10px;gap:18px;scrollbar-width:none}
+  .fpair-main-nav::-webkit-scrollbar{display:none}.fpair-actions{justify-self:end}
+}
+@media(max-width:850px){
+  .hero{grid-template-columns:1fr}.hero-visual{min-height:190px}.grid{grid-template-columns:1fr 1fr}.timeline{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .fpair-brand-text small{display:none}.fpair-mark{width:40px;height:40px}.fpair-back-library{padding:8px 9px}
+  .hero{padding-top:34px}.hero h1{font-size:42px}.section{padding:20px}.grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.hero-visual::before{animation:none}}
+</style></head><body>
 
-    <script>
-        // Navegación de vuelta a la plataforma
-        document.getElementById('back-to-platform').addEventListener('click', function() {
-            history.back();
-        });
-        
-        // Funcionalidad de pestañas
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // Remover clase activa de todos los botones
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    // Añadir clase activa al botón clickeado
-                    this.classList.add('active');
-                    
-                    // Ocultar todos los contenidos
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    // Mostrar el contenido correspondiente
-                    const tabId = this.getAttribute('data-tab');
-                    document.getElementById(`${tabId}-tab`).classList.add('active');
-                });
-            });
-            
-            // Efecto de aparición suave para los elementos
-            const elements = document.querySelectorAll('.exam-card, .help-card');
-            
-            elements.forEach((element, index) => {
-                setTimeout(() => {
-                    element.style.opacity = '0';
-                    element.style.transform = 'translateY(20px)';
-                    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    
-                    setTimeout(() => {
-                        element.style.opacity = '1';
-                        element.style.transform = 'translateY(0)';
-                    }, 100);
-                }, index * 100);
-            });
-        });
-    </script>
-</body>
-</html>
+<div class="fpair-topbar">
+  <div class="fpair-topbar-in">
+    <a class="fpair-brand" href="app.html#fpair/home" aria-label="Ir al inicio FPAIR">
+      <span class="fpair-mark">F</span>
+      <span class="fpair-brand-text"><strong>FPAIR</strong><small>Educación y entrenamiento respiratorio</small></span>
+    </a>
+    <nav class="fpair-main-nav" aria-label="Navegación principal">
+      <a href="app.html#fpair/examenes/adult">Exámenes</a>
+      <a href="preparacion_info.html">Preparación</a>
+      <a href="tecnicas_guiadas.html">Técnica guiada</a>
+      <a href="interpretacion_ia.html">Interpretación</a>
+      <a href="examenes-seguros.html">Confianza clínica</a>
+    </nav>
+    <div class="fpair-actions">
+      <a class="fpair-back-library" href="biblioteca.html">← Biblioteca</a>
+      <button class="fpair-theme-btn" id="themeToggle" type="button" aria-label="Cambiar tema">◐</button>
+    </div>
+  </div>
+</div>
+<div class="fpair-progress"><span id="pageProgress"></span></div>
+
+<section class="hero"><div><span class="eyebrow">EXAM / 05</span><h1>Enciclopedia de exámenes</h1><p>Un mapa de entrada a todos los exámenes FPAIR. Busca una prueba, descubre para qué sirve y entra a su experiencia educativa.</p></div>
+<div class="hero-visual" aria-hidden="true"><div class="hero-icon">🗺️</div></div></section>
+
+<main class="container"><section class="section"><h2>Encuentra un examen</h2><p>Busca por nombre o filtra por población.</p><div class="searchbar"><input id="examSearch" type="search" placeholder="Buscar: DLCO, FeNO, caminata..."><select id="examFilter"><option value="all">Todos</option><option value="adult">Adultos</option><option value="pediatric">Pediatría</option></select></div><div class="grid" id="examGrid"><a class="card exam-card" data-pop="adult" data-search="espirometría mide flujos y volúmenes durante una espiración forzada. spiro" href="espirometria_info.html"><span class="code">SPIRO</span><h3>Espirometría</h3><p>Mide flujos y volúmenes durante una espiración forzada.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="adult" data-search="difusión de co evalúa cómo pasan los gases desde los pulmones hacia la sangre. dlco" href="difusion_info.html"><span class="code">DLCO</span><h3>Difusión de CO</h3><p>Evalúa cómo pasan los gases desde los pulmones hacia la sangre.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="adult" data-search="volúmenes pulmonares mide volúmenes que la espirometría no puede medir directamente. pleth" href="volumenes_info.html"><span class="code">PLETH</span><h3>Volúmenes pulmonares</h3><p>Mide volúmenes que la espirometría no puede medir directamente.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="adult" data-search="oscilometría explora resistencia y reactancia con respiración tranquila. ios" href="oscilometria_info.html"><span class="code">IOS</span><h3>Oscilometría</h3><p>Explora resistencia y reactancia con respiración tranquila.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="adult" data-search="feno mide óxido nítrico exhalado como marcador respiratorio. feno" href="feno_info.html"><span class="code">FeNO</span><h3>FeNO</h3><p>Mide óxido nítrico exhalado como marcador respiratorio.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="adult" data-search="presiones respiratorias evalúa fuerza de músculos inspiratorios y espiratorios. pim/pem" href="pim_pem_info.html"><span class="code">PIM/PEM</span><h3>Presiones respiratorias</h3><p>Evalúa fuerza de músculos inspiratorios y espiratorios.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="adult" data-search="provocación bronquial estudia hiperreactividad bronquial bajo supervisión. prov" href="provocacion_info.html"><span class="code">PROV</span><h3>Provocación bronquial</h3><p>Estudia hiperreactividad bronquial bajo supervisión.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="adult" data-search="shunt ayuda a estudiar alteraciones de oxigenación seleccionadas. shunt" href="shunt_info.html"><span class="code">SHUNT</span><h3>Shunt</h3><p>Ayuda a estudiar alteraciones de oxigenación seleccionadas.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="adult" data-search="caminata 6 minutos evalúa distancia, oxigenación y respuesta al ejercicio submáximo. 6mwt" href="test_caminata_info.html"><span class="code">6MWT</span><h3>Caminata 6 minutos</h3><p>Evalúa distancia, oxigenación y respuesta al ejercicio submáximo.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="adult" data-search="gasometría arterial mide oxígeno, dióxido de carbono y equilibrio ácido-base. abg" href="gasometria_info.html"><span class="code">ABG</span><h3>Gasometría arterial</h3><p>Mide oxígeno, dióxido de carbono y equilibrio ácido-base.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="adult" data-search="ejercicio cardiopulmonar integra respuesta respiratoria, cardiovascular y metabólica. cpet" href="cardiopulmonar_info.html"><span class="code">CPET</span><h3>Ejercicio cardiopulmonar</h3><p>Integra respuesta respiratoria, cardiovascular y metabólica.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="pediatric" data-search="espirometría niños versión pediátrica con guía didáctica. p01" href="espirometria_ninos.html"><span class="code">P01</span><h3>Espirometría niños</h3><p>Versión pediátrica con guía didáctica.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="pediatric" data-search="dlco niños difusión adaptada a pacientes pediátricos. p02" href="dlco_ninos.html"><span class="code">P02</span><h3>DLCO niños</h3><p>Difusión adaptada a pacientes pediátricos.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="pediatric" data-search="ios niños oscilometría con respiración tranquila. p03" href="ios_ninos.html"><span class="code">P03</span><h3>IOS niños</h3><p>Oscilometría con respiración tranquila.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="pediatric" data-search="feno niños medición de óxido nítrico exhalado. p04" href="feno_ninos.html"><span class="code">P04</span><h3>FeNO niños</h3><p>Medición de óxido nítrico exhalado.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="pediatric" data-search="ejercicio niños evaluación de respuesta respiratoria al ejercicio. p05" href="test_ejercicio_ninos.html"><span class="code">P05</span><h3>Ejercicio niños</h3><p>Evaluación de respuesta respiratoria al ejercicio.</p><span class="go">Explorar →</span></a><a class="card exam-card" data-pop="pediatric" data-search="provocación niños prueba de provocación con enfoque pediátrico. p06" href="provocacion_ninos.html"><span class="code">P06</span><h3>Provocación niños</h3><p>Prueba de provocación con enfoque pediátrico.</p><span class="go">Explorar →</span></a></div></section><section class="section"><h2>Cómo usar esta enciclopedia</h2><div class="grid"><div class="card"><span class="code">1</span><h3>Encuentra tu prueba</h3><p>Usa el buscador o los filtros.</p></div><div class="card"><span class="code">2</span><h3>Aprende el recorrido</h3><p>Conoce preparación, técnica y qué puedes sentir.</p></div><div class="card"><span class="code">3</span><h3>Vuelve a la Biblioteca</h3><p>Profundiza en seguridad, interpretación y preguntas frecuentes.</p></div></div></section></main>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<footer><strong>FPAIR · Función Pulmonar</strong><br>Contenido educativo para acompañar al paciente y su familia.</footer>
+
+<script>
+(function(){
+  const root=document.documentElement;
+  const saved=localStorage.getItem('fpair:theme');
+  root.setAttribute('data-theme', saved || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+  const theme=document.getElementById('themeToggle');
+  if(theme) theme.addEventListener('click',()=>{
+    const next=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);localStorage.setItem('fpair:theme',next);
+  });
+  const bar=document.getElementById('pageProgress');
+  const progress=()=>{const max=document.documentElement.scrollHeight-innerHeight;if(bar)bar.style.width=(max>0?Math.min(100,scrollY/max*100):0)+'%'};
+  addEventListener('scroll',progress,{passive:true});progress();
+  window.FPAIRToast=function(msg){
+    const t=document.getElementById('toast'); if(!t)return;
+    t.textContent=msg;t.classList.add('show');clearTimeout(window.__fpairToast);
+    window.__fpairToast=setTimeout(()=>t.classList.remove('show'),3000);
+  };
+  document.querySelectorAll('.acc-q').forEach(btn=>{
+    btn.addEventListener('click',()=>{const item=btn.closest('.acc-item');item.classList.toggle('open');
+      const icon=btn.querySelector('.acc-icon'); if(icon) icon.textContent=item.classList.contains('open')?'−':'+';});
+  });
+})();
+</script>
+
+
+<script>
+const s=document.getElementById('examSearch'), f=document.getElementById('examFilter');
+function applyExamFilter(){
+ const q=s.value.trim().toLowerCase(), pop=f.value;
+ document.querySelectorAll('.exam-card').forEach(c=>{
+   const okQ=!q||c.dataset.search.includes(q), okP=pop==='all'||c.dataset.pop===pop;
+   c.classList.toggle('hidden',!(okQ&&okP));
+ });
+}
+s.addEventListener('input',applyExamFilter);f.addEventListener('change',applyExamFilter);
+</script>
+
+</body></html>
