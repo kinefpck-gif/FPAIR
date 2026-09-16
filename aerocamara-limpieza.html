@@ -82,19 +82,186 @@ footer{text-align:center;padding:25px 18px 38px;color:var(--muted);font-size:11p
 @media(max-width:850px){.fpair-hero{grid-template-columns:1fr}.fpair-hero-card{min-height:190px}.inhalador-layout{grid-template-columns:1fr}.fpair-related-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.fpair-actions .label{display:none}.fpair-hero{padding-top:34px}.fpair-hero h1{font-size:42px}.section{padding:20px}.fpair-related-grid{grid-template-columns:1fr}.inhaladores-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.fpair-hero-card::before{animation:none}}
+
+/* ===== FPAIR UX 2.0 · capa de precisión visual e interacción ===== */
+:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 72%,#fff);outline-offset:3px}
+img{max-width:100%;height:auto}
+.fpair-topbar-in{min-width:0}.fpair-brand{min-width:0}.fpair-brand span:last-child{white-space:nowrap}
+.fpair-brand-logo{width:42px;height:42px;object-fit:contain;display:block}
+.fpair-brand-logo.is-missing{display:none}
+.fpair-main{min-width:0}
+.fpair-hero>*{min-width:0}
+.fpair-hero p{max-width:64ch}
+.section>*:last-child{margin-bottom:0}
+.section ul ul{margin:8px 0 0;padding-left:20px}
+.section li{overflow-wrap:anywhere}
+
+/* asistencia contextual */
+.fpair-assist{width:min(1180px,calc(100% - 32px));margin:14px auto 18px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:15px 16px;box-shadow:var(--shadow)}
+.fpair-assist-icon{width:46px;height:46px;border-radius:14px;background:var(--accent2);display:grid;place-items:center;font-size:24px}
+.fpair-assist-copy strong{display:block;font-family:Manrope;font-size:14px}.fpair-assist-copy span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.fpair-assist-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.fpair-action{border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:11px;padding:9px 11px;font-size:11px;font-weight:800;cursor:pointer;transition:.18s}
+.fpair-action:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-1px)}
+.fpair-action.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* navegación de contenidos */
+.fpair-quick{position:sticky;top:71px;z-index:35;padding:11px 13px}
+.fpair-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.fpair-chips::-webkit-scrollbar{display:none}.fpair-chip{white-space:nowrap;flex:0 0 auto}
+.fpair-chip.is-active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* layout y lectura */
+.container{padding-top:22px}.section{overflow:hidden}.section h2{line-height:1.18}.section p{max-width:78ch}
+.table-scroll{overflow-x:auto;border-radius:14px}.table-scroll table{min-width:640px;margin-top:0}
+
+/* imágenes: misma caja visual, sin saltos ni deformación */
+.inhalador-img,.image-container{min-width:0}
+.inhalador-img{border:1px solid var(--line);background:var(--surface);border-radius:16px;padding:14px;min-height:250px;display:grid;place-items:center}
+.inhalador-img img,.content-image{width:100%;height:auto;max-height:320px;object-fit:contain;box-shadow:none!important}
+.inhalador-image{position:relative;aspect-ratio:4/3;height:auto;min-height:190px;padding:14px}
+.inhalador-image img{width:100%;height:100%;max-height:none;object-fit:contain}
+.fpair-img-fallback{display:none;place-items:center;min-height:180px;width:100%;border:1px dashed var(--line);border-radius:13px;color:var(--muted);font-size:11px;text-align:center;padding:16px}
+
+/* tarjetas inhaladores */
+.inhaladores-tools{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;margin:16px 0 4px;align-items:center}
+.inhaladores-search{width:100%;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;padding:12px 13px}
+.selected-counter{border:1px solid var(--line);background:var(--accent2);color:var(--primary2);border-radius:12px;padding:11px 13px;font-size:11px;font-weight:900;white-space:nowrap}
+.inhalador-card{display:flex;flex-direction:column;min-width:0}.card-content{display:flex;flex-direction:column;flex:1}.checkbox-area{margin-top:auto}
+.inhalador-card.is-filtered{display:none}
+.inhalador-card.selected{outline:2px solid var(--primary);outline-offset:2px;background:color-mix(in srgb,var(--accent2) 38%,var(--surface2))}
+
+/* tabs más claras */
+.comparison-tabs{position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px}
+.tab{min-width:0!important;border-radius:12px!important;border:1px solid var(--line)!important;color:var(--muted);background:var(--surface)!important;min-height:48px}
+.tab.active{background:var(--primary)!important;color:#fff!important;border-color:var(--primary)!important}
+.tab-content{border-radius:16px!important;padding:20px!important}
+
+/* Modo práctica */
+.practice-launch{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:16px 0;padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--accent2)}
+.practice-launch strong{font-size:12px}.practice-launch span{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.practice-panel{display:none;margin-top:14px;border:1px solid var(--line);border-radius:17px;background:var(--surface);padding:18px}.practice-panel.active{display:block;animation:fadeIn .25s ease}
+.practice-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.practice-count{font:800 10px 'IBM Plex Mono',monospace;color:var(--primary);letter-spacing:.06em}.practice-progress{height:6px;background:var(--line);border-radius:999px;overflow:hidden;margin:10px 0 16px}.practice-progress span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));width:0;transition:width .25s}
+.practice-step{min-height:110px;display:flex;gap:14px;align-items:flex-start}.practice-number{width:42px;height:42px;border-radius:13px;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:900;flex:0 0 auto}.practice-step h4{margin:0 0 5px;font-size:17px}.practice-step p{margin:0;color:var(--muted)}
+.practice-controls{display:flex;justify-content:space-between;gap:10px;margin-top:16px}.practice-controls button{border:1px solid var(--line);border-radius:11px;background:var(--surface2);color:var(--text);padding:9px 12px;font-weight:800;cursor:pointer}.practice-controls button:last-child{background:var(--primary);color:#fff;border-color:var(--primary)}.practice-controls button:disabled{opacity:.45;cursor:not-allowed}
+
+/* videos pendientes no deben saltar arriba */
+.video-button.is-pending,.video-link.is-pending{background:var(--surface2)!important;color:var(--primary)!important;border:1px dashed var(--primary)!important}
+
+/* FAQ */
+.faq-question{border-radius:10px;padding-left:8px;padding-right:8px}.faq-question:hover{background:var(--surface2)}.faq-question span{width:28px;height:28px;border:1px solid var(--line);border-radius:9px;display:grid;place-items:center;flex:0 0 auto}
+
+/* toast */
+.fpair-toast{position:fixed;left:50%;bottom:22px;z-index:100;transform:translate(-50%,18px);opacity:0;pointer-events:none;background:var(--text);color:var(--bg);border-radius:13px;padding:11px 14px;font-size:11px;font-weight:800;box-shadow:0 16px 36px rgba(0,0,0,.24);transition:.22s;max-width:min(430px,calc(100% - 28px));text-align:center}.fpair-toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* móvil */
+@media(max-width:850px){.fpair-quick{top:68px}.fpair-assist{grid-template-columns:auto 1fr}.fpair-assist-actions{grid-column:1/-1;justify-content:stretch}.fpair-assist-actions .fpair-action{flex:1}.inhaladores-tools{grid-template-columns:1fr}.selected-counter{justify-self:start}.comparison-tabs{display:flex;overflow-x:auto;flex-wrap:nowrap}.tab{flex:0 0 auto;min-width:150px!important}.inhalador-img{min-height:210px}}
+@media(max-width:560px){.fpair-topbar-in{width:min(100% - 20px,1180px)}.fpair-assist{width:min(100% - 20px,1180px)}.fpair-hero,.fpair-quick,.fpair-related{width:min(100% - 20px,1180px)}.fpair-actions{gap:5px}.fpair-mini-btn{padding:8px 9px}.fpair-hero-card{min-height:160px}.fpair-hero-icon{font-size:58px}.section{padding:18px;border-radius:16px}.section h2{font-size:22px}.practice-launch{align-items:flex-start;flex-direction:column}.practice-launch .fpair-action{width:100%}.practice-controls button{flex:1}.inhalador-image{min-height:160px}}
+
+
+.fpair-topbar{
+  position:sticky;top:0;z-index:60;
+  background:color-mix(in srgb,var(--surface) 94%,transparent);
+  backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.fpair-topbar-in{
+  width:min(1400px,calc(100% - 20px));
+  min-height:72px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:24px;
+}
+.fpair-brand{
+  display:flex;align-items:center;gap:12px;
+  min-width:max-content;
+}
+.fpair-mark{
+  width:42px;height:42px;border-radius:12px;
+  background:linear-gradient(135deg,#0E8A82,#22D3B8);
+  color:#fff;display:grid;place-items:center;
+  font-family:Manrope,Arial,sans-serif;font-weight:800;font-size:16px;
+  box-shadow:0 10px 24px -12px rgba(14,138,130,.65);
+}
+.fpair-brand-text{display:flex;flex-direction:column;line-height:1.1}
+.fpair-brand-text strong{
+  font-family:Manrope,Arial,sans-serif;
+  font-size:17px;color:var(--text);letter-spacing:-.2px
+}
+.fpair-brand-text small{
+  margin-top:5px;color:var(--muted);font-size:11px;font-weight:500
+}
+.fpair-main-nav{
+  display:flex;justify-content:center;align-items:center;gap:26px;
+  min-width:0
+}
+.fpair-main-nav a{
+  color:var(--muted);font-size:12px;font-weight:700;
+  white-space:nowrap;transition:.2s
+}
+.fpair-main-nav a:hover{color:var(--primary)}
+.fpair-actions{display:flex;align-items:center;gap:9px}
+.fpair-back-library{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:9px 12px;border:1px solid var(--line);
+  border-radius:11px;background:var(--surface);
+  color:var(--muted);font-size:11px;font-weight:800;
+  transition:.2s;white-space:nowrap
+}
+.fpair-back-library:hover{color:var(--primary);border-color:var(--primary)}
+.fpair-theme-btn{
+  width:40px;height:40px;border:1px solid var(--line);
+  border-radius:11px;background:var(--surface);color:var(--text);
+  cursor:pointer;font-weight:800
+}
+.fpair-theme-btn:hover{border-color:var(--primary)}
+@media(max-width:1050px){
+  .fpair-topbar-in{grid-template-columns:auto auto;gap:14px}
+  .fpair-main-nav{grid-column:1/-1;order:3;justify-content:flex-start;overflow-x:auto;padding:0 2px 10px;gap:18px;scrollbar-width:none}
+  .fpair-main-nav::-webkit-scrollbar{display:none}
+  .fpair-actions{justify-self:end}
+}
+@media(max-width:620px){
+  .fpair-topbar-in{width:min(100% - 16px,1400px);min-height:66px}
+  .fpair-brand-text small{display:none}
+  .fpair-brand-text strong{font-size:16px}
+  .fpair-mark{width:40px;height:40px}
+  .fpair-back-library{padding:8px 10px}
+  .fpair-main-nav a{font-size:11px}
+}
+
 </style>
 </head>
 <body>
 
+
 <div class="fpair-topbar">
   <div class="fpair-topbar-in">
-    <a class="fpair-brand" href="app.html#fpair/home"><span class="fpair-mark">F</span><span>FPAIR</span></a>
+    <a class="fpair-brand" href="app.html#fpair/home" aria-label="Ir al inicio de FPAIR">
+      <span class="fpair-mark">F</span>
+      <span class="fpair-brand-text">
+        <strong>FPAIR</strong>
+        <small>Educación y entrenamiento respiratorio</small>
+      </span>
+    </a>
+
+    <nav class="fpair-main-nav" aria-label="Navegación principal FPAIR">
+      <a href="app.html#fpair/examenes/adult">Exámenes</a>
+      <a href="preparacion_info.html">Preparación</a>
+      <a href="tecnicas_guiadas.html">Técnica guiada</a>
+      <a href="interpretacion_ia.html">Interpretación</a>
+      <a href="examenes-seguros.html">Confianza clínica</a>
+    </nav>
+
     <div class="fpair-actions">
-      <a class="fpair-mini-btn" href="biblioteca.html">← Biblioteca</a>
-      <button class="fpair-mini-btn" id="themeToggle" type="button" aria-label="Cambiar tema">◐ <span class="label">Tema</span></button>
+      <a class="fpair-back-library" href="biblioteca.html">← Biblioteca</a>
+      <button class="fpair-theme-btn" id="themeToggle" type="button" aria-label="Cambiar tema">◐</button>
     </div>
   </div>
 </div>
+
 <div class="fpair-progress"><span id="pageProgress"></span></div>
 
 <section class="fpair-hero">
@@ -112,8 +279,9 @@ footer{text-align:center;padding:25px 18px 38px;color:var(--muted);font-size:11p
   <strong>EXPLORA ESTA GUÍA</strong>
   <div class="fpair-chips"><a class="fpair-chip" href="#importancia-de-la-aerocamara">Importancia de la Aerocámara</a><a class="fpair-chip" href="#tecnica-de-uso-de-la-aerocamara">Técnica de uso de la aerocámara</a><a class="fpair-chip" href="#limpieza-de-la-aerocamara">Limpieza de la aerocámara</a><a class="fpair-chip" href="#recomendaciones-y-sugerencias">Recomendaciones y sugerencias</a><a class="fpair-chip" href="#preguntas-frecuentes">Preguntas Frecuentes</a></div>
 </nav>
+<section class="fpair-assist" aria-label="Asistente FPAIR"><div class="fpair-assist-icon">✨</div><div class="fpair-assist-copy"><strong>¿Quieres aprender a usar tu aerocámara?</strong><span>Puedes ir directo a la técnica, limpieza o preguntas frecuentes.</span></div><div class="fpair-assist-actions"><button type="button" class="fpair-action primary" data-assist-target=".simple-list">Ver técnica</button><button type="button" class="fpair-action" data-assist-target=".steps-list">Ver limpieza</button></div></section>
 
-<div class="container">
+<main class="container fpair-main">
     <!-- Importancia de la aerocámara -->
     <section class="section" id="importancia-de-la-aerocamara">
       <h2>Importancia de la Aerocámara</h2>
@@ -283,9 +451,7 @@ footer{text-align:center;padding:25px 18px 38px;color:var(--muted);font-size:11p
         </div>
       </div>
     </section>
-  </div>
-
-  
+  </main>
 
   <script>
     // FAQ
@@ -330,6 +496,88 @@ footer{text-align:center;padding:25px 18px 38px;color:var(--muted);font-size:11p
   }
   addEventListener('scroll',updateProgress,{passive:true});
   updateProgress();
+})();
+</script>
+
+<div class="fpair-toast" id="fpairToast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+  const toast=$('#fpairToast');
+  let toastTimer;
+  function notify(msg){if(!toast)return;toast.textContent=msg;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2600)}
+
+  // Images: graceful fallback without broken icon or layout shift.
+  $$('img').forEach(img=>{
+    img.addEventListener('error',()=>{
+      img.style.display='none';
+      let fb=img.parentElement?.querySelector('.fpair-img-fallback');
+      if(!fb && img.parentElement){fb=document.createElement('div');fb.className='fpair-img-fallback';fb.innerHTML='<div><strong>Imagen educativa</strong><br><span>Archivo gráfico pendiente o no disponible.</span></div>';img.parentElement.appendChild(fb)}
+      if(fb)fb.style.display='grid';
+    },{once:true});
+  });
+
+  // Active section chip while scrolling.
+  const chips=$$('.fpair-chip[href^="#"]');
+  const sections=chips.map(c=>document.querySelector(c.getAttribute('href'))).filter(Boolean);
+  if('IntersectionObserver' in window && sections.length){
+    const io=new IntersectionObserver(entries=>{
+      const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+      if(!visible)return;
+      chips.forEach(c=>c.classList.toggle('is-active',c.getAttribute('href')==='#'+visible.target.id));
+    },{rootMargin:'-30% 0px -58% 0px',threshold:[0,.2,.5,1]});
+    sections.forEach(s=>io.observe(s));
+  }
+
+  // Turn tables into horizontally safe blocks on narrow screens.
+  $$('table').forEach(t=>{if(!t.parentElement.classList.contains('table-scroll')){const w=document.createElement('div');w.className='table-scroll';t.parentNode.insertBefore(w,t);w.appendChild(t)}});
+
+  // FAQ accessibility.
+  $$('.faq-question').forEach((q,i)=>{
+    q.setAttribute('role','button'); q.setAttribute('tabindex','0'); q.setAttribute('aria-expanded',q.nextElementSibling?.classList.contains('active')?'true':'false');
+    const activate=()=>setTimeout(()=>q.setAttribute('aria-expanded',q.nextElementSibling?.classList.contains('active')?'true':'false'),0);
+    q.addEventListener('click',activate);
+    q.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();q.click()}});
+  });
+
+  // Video placeholders: do not jump to top when href="#".
+  $$('a.video-button[href="#"],a.video-link[href="#"]').forEach(a=>{
+    a.classList.add('is-pending'); a.setAttribute('aria-disabled','true');
+    a.addEventListener('click',e=>{e.preventDefault();notify('Video FPAIR: espacio preparado para el enlace de YouTube.')});
+  });
+
+  // Guided practice generated from each technique steps-list.
+  function attachPractice(container){
+    const list=container.querySelector('.steps-list'); if(!list||container.querySelector('.practice-launch'))return;
+    const steps=[...list.querySelectorAll(':scope > li')].map(li=>li.textContent.replace(/\s+/g,' ').trim()).filter(Boolean); if(!steps.length)return;
+    const launch=document.createElement('div');launch.className='practice-launch';launch.innerHTML='<div><strong>🎯 Modo práctica FPAIR</strong><span>Repasa la técnica un paso a la vez antes de usar el dispositivo.</span></div><button type="button" class="fpair-action primary">Practicar paso a paso</button>';
+    const panel=document.createElement('div');panel.className='practice-panel';panel.setAttribute('aria-live','polite');panel.innerHTML='<div class="practice-top"><span class="practice-count"></span><button type="button" class="fpair-action practice-close">Cerrar</button></div><div class="practice-progress"><span></span></div><div class="practice-step"><div class="practice-number"></div><div><h4>Tu siguiente paso</h4><p></p></div></div><div class="practice-controls"><button type="button" class="practice-prev">← Anterior</button><button type="button" class="practice-next">Siguiente →</button></div>';
+    list.parentNode.insertBefore(launch,list);launch.after(panel);
+    let idx=0;
+    const render=()=>{panel.querySelector('.practice-count').textContent=`PASO ${String(idx+1).padStart(2,'0')} / ${String(steps.length).padStart(2,'0')}`;panel.querySelector('.practice-progress span').style.width=((idx+1)/steps.length*100)+'%';panel.querySelector('.practice-number').textContent=idx+1;panel.querySelector('.practice-step p').textContent=steps[idx];panel.querySelector('.practice-prev').disabled=idx===0;panel.querySelector('.practice-next').textContent=idx===steps.length-1?'Terminar ✓':'Siguiente →'};
+    launch.querySelector('button').onclick=()=>{panel.classList.add('active');idx=0;render();panel.scrollIntoView({behavior:'smooth',block:'center'})};
+    panel.querySelector('.practice-close').onclick=()=>panel.classList.remove('active');
+    panel.querySelector('.practice-prev').onclick=()=>{if(idx>0){idx--;render()}};
+    panel.querySelector('.practice-next').onclick=()=>{if(idx<steps.length-1){idx++;render()}else{notify('¡Recorrido completado! Puedes repetirlo cuando quieras.');panel.classList.remove('active')}};
+  }
+  $$('.tab-content').forEach(attachPractice);
+  $$('.section').forEach(sec=>{if(sec.querySelector('.steps-list')&&!sec.closest('.tab-content'))attachPractice(sec)});
+
+  // Inhaler finder: search + selected count.
+  const inhalerGrid=$('.inhaladores-grid');
+  if(inhalerGrid){
+    const tools=document.createElement('div');tools.className='inhaladores-tools';tools.innerHTML='<input class="inhaladores-search" type="search" aria-label="Buscar inhalador" placeholder="Buscar por nombre o medicamento…"><div class="selected-counter"><span>0</span> seleccionados</div>';
+    inhalerGrid.parentNode.insertBefore(tools,inhalerGrid);
+    const search=$('.inhaladores-search',tools), counter=$('.selected-counter span',tools), cards=$$('.inhalador-card',inhalerGrid);
+    const updateCount=()=>{const n=$$('.selector-inhalador:checked',inhalerGrid).length;counter.textContent=n};
+    search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();cards.forEach(c=>c.classList.toggle('is-filtered',q && !c.textContent.toLowerCase().includes(q)))});
+    $$('.selector-inhalador',inhalerGrid).forEach(cb=>{cb.addEventListener('change',()=>{cb.closest('.inhalador-card')?.classList.toggle('selected',cb.checked);updateCount()})});
+    updateCount();
+  }
+
+  // Assistance buttons.
+  $$('[data-assist-target]').forEach(b=>b.addEventListener('click',()=>{const el=document.querySelector(b.dataset.assistTarget);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}));
 })();
 </script>
 
