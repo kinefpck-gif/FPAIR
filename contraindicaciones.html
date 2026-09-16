@@ -1,712 +1,289 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contraindicaciones - FPAIR</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Variables de color y estilos */
-        :root {
-            --primary: #0e8a82;
-            --primary-dark: #086b64;
-            --primary-light: #22d3b8;
-            --secondary: #14b8a6;
-            --accent: #22d3b8;
-            --text-dark: #0b2530;
-            --text-light: #4b6b6d;
-            --background: #eef9f7;
-            --white: #ffffff;
-            --shadow: 0 8px 30px rgba(14, 138, 130, 0.12);
-            --transition: all 0.3s ease;
-        }
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0E8A82"><title>Contraindicaciones y seguridad | FPAIR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3FBFA;--bg2:#E7F6F4;--surface:#FFFFFF;--surface2:#F6FCFB;
+  --text:#0B2530;--muted:#587477;--line:#D3EDE9;
+  --primary:#0E8A82;--primary2:#086B64;--accent:#22D3B8;--accent2:#C8F5EC;
+  --danger:#B54B5C;--warn:#B27618;--shadow:0 22px 60px -38px rgba(8,107,100,.38);
+}
+[data-theme="dark"]{
+  --bg:#06191B;--bg2:#0A2224;--surface:#0D2B2D;--surface2:#0F3335;
+  --text:#E6F7F4;--muted:#8FBDB8;--line:#164448;
+  --primary:#2FE0C3;--primary2:#63F0D6;--accent:#14B8A6;--accent2:#0F3B3A;
+  --danger:#FF8EA1;--warn:#FFD47B;--shadow:0 22px 60px -36px rgba(0,0,0,.78);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--text);
+  background:radial-gradient(circle at 88% -8%,rgba(34,211,184,.12),transparent 27%),var(--bg);
+  font-family:Inter,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+h1,h2,h3,h4{font-family:Manrope,Arial,sans-serif}
+img{max-width:100%;display:block}
+.fpair-topbar{
+  position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--surface) 94%,transparent);
+  backdrop-filter:blur(14px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)
+}
+.fpair-topbar-in{
+  width:min(1400px,calc(100% - 20px));min-height:72px;margin:auto;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px
+}
+.fpair-brand{display:flex;align-items:center;gap:12px;min-width:max-content}
+.fpair-mark{
+  width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#0E8A82,#22D3B8);
+  color:#fff;display:grid;place-items:center;font-family:Manrope;font-weight:800;
+  box-shadow:0 10px 24px -12px rgba(14,138,130,.65)
+}
+.fpair-brand-text{display:flex;flex-direction:column;line-height:1.1}
+.fpair-brand-text strong{font-family:Manrope;font-size:17px}
+.fpair-brand-text small{margin-top:5px;color:var(--muted);font-size:11px}
+.fpair-main-nav{display:flex;justify-content:center;align-items:center;gap:26px}
+.fpair-main-nav a{color:var(--muted);font-size:12px;font-weight:700;white-space:nowrap}
+.fpair-main-nav a:hover{color:var(--primary)}
+.fpair-actions{display:flex;align-items:center;gap:9px}
+.fpair-back-library,.fpair-theme-btn{
+  border:1px solid var(--line);background:var(--surface);color:var(--text);
+  border-radius:11px;font-weight:800
+}
+.fpair-back-library{padding:9px 12px;font-size:11px;color:var(--muted)}
+.fpair-theme-btn{width:40px;height:40px;cursor:pointer}
+.fpair-back-library:hover,.fpair-theme-btn:hover{border-color:var(--primary);color:var(--primary)}
+.fpair-progress{height:3px;background:var(--line);position:sticky;top:72px;z-index:65}
+.fpair-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--accent))}
+.hero{
+  width:min(1180px,calc(100% - 32px));margin:auto;padding:58px 0 30px;
+  display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center
+}
+.eyebrow{
+  display:inline-flex;padding:7px 11px;border-radius:999px;background:var(--accent2);
+  color:var(--primary2);font-size:10px;font-weight:900;letter-spacing:.08em
+}
+.hero h1{font-size:clamp(42px,6vw,76px);line-height:.98;letter-spacing:-2.2px;margin:15px 0}
+.hero p{max-width:720px;color:var(--muted);font-size:17px;line-height:1.72;margin:0}
+.hero-visual{
+  min-height:250px;border:1px solid var(--line);border-radius:28px;
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  box-shadow:var(--shadow);display:grid;place-items:center;position:relative;overflow:hidden
+}
+.hero-visual::before{
+  content:"";position:absolute;width:190px;height:190px;border:1px solid var(--line);
+  border-radius:50%;animation:pulseRing 5s ease-in-out infinite
+}
+.hero-icon{font-size:72px;position:relative;z-index:2}
+@keyframes pulseRing{0%,100%{transform:scale(.92);opacity:.55}50%{transform:scale(1.08);opacity:1}}
+.quick{
+  width:min(1180px,calc(100% - 32px));margin:0 auto 10px;
+  border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:14px;
+  box-shadow:var(--shadow)
+}
+.quick strong{display:block;color:var(--primary);font-size:10px;margin-bottom:10px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:var(--surface2);
+  color:var(--muted);font-size:11px;font-weight:800
+}
+.chip:hover{color:var(--primary);border-color:var(--primary)}
+.container{width:min(1180px,calc(100% - 32px));margin:auto;padding:28px 0 44px}
+.section{
+  background:var(--surface);border:1px solid var(--line);border-radius:20px;
+  padding:28px;margin-bottom:18px;box-shadow:var(--shadow);scroll-margin-top:108px
+}
+.section h2{font-size:clamp(22px,3vw,30px);margin:0 0 16px}
+.section h2::before{
+  content:"";display:inline-block;width:9px;height:9px;border-radius:50%;
+  background:var(--accent);margin-right:10px;vertical-align:middle
+}
+.section p{color:var(--muted);font-size:14px;margin:0 0 13px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{
+  border:1px solid var(--line);border-radius:16px;background:var(--surface2);padding:16px;
+  transition:.2s
+}
+.card:hover{transform:translateY(-2px);border-color:var(--primary)}
+.card .code{font-size:9px;font-weight:900;color:var(--primary);letter-spacing:.08em;text-transform:uppercase}
+.card h3{font-size:16px;margin:8px 0 6px}
+.card p{font-size:12px;margin:0;color:var(--muted)}
+.card .go{display:inline-block;margin-top:12px;color:var(--primary);font-size:11px;font-weight:900}
+.callout{
+  border:1px solid color-mix(in srgb,var(--primary) 22%,var(--line));
+  border-left:4px solid var(--primary);background:var(--accent2);border-radius:14px;
+  padding:16px;margin:16px 0
+}
+.callout.warn{border-left-color:var(--warn);background:color-mix(in srgb,var(--surface) 84%,#FFF1CC)}
+.callout.danger{border-left-color:var(--danger);background:color-mix(in srgb,var(--surface) 88%,#FFDDE2)}
+.stepper{display:grid;gap:10px}
+.step{
+  display:grid;grid-template-columns:44px 1fr;gap:13px;align-items:start;
+  border:1px solid var(--line);border-radius:15px;background:var(--surface2);padding:14px
+}
+.step-num{
+  width:34px;height:34px;border-radius:11px;background:var(--primary);color:#fff;
+  display:grid;place-items:center;font-weight:900;font-size:12px
+}
+.step h3{margin:0 0 4px;font-size:15px}.step p{margin:0;font-size:12px}
+.searchbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.searchbar input,.searchbar select{
+  flex:1;min-width:210px;padding:12px 13px;border:1px solid var(--line);border-radius:12px;
+  background:var(--surface);color:var(--text);outline:none
+}
+.searchbar input:focus,.searchbar select:focus{border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 15%,transparent)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.pill{border:1px solid var(--line);background:var(--surface2);color:var(--muted);border-radius:999px;padding:8px 11px;font-size:11px;font-weight:800;cursor:pointer}
+.pill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.accordion{border-top:1px solid var(--line)}
+.acc-item{border-bottom:1px solid var(--line)}
+.acc-q{width:100%;display:flex;justify-content:space-between;gap:14px;align-items:center;padding:15px 0;background:none;border:0;color:var(--text);text-align:left;font-weight:800;cursor:pointer}
+.acc-a{display:none;padding:0 0 15px;color:var(--muted);font-size:13px}.acc-item.open .acc-a{display:block}
+.acc-icon{width:30px;height:30px;border:1px solid var(--line);border-radius:9px;display:grid;place-items:center;flex:0 0 auto}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.timeline .phase{border:1px solid var(--line);border-radius:18px;background:var(--surface2);padding:18px;position:relative}
+.phase-badge{display:inline-flex;padding:6px 9px;border-radius:999px;background:var(--accent2);color:var(--primary2);font-size:9px;font-weight:900}
+.phase h3{font-size:18px;margin:10px 0 8px}.phase ul{padding-left:18px;color:var(--muted);font-size:12px}
+.metric{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface2);padding:13px}
+.metric strong{font-size:14px}.metric span{font-size:11px;color:var(--muted)}
+.kpi{font-family:Manrope;font-size:28px;color:var(--primary);font-weight:800}
+.image-card{
+  border:1px solid var(--line);border-radius:18px;background:var(--surface2);padding:14px;text-align:center
+}
+.image-card img{max-height:360px;margin:auto;object-fit:contain;border-radius:12px}
+.toast{
+  position:fixed;right:18px;bottom:18px;z-index:90;max-width:340px;
+  background:var(--text);color:var(--surface);border-radius:14px;padding:13px 15px;
+  font-size:12px;box-shadow:0 16px 40px -20px rgba(0,0,0,.55);
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.2s
+}
+.toast.show{opacity:1;transform:none}
+footer{text-align:center;padding:26px 18px 38px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
+.hidden{display:none!important}
+@media(max-width:1050px){
+  .fpair-topbar-in{grid-template-columns:auto auto;gap:14px}
+  .fpair-main-nav{grid-column:1/-1;order:3;justify-content:flex-start;overflow-x:auto;padding:0 2px 10px;gap:18px;scrollbar-width:none}
+  .fpair-main-nav::-webkit-scrollbar{display:none}.fpair-actions{justify-self:end}
+}
+@media(max-width:850px){
+  .hero{grid-template-columns:1fr}.hero-visual{min-height:190px}.grid{grid-template-columns:1fr 1fr}.timeline{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .fpair-brand-text small{display:none}.fpair-mark{width:40px;height:40px}.fpair-back-library{padding:8px 9px}
+  .hero{padding-top:34px}.hero h1{font-size:42px}.section{padding:20px}.grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.hero-visual::before{animation:none}}
+</style></head><body>
 
-        [data-theme="dark"] {
-            --primary: #42c9ff;
-            --primary-dark: #0d4a75;
-            --primary-light: #7fdcff;
-            --secondary: #00d4ff;
-            --accent: #29f0b4;
-            --text-dark: #ffffff;
-            --text-light: #a9b6c7;
-            --background: #07111f;
-            --white: #101f2e;
-            --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-            --transition: all 0.3s ease;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            html:not([data-theme]) {
-                --primary: #42c9ff;
-                --primary-dark: #0d4a75;
-                --primary-light: #7fdcff;
-                --secondary: #00d4ff;
-                --accent: #29f0b4;
-                --text-dark: #ffffff;
-                --text-light: #a9b6c7;
-                --background: #07111f;
-                --white: #101f2e;
-                --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-            }
-        }
-        
-        /* Estilos generales */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--background);
-            color: var(--text-dark);
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Header con logo */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            margin-bottom: 10px;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .logo-text h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            letter-spacing: 1px;
-            line-height: 1;
-        }
-        
-        .logo-text h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary-light);
-            letter-spacing: 2px;
-            line-height: 1;
-            margin-top: 5px;
-        }
-        
-        .logo-text h3 {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-light);
-            margin-top: 5px;
-        }
-        
-        /* Logotipo FPAIR en header */
-        .fpair-logo-header {
-            width: 140px;
-            height: auto;
-            margin-right: 20px;
-        }
-        
-        /* Navegación */
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .back-btn {
-            display: flex;
-            align-items: center;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        
-        .back-btn:hover {
-            color: var(--primary-dark);
-        }
-        
-        .back-btn i {
-            margin-right: 8px;
-        }
-        
-        /* Contenido principal */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            padding: 20px 0;
-        }
-        
-        .page-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .content-section {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--primary-light);
-            padding-bottom: 10px;
-        }
-        
-        .content-text {
-            font-size: 1rem;
-            color: var(--text-dark);
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-        
-        .highlight-box {
-            background: rgba(26, 106, 162, 0.05);
-            border-left: 4px solid var(--primary);
-            padding: 20px;
-            border-radius: 0 8px 8px 0;
-            margin: 25px 0;
-        }
-        
-        .warning-box {
-            background: rgba(255, 126, 95, 0.05);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 4px solid var(--accent);
-        }
-        
-        .warning-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 10px;
-        }
-        
-        .checklist {
-            margin: 20px 0;
-            padding-left: 20px;
-        }
-        
-        .checklist li {
-            margin-bottom: 8px;
-            list-style-type: none;
-            position: relative;
-            padding-left: 30px;
-        }
-        
-        .checklist li:before {
-            content: "☑";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
-        
-        .image-placeholder {
-            background-color: #e8f4fc;
-            border: 2px dashed var(--primary-light);
-            border-radius: 8px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-        
-        .contraindications-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 25px 0;
-        }
-        
-        .contraindication-card {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            border-top: 4px solid var(--primary);
-        }
-        
-        .contraindication-type {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .contraindication-list {
-            list-style-type: none;
-        }
-        
-        .contraindication-list li {
-            margin-bottom: 10px;
-            padding-left: 25px;
-            position: relative;
-        }
-        
-        .contraindication-list li:before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-size: 1.5rem;
-        }
-        
-        .advice-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 25px 0;
-        }
-        
-        .advice-card {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            border-top: 4px solid var(--secondary);
-        }
-        
-        .advice-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .advice-list {
-            list-style-type: none;
-        }
-        
-        .advice-list li {
-            margin-bottom: 10px;
-            padding-left: 25px;
-            position: relative;
-        }
-        
-        .advice-list li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--secondary);
-            font-weight: bold;
-        }
-        
-        .note-box {
-            background: rgba(52, 199, 179, 0.05);
-            border-radius: 8px;
-            padding: 15px;
-            margin: 15px 0;
-            font-style: italic;
-            color: var(--text-light);
-        }
-        
-        .conclusion-box {
-            background: rgba(52, 199, 179, 0.1);
-            border-radius: 8px;
-            padding: 25px;
-            margin: 30px 0;
-            border-left: 4px solid var(--secondary);
-        }
-        
-        .conclusion-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary-dark);
-            text-align: center;
-        }
-        
-        /* Estilos para la sección de contraindicaciones absolutas */
-        .absolute-contraindications-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin: 25px 0;
-        }
-
-        .contraindication-group {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            border-top: 4px solid var(--primary);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .group-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary-dark);
-            margin-bottom: 15px;
-            text-align: center;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-            padding-bottom: 10px;
-        }
-
-        /* NUEVO ESTILO PARA GIFS REDUCIDOS */
-        .gif-image {
-            width: 150px; /* Tamaño reducido */
-            height: 120px; /* Altura fija para consistencia */
-            object-fit: cover; /* Ajusta la imagen sin distorsionar */
-            border-radius: 8px;
-            margin: 15px auto 0;
-            display: block;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: 2px solid var(--primary-light);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: zoom-in;
-        }
-
-        .gif-image:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .gif-placeholder {
-            background-color: #e8f4fc;
-            border: 2px dashed var(--primary-light);
-            border-radius: 8px;
-            width: 150px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 15px auto 0;
-            color: var(--primary);
-            font-weight: bold;
-            text-align: center;
-            padding: 10px;
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 25px 20px;
-            margin-top: 50px;
-            background: var(--white);
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .logo-container {
-                margin-bottom: 15px;
-            }
-            
-            .page-title {
-                font-size: 1.6rem;
-            }
-            
-            .section-title {
-                font-size: 1.3rem;
-            }
-            
-            .content-text {
-                font-size: 1rem;
-            }
-            
-            .contraindications-grid, .advice-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .absolute-contraindications-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .fpair-logo-header {
-                width: 110px;
-            }
-
-            .gif-image {
-                width: 130px;
-                height: 104px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .page-title {
-                font-size: 1.4rem;
-            }
-            
-            .content-section {
-                padding: 20px;
-            }
-            
-            .fpair-logo-header {
-                width: 90px;
-            }
-
-            .gif-image {
-                width: 110px;
-                height: 88px;
-            }
-        }
-    </style>
-  <link rel="stylesheet" href="assets/css/fpair-widgets.css">
-  <script src="assets/js/theme.js"></script>
-</head>
-<body>
-    <div class="container">
-        <header class="header">
-            <div class="logo-container">
-                <!-- LOGO FPAIR -->
-                <img src="logo-fpair-header.png" alt="Logo FPAIR" class="fpair-logo-header">
-                <div class="logo-text">
-                   
-                    <h2>FPAIR</h2>
-                    <h3>FUNCIÓN PULMONAR</h3>
-                </div>
-            </div>
-        </header>
-        
-        <div class="nav-container">
-        </div>
-        
-        <main class="main-content">
-            <h1 class="page-title">Contraindicaciones</h1>
-            
-            <section class="content-section">
-                <h2 class="section-title">Consideraciones de seguridad durante la espirometría</h2>
-                
-                <p class="content-text">
-                    La espirometría es una prueba esencial para evaluar la función pulmonar, pero puede ser físicamente exigente para algunos pacientes. La maniobra de espiración forzada implica un esfuerzo intenso que aumenta las presiones intratorácica, intra-abdominal e intracraneal, lo que puede generar incomodidad o riesgos en ciertas condiciones de salud.
-                </p>
-                
-                <p class="content-text">
-                    El esfuerzo necesario durante la prueba también incrementa la demanda miocárdica, por lo que se fundamental monitorear cualquier síntoma que pudiera aparecer. Si el paciente experimenta dolor, mareos o malestar significativo durante la maniobra, la prueba debe suspenderse de inmediato para evitar complicaciones.
-                </p>
-                
-                            
-                <p class="content-text">
-                    En casos donde existan contraindicaciones o factores de riesgo, se recomienda que la espirometría se realice en un laboratorio especializado en función pulmonar, con personal capacitado y acceso a atención de emergencia si fuese necesario. Esto garantiza la seguridad del paciente y la calidad de los resultados obtenidos.
-                </p>
-                
-                <div class="highlight-box">
-                    <p class="content-text">
-                        En FPAIR, priorizamos la seguridad y el bienestar del paciente, proporcionando información clara y guías prácticas para que la experiencia de la espirometría sea lo más segura y efectiva posible.
-                    </p>
-                </div>
-            </section>
-            
-            <section class="content-section">
-                <h2 class="section-title">Contraindicaciones en las pruebas de función pulmonar</h2>
-                
-                <p class="content-text">
-                    Las contraindicaciones en las pruebas de función pulmonar pueden clasificarse como relativas o absolutas:
-                </p>
-                
-                <div class="contraindications-grid">
-                    <div class="contraindication-card">
-                        <div class="contraindication-type">Contraindicaciones Relativas</div>
-                        <ul class="contraindication-list">
-                            <li>Son aquellas que requieren una evaluación cuidadosa por parte del médico o especialista para determinar si la prueba puede realizarse de manera segura.</li>
-                            <li>El profesional debe valorar los riesgos y beneficios, considerando la condición clínica del paciente y la necesidad de los resultados.</li>
-                            <li>En estos casos, la decisión se toma individualmente, evaluando el valor clínico esperado frente a los posibles riesgos.</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="contraindication-card">
-                        <div class="contraindication-type">Contraindicaciones Absolutas</div>
-                        <ul class="contraindication-list">
-                            <li>Son situaciones en las que realizar la prueba podría causar un daño grave, lesión o incluso poner en riesgo la vida del paciente.</li>
-                            <li>En estos casos, la espirometría debe ser evitada hasta que la condición del paciente se estabilice o la prueba deje de representar un peligro significativo.</li>
-                            <li>No se recomienda proceder hasta que la condición de riesgo haya sido resuelta o controlada.</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="warning-box">
-                    <h3 class="warning-title">Importante</h3>
-                    <p class="content-text">
-                        No todas las contraindicaciones implican un riesgo físico inmediato. En algunos casos, la prueba puede ser innecesaria o poco útil desde el punto de vista clínico, por ejemplo, en pacientes con una condición aguda que altera temporalmente la función pulmonar o en aquellos operados recientemente o con infección pulmonar.
-                    </p>
-                </div>
-                
-                <p class="content-text">
-                    Es importante encontrar un equilibrio: un enfoque rígido que excluya automáticamente a cualquier paciente con una contraindicación puede privarlo de información valiosa para su diagnóstico o tratamiento. La clave es una evaluación individualizada, donde la decisión de realizar o posponer la prueba se tome con base en la seguridad del paciente y el valor clínico esperado.
-                </p>
-                
-                <div class="highlight-box">
-                    <p class="content-text">
-                        En FPAIR, promovemos la toma de decisiones informadas y la personalización de cada evaluación, garantizando siempre la seguridad y el bienestar del paciente.
-                    </p>
-                </div>
-            </section>
-            
-            <section class="content-section">
-                <h2 class="section-title">Contraindicaciones Absolutas</h2>
-                
-                <p class="content-text">
-                    La actualización del Manual de Espirometría por SER Chile, el 2024 establece directrices claras sobre las contraindicaciones para la realización de espirometrías, enfatizando la seguridad del paciente y la calidad de los resultados.
-                </p>
-                
-                <div class="absolute-contraindications-grid">
-                    <div class="contraindication-group">
-                        <h3 class="group-title">Demanda miocardiaca o cambios en la presión arterial</h3>
-                        <ul class="checklist">
-                            <li>Patología cardiovascular no controlada</li>
-                            <li>Angina inestable *</li>
-                            <li>Hemoptisis</li>
-                            <li>Hipertensión arterial no controlada*</li>
-                            <li>Insuficiencia cardiaca descompensada</li>
-                            <li>Embolía pulmonar clínicamente inestable o hasta adecuada anticoagulación</li>
-                        </ul>
-                        <!-- Reemplaza con tu GIF redimensionado -->
-                        <img src="images/corazon.gif" alt="Demanda miocardiaca" class="gif-image">
-                    </div>
-                    
-                    <div class="contraindication-group">
-                        <h3 class="group-title">Aumento presiones intracraneal-intraocular</h3>
-                        <ul class="checklist">
-                            <li>Accidente cerebro-vascular reciente*</li>
-                            <li>Trauma craneal reciente con síntomas persistentes</li>
-                        </ul>
-                        <!-- Reemplaza con tu GIF redimensionado -->
-                        <img src="images/cerebro.gif" alt="Presiones intracraneales" class="gif-image">
-                    </div>
-                    
-                    <div class="contraindication-group">
-                        <h3 class="group-title">Aumento presiones intratorácica-intraabdominal</h3>
-                        <ul class="checklist">
-                            <li>Presencia de neumotórax reciente (al menos 4 semanas tras la resolución)</li>
-                        </ul>
-                        <!-- Reemplaza con tu GIF redimensionado -->
-                        <img src="images/torax.png" alt="Presiones intratorácicas" class="gif-image">
-                    </div>
-                    
-                    <div class="contraindication-group">
-                        <h3 class="group-title">Control de infecciones</h3>
-                        <ul class="checklist">
-                            <li>Paciente con signos de insuficiencia respiratoria aguda</li>
-                            <li>Infección respiratoria o sistémica transmisible activa o presunta, incluida la tuberculosis dentro de las 4 primeras semanas de tratamiento</li>
-                            <li>Condiciones bucales que predisponen a la transmisión de infecciones o sangrado oral</li>
-                            <li>Condiciones físicas que predisponen a la transmisión de infecciones, como hemoptisis, secreciones importantes o lesiones orales o sangrado bucal</li>
-                        </ul>
-                        <!-- Reemplaza con tu GIF redimensionado -->
-                        <img src="images/infeccion.gif" alt="Control de infecciones" class="gif-image">
-                    </div>
-                </div>
-                
-                <div class="note-box">
-                    <p>*Hasta por 1 mes después de estabilizado el episodio.</p>
-                </div>
-            </section>
-            
-            <section class="content-section">
-                <h2 class="section-title">Consejos para el paciente y el operador</h2>
-                
-                <div class="advice-grid">
-                    <div class="advice-card">
-                        <div class="advice-title">Consejos para el paciente</div>
-                        <ul class="advice-list">
-                            <li>Comunicar su historial médico completo: Informe al operador si tiene antecedentes de problemas cardíacos, hipertensión, embolia pulmonar, o si ha tenido alguna cirugía reciente en tórax o abdomen.</li>
-                            <li>Avisar sobre síntomas recientes: Si ha tenido fiebre, tos persistente, dolor en el pecho, hemoptisis (sangrado al toser) o alguna infección respiratoria reciente, es esencial que lo mencione antes de la prueba.</li>
-                            <li>Controlar la medicación: Consulte con su médico si debe suspender o ajustar medicamentos respiratorios (como broncodilatadores) antes del examen, para que los resultados reflejen su función pulmonar basal.</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="advice-card">
-                        <div class="advice-title">Consejos para el operador</div>
-                        <ul class="advice-list">
-                            <li>Realizar una evaluación previa del paciente: Hacer una entrevista rápida para detectar posibles contraindicaciones, preguntando sobre enfermedades recientes, dolor torácico o síntomas inusuales.</li>
-                            <li>Medir signos vitales básicos: Controlar la presión arterial, la saturación de oxígeno y la frecuencia cardíaca antes de la prueba, especialmente en pacientes de riesgo.</li>
-                            <li>Confirmar la suspensión de medicación si es necesario: Verificar si el paciente siguió las indicaciones de su médico respecto a broncodilatadores u otros medicamentos que puedan alterar los resultados.</li>
-                            <li>Explicar el procedimiento y sus exigencias: Informar al paciente que la prueba requiere esfuerzo físico, puede causar mareo o tos, y que puede detenerse en cualquier momento si siente molestias.</li>
-                            <li>Tener protocolos de emergencia: Asegurarse de contar con equipo básico de primeros auxilios y tener un plan claro de acción en caso de eventos adversos (como una crisis hipertensiva o angina).</li>
-                            <li>Documentar cualquier riesgo: Si el paciente tiene una contraindicación relativa pero la prueba sigue siendo necesaria, dejar constancia del riesgo y la justificación para proceder, con el consentimiento informado del paciente.</li>
-                        </ul>
-                    </div>
-                </div>
-                
-            </section>
-            
-            <section class="content-section">
-                <div class="conclusion-box">
-                    <p class="conclusion-text">
-                        La identificación adecuada de contraindicaciones y la comunicación clara entre paciente y operador son fundamentales para garantizar la seguridad durante las pruebas de función pulmonar.
-                    </p>
-                </div>
-            </section>
-        </main>
+<div class="fpair-topbar">
+  <div class="fpair-topbar-in">
+    <a class="fpair-brand" href="app.html#fpair/home" aria-label="Ir al inicio FPAIR">
+      <span class="fpair-mark">F</span>
+      <span class="fpair-brand-text"><strong>FPAIR</strong><small>Educación y entrenamiento respiratorio</small></span>
+    </a>
+    <nav class="fpair-main-nav" aria-label="Navegación principal">
+      <a href="app.html#fpair/examenes/adult">Exámenes</a>
+      <a href="preparacion_info.html">Preparación</a>
+      <a href="tecnicas_guiadas.html">Técnica guiada</a>
+      <a href="interpretacion_ia.html">Interpretación</a>
+      <a href="examenes-seguros.html">Confianza clínica</a>
+    </nav>
+    <div class="fpair-actions">
+      <a class="fpair-back-library" href="biblioteca.html">← Biblioteca</a>
+      <button class="fpair-theme-btn" id="themeToggle" type="button" aria-label="Cambiar tema">◐</button>
     </div>
-    
-    <footer>
-        <p>&copy; 2023 FPAIR - Plataforma para el cuidado de la función pulmonar | Diseñado para pacientes y profesionales</p>
-    </footer>
+  </div>
+</div>
+<div class="fpair-progress"><span id="pageProgress"></span></div>
 
-    <script>
-        // Navegación de vuelta a la plataforma
-        document.getElementById('back-to-platform').addEventListener('click', function() {
-            // Usamos history.back() para volver a la página anterior
-            history.back();
-        });
-        
-        // Efecto de aparición suave para los elementos
-        document.addEventListener('DOMContentLoaded', function() {
-            const elements = document.querySelectorAll('.content-section');
-            
-            elements.forEach((element, index) => {
-                setTimeout(() => {
-                    element.style.opacity = '0';
-                    element.style.transform = 'translateY(20px)';
-                    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    
-                    setTimeout(() => {
-                        element.style.opacity = '1';
-                        element.style.transform = 'translateY(0)';
-                    }, 100);
-                }, index * 200);
-            });
-        });
-    </script>
-  <script src="assets/js/auth.js"></script>
-</body>
-</html>
+<section class="hero"><div><span class="eyebrow">SAFE / 02</span><h1>Contraindicaciones y seguridad</h1><p>Reconoce qué antecedentes o síntomas conviene comunicar antes de una prueba. La decisión final siempre depende del contexto clínico y del equipo que realiza el examen.</p></div>
+<div class="hero-visual" aria-hidden="true"><div class="hero-icon">🛡️</div></div></section>
+<nav class="quick"><strong>EXPLORA ESTA GUÍA</strong><div class="chips"><a class="chip" href="#antes">Chequeo rápido</a><a class="chip" href="#por-que">Por qué importa</a><a class="chip" href="#tipos">Tipos</a><a class="chip" href="#grupos">Situaciones</a><a class="chip" href="#consejos">Consejos</a></div></nav>
+
+<main class="container">
+<section class="section" id="antes"><h2>Antes de tu examen: chequeo rápido</h2>
+<p>Este espacio no reemplaza una evaluación profesional. Sirve para ayudarte a reconocer información que vale la pena comunicar antes de una prueba de función pulmonar.</p>
+<div class="grid">
+  <button class="card safety-check" data-msg="Coméntalo antes del examen: dolor torácico reciente o síntomas cardiovasculares pueden requerir evaluación previa."><span class="code">CARDIO</span><h3>¿Dolor torácico o evento cardiovascular reciente?</h3><p>Tócalo si aplica.</p></button>
+  <button class="card safety-check" data-msg="Coméntalo antes del examen: fiebre, infección respiratoria activa o sospecha de contagio pueden cambiar la decisión de realizar la prueba."><span class="code">INFECCIÓN</span><h3>¿Fiebre o infección respiratoria activa?</h3><p>Tócalo si aplica.</p></button>
+  <button class="card safety-check" data-msg="Coméntalo antes del examen: cirugías recientes de tórax, abdomen, ojos o cerebro pueden ser relevantes por el esfuerzo de la maniobra."><span class="code">CIRUGÍA</span><h3>¿Cirugía reciente?</h3><p>Tócalo si aplica.</p></button>
+  <button class="card safety-check" data-msg="Coméntalo antes del examen: hemoptisis, neumotórax reciente o inestabilidad respiratoria requieren valoración profesional."><span class="code">RESP</span><h3>¿Hemoptisis, neumotórax o dificultad respiratoria importante?</h3><p>Tócalo si aplica.</p></button>
+</div>
+<div id="safetyResult" class="callout" style="display:none;margin-top:14px"></div>
+</section>
+
+<section class="section" id="por-que"><h2>¿Por qué importa la seguridad?</h2>
+<p>La espirometría exige una espiración forzada intensa. Ese esfuerzo puede aumentar transitoriamente las presiones intratorácica, intraabdominal e intracraneal y aumentar la demanda cardiovascular.</p>
+<div class="callout">Si durante la prueba aparece dolor, mareo o malestar significativo, el examen puede detenerse. La seguridad tiene prioridad sobre completar la maniobra.</div>
+</section>
+
+<section class="section" id="tipos"><h2>Contraindicaciones: relativas y absolutas</h2>
+<div class="grid">
+<div class="card"><span class="code">RELATIVAS</span><h3>Requieren evaluación individual</h3><p>Se valora el equilibrio entre riesgo, beneficio clínico y necesidad de la prueba.</p></div>
+<div class="card"><span class="code">ABSOLUTAS</span><h3>No conviene proceder hasta resolver el riesgo</h3><p>La prueba puede representar un riesgo importante y debe posponerse hasta que la situación esté controlada.</p></div>
+<div class="card"><span class="code">CALIDAD</span><h3>A veces el problema es la utilidad</h3><p>Una condición aguda puede alterar temporalmente los resultados aunque no implique un riesgo físico inmediato.</p></div>
+</div>
+</section>
+
+<section class="section" id="grupos"><h2>Situaciones que debes comunicar</h2>
+<div class="grid">
+<div class="card"><span class="code">CARDIOVASCULAR</span><h3>Demanda miocárdica o presión arterial</h3><p>Patología cardiovascular no controlada, angina inestable, insuficiencia cardiaca descompensada, embolía pulmonar inestable, hemoptisis o hipertensión no controlada.</p></div>
+<div class="card"><span class="code">NEURO / OCULAR</span><h3>Presiones intracraneal o intraocular</h3><p>Eventos neurológicos recientes, trauma craneal con síntomas persistentes u otras situaciones donde el esfuerzo pueda ser relevante.</p></div>
+<div class="card"><span class="code">TÓRAX / ABDOMEN</span><h3>Aumento de presión intratorácica o intraabdominal</h3><p>Neumotórax reciente u otros antecedentes donde el esfuerzo deba reevaluarse.</p></div>
+<div class="card"><span class="code">INFECCIONES</span><h3>Control de infecciones</h3><p>Insuficiencia respiratoria aguda, infección respiratoria o sistémica transmisible activa o presunta, o condiciones con secreciones/sangrado que aumenten riesgo de transmisión.</p></div>
+</div>
+</section>
+
+<section class="section" id="consejos"><h2>Paciente y equipo: qué ayuda</h2>
+<div class="timeline">
+<div class="phase"><span class="phase-badge">PACIENTE</span><h3>Cuenta lo importante</h3><ul><li>Cirugías o eventos recientes.</li><li>Dolor torácico, fiebre, hemoptisis o infección.</li><li>Medicamentos respiratorios y si te indicaron suspensión.</li></ul></div>
+<div class="phase"><span class="phase-badge">OPERADOR</span><h3>Evalúa antes de comenzar</h3><ul><li>Antecedentes y síntomas recientes.</li><li>Signos vitales cuando corresponda.</li><li>Capacidad de realizar una maniobra segura.</li></ul></div>
+<div class="phase"><span class="phase-badge">DECISIÓN</span><h3>Individualiza</h3><ul><li>Seguridad primero.</li><li>Valorar utilidad clínica.</li><li>Posponer si el riesgo supera el beneficio.</li></ul></div>
+</div>
+</section>
+</main>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<footer><strong>FPAIR · Función Pulmonar</strong><br>Contenido educativo para acompañar al paciente y su familia.</footer>
+
+<script>
+(function(){
+  const root=document.documentElement;
+  const saved=localStorage.getItem('fpair:theme');
+  root.setAttribute('data-theme', saved || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+  const theme=document.getElementById('themeToggle');
+  if(theme) theme.addEventListener('click',()=>{
+    const next=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);localStorage.setItem('fpair:theme',next);
+  });
+  const bar=document.getElementById('pageProgress');
+  const progress=()=>{const max=document.documentElement.scrollHeight-innerHeight;if(bar)bar.style.width=(max>0?Math.min(100,scrollY/max*100):0)+'%'};
+  addEventListener('scroll',progress,{passive:true});progress();
+  window.FPAIRToast=function(msg){
+    const t=document.getElementById('toast'); if(!t)return;
+    t.textContent=msg;t.classList.add('show');clearTimeout(window.__fpairToast);
+    window.__fpairToast=setTimeout(()=>t.classList.remove('show'),3000);
+  };
+  document.querySelectorAll('.acc-q').forEach(btn=>{
+    btn.addEventListener('click',()=>{const item=btn.closest('.acc-item');item.classList.toggle('open');
+      const icon=btn.querySelector('.acc-icon'); if(icon) icon.textContent=item.classList.contains('open')?'−':'+';});
+  });
+})();
+</script>
+
+
+<script>
+document.querySelectorAll('.safety-check').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const box=document.getElementById('safetyResult');
+    box.style.display='block';box.textContent=btn.dataset.msg;
+    box.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+});
+</script>
+
+</body></html>
