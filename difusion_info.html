@@ -6,275 +6,1470 @@
 <meta name="theme-color" content="#0E8A82">
 <meta name="description" content="FPAIR — DLCO: preparación, técnica guiada y comprensión del examen de difusión pulmonar.">
 <title>DLCO | FPAIR</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
 <style>
 :root{
-  --bg:#F3FBFA;--bg2:#E7F6F4;--surface:#fff;--surface2:#F4FCFB;--text:#0B2530;--muted:#547174;
-  --line:#D3EDE9;--primary:#0E8A82;--primary2:#086B64;--accent:#22D3B8;--accent2:#C8F5EC;
-  --warn:#B86A07;--danger:#B94747;--shadow:0 18px 50px -22px rgba(8,107,100,.28);
-  --r:20px;--header:72px;
+  --bg:#F3FBFA;
+  --bg2:#E7F6F4;
+  --surface:#fff;
+  --surface2:#F4FCFB;
+  --text:#0B2530;
+  --muted:#547174;
+  --line:#D3EDE9;
+  --primary:#0E8A82;
+  --primary2:#086B64;
+  --accent:#22D3B8;
+  --accent2:#C8F5EC;
+  --warn:#B86A07;
+  --danger:#B94747;
+  --shadow:0 18px 50px -22px rgba(8,107,100,.28);
+  --r:20px;
+  --header:72px;
 }
-html.dark{--bg:#06191B;--bg2:#0A2224;--surface:#0D2B2D;--surface2:#0F3335;--text:#E6F7F4;--muted:#8FBDB8;--line:#164448;--primary:#2FE0C3;--primary2:#63F0D6;--accent:#14B8A6;--accent2:#0F3B3A;--shadow:0 18px 55px -25px rgba(0,0,0,.75)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 82% -12%,rgba(34,211,184,.11),transparent 28%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;line-height:1.55}
-a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-.container{width:min(1220px,calc(100% - 36px));margin:auto}
-.header{position:sticky;top:0;z-index:50;height:var(--header);background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-.header-in{height:100%;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:11px}.brandmark{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--primary),var(--accent));display:grid;place-items:center;color:white;font-weight:800}.brand strong{display:block;font-family:Manrope;font-size:16px}.brand span{display:block;color:var(--muted);font-size:10px}
-.header-nav{display:flex;gap:5px}.header-nav a{padding:8px 11px;border-radius:10px;color:var(--muted);font-size:12px;font-weight:700}.header-nav a:hover{background:var(--surface2);color:var(--primary2)}.icon-btn{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--surface);color:var(--text)}
-.hero{padding:58px 0 34px}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:44px;align-items:center}.eyebrow{display:inline-flex;gap:7px;align-items:center;padding:7px 11px;border-radius:999px;background:var(--accent2);color:var(--primary2);font-size:11px;font-weight:800}.dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
-h1,h2,h3,h4{font-family:Manrope;margin:0}.hero h1{font-size:clamp(42px,5.6vw,72px);line-height:.98;letter-spacing:-2.8px;margin-top:18px;max-width:760px}.hero h1 span{color:var(--primary)}.lead{font-size:17px;color:var(--muted);max-width:650px;line-height:1.7;margin:22px 0 0}.hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:12px 17px;border:1px solid transparent;font-weight:800;font-size:13px;transition:.2s}.btn:hover{transform:translateY(-2px)}.btn-primary{background:var(--primary);color:white;box-shadow:0 10px 28px rgba(14,138,130,.22)}.btn-secondary{background:var(--surface);border-color:var(--line)}.btn-soft{background:var(--accent2);color:var(--primary2)}
-.hero-card{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:23px;box-shadow:var(--shadow)}.hero-card-top{display:flex;justify-content:space-between;align-items:center;gap:14px}.mini-label{font-family:"IBM Plex Mono";font-size:10px;color:var(--primary);letter-spacing:.08em;text-transform:uppercase}.hero-card h3{font-size:16px;margin-top:5px}.status-pill{padding:6px 9px;border-radius:999px;background:var(--accent2);color:var(--primary2);font-size:9px;font-weight:800}
-.diffusion-visual{margin-top:18px;background:linear-gradient(145deg,var(--surface2),var(--bg2));border:1px solid var(--line);border-radius:20px;padding:18px}.diffusion-visual svg{width:100%;height:230px;display:block}.graph-note{display:flex;justify-content:space-between;gap:15px;color:var(--muted);font-size:10px;margin-top:6px}
-.journey{padding:22px 0 82px}.shell{background:var(--surface);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}.shell-head{padding:26px 28px 22px;background:linear-gradient(180deg,var(--surface2),var(--surface));border-bottom:1px solid var(--line)}
-.shell-title{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}.shell-title h2{font-size:clamp(25px,3vw,37px);letter-spacing:-1px}.shell-title p{margin:5px 0 0;color:var(--muted);font-size:13px}.progress-wrap{min-width:210px}.progress-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;font-weight:800;margin-bottom:7px}.progress-track{height:6px;background:var(--bg2);border-radius:999px;overflow:hidden}.progress-fill{height:100%;width:20%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:999px;transition:width .35s}
-.stage-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:22px}.stage-btn{appearance:none;text-align:left;padding:13px;border:1px solid var(--line);background:var(--surface);border-radius:14px;color:var(--text);transition:.2s}.stage-btn:hover{border-color:var(--primary);transform:translateY(-2px)}.stage-btn.active{background:var(--accent2);border-color:var(--primary);color:var(--primary2)}.stage-num{font-family:"IBM Plex Mono";font-size:9px;color:var(--muted)}.stage-btn strong{display:block;font-size:12px;margin-top:4px}.stage-btn span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
-.shell-body{padding:30px}.panel{display:none;animation:fade .25s ease}.panel.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.panel-hero{display:grid;grid-template-columns:.8fr 1.2fr;gap:24px;align-items:stretch}.visual-card{min-height:285px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,var(--surface2),var(--bg2));display:grid;place-items:center;padding:18px;text-align:center}.lung-orb{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,var(--accent2),transparent 68%);font-size:66px}.content-card{display:flex;flex-direction:column;justify-content:center}.kicker{font-family:"IBM Plex Mono";font-size:9px;color:var(--primary);text-transform:uppercase;letter-spacing:.1em}.content-card h3{font-size:clamp(27px,3vw,42px);line-height:1.05;letter-spacing:-1.2px;margin:8px 0 10px}.content-card>p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
-.metric-grid,.action-grid,.learn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:20px}.card{border:1px solid var(--line);background:var(--surface);border-radius:15px;padding:16px}.card-icon{width:35px;height:35px;border-radius:10px;display:grid;place-items:center;background:var(--accent2);color:var(--primary2);font-weight:800;margin-bottom:11px}.card strong{font-size:12px;display:block}.card p{font-size:11px;color:var(--muted);margin:5px 0 0}.card a{display:inline-flex;margin-top:12px;color:var(--primary2);font-weight:800;font-size:11px}
-.note{margin-top:16px;padding:13px 15px;border-radius:13px;background:var(--surface2);border:1px solid var(--line);color:var(--muted);font-size:11px}.note.warn{border-left:4px solid var(--warn)}
-.stepper{display:grid;grid-template-columns:220px 1fr;gap:24px;margin-top:20px}.stepper-side{display:flex;flex-direction:column;gap:8px}.mini-step{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px;text-align:left;color:var(--text)}.mini-step.active{border-color:var(--primary);background:var(--accent2)}.mini-step b{font-size:11px}.mini-step span{display:block;font-size:9px;color:var(--muted);margin-top:2px}
-.stepper-main{border:1px solid var(--line);border-radius:18px;background:var(--surface2);padding:22px}.step-image-slot{position:relative;width:100%;aspect-ratio:16/8.2;min-height:210px;margin:0 0 20px;border:1px dashed var(--line);border-radius:16px;overflow:hidden;background:linear-gradient(145deg,var(--surface),var(--bg2));display:grid;place-items:center}.step-image-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}.step-image-slot.has-image{border-style:solid}.step-image-slot.has-image img{display:block}.step-image-placeholder{text-align:center;color:var(--muted);padding:20px}.step-image-placeholder strong{display:block;font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.08em;color:var(--primary);text-transform:uppercase}.step-image-placeholder span{display:block;font-size:11px;margin-top:7px}.step-image-slot.has-image .step-image-placeholder{display:none}
-.stepper-main .phase{font-family:"IBM Plex Mono";font-size:10px;color:var(--primary)}.stepper-main h3{font-size:25px;margin:7px 0 8px}.stepper-main p{color:var(--muted);font-size:13px}.tipgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.tip{padding:13px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-size:11px;color:var(--muted)}.tip strong{display:block;color:var(--text);margin-bottom:4px}.stepper-controls{display:flex;gap:9px;margin-top:16px}
-.pattern-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:20px}.pattern{border:1px solid var(--line);border-radius:15px;padding:16px;background:var(--surface)}.badge{display:inline-flex;padding:5px 8px;border-radius:999px;background:var(--accent2);color:var(--primary2);font-size:9px;font-weight:800}.pattern h4{font-size:14px;margin:9px 0 5px}.pattern p{margin:0;color:var(--muted);font-size:11px}
-.learn-more{padding:0 0 80px}.learn-shell{border:1px solid var(--line);background:var(--surface);border-radius:24px;padding:26px;box-shadow:var(--shadow)}.learn-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-end}.learn-head h2{font-size:clamp(25px,3vw,38px);margin-top:6px}.learn-head p{margin:7px 0 0;color:var(--muted);font-size:12px}
-.footer{padding:28px 0 38px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:10px}
-@media(max-width:900px){.header-nav{display:none}.hero-grid,.panel-hero{grid-template-columns:1fr}.stage-nav{grid-template-columns:repeat(2,1fr)}.metric-grid,.action-grid,.learn-grid,.pattern-grid{grid-template-columns:1fr 1fr}.stepper{grid-template-columns:1fr}.stepper-side{display:grid;grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.container{width:min(100% - 24px,620px)}.brand span{display:none}.hero{padding-top:38px}.hero h1{font-size:42px}.hero-cta{flex-direction:column}.hero-cta .btn{width:100%}.shell-head,.shell-body{padding:19px}.shell-title{align-items:stretch;flex-direction:column}.progress-wrap{min-width:0}.stage-nav{grid-template-columns:1fr 1fr}.metric-grid,.action-grid,.learn-grid,.pattern-grid,.tipgrid{grid-template-columns:1fr}.stepper-side{grid-template-columns:1fr}.footer,.learn-head{align-items:flex-start;flex-direction:column}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+html.dark{
+  --bg:#06191B;
+  --bg2:#0A2224;
+  --surface:#0D2B2D;
+  --surface2:#0F3335;
+  --text:#E6F7F4;
+  --muted:#8FBDB8;
+  --line:#164448;
+  --primary:#2FE0C3;
+  --primary2:#63F0D6;
+  --accent:#14B8A6;
+  --accent2:#0F3B3A;
+  --shadow:0 18px 55px -25px rgba(0,0,0,.75);
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 82% -12%,rgba(34,211,184,.11),transparent 28%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+  line-height:1.55;
+}
+
+a{color:inherit;text-decoration:none}
+
+button{
+  font:inherit;
+  cursor:pointer;
+}
+
+button:focus-visible,
+a:focus-visible{
+  outline:3px solid var(--accent);
+  outline-offset:3px;
+}
+
+.container{
+  width:min(1220px,calc(100% - 36px));
+  margin:auto;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  height:var(--header);
+  background:color-mix(in srgb,var(--surface) 92%,transparent);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+
+.header-in{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.brandmark{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:grid;
+  place-items:center;
+  color:white;
+  font-weight:800;
+}
+
+.brand strong{
+  display:block;
+  font-family:Manrope;
+  font-size:16px;
+}
+
+.brand span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.header-nav{
+  display:flex;
+  gap:5px;
+}
+
+.header-nav a{
+  padding:8px 11px;
+  border-radius:10px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+}
+
+.header-nav a:hover{
+  background:var(--surface2);
+  color:var(--primary2);
+}
+
+.icon-btn{
+  width:40px;
+  height:40px;
+  border-radius:11px;
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--text);
+}
+
+.hero{
+  padding:58px 0 34px;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:44px;
+  align-items:center;
+}
+
+.eyebrow{
+  display:inline-flex;
+  gap:7px;
+  align-items:center;
+  padding:7px 11px;
+  border-radius:999px;
+  background:var(--accent2);
+  color:var(--primary2);
+  font-size:11px;
+  font-weight:800;
+}
+
+.dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--accent);
+}
+
+h1,h2,h3,h4{
+  font-family:Manrope;
+  margin:0;
+}
+
+.hero h1{
+  font-size:clamp(42px,5.6vw,72px);
+  line-height:.98;
+  letter-spacing:-2.8px;
+  margin-top:18px;
+  max-width:760px;
+}
+
+.hero h1 span{
+  color:var(--primary);
+}
+
+.lead{
+  font-size:17px;
+  color:var(--muted);
+  max-width:650px;
+  line-height:1.7;
+  margin:22px 0 0;
+}
+
+.hero-cta{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:28px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  border-radius:12px;
+  padding:12px 17px;
+  border:1px solid transparent;
+  font-weight:800;
+  font-size:13px;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.btn-primary{
+  background:var(--primary);
+  color:white;
+  box-shadow:0 10px 28px rgba(14,138,130,.22);
+}
+
+.btn-secondary{
+  background:var(--surface);
+  border-color:var(--line);
+}
+
+.btn-soft{
+  background:var(--accent2);
+  color:var(--primary2);
+}
+
+.hero-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:23px;
+  box-shadow:var(--shadow);
+}
+
+.hero-card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+}
+
+.mini-label{
+  font-family:"IBM Plex Mono";
+  font-size:10px;
+  color:var(--primary);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.hero-card h3{
+  font-size:16px;
+  margin-top:5px;
+}
+
+.status-pill{
+  padding:6px 9px;
+  border-radius:999px;
+  background:var(--accent2);
+  color:var(--primary2);
+  font-size:9px;
+  font-weight:800;
+}
+
+/* ICONO PRINCIPAL DLCO */
+.diffusion-visual{
+  margin-top:18px;
+  background:linear-gradient(145deg,var(--surface2),var(--bg2));
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:18px;
+}
+
+.diffusion-visual.icon-visual{
+  min-height:290px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px;
+}
+
+.diffusion-visual.icon-visual img{
+  width:min(100%,380px);
+  max-height:250px;
+  object-fit:contain;
+  display:block;
+  filter:drop-shadow(0 18px 34px rgba(14,138,130,.14));
+}
+
+/* RECORRIDO */
+.journey{
+  padding:22px 0 82px;
+}
+
+.shell{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.shell-head{
+  padding:26px 28px 22px;
+  background:linear-gradient(180deg,var(--surface2),var(--surface));
+  border-bottom:1px solid var(--line);
+}
+
+.shell-title{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.shell-title h2{
+  font-size:clamp(25px,3vw,37px);
+  letter-spacing:-1px;
+}
+
+.shell-title p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.progress-wrap{
+  min-width:210px;
+}
+
+.progress-meta{
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
+  margin-bottom:7px;
+}
+
+.progress-track{
+  height:6px;
+  background:var(--bg2);
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  width:20%;
+  background:linear-gradient(90deg,var(--primary),var(--accent));
+  border-radius:999px;
+  transition:width .35s;
+}
+
+.stage-nav{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+  margin-top:22px;
+}
+
+.stage-btn{
+  appearance:none;
+  text-align:left;
+  padding:13px;
+  border:1px solid var(--line);
+  background:var(--surface);
+  border-radius:14px;
+  color:var(--text);
+  transition:.2s;
+}
+
+.stage-btn:hover{
+  border-color:var(--primary);
+  transform:translateY(-2px);
+}
+
+.stage-btn.active{
+  background:var(--accent2);
+  border-color:var(--primary);
+  color:var(--primary2);
+}
+
+.stage-num{
+  font-family:"IBM Plex Mono";
+  font-size:9px;
+  color:var(--muted);
+}
+
+.stage-btn strong{
+  display:block;
+  font-size:12px;
+  margin-top:4px;
+}
+
+.stage-btn span{
+  display:block;
+  font-size:10px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.shell-body{
+  padding:30px;
+}
+
+.panel{
+  display:none;
+  animation:fade .25s ease;
+}
+
+.panel.active{
+  display:block;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:none}
+}
+
+.panel-hero{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:24px;
+  align-items:stretch;
+}
+
+.visual-card{
+  min-height:285px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:linear-gradient(145deg,var(--surface2),var(--bg2));
+  display:grid;
+  place-items:center;
+  padding:18px;
+  text-align:center;
+}
+
+.lung-orb{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle,var(--accent2),transparent 68%);
+  font-size:66px;
+}
+
+.content-card{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.kicker{
+  font-family:"IBM Plex Mono";
+  font-size:9px;
+  color:var(--primary);
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+
+.content-card h3{
+  font-size:clamp(27px,3vw,42px);
+  line-height:1.05;
+  letter-spacing:-1.2px;
+  margin:8px 0 10px;
+}
+
+.content-card>p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.7;
+}
+
+.metric-grid,
+.action-grid,
+.learn-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:11px;
+  margin-top:20px;
+}
+
+.card{
+  border:1px solid var(--line);
+  background:var(--surface);
+  border-radius:15px;
+  padding:16px;
+}
+
+.card-icon{
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:var(--accent2);
+  color:var(--primary2);
+  font-weight:800;
+  margin-bottom:11px;
+}
+
+.card strong{
+  font-size:12px;
+  display:block;
+}
+
+.card p{
+  font-size:11px;
+  color:var(--muted);
+  margin:5px 0 0;
+}
+
+.note{
+  margin-top:16px;
+  padding:13px 15px;
+  border-radius:13px;
+  background:var(--surface2);
+  border:1px solid var(--line);
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* TECNICA */
+.stepper{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:24px;
+  margin-top:20px;
+}
+
+.stepper-side{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.mini-step{
+  border:1px solid var(--line);
+  background:var(--surface);
+  border-radius:12px;
+  padding:11px;
+  text-align:left;
+  color:var(--text);
+}
+
+.mini-step.active{
+  border-color:var(--primary);
+  background:var(--accent2);
+}
+
+.mini-step b{
+  font-size:11px;
+}
+
+.mini-step span{
+  display:block;
+  font-size:9px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.stepper-main{
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:var(--surface2);
+  padding:22px;
+}
+
+.step-image-slot{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/8.2;
+  min-height:210px;
+  margin:0 0 20px;
+  border:1px dashed var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  background:linear-gradient(145deg,var(--surface),var(--bg2));
+  display:grid;
+  place-items:center;
+}
+
+.step-image-slot img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  padding:8px;
+  display:none;
+}
+
+.step-image-slot.has-image{
+  border-style:solid;
+}
+
+.step-image-slot.has-image img{
+  display:block;
+}
+
+.step-image-placeholder{
+  text-align:center;
+  color:var(--muted);
+  padding:20px;
+}
+
+.step-image-placeholder strong{
+  display:block;
+  font-family:"IBM Plex Mono";
+  font-size:10px;
+  letter-spacing:.08em;
+  color:var(--primary);
+  text-transform:uppercase;
+}
+
+.step-image-placeholder span{
+  display:block;
+  font-size:11px;
+  margin-top:7px;
+}
+
+.step-image-slot.has-image .step-image-placeholder{
+  display:none;
+}
+
+.stepper-main .phase{
+  font-family:"IBM Plex Mono";
+  font-size:10px;
+  color:var(--primary);
+}
+
+.stepper-main h3{
+  font-size:25px;
+  margin:7px 0 8px;
+}
+
+.stepper-main p{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.tipgrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:16px;
+}
+
+.tip{
+  padding:13px;
+  border-radius:12px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  font-size:11px;
+  color:var(--muted);
+}
+
+.tip strong{
+  display:block;
+  color:var(--text);
+  margin-bottom:4px;
+}
+
+.stepper-controls{
+  display:flex;
+  gap:9px;
+  margin-top:16px;
+}
+
+@media(max-width:900px){
+  .header-nav{display:none}
+  .hero-grid,.panel-hero{grid-template-columns:1fr}
+  .stage-nav{grid-template-columns:repeat(2,1fr)}
+  .metric-grid,.action-grid,.learn-grid{grid-template-columns:1fr 1fr}
+  .stepper{grid-template-columns:1fr}
+  .stepper-side{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:640px){
+  .container{width:min(100% - 24px,620px)}
+  .brand span{display:none}
+  .hero{padding-top:38px}
+  .hero h1{font-size:42px}
+  .hero-cta{flex-direction:column}
+  .hero-cta .btn{width:100%}
+  .shell-head,.shell-body{padding:19px}
+  .shell-title{
+    align-items:stretch;
+    flex-direction:column;
+  }
+  .progress-wrap{min-width:0}
+  .stage-nav{grid-template-columns:1fr 1fr}
+  .metric-grid,.action-grid,.learn-grid,.tipgrid{grid-template-columns:1fr}
+  .stepper-side{grid-template-columns:1fr}
+}
 </style>
 </head>
+
 <body>
+
 <header class="header">
   <div class="container header-in">
-    <a href="index.html" class="brand" aria-label="Volver a FPAIR">
+    <a href="app.html#fpair/home" class="brand" aria-label="Volver a FPAIR">
       <div class="brandmark">F</div>
-      <div><strong>FPAIR</strong><span>Educación y entrenamiento respiratorio</span></div>
+      <div>
+        <strong>FPAIR</strong>
+        <span>Educación y entrenamiento respiratorio</span>
+      </div>
     </a>
+
     <nav class="header-nav" aria-label="Navegación">
-      <a href="#recorrido">Recorrido</a><a href="#tecnica">Técnica</a><a href="#comprender">Comprender</a><a href="#aprender">Biblioteca</a>
+      <a href="#recorrido">Recorrido</a>
+      <a href="#tecnica">Técnica</a>
+      <a href="#comprender">Comprender</a>
+      <a href="#aprender">Biblioteca</a>
     </nav>
+
     <button class="icon-btn" id="themeToggle" aria-label="Cambiar tema">◐</button>
   </div>
 </header>
 
 <main>
+
 <section class="hero">
-<div class="container hero-grid">
-  <div>
-    <div class="eyebrow"><span class="dot"></span> Examen de función pulmonar · FPAIR</div>
-    <h1>DLCO.<br><span>Entiende cómo tus pulmones transfieren gases.</span></h1>
-    <p class="lead">Conoce qué mide la difusión pulmonar, cómo prepararte, practica la maniobra y comprende los conceptos principales antes de asistir al laboratorio.</p>
-    <div class="hero-cta">
-      <button class="btn btn-primary" data-go="before">Comenzar mi recorrido →</button>
-      <button class="btn btn-secondary" data-go="technique">Ver técnica guiada</button>
-      <a class="btn btn-soft" href="preparacion_info.html#alarma">Crear recordatorio</a>
+  <div class="container hero-grid">
+
+    <div>
+      <div class="eyebrow">
+        <span class="dot"></span>
+        Examen de función pulmonar · FPAIR
+      </div>
+
+      <h1>
+        DLCO.<br>
+        <span>Entiende cómo tus pulmones transfieren gases.</span>
+      </h1>
+
+      <p class="lead">
+        Conoce qué mide la difusión pulmonar, cómo prepararte,
+        practica la maniobra y comprende los conceptos principales
+        antes de asistir al laboratorio.
+      </p>
+
+      <div class="hero-cta">
+        <button class="btn btn-primary" data-go="before">
+          Comenzar mi recorrido →
+        </button>
+
+        <button class="btn btn-secondary" data-go="technique">
+          Ver técnica guiada
+        </button>
+
+        <a class="btn btn-soft" href="preparacion_info.html#alarma">
+          Crear recordatorio
+        </a>
+      </div>
+    </div>
+
+    <!-- CAMBIO 1:
+         la imagen anterior de intercambio alveolo-capilar
+         se reemplaza por el icono principal de DLCO -->
+    <div class="hero-card">
+      <div class="hero-card-top">
+        <div>
+          <div class="mini-label">FPAIR / examen</div>
+          <h3>Difusión pulmonar</h3>
+        </div>
+        <span class="status-pill">DLCO</span>
+      </div>
+
+      <div class="diffusion-visual icon-visual">
+        <img
+          src="assets/images/exams/dlco.png"
+          alt="Icono del examen de difusión pulmonar DLCO"
+        >
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="journey" id="recorrido">
+<div class="container">
+<div class="shell">
+
+  <div class="shell-head">
+
+    <div class="shell-title">
+      <div>
+        <div class="mini-label">FPAIR / recorrido del paciente</div>
+        <h2>Tu DLCO, paso a paso.</h2>
+        <p>Explora solo lo que necesitas en cada momento.</p>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span>Tu recorrido FPAIR</span>
+          <span id="progressText">1 de 5</span>
+        </div>
+
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage-nav" role="tablist">
+
+      <button class="stage-btn active" data-stage="before">
+        <span class="stage-num">01</span>
+        <strong>Antes</strong>
+        <span>Prepárate</span>
+      </button>
+
+      <button class="stage-btn" data-stage="during">
+        <span class="stage-num">02</span>
+        <strong>Durante</strong>
+        <span>Qué ocurrirá</span>
+      </button>
+
+      <button class="stage-btn" data-stage="technique">
+        <span class="stage-num">03</span>
+        <strong>Técnica</strong>
+        <span>Aprende la maniobra</span>
+      </button>
+
+      <button class="stage-btn" data-stage="understand">
+        <span class="stage-num">04</span>
+        <strong>Comprender</strong>
+        <span>DLCO, KCO y VA</span>
+      </button>
+
+      <button class="stage-btn" data-stage="faq">
+        <span class="stage-num">05</span>
+        <strong>Dudas</strong>
+        <span>Preguntas frecuentes</span>
+      </button>
+
     </div>
   </div>
 
-  <div class="hero-card">
-    <div class="hero-card-top">
-      <div><div class="mini-label">FPAIR / visual educativo</div><h3>Intercambio alveolo–capilar</h3></div>
-      <span class="status-pill">DLCO</span>
-    </div>
-    <div class="diffusion-visual">
-      <svg viewBox="0 0 640 250" role="img" aria-label="Esquema educativo de transferencia de gas desde el alvéolo hacia el capilar">
-        <defs>
-          <linearGradient id="alv" x1="0" x2="1"><stop offset="0" stop-color="#C8F5EC"/><stop offset="1" stop-color="#E7F6F4"/></linearGradient>
-          <linearGradient id="cap" x1="0" x2="1"><stop offset="0" stop-color="#0E8A82"/><stop offset="1" stop-color="#22D3B8"/></linearGradient>
-        </defs>
-        <rect x="28" y="25" width="584" height="200" rx="24" fill="transparent" stroke="currentColor" opacity=".09"/>
-        <circle cx="190" cy="122" r="76" fill="url(#alv)" stroke="#0E8A82" stroke-width="3"/>
-        <circle cx="158" cy="104" r="20" fill="#fff" opacity=".75"/><circle cx="210" cy="90" r="17" fill="#fff" opacity=".6"/><circle cx="222" cy="144" r="14" fill="#fff" opacity=".55"/>
-        <path d="M335 74 C390 38,505 49,552 90 C586 119,566 168,520 184 C464 204,371 190,332 154 C307 131,310 91,335 74Z" fill="url(#cap)" opacity=".18" stroke="#0E8A82" stroke-width="3"/>
-        <path d="M325 86 C390 65,478 72,538 108" fill="none" stroke="#0E8A82" stroke-width="9" stroke-linecap="round"/>
-        <path d="M325 150 C390 171,480 164,539 128" fill="none" stroke="#22D3B8" stroke-width="9" stroke-linecap="round"/>
-        <path d="M255 103 C286 103,304 103,331 103" stroke="#0E8A82" stroke-width="4" stroke-linecap="round"/>
-        <path d="M319 94 L334 103 L319 112" fill="none" stroke="#0E8A82" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M255 139 C287 139,305 139,332 139" stroke="#22D3B8" stroke-width="4" stroke-linecap="round"/>
-        <path d="M320 130 L335 139 L320 148" fill="none" stroke="#22D3B8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-        <text x="145" y="214" font-size="13" fill="currentColor">Alvéolo</text>
-        <text x="405" y="214" font-size="13" fill="currentColor">Capilar sanguíneo</text>
-        <text x="272" y="89" font-size="12" fill="currentColor">CO</text>
-        <text x="273" y="156" font-size="12" fill="currentColor">gas</text>
-      </svg>
-      <div class="graph-note"><span>Aire alveolar</span><span>Transferencia</span><span>Sangre capilar</span></div>
-    </div>
+
+  <div class="shell-body">
+
+    <section class="panel active" data-panel="before">
+
+      <div class="panel-hero">
+
+        <div class="visual-card">
+          <div>
+            <div class="lung-orb">🫁</div>
+            <div class="mini-label" style="margin-top:10px">
+              ANTES DEL EXAMEN
+            </div>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <div class="kicker">FPAIR / preparación</div>
+
+          <h3>Llega preparado sin memorizar instrucciones.</h3>
+
+          <p>
+            Las indicaciones pueden variar según tu laboratorio.
+            FPAIR concentra las acciones prácticas antes de la visita.
+          </p>
+
+          <div class="action-grid">
+
+            <div class="card">
+              <div class="card-icon">✓</div>
+              <strong>Consentimiento</strong>
+              <p>Revisa la información del procedimiento antes de asistir.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-icon">⏰</div>
+              <strong>Recordatorio</strong>
+              <p>Programa una alarma para recordar las indicaciones previas.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-icon">i</div>
+              <strong>Información ampliada</strong>
+              <p>
+                Consulta preparación, inhaladores y contraindicaciones
+                en la Biblioteca FPAIR.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="panel" data-panel="during">
+
+      <div class="panel-hero">
+
+        <div class="visual-card">
+          <div>
+            <div class="lung-orb">⏱️</div>
+            <div class="mini-label" style="margin-top:10px">
+              DURANTE LA PRUEBA
+            </div>
+          </div>
+        </div>
+
+        <div class="content-card">
+
+          <div class="kicker">FPAIR / qué esperar</div>
+
+          <h3>
+            Una inspiración profunda, una apnea breve
+            y una exhalación controlada.
+          </h3>
+
+          <p>
+            El técnico te guiará durante toda la maniobra.
+            El examen usa una mezcla de gas en cantidad segura y controlada
+            para evaluar transferencia desde los alvéolos hacia la sangre.
+          </p>
+
+          <div class="metric-grid">
+
+            <div class="card">
+              <div class="card-icon">1</div>
+              <strong>Respiración inicial</strong>
+              <p>Respiras normalmente antes de comenzar el esfuerzo.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-icon">2</div>
+              <strong>Apnea</strong>
+              <p>
+                Tras inspirar la mezcla,
+                mantienes la respiración aproximadamente 10 segundos.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-icon">3</div>
+              <strong>Exhalación</strong>
+              <p>
+                Exhalas para que el equipo mida
+                cuánto gas fue transferido.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+
+    <section class="panel" data-panel="technique" id="tecnica">
+
+      <div class="content-card">
+
+        <div class="kicker">FPAIR / técnica guiada</div>
+
+        <h3>Una maniobra, cuatro momentos.</h3>
+
+        <p>
+          Selecciona cada paso y observa cómo cambia
+          el espirograma durante la maniobra.
+        </p>
+
+      </div>
+
+      <div class="stepper">
+
+        <div class="stepper-side" id="stepList"></div>
+
+        <div class="stepper-main">
+
+          <div class="step-image-slot" id="stepImageSlot">
+
+            <img
+              id="stepImage"
+              alt=""
+              loading="lazy"
+            >
+
+            <div class="step-image-placeholder">
+              <strong>Imagen del paso</strong>
+              <span id="stepImageLabel">Paso 01 · Preparación</span>
+            </div>
+
+          </div>
+
+          <div class="phase" id="stepPhase">
+            PASO 01 / 04
+          </div>
+
+          <h3 id="stepTitle">
+            Preparación
+          </h3>
+
+          <p id="stepDesc"></p>
+
+          <div class="tipgrid">
+
+            <div class="tip">
+              <strong>Qué hacer</strong>
+              <span id="stepTip"></span>
+            </div>
+
+            <div class="tip">
+              <strong>Qué recordar</strong>
+              <span id="stepError"></span>
+            </div>
+
+          </div>
+
+          <div class="stepper-controls">
+
+            <button
+              class="btn btn-secondary"
+              id="prevStep"
+            >
+              ← Anterior
+            </button>
+
+            <button
+              class="btn btn-primary"
+              id="nextStep"
+            >
+              Siguiente →
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+
+    <section class="panel" data-panel="understand" id="comprender">
+
+      <div class="content-card">
+
+        <div class="kicker">FPAIR / comprender</div>
+
+        <h3>
+          DLCO, KCO y VA sin perderse en tecnicismos.
+        </h3>
+
+        <p>
+          Estos parámetros describen aspectos distintos
+          de la transferencia gaseosa.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <section class="panel" data-panel="faq">
+
+      <div class="content-card">
+
+        <div class="kicker">
+          FPAIR / preguntas frecuentes
+        </div>
+
+        <h3>
+          Respuestas breves antes de tu examen.
+        </h3>
+
+      </div>
+
+    </section>
+
   </div>
+
+</div>
 </div>
 </section>
 
-<section class="journey" id="recorrido">
-<div class="container"><div class="shell">
-  <div class="shell-head">
-    <div class="shell-title">
-      <div><div class="mini-label">FPAIR / recorrido del paciente</div><h2>Tu DLCO, paso a paso.</h2><p>Explora solo lo que necesitas en cada momento.</p></div>
-      <div class="progress-wrap"><div class="progress-meta"><span>Tu recorrido FPAIR</span><span id="progressText">1 de 5</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
-    </div>
-    <div class="stage-nav" role="tablist">
-      <button class="stage-btn active" data-stage="before"><span class="stage-num">01</span><strong>Antes</strong><span>Prepárate</span></button>
-      <button class="stage-btn" data-stage="during"><span class="stage-num">02</span><strong>Durante</strong><span>Qué ocurrirá</span></button>
-      <button class="stage-btn" data-stage="technique"><span class="stage-num">03</span><strong>Técnica</strong><span>Aprende la maniobra</span></button>
-      <button class="stage-btn" data-stage="understand"><span class="stage-num">04</span><strong>Comprender</strong><span>DLCO, KCO y VA</span></button>
-      <button class="stage-btn" data-stage="faq"><span class="stage-num">05</span><strong>Dudas</strong><span>Preguntas frecuentes</span></button>
-    </div>
-  </div>
-
-  <div class="shell-body">
-    <section class="panel active" data-panel="before">
-      <div class="panel-hero">
-        <div class="visual-card"><div><div class="lung-orb">🫁</div><div class="mini-label" style="margin-top:10px">ANTES DEL EXAMEN</div></div></div>
-        <div class="content-card">
-          <div class="kicker">FPAIR / preparación</div><h3>Llega preparado sin memorizar instrucciones.</h3>
-          <p>Las indicaciones pueden variar según tu laboratorio. FPAIR concentra las acciones prácticas antes de la visita.</p>
-          <div class="action-grid">
-            <div class="card"><div class="card-icon">✓</div><strong>Consentimiento</strong><p>Revisa la información del procedimiento antes de asistir.</p><a href="preparacion_info.html#consentimiento">Abrir consentimiento →</a></div>
-            <div class="card"><div class="card-icon">⏰</div><strong>Recordatorio</strong><p>Programa una alarma para recordar las indicaciones previas.</p><a href="preparacion_info.html#alarma">Crear recordatorio →</a></div>
-            <div class="card"><div class="card-icon">i</div><strong>Información ampliada</strong><p>Consulta preparación, inhaladores y contraindicaciones en la Biblioteca FPAIR.</p><a href="#aprender">Ir a Biblioteca →</a></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" data-panel="during">
-      <div class="panel-hero">
-        <div class="visual-card"><div><div class="lung-orb">⏱️</div><div class="mini-label" style="margin-top:10px">DURANTE LA PRUEBA</div></div></div>
-        <div class="content-card">
-          <div class="kicker">FPAIR / qué esperar</div><h3>Una inspiración profunda, una apnea breve y una exhalación controlada.</h3>
-          <p>El técnico te guiará durante toda la maniobra. El examen usa una mezcla de gas en cantidad segura y controlada para evaluar transferencia desde los alvéolos hacia la sangre.</p>
-          <div class="metric-grid">
-            <div class="card"><div class="card-icon">1</div><strong>Respiración inicial</strong><p>Respiras normalmente antes de comenzar el esfuerzo.</p></div>
-            <div class="card"><div class="card-icon">2</div><strong>Apnea</strong><p>Tras inspirar la mezcla, mantienes la respiración aproximadamente 10 segundos.</p></div>
-            <div class="card"><div class="card-icon">3</div><strong>Exhalación</strong><p>Exhalas para que el equipo mida cuánto gas fue transferido.</p></div>
-          </div>
-          <div class="note">Si presentas mareo, fatiga o molestias, avísale al técnico. El contenido original de FPAIR indica que estos síntomas suelen ser temporales.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" data-panel="technique" id="tecnica">
-      <div class="content-card">
-        <div class="kicker">FPAIR / técnica guiada</div><h3>Una maniobra, cuatro momentos.</h3>
-        <p>Selecciona cada paso. Cada etapa tiene un espacio preparado para incorporar una imagen o animación educativa.</p>
-      </div>
-      <div class="stepper">
-        <div class="stepper-side" id="stepList"></div>
-        <div class="stepper-main">
-          <div class="step-image-slot" id="stepImageSlot">
-            <img id="stepImage" alt="" loading="lazy">
-            <div class="step-image-placeholder"><strong>Espacio para imagen del paso</strong><span id="stepImageLabel">Paso 01 · Preparación</span></div>
-          </div>
-          <div class="phase" id="stepPhase">PASO 01 / 04</div>
-          <h3 id="stepTitle">Preparación</h3>
-          <p id="stepDesc"></p>
-          <div class="tipgrid">
-            <div class="tip"><strong>Qué hacer</strong><span id="stepTip"></span></div>
-            <div class="tip"><strong>Qué recordar</strong><span id="stepError"></span></div>
-          </div>
-          <div class="stepper-controls"><button class="btn btn-secondary" id="prevStep">← Anterior</button><button class="btn btn-primary" id="nextStep">Siguiente →</button></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" data-panel="understand" id="comprender">
-      <div class="content-card">
-        <div class="kicker">FPAIR / comprender</div><h3>DLCO, KCO y VA sin perderse en tecnicismos.</h3>
-        <p>Estos parámetros describen aspectos distintos de la transferencia gaseosa y deben interpretarse junto con otros exámenes y antecedentes clínicos.</p>
-      </div>
-      <div class="metric-grid">
-        <div class="card"><div class="card-icon">D</div><strong>DLCO</strong><p>Mide cuán bien el pulmón transfiere el gas desde los alvéolos hacia la sangre.</p></div>
-        <div class="card"><div class="card-icon">K</div><strong>KCO</strong><p>Describe la eficiencia de transferencia en relación con el volumen alveolar medido.</p></div>
-        <div class="card"><div class="card-icon">VA</div><strong>Volumen alveolar</strong><p>Representa el volumen pulmonar que participa en la medición durante la prueba.</p></div>
-      </div>
-      <div class="pattern-grid">
-        <div class="pattern"><span class="badge">RESULTADO</span><h4>DLCO dentro de rango</h4><p>La capacidad de transferencia se encuentra dentro de los valores esperados.</p></div>
-        <div class="pattern"><span class="badge">RESULTADO</span><h4>DLCO disminuida</h4><p>Puede observarse en distintas condiciones; el significado depende del contexto clínico y otros estudios.</p></div>
-        <div class="pattern"><span class="badge">INTERPRETACIÓN</span><h4>Siempre en contexto</h4><p>El contenido fuente indica que debe considerarse junto con espirometría, volúmenes pulmonares, síntomas y antecedentes.</p></div>
-      </div>
-      <div class="note">FPAIR es educativo. La interpretación final del examen debe realizarla un profesional de salud.</div>
-    </section>
-
-    <section class="panel" data-panel="faq">
-      <div class="content-card"><div class="kicker">FPAIR / preguntas frecuentes</div><h3>Respuestas breves antes de tu examen.</h3></div>
-      <div class="metric-grid">
-        <div class="card"><div class="card-icon">CO</div><strong>¿Es seguro el monóxido de carbono?</strong><p>El contenido fuente señala que se utiliza una cantidad muy pequeña, segura y controlada.</p></div>
-        <div class="card"><div class="card-icon">10s</div><strong>¿Cuánto dura la apnea?</strong><p>Generalmente alrededor de 10 segundos, siguiendo las instrucciones del técnico.</p></div>
-        <div class="card"><div class="card-icon">⏱</div><strong>¿Cuánto dura la prueba?</strong><p>El material original indica aproximadamente 15 a 30 minutos, según los intentos necesarios.</p></div>
-      </div>
-    </section>
-  </div>
-</div></div>
-</section>
-
-<section class="learn-more" id="aprender">
-<div class="container"><div class="learn-shell">
-  <div class="learn-head"><div><div class="mini-label">BIBLIOTECA FPAIR</div><h2>¿Quieres aprender más?</h2><p>Contenido complementario para explorar a tu ritmo.</p></div><a class="btn btn-secondary" href="index.html">Volver al inicio</a></div>
-  <div class="learn-grid">
-    <div class="card"><div class="card-icon">🩸</div><strong>Hemoglobina y DLCO</strong><p>Por qué la hemoglobina influye en la medición de la capacidad de difusión.</p><a href="#">Próximamente en Biblioteca →</a></div>
-    <div class="card"><div class="card-icon">🫁</div><strong>Intercambio gaseoso</strong><p>Cómo pasan los gases desde el alvéolo hacia el torrente sanguíneo.</p><a href="#">Próximamente en Biblioteca →</a></div>
-    <div class="card"><div class="card-icon">📈</div><strong>Cómo leemos tus pulmones</strong><p>DLCO, VA y KCO explicados con ejemplos visuales.</p><a href="#">Próximamente en Biblioteca →</a></div>
-  </div>
-</div></div>
-</section>
 </main>
 
-<footer><div class="container footer"><div><strong>FPAIR</strong> · Educación y entrenamiento respiratorio.</div><div>Contenido educativo. No reemplaza indicaciones médicas ni una evaluación clínica.</div></div></footer>
 
 <script>
-const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-const store={get(k){try{return localStorage.getItem(k)}catch{return null}},set(k,v){try{localStorage.setItem(k,v)}catch{}}};
-function setTheme(t){document.documentElement.classList.toggle('dark',t==='dark');store.set('fpair:theme',t)}
-setTheme(store.get('fpair:theme') || (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
-$('#themeToggle').addEventListener('click',()=>setTheme(document.documentElement.classList.contains('dark')?'light':'dark'));
 
-const stages=['before','during','technique','understand','faq'];
-function openStage(id,scroll=true){
-  const idx=Math.max(0,stages.indexOf(id)); id=stages[idx];
-  $$('.stage-btn').forEach(b=>b.classList.toggle('active',b.dataset.stage===id));
-  $$('.panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===id));
-  $('#progressFill').style.width=((idx+1)/stages.length*100)+'%';
-  $('#progressText').textContent=(idx+1)+' de '+stages.length;
-  store.set('fpair:dlco:stage',id);
-  if(scroll) $('#recorrido').scrollIntoView({behavior:'smooth',block:'start'});
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+
+const store={
+  get(k){
+    try{return localStorage.getItem(k)}
+    catch{return null}
+  },
+
+  set(k,v){
+    try{localStorage.setItem(k,v)}
+    catch{}
+  }
+};
+
+function setTheme(t){
+
+  document.documentElement.classList.toggle(
+    'dark',
+    t==='dark'
+  );
+
+  store.set('fpair:theme',t);
 }
-$$('[data-stage]').forEach(b=>b.addEventListener('click',()=>openStage(b.dataset.stage,false)));
-$$('[data-go]').forEach(b=>b.addEventListener('click',()=>openStage(b.dataset.go,true)));
+
+setTheme(
+  store.get('fpair:theme') ||
+  (
+    matchMedia('(prefers-color-scheme:dark)').matches
+      ? 'dark'
+      : 'light'
+  )
+);
+
+$('#themeToggle').addEventListener(
+  'click',
+  ()=>{
+    setTheme(
+      document.documentElement.classList.contains('dark')
+        ? 'light'
+        : 'dark'
+    );
+  }
+);
+
+
+const stages=[
+  'before',
+  'during',
+  'technique',
+  'understand',
+  'faq'
+];
+
+function openStage(id,scroll=true){
+
+  const idx=Math.max(
+    0,
+    stages.indexOf(id)
+  );
+
+  id=stages[idx];
+
+  $$('.stage-btn').forEach(
+    b=>b.classList.toggle(
+      'active',
+      b.dataset.stage===id
+    )
+  );
+
+  $$('.panel').forEach(
+    p=>p.classList.toggle(
+      'active',
+      p.dataset.panel===id
+    )
+  );
+
+  $('#progressFill').style.width=
+    ((idx+1)/stages.length*100)+'%';
+
+  $('#progressText').textContent=
+    (idx+1)+' de '+stages.length;
+
+  store.set(
+    'fpair:dlco:stage',
+    id
+  );
+
+  if(scroll){
+    $('#recorrido').scrollIntoView({
+      behavior:'smooth',
+      block:'start'
+    });
+  }
+}
+
+$$('[data-stage]').forEach(
+  b=>b.addEventListener(
+    'click',
+    ()=>openStage(
+      b.dataset.stage,
+      false
+    )
+  )
+);
+
+$$('[data-go]').forEach(
+  b=>b.addEventListener(
+    'click',
+    ()=>openStage(
+      b.dataset.go,
+      true
+    )
+  )
+);
+
+
+/* =====================================================
+   IMÁGENES DE LA TÉCNICA DLCO
+   =====================================================
+
+   Para que funcione en GitHub, sube estas 4 imágenes a:
+
+   assets/images/exams/dlco/
+
+   con EXACTAMENTE estos nombres.
+
+===================================================== */
 
 const steps=[
- {title:'Preparación',desc:'Siéntate en posición erguida y sella correctamente los labios alrededor de la boquilla.',tip:'Mantén una postura cómoda y sigue las instrucciones del técnico.',error:'Evita fugas de aire alrededor de la boquilla.',image:''},
- {title:'Exhalar completamente',desc:'Respira normalmente y luego exhala hasta vaciar los pulmones antes de inspirar la mezcla de gas.',tip:'No te apresures; el técnico te indicará cuándo comenzar.',error:'Una exhalación incompleta puede dificultar una inspiración máxima posterior.',image:''},
- {title:'Inspirar y contener',desc:'Inhala la mezcla de gas rápidamente hasta máxima capacidad y mantén la respiración aproximadamente 10 segundos.',tip:'Mantén el aire sin hacer esfuerzo excesivo y espera la indicación.',error:'Evita inspiraciones parciales o soltar aire antes de tiempo.',image:''},
- {title:'Exhalar para la medición',desc:'Exhala rápida y completamente para que el equipo analice la muestra de gas.',tip:'Sigue soplando según la indicación del técnico.',error:'No retires la boquilla hasta que te indiquen finalizar.',image:''}
-];
-let step=0;
-function renderSteps(){
-  $('#stepList').innerHTML=steps.map((s,i)=>`<button class="mini-step ${i===step?'active':''}" data-step="${i}"><b>0${i+1} · ${s.title}</b><span>${i===0?'Prepárate':i===1?'Vacía':i===2?'Inspira y espera':'Exhala'}</span></button>`).join('');
-  $$('[data-step]').forEach(b=>b.addEventListener('click',()=>{step=+b.dataset.step;renderSteps()}));
-  const s=steps[step];
-  $('#stepPhase').textContent=`PASO 0${step+1} / 04`; $('#stepTitle').textContent=s.title; $('#stepDesc').textContent=s.desc; $('#stepTip').textContent=s.tip; $('#stepError').textContent=s.error; $('#stepImageLabel').textContent=`Paso 0${step+1} · ${s.title}`;
-  const slot=$('#stepImageSlot'),img=$('#stepImage');
-  if(s.image){img.src=s.image;img.alt=`Ilustración educativa: ${s.title}`;slot.classList.add('has-image')}else{img.removeAttribute('src');img.alt='';slot.classList.remove('has-image')}
-  $('#prevStep').disabled=step===0; $('#nextStep').disabled=step===steps.length-1;
-}
-$('#prevStep').addEventListener('click',()=>{if(step>0){step--;renderSteps()}});
-$('#nextStep').addEventListener('click',()=>{if(step<steps.length-1){step++;renderSteps()}});
-renderSteps();
-openStage(store.get('fpair:dlco:stage')||'before',false);
-</script>
 
-<script>
-/* FPAIR — comportamiento Atrás: volver directamente al índice */
-(function(){
-  const FPAIR_HOME = 'index.html#fpair/home';
-  try {
-    history.pushState({ fpairExamGuard: true }, '', location.href);
-    window.addEventListener('popstate', function(){
-      location.replace(FPAIR_HOME);
-    });
-  } catch (e) {}
-})();
+  {
+    title:'Preparación',
+
+    desc:
+    'Siéntate en posición erguida, coloca la pinza nasal y sella correctamente los labios alrededor de la boquilla.',
+
+    tip:
+    'Respira normalmente por la boquilla mientras te preparas para comenzar.',
+
+    error:
+    'Evita fugas de aire alrededor de la boquilla.',
+
+    image:
+    'assets/images/exams/dlco/dlco_01_preparacion.png'
+  },
+
+
+  {
+    title:'Exhalar completamente',
+
+    desc:
+    'Después de respirar normalmente, exhala de forma sostenida hasta vaciar completamente tus pulmones.',
+
+    tip:
+    'Sigue soplando hasta llegar al volumen mínimo indicado por el técnico.',
+
+    error:
+    'Una exhalación incompleta disminuye el volumen disponible para la inspiración máxima posterior.',
+
+    image:
+    'assets/images/exams/dlco/dlco_02_exhalar_completamente.png'
+  },
+
+
+  {
+    title:'Inspirar y contener',
+
+    desc:
+    'Desde pulmones vacíos, inspira rápidamente la mezcla de gas hasta llenar completamente tus pulmones y luego mantén la respiración.',
+
+    tip:
+    'La inspiración debe ser máxima. Después mantén la apnea siguiendo la indicación del técnico.',
+
+    error:
+    'Evita una inspiración parcial o comenzar a exhalar antes de tiempo.',
+
+    image:
+    'assets/images/exams/dlco/dlco_03_inspiracion_maxima_apnea.png'
+  },
+
+
+  {
+    title:'Exhalar para la medición',
+
+    desc:
+    'Después de la apnea, exhala para que el equipo pueda analizar la muestra de gas y calcular la DLCO.',
+
+    tip:
+    'Mantén los labios sellados y continúa hasta que el técnico indique que finalizó la maniobra.',
+
+    error:
+    'No retires la boquilla durante la exhalación.',
+
+    image:
+    'assets/images/exams/dlco/dlco_04_exhalacion_medicion.png'
+  }
+
+];
+
+
+let step=0;
+
+
+function renderSteps(){
+
+  $('#stepList').innerHTML=
+    steps.map(
+      (s,i)=>`
+
+      <button
+        class="mini-step ${i===step?'active':''}"
+        data-step="${i}"
+      >
+
+        <b>
+          0${i+1} · ${s.title}
+        </b>
+
+        <span>
+          ${
+            i===0
+              ? 'Prepárate'
+              : i===1
+              ? 'Vacía'
+              : i===2
+              ? 'Llena y espera'
+              : 'Exhala'
+          }
+        </span>
+
+      </button>
+
+      `
+    ).join('');
+
+
+  $$('[data-step]').forEach(
+
+    b=>b.addEventListener(
+
+      'click',
+
+      ()=>{
+        step=+b.dataset.step;
+        renderSteps();
+      }
+
+    )
+
+  );
+
+
+  const s=steps[step];
+
+
+  $('#stepPhase').textContent=
+    `PASO 0${step+1} / 04`;
+
+
+  $('#stepTitle').textContent=
+    s.title;
+
+
+  $('#stepDesc').textContent=
+    s.desc;
+
+
+  $('#stepTip').textContent=
+    s.tip;
+
+
+  $('#stepError').textContent=
+    s.error;
+
+
+  $('#stepImageLabel').textContent=
+    `Paso 0${step+1} · ${s.title}`;
+
+
+  const slot=$('#stepImageSlot');
+  const img=$('#stepImage');
+
+
+  if(s.image){
+
+    img.src=s.image;
+
+    img.alt=
+      `Ilustración educativa DLCO: ${s.title}`;
+
+    slot.classList.add('has-image');
+
+  }else{
+
+    img.removeAttribute('src');
+
+    img.alt='';
+
+    slot.classList.remove('has-image');
+  }
+
+
+  $('#prevStep').disabled=
+    step===0;
+
+
+  $('#nextStep').disabled=
+    step===steps.length-1;
+
+}
+
+
+$('#prevStep').addEventListener(
+  'click',
+  ()=>{
+
+    if(step>0){
+
+      step--;
+
+      renderSteps();
+
+    }
+
+  }
+);
+
+
+$('#nextStep').addEventListener(
+  'click',
+  ()=>{
+
+    if(step<steps.length-1){
+
+      step++;
+
+      renderSteps();
+
+    }
+
+  }
+);
+
+
+renderSteps();
+
+
+openStage(
+  store.get('fpair:dlco:stage') || 'before',
+  false
+);
+
 </script>
 
 </body>
