@@ -1134,7 +1134,9 @@ main {
   width:100%;
   height:100%;
 
-  object-fit:cover;
+  object-fit:contain;
+  object-position:center;
+  padding:3px;
 }
 
 
@@ -1350,7 +1352,14 @@ main {
   width:100%;
   height:100%;
 
-  object-fit:cover;
+  object-fit:contain;
+  object-position:center;
+
+  /*
+     Las ilustraciones FPAIR tienen fondo transparente.
+     "contain" evita recortes y mantiene visible la imagen completa.
+  */
+  padding:10px;
 }
 
 
@@ -1400,6 +1409,33 @@ main {
   opacity:.75;
 }
 
+
+
+/* ============================================================
+   FPAIR — MEDIOS REALES DE EXÁMENES
+   ============================================================ */
+
+.media-slot-icon:has(img) {
+  border-style:solid;
+  background:var(--surface);
+}
+
+.media-slot-large:has(img) {
+  border-style:solid;
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      color-mix(in srgb,var(--accent-soft) 42%,transparent),
+      transparent 68%
+    ),
+    var(--surface-alt);
+}
+
+.media-slot-icon img,
+.media-slot-large img {
+  -webkit-user-drag:none;
+  user-select:none;
+}
 
 /* ============================================================
    CONTEXT INTRO
@@ -3354,7 +3390,15 @@ footer {
             data-exam-id="espirometria"
           >
             <div class="exam-card-top">
-              <div class="media-slot-icon">ICONO</div>
+              <div class="media-slot-icon">
+                <img
+                  src="assets/images/icons/espirometria.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none';this.parentElement.classList.add('media-missing');"
+                >
+              </div>
               <span class="exam-number">01</span>
             </div>
             <div>
@@ -3370,7 +3414,15 @@ footer {
             data-exam-id="dlco"
           >
             <div class="exam-card-top">
-              <div class="media-slot-icon">ICONO</div>
+              <div class="media-slot-icon">
+                <img
+                  src="assets/images/icons/dlco.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none';this.parentElement.classList.add('media-missing');"
+                >
+              </div>
               <span class="exam-number">02</span>
             </div>
             <div>
@@ -3386,7 +3438,15 @@ footer {
             data-exam-id="pletismografia"
           >
             <div class="exam-card-top">
-              <div class="media-slot-icon">ICONO</div>
+              <div class="media-slot-icon">
+                <img
+                  src="assets/images/icons/pletismografia.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none';this.parentElement.classList.add('media-missing');"
+                >
+              </div>
               <span class="exam-number">03</span>
             </div>
             <div>
@@ -3402,7 +3462,15 @@ footer {
             data-exam-id="ios"
           >
             <div class="exam-card-top">
-              <div class="media-slot-icon">ICONO</div>
+              <div class="media-slot-icon">
+                <img
+                  src="assets/images/icons/ios.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none';this.parentElement.classList.add('media-missing');"
+                >
+              </div>
               <span class="exam-number">04</span>
             </div>
             <div>
@@ -3418,7 +3486,15 @@ footer {
             data-exam-id="feno"
           >
             <div class="exam-card-top">
-              <div class="media-slot-icon">ICONO</div>
+              <div class="media-slot-icon">
+                <img
+                  src="assets/images/icons/feno.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none';this.parentElement.classList.add('media-missing');"
+                >
+              </div>
               <span class="exam-number">05</span>
             </div>
             <div>
@@ -3434,7 +3510,15 @@ footer {
             data-exam-id="pimpem"
           >
             <div class="exam-card-top">
-              <div class="media-slot-icon">ICONO</div>
+              <div class="media-slot-icon">
+                <img
+                  src="assets/images/icons/pimpem.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none';this.parentElement.classList.add('media-missing');"
+                >
+              </div>
               <span class="exam-number">06</span>
             </div>
             <div>
@@ -3450,7 +3534,15 @@ footer {
             data-exam-id="provocacion"
           >
             <div class="exam-card-top">
-              <div class="media-slot-icon">ICONO</div>
+              <div class="media-slot-icon">
+                <img
+                  src="assets/images/icons/provocacion.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none';this.parentElement.classList.add('media-missing');"
+                >
+              </div>
               <span class="exam-number">07</span>
             </div>
             <div>
@@ -3466,7 +3558,15 @@ footer {
             data-exam-id="shunt"
           >
             <div class="exam-card-top">
-              <div class="media-slot-icon">ICONO</div>
+              <div class="media-slot-icon">
+                <img
+                  src="assets/images/icons/shunt.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none';this.parentElement.classList.add('media-missing');"
+                >
+              </div>
               <span class="exam-number">08</span>
             </div>
             <div>
@@ -3482,7 +3582,15 @@ footer {
             data-exam-id="caminata"
           >
             <div class="exam-card-top">
-              <div class="media-slot-icon">ICONO</div>
+              <div class="media-slot-icon">
+                <img
+                  src="assets/images/icons/caminata.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none';this.parentElement.classList.add('media-missing');"
+                >
+              </div>
               <span class="exam-number">09</span>
             </div>
             <div>
@@ -3498,7 +3606,15 @@ footer {
             data-exam-id="gasometria"
           >
             <div class="exam-card-top">
-              <div class="media-slot-icon">ICONO</div>
+              <div class="media-slot-icon">
+                <img
+                  src="assets/images/icons/gasometria.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none';this.parentElement.classList.add('media-missing');"
+                >
+              </div>
               <span class="exam-number">10</span>
             </div>
             <div>
@@ -3514,7 +3630,15 @@ footer {
             data-exam-id="cpet"
           >
             <div class="exam-card-top">
-              <div class="media-slot-icon">ICONO</div>
+              <div class="media-slot-icon">
+                <img
+                  src="assets/images/icons/cpet.png"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none';this.parentElement.classList.add('media-missing');"
+                >
+              </div>
               <span class="exam-number">11</span>
             </div>
             <div>
@@ -4158,9 +4282,9 @@ const EXAMS = {
     short:
       "Evalúa cuánto aire puedes expulsar y qué tan rápido.",
 
-    icon:"",
+    icon:"assets/images/icons/espirometria.png",
 
-    media:"",
+    media:"assets/images/exams/espirometria.png",
 
     link:"espirometria_info.html",
 
@@ -4326,9 +4450,9 @@ const EXAMS = {
     short:
       "Evalúa el intercambio de gases a través del pulmón.",
 
-    icon:"",
+    icon:"assets/images/icons/dlco.png",
 
-    media:"",
+    media:"assets/images/exams/dlco.png",
 
     link:"difusion_info.html",
 
@@ -4490,9 +4614,9 @@ const EXAMS = {
     short:
       "Evalúa volúmenes pulmonares que no pueden medirse solamente con una espirometría.",
 
-    icon:"",
+    icon:"assets/images/icons/pletismografia.png",
 
-    media:"",
+    media:"assets/images/exams/pletismografia.png",
 
     link:"volumenes_info.html",
 
@@ -4654,9 +4778,9 @@ const EXAMS = {
     short:
       "Evalúa la respuesta mecánica del sistema respiratorio mediante pequeñas oscilaciones de presión.",
 
-    icon:"",
+    icon:"assets/images/icons/ios.png",
 
-    media:"",
+    media:"assets/images/exams/ios.png",
 
     link:"oscilometria_info.html",
 
@@ -4818,9 +4942,9 @@ const EXAMS = {
     short:
       "Evalúa de forma no invasiva un marcador relacionado con inflamación de la vía aérea.",
 
-    icon:"",
+    icon:"assets/images/icons/feno.png",
 
-    media:"",
+    media:"assets/images/exams/feno.png",
 
     link:"feno_info.html",
 
@@ -4982,9 +5106,9 @@ const EXAMS = {
     short:
       "Evalúa la fuerza de los músculos respiratorios.",
 
-    icon:"",
+    icon:"assets/images/icons/pimpem.png",
 
-    media:"",
+    media:"assets/images/exams/pimpem.png",
 
     link:"pim_pem_info.html",
 
@@ -5146,9 +5270,9 @@ const EXAMS = {
     short:
       "Evalúa la respuesta de las vías respiratorias frente a un estímulo específico.",
 
-    icon:"",
+    icon:"assets/images/icons/provocacion.png",
 
-    media:"",
+    media:"assets/images/exams/provocacion.png",
 
     link:"provocacion_info.html",
 
@@ -5310,9 +5434,9 @@ const EXAMS = {
     short:
       "Estudia alteraciones relacionadas con la oxigenación y el intercambio gaseoso.",
 
-    icon:"",
+    icon:"assets/images/icons/shunt.png",
 
-    media:"",
+    media:"assets/images/exams/shunt.png",
 
     link:"shunt_info.html",
 
@@ -5474,9 +5598,9 @@ const EXAMS = {
     short:
       "Evalúa la respuesta del organismo durante una caminata controlada.",
 
-    icon:"",
+    icon:"assets/images/icons/caminata.png",
 
-    media:"",
+    media:"assets/images/exams/caminata.png",
 
     link:"test_caminata_info.html",
 
@@ -5638,9 +5762,9 @@ const EXAMS = {
     short:
       "Evalúa oxígeno, dióxido de carbono y equilibrio ácido-base.",
 
-    icon:"",
+    icon:"assets/images/icons/gasometria.png",
 
-    media:"",
+    media:"assets/images/exams/gasometria.png",
 
     link:"gasometria_info.html",
 
@@ -5802,9 +5926,9 @@ const EXAMS = {
     short:
       "Evalúa la respuesta cardiorrespiratoria durante el ejercicio.",
 
-    icon:"",
+    icon:"assets/images/icons/cpet.png",
 
-    media:"",
+    media:"assets/images/exams/cpet.png",
 
     link:"cardiopulmonar_info.html",
 
@@ -7007,8 +7131,24 @@ const ALL_EXAMS = {
 
 /* ============================================================
    FPAIR — RUTAS DE MEDIOS
-   No modifica el diseño. Solo permite que al agregar un PNG
-   con el ID del examen aparezca automáticamente.
+
+   Adultos:
+   assets/images/icons/espirometria.png
+   assets/images/icons/dlco.png
+   assets/images/icons/pletismografia.png
+   assets/images/icons/ios.png
+   assets/images/icons/feno.png
+   assets/images/icons/pimpem.png
+   assets/images/icons/provocacion.png
+   assets/images/icons/shunt.png
+   assets/images/icons/caminata.png
+   assets/images/icons/gasometria.png
+   assets/images/icons/cpet.png
+
+   Imágenes grandes:
+   assets/images/exams/<mismo-id>.png
+
+   Para Pediatría se conserva el sistema automático ya existente.
    ============================================================ */
 Object.values(ALL_EXAMS).forEach(exam => {
 
@@ -7083,6 +7223,7 @@ function renderIcon(exam) {
           src="${exam.icon}"
           alt=""
           loading="lazy"
+          decoding="async"
           onerror="
             this.style.display='none';
             this.parentElement.classList.add('media-missing');
@@ -7114,8 +7255,10 @@ function renderLargeMedia(exam) {
 
         <img
           src="${exam.media}"
-          alt="${exam.name}"
-          loading="lazy"
+          alt="Ilustración educativa de ${exam.name}"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
           onerror="
             this.style.display='none';
             this.nextElementSibling.style.display='grid';
