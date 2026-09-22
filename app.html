@@ -3161,6 +3161,35 @@ footer {
     }
   }
 
+
+  .technique-controls{
+    display:flex;
+    gap:10px;
+    margin-top:18px;
+  }
+  .technique-controls .btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    transform:none;
+  }
+  .technique-panel .info-panel-header{
+    margin-bottom:18px;
+  }
+  .technique-panel .technique-stage{
+    border:1px solid var(--stroke);
+    border-radius:22px;
+    background:var(--panel-soft);
+    padding:20px;
+  }
+  .technique-panel .technique-image-slot{
+    min-height:390px;
+    background:linear-gradient(145deg,var(--panel),var(--panel-soft));
+  }
+  @media (max-width: 760px){
+    .technique-controls{flex-direction:column;}
+    .technique-controls .btn{width:100%;}
+  }
+
 </style>
 </head>
 
@@ -7265,6 +7294,10 @@ function renderTechniqueSection(exam, flow) {
               <div class="mini-card"><strong id="techniqueTipLabel">${first.tip}</strong><span id="techniqueTipText">${first.tipText}</span></div>
               <div class="mini-card"><strong id="techniqueMistakeLabel">${first.mistake}</strong><span id="techniqueMistakeText">${first.mistakeText}</span></div>
             </div>
+            <div class="technique-controls">
+              <button type="button" class="btn btn-secondary" id="techniquePrev" disabled>← Anterior</button>
+              <button type="button" class="btn btn-primary" id="techniqueNext">Siguiente →</button>
+            </div>
           </div>
         </div>
       </div>
@@ -7318,26 +7351,32 @@ function bindTechniqueEvents(exam) {
   const tipText = document.getElementById('techniqueTipText');
   const mistakeLabel = document.getElementById('techniqueMistakeLabel');
   const mistakeText = document.getElementById('techniqueMistakeText');
+  const prev = document.getElementById('techniquePrev');
+  const next = document.getElementById('techniqueNext');
+  let activeIndex = 0;
 
   function activate(index) {
-    const step = steps[index];
+    activeIndex = Math.max(0, Math.min(index, steps.length - 1));
+    const step = steps[activeIndex];
     root.querySelectorAll('[data-tech-step]').forEach((button, buttonIndex) => {
-      button.classList.toggle('active', buttonIndex === index);
+      button.classList.toggle('active', buttonIndex === activeIndex);
     });
-    counter.textContent = String(index + 1).padStart(2,'0');
+    counter.textContent = String(activeIndex + 1).padStart(2,'0');
     title.textContent = step.title;
     desc.textContent = step.description;
     tipLabel.textContent = step.tip;
     tipText.textContent = step.tipText;
     mistakeLabel.textContent = step.mistake;
     mistakeText.textContent = step.mistakeText;
-    if (placeholderTitle) placeholderTitle.textContent = `Paso ${String(index + 1).padStart(2,'0')} · ${step.title}`;
+    if (placeholderTitle) placeholderTitle.textContent = `Paso ${String(activeIndex + 1).padStart(2,'0')} · ${step.title}`;
     if (placeholderPath) placeholderPath.textContent = step.image;
+    if (prev) prev.disabled = activeIndex === 0;
+    if (next) next.disabled = activeIndex === steps.length - 1;
     if (image) {
       image.style.display = '';
       if (placeholder) placeholder.style.display = 'none';
       image.src = step.image;
-      image.alt = `Paso ${index + 1} de ${exam.name}`;
+      image.alt = `Paso ${activeIndex + 1} de ${exam.name}`;
       image.onerror = function() {
         this.style.display = 'none';
         if (placeholder) placeholder.style.display = 'grid';
@@ -7348,6 +7387,9 @@ function bindTechniqueEvents(exam) {
   root.querySelectorAll('[data-tech-step]').forEach((button, index) => {
     button.addEventListener('click', () => activate(index));
   });
+
+  if (prev) prev.addEventListener('click', () => activate(activeIndex - 1));
+  if (next) next.addEventListener('click', () => activate(activeIndex + 1));
 }
 
 
@@ -8413,9 +8455,10 @@ function renderFromHash() {
     */
 
     const step = normalizeStepRoute(parts[4]);
+    const flow = getFlowConfig(exam);
 
     state.step =
-      exam.steps[step]
+      flow[step]
         ? step
         : "during";
 
