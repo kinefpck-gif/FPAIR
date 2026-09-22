@@ -3343,6 +3343,42 @@ footer {
 
 
 <!-- ============================================================
+     PREPARACIÓN — EXPLORADOR INTERACTIVO
+     ============================================================ -->
+<section class="section section-alt fpair-prep-section" id="preparacion">
+  <div class="container">
+    <div class="section-header fpair-section-head-wide">
+      <div class="eyebrow"><span class="eyebrow-dot"></span>Antes del examen</div>
+      <h2>Llegar preparado ayuda a realizar mejor el examen.</h2>
+      <p>Deja listos los dos pasos prácticos antes de venir. La información sobre inhaladores, contraindicaciones y otros temas estará disponible en la Biblioteca FPAIR.</p>
+    </div>
+
+    <div class="fpair-explorer" data-explorer="prep">
+      <div class="fpair-explorer-nav" role="tablist" aria-label="Herramientas de preparación">
+        <button class="fpair-explorer-tab active" type="button" role="tab" aria-selected="true" data-prep-topic="consentimiento">
+          <span class="fpair-tab-icon">01</span><span><strong>Consentimiento</strong><small>Revísalo con tiempo</small></span><span class="fpair-arrow">→</span>
+        </button>
+        <button class="fpair-explorer-tab" type="button" role="tab" aria-selected="false" data-prep-topic="alarma">
+          <span class="fpair-tab-icon">02</span><span><strong>Recordatorio con alarma</strong><small>Programa tu preparación</small></span><span class="fpair-arrow">→</span>
+        </button>
+      </div>
+
+      <div class="fpair-explorer-stage" id="prepExplorerStage" aria-live="polite">
+        <div class="fpair-stage-topline"><span>PREPARACIÓN PERSONALIZADA</span><span class="fpair-stage-counter">01 / 02</span></div>
+        <div class="fpair-stage-icon">✓</div>
+        <h3>Lee tu consentimiento antes de venir.</h3>
+        <p>Conocer el procedimiento con anticipación te permite llegar con menos dudas y aprovechar mejor el tiempo en el laboratorio.</p>
+        <div class="fpair-stage-points"><span>Comprende qué examen te realizarán</span><span>Revisa las indicaciones principales</span><span>Anota cualquier duda para el equipo</span></div>
+        <div class="fpair-stage-actions"><a class="btn btn-primary" href="preparacion_info.html#consentimiento">Revisar consentimiento</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- ============================================================
      EXPLORADOR DE EXÁMENES — FPAIR EXPERIENCE
      ============================================================ -->
 <section class="totem-section fpair-exam-explorer" id="examenes">
@@ -3356,7 +3392,7 @@ footer {
         </div>
         <div class="fpair-journey-chip" aria-live="polite">
           <span class="fpair-journey-dot"></span>
-          <span id="progressText">1 de 4</span>
+          <span id="progressText">1 de 2</span>
           <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
         </div>
       </div>
@@ -3665,40 +3701,6 @@ footer {
             Necesito tranquilidad
           </button>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ============================================================
-     PREPARACIÓN — EXPLORADOR INTERACTIVO
-     ============================================================ -->
-<section class="section section-alt fpair-prep-section" id="preparacion">
-  <div class="container">
-    <div class="section-header fpair-section-head-wide">
-      <div class="eyebrow"><span class="eyebrow-dot"></span>Antes del examen</div>
-      <h2>Llegar preparado ayuda a realizar mejor el examen.</h2>
-      <p>Deja listos los dos pasos prácticos antes de venir. La información sobre inhaladores, contraindicaciones y otros temas estará disponible en la Biblioteca FPAIR.</p>
-    </div>
-
-    <div class="fpair-explorer" data-explorer="prep">
-      <div class="fpair-explorer-nav" role="tablist" aria-label="Herramientas de preparación">
-        <button class="fpair-explorer-tab active" type="button" role="tab" aria-selected="true" data-prep-topic="consentimiento">
-          <span class="fpair-tab-icon">01</span><span><strong>Consentimiento</strong><small>Revísalo con tiempo</small></span><span class="fpair-arrow">→</span>
-        </button>
-        <button class="fpair-explorer-tab" type="button" role="tab" aria-selected="false" data-prep-topic="alarma">
-          <span class="fpair-tab-icon">02</span><span><strong>Recordatorio con alarma</strong><small>Programa tu preparación</small></span><span class="fpair-arrow">→</span>
-        </button>
-      </div>
-
-      <div class="fpair-explorer-stage" id="prepExplorerStage" aria-live="polite">
-        <div class="fpair-stage-topline"><span>PREPARACIÓN PERSONALIZADA</span><span class="fpair-stage-counter">01 / 02</span></div>
-        <div class="fpair-stage-icon">✓</div>
-        <h3>Lee tu consentimiento antes de venir.</h3>
-        <p>Conocer el procedimiento con anticipación te permite llegar con menos dudas y aprovechar mejor el tiempo en el laboratorio.</p>
-        <div class="fpair-stage-points"><span>Comprende qué examen te realizarán</span><span>Revisa las indicaciones principales</span><span>Anota cualquier duda para el equipo</span></div>
-        <div class="fpair-stage-actions"><a class="btn btn-primary" href="preparacion_info.html#consentimiento">Revisar consentimiento</a></div>
       </div>
     </div>
   </div>
@@ -6709,19 +6711,19 @@ const storage = {
 };
 
 const ROUTE_STEP_ALIASES = Object.freeze({
-  before:"before",
-  antes:"before",
+  before:"during",
+  antes:"during",
   during:"during",
   durante:"during",
   practice:"practice",
   practicar:"practice",
-  results:"results",
-  comprender:"results",
-  resultados:"results"
+  results:"during",
+  comprender:"during",
+  resultados:"during"
 });
 
 function normalizeStepRoute(value) {
-  return ROUTE_STEP_ALIASES[String(value || "").toLowerCase()] || "before";
+  return ROUTE_STEP_ALIASES[String(value || "").toLowerCase()] || "during";
 }
 
 function safeRoutePart(value) {
@@ -6781,7 +6783,7 @@ const state = {
 
   examId:null,
 
-  step:"before"
+  step:"during"
 
 };
 
@@ -7221,7 +7223,7 @@ function openExam(examId) {
     examId;
 
   state.step =
-    "before";
+    "during";
 
   state.audience =
     exam.audience;
@@ -7237,7 +7239,7 @@ function openExam(examId) {
   );
 
   navigate(
-    `#fpair/examenes/${exam.audience}/${exam.id}/antes`
+    `#fpair/examenes/${exam.audience}/${exam.id}/durante`
   );
 
 }
@@ -7251,21 +7253,17 @@ function renderExamContext(exam) {
 
   const stepNames = {
 
-    before:"Antes",
-
     during:"Durante",
 
-    practice:"Practicar",
-
-    results:"Comprender"
+    practice:"Practicar"
 
   };
 
 
   const step =
-    exam.steps[state.step]
+    stepNames[state.step] && exam.steps[state.step]
       ? state.step
-      : "before";
+      : "during";
 
 
   state.step = step;
@@ -7281,10 +7279,10 @@ function renderExamContext(exam) {
 
 
   progressBar.style.width =
-    `${((stepIndex + 1) / 4) * 100}%`;
+    `${((stepIndex + 1) / 2) * 100}%`;
 
   progressText.textContent =
-    `${stepIndex + 1} de 4`;
+    `${stepIndex + 1} de 2`;
 
 
   const related =
@@ -7377,13 +7375,9 @@ function renderExamContext(exam) {
 
                     <span>
                       ${
-                        key === "before"
-                          ? "Prepárate"
-                          : key === "during"
-                            ? "Qué ocurrirá"
-                            : key === "practice"
-                              ? "Familiarízate"
-                              : "Entiende"
+                        key === "during"
+                          ? "Qué ocurrirá"
+                          : "Familiarízate"
                       }
                     </span>
 
@@ -7451,61 +7445,7 @@ function renderExamContext(exam) {
 
         </div>
 
-        ${
-          step === "before"
-            ? `
-              <div class="prep-hub" aria-label="Recursos de preparación del examen">
 
-                <div class="prep-hub-head">
-                  <div>
-                    <h4>Completa tu preparación antes de venir</h4>
-                    <p>Usa estos recursos para llegar informado, reducir imprevistos y seguir correctamente las indicaciones de tu laboratorio.</p>
-                  </div>
-                  <span class="prep-hub-badge">3 recursos útiles</span>
-                </div>
-
-                <div class="prep-task-grid">
-
-                  <article class="prep-task">
-                    <div class="prep-task-icon" aria-hidden="true">✓</div>
-                    <strong>1. Revisa tus prerrequisitos</strong>
-                    <p>Consulta actividades que debes evitar, contraindicaciones y las indicaciones específicas sobre medicamentos e inhaladores.</p>
-                    <a class="prep-task-link" href="preparacion_info.html#cese-actividades">
-                      Revisar preparación →
-                    </a>
-                  </article>
-
-                  <article class="prep-task">
-                    <div class="prep-task-icon" aria-hidden="true">▤</div>
-                    <strong>2. Completa tu consentimiento</strong>
-                    <p>Lee la información del procedimiento y deja listo el formulario de consentimiento si tu laboratorio lo solicita.</p>
-                    <a class="prep-task-link" href="preparacion_info.html#consentimiento">
-                      Ir al consentimiento →
-                    </a>
-                  </article>
-
-                  <article class="prep-task">
-                    <div class="prep-task-icon" aria-hidden="true">⏰</div>
-                    <strong>3. Programa un recordatorio</strong>
-                    <p>Crea una alarma para recordar las instrucciones previas, incluida la indicación sobre tus inhaladores cuando corresponda.</p>
-                    <a class="prep-task-link" href="preparacion_info.html#recordatorio-alarma">
-                      Crear recordatorio →
-                    </a>
-                  </article>
-
-                </div>
-
-                <div class="prep-hub-footer">
-                  <p><strong>Importante:</strong> no suspendas medicamentos ni inhaladores por tu cuenta. Los tiempos dependen del fármaco, del examen y de la indicación del laboratorio.</p>
-                  <a class="btn btn-primary" href="preparacion_info.html">
-                    Abrir preparación completa →
-                  </a>
-                </div>
-
-              </div>
-            `
-            : ""
-        }
 
 
         <div class="context-actions">
@@ -7518,34 +7458,18 @@ function renderExamContext(exam) {
                   class="btn btn-primary"
                   id="launchPractice"
                 >
-                  Iniciar práctica FPAIR
-                </button>
-              `
-              : ""
-          }
-
-
-          ${
-            step !== "practice"
-              ? `
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  id="goPractice"
-                >
                   Practicar esta técnica
                 </button>
               `
-              : ""
+              : `
+                <a
+                  class="btn btn-secondary"
+                  href="${exam.link}"
+                >
+                  Ver página completa del examen →
+                </a>
+              `
           }
-
-
-          <a
-            class="btn btn-secondary"
-            href="${exam.link}"
-          >
-            Ver página completa del examen →
-          </a>
 
         </div>
 
@@ -8351,7 +8275,7 @@ function renderFromHash() {
     state.step =
       exam.steps[step]
         ? step
-        : "before";
+        : "during";
 
 
     renderExamContext(
