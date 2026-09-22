@@ -3069,6 +3069,98 @@ footer {
 @media(max-width:980px){.fpair-explorer{grid-template-columns:1fr}.fpair-explorer-nav{display:grid;grid-template-columns:repeat(2,1fr)}.fpair-learning-hero{grid-template-columns:1fr}.fpair-topic-grid{grid-template-columns:repeat(2,1fr)}.fpair-journey-explorer{grid-template-columns:1fr}.fpair-explorer-head{grid-template-columns:1fr}.fpair-journey-chip{max-width:320px}}
 @media(max-width:620px){.fpair-explorer-head{padding:22px}.fpair-explorer-nav{grid-template-columns:1fr}.fpair-explorer-stage{padding:22px;min-height:360px}.fpair-stage-actions .btn{width:100%}.fpair-prep-footer{align-items:flex-start;flex-direction:column}.fpair-topic-grid{grid-template-columns:1fr}.fpair-topic-card{min-height:170px}.fpair-topic-card strong{margin-top:28px}.fpair-forum-shell{grid-template-columns:50px 1fr}.fpair-forum-status{grid-column:2}.fpair-journey-rail{padding:18px 10px}.fpair-journey-step{flex-basis:82px}.fpair-journey-step>span{width:38px;height:38px}.fpair-mini-actions{align-items:flex-start;flex-direction:column;gap:10px}}
 
+
+  .during-layout{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:22px;
+    align-items:stretch;
+  }
+  .step-visual-slot{
+    min-height:280px;
+    border:1px dashed var(--stroke);
+    border-radius:26px;
+    background:var(--panel-soft);
+    overflow:hidden;
+    position:relative;
+  }
+  .step-visual-slot img,
+  .technique-image-slot img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+    padding:18px;
+  }
+  .step-visual-slot small,
+  .technique-stage small{
+    font-size:11px;
+    color:var(--text-soft);
+    line-height:1.5;
+  }
+  .technique-panel{
+    background:var(--panel-soft);
+  }
+  .technique-layout{
+    display:grid;
+    grid-template-columns:198px minmax(0,1fr);
+    gap:20px;
+    align-items:start;
+  }
+  .technique-steps{
+    display:grid;
+    gap:10px;
+  }
+  .technique-step-button{
+    border:1px solid var(--stroke);
+    background:var(--panel);
+    border-radius:16px;
+    text-align:left;
+    padding:16px 14px;
+    display:grid;
+    gap:6px;
+    cursor:pointer;
+    transition:.2s ease;
+  }
+  .technique-step-button strong{
+    font-size:14px;
+  }
+  .technique-step-button span{
+    font-size:12px;
+    color:var(--text-soft);
+  }
+  .technique-step-button.active,
+  .technique-step-button:hover{
+    background:rgba(80, 212, 197, .14);
+    border-color:var(--accent);
+    box-shadow:0 10px 24px rgba(10,41,55,.06);
+  }
+  .technique-stage{
+    display:grid;
+    gap:18px;
+  }
+  .technique-copy h3{
+    margin:10px 0 10px;
+    font-size:clamp(28px,3vw,40px);
+    line-height:1.1;
+  }
+  .technique-meta-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-top:18px;
+  }
+  .practice-panel{
+    min-height:220px;
+  }
+  @media (max-width: 980px){
+    .during-layout,
+    .technique-layout,
+    .technique-meta-grid{
+      grid-template-columns:1fr;
+    }
+  }
+
 </style>
 </head>
 
@@ -6715,8 +6807,12 @@ const ROUTE_STEP_ALIASES = Object.freeze({
   antes:"during",
   during:"during",
   durante:"during",
+  technique:"technique",
+  tecnica:"technique",
+  técnica:"technique",
   practice:"practice",
   practicar:"practice",
+  simulador:"practice",
   results:"during",
   comprender:"during",
   resultados:"during"
@@ -6916,6 +7012,342 @@ function renderLargeMedia(exam) {
     </div>
   `;
 
+}
+
+
+
+function getDuringImagePath(exam) {
+  return `assets/images/during/${exam.id}.png`;
+}
+
+function getTechniqueImagePath(exam, index) {
+  return `assets/images/technique/${exam.id}-paso-${String(index + 1).padStart(2, "0")}.png`;
+}
+
+function getSimulatorLink(exam) {
+  return exam.simulatorLink || `simulador_FPAIR_base.html?exam=${encodeURIComponent(exam.id)}`;
+}
+
+function getTechniqueBlueprint(exam) {
+  const blueprints = {
+    espirometria:[
+      ["Inspiración máxima","Llena tus pulmones todo lo que puedas antes de comenzar."],
+      ["Sellar la boquilla","Coloca la boca bien ajustada para que no escape aire."],
+      ["Inicio explosivo","Sopla fuerte desde el primer instante."],
+      ["Mantener la exhalación","Sigue soplando sin detenerte hasta el final."],
+      ["Final adecuado","Termina solo cuando el profesional te lo indique."],
+      ["Recuperación","Respira con normalidad y prepárate para repetir si es necesario."]
+    ],
+    dlco:[
+      ["Preparación","Respira tranquilo y sigue la indicación del profesional."],
+      ["Exhalar completamente","Vacía el aire antes de iniciar la inspiración de la mezcla."],
+      ["Inspirar y contener","Llena los pulmones profundamente y mantén una apnea breve."],
+      ["Exhalar para la medición","Suelta el aire según la maniobra indicada para completar la prueba."]
+    ],
+    pletismografia:[
+      ["Ingresar a la cabina","Siéntate cómodo dentro de la cabina y escucha la explicación."],
+      ["Boquilla y pinza nasal","Sella la boquilla y mantén la nariz ocluida si se indica."],
+      ["Respiración tranquila","Respira suavemente mientras el equipo registra tus volúmenes."],
+      ["Pequeños jadeos","Realiza los jadeos cortos cuando el profesional lo solicite."],
+      ["Repetición","Algunas maniobras se repiten para asegurar mediciones confiables."]
+    ],
+    ios:[
+      ["Postura estable","Siéntate derecho y respira con tranquilidad."],
+      ["Sellar la boquilla","Mantén la boca bien cerrada alrededor de la boquilla."],
+      ["Sostener mejillas","Apoya firmemente las mejillas para evitar vibraciones."],
+      ["Respirar normal","Continúa respirando tranquilo hasta completar la medición."]
+    ],
+    feno:[
+      ["Inspirar profundamente","Toma aire según la indicación del equipo."],
+      ["Exhalar lento y constante","Sopla de forma sostenida manteniendo la velocidad indicada."],
+      ["Mantener el flujo","Observa la guía visual y trata de mantenerte en rango."],
+      ["Repetir si es necesario","Puede ser necesario repetir la maniobra para validar la medición."]
+    ],
+    pimpem:[
+      ["Preparación","Siéntate cómodo y sella bien la boquilla."],
+      ["Inspiración máxima","Para PIM, inspira con máxima fuerza cuando te lo indiquen."],
+      ["Espiración máxima","Para PEM, exhala con máxima fuerza cuando te lo indiquen."],
+      ["Repetición","Se realizan varias maniobras para obtener el mejor valor."]
+    ],
+    metacolina:[
+      ["Medición basal","Primero se realiza una medición inicial."],
+      ["Administración del estímulo","Recibirás la sustancia o estímulo según el protocolo."],
+      ["Espera guiada","Se respeta un tiempo breve antes de repetir la medición."],
+      ["Control de la respuesta","Se repite la prueba para evaluar cambios en la vía aérea."],
+      ["Avisar síntomas","Si sientes tos, pecho apretado o disnea, comunícalo de inmediato."]
+    ],
+    shunt:[
+      ["Preparación","Mantente cómodo y atento a las indicaciones."],
+      ["Administración del gas","Respira según el circuito o mezcla que te indiquen."],
+      ["Medición","El equipo registra la información sobre oxigenación e intercambio."],
+      ["Control final","Puede haber mediciones adicionales para completar el estudio."]
+    ],
+    caminata6min:[
+      ["Inicio controlado","Comienza el recorrido al ritmo indicado."],
+      ["Marcha sostenida","Camina intentando mantener el mejor ritmo tolerable."],
+      ["Monitoreo","Se controlan síntomas, saturación y frecuencia cardíaca."],
+      ["Cierre","Al finalizar se registran distancia, síntomas y recuperación."]
+    ],
+    gasometria:[
+      ["Preparación","Se identifica la arteria y se prepara el sitio de punción."],
+      ["Punción arterial","Se toma una pequeña muestra de sangre arterial."],
+      ["Compresión","Luego se comprime el sitio para evitar hematomas."],
+      ["Análisis","La muestra se analiza para conocer oxígeno, CO2 y equilibrio ácido-base."]
+    ],
+    cpet:[
+      ["Preparación","Se colocan sensores y se explica el protocolo."],
+      ["Inicio suave","Comienzas caminando o pedaleando a baja intensidad."],
+      ["Carga progresiva","La dificultad aumenta de forma gradual mientras te monitorizan."],
+      ["Esfuerzo máximo","Continúas hasta tu límite o hasta que el profesional indique detenerte."],
+      ["Recuperación","Se observa la recuperación cardiorrespiratoria después del esfuerzo."]
+    ],
+    espirometria_ninos:[
+      ["Tomar mucho aire","Imagina que inflas un gran globo con tus pulmones."],
+      ["Cerrar bien la boquilla","Haz un sellado fuerte con la boca para que no escape aire."],
+      ["Soplar fuerte","Sopla con toda tu energía desde el primer segundo."],
+      ["Seguir soplando","Continúa hasta que te indiquen parar."],
+      ["Descansar","Respira tranquilo y prepárate para repetir si hace falta."]
+    ],
+    dlco_ninos:[
+      ["Preparación","Respira tranquilo y escucha la instrucción."],
+      ["Vaciar el aire","Suelta el aire antes de empezar."],
+      ["Llenar y aguantar","Toma aire profundo y aguanta un poquito."],
+      ["Soltar para medir","Exhala como te indiquen para completar la prueba."]
+    ],
+    ios_ninos:[
+      ["Sentarse como estatua","Mantén una postura tranquila."],
+      ["Boquilla segura","Sella bien la boquilla con la boca."],
+      ["Sujetar las mejillas","Ayuda a que la prueba sea más precisa."],
+      ["Respirar suave","Respira normal hasta terminar."]
+    ],
+    feno_ninos:[
+      ["Tomar aire","Inspira como te indiquen."],
+      ["Soplar despacito","Mantén un soplido suave y continuo."],
+      ["Seguir la guía","Intenta sostener la velocidad correcta."],
+      ["Repetir","Se puede repetir para confirmar el resultado."]
+    ],
+    test_ejercicio_ninos:[
+      ["Comenzar el ejercicio","Empieza a caminar o correr según el protocolo."],
+      ["Mantener el ritmo","Sigue la actividad mientras te observan."],
+      ["Avisar molestias","Si sientes algo raro, avísalo de inmediato."],
+      ["Recuperarte","Al terminar, descansa mientras registran tu recuperación."]
+    ],
+    provocacion_ninos:[
+      ["Medición inicial","Primero se realiza una medición de base."],
+      ["Recibir el estímulo","Luego se administra el estímulo del protocolo."],
+      ["Esperar un momento","Se espera el tiempo indicado."],
+      ["Volver a medir","Se repite la prueba para ver si hubo cambios."],
+      ["Contar cómo te sientes","Si aparece tos o molestia, dilo enseguida."]
+    ]
+  };
+  const key = exam.id;
+  const exact = blueprints[key];
+  if (exact) return exact;
+  const baseKey = key.replace(/_ninos$/, "");
+  if (blueprints[baseKey]) return blueprints[baseKey];
+  return [
+    ["Preparación","Escucha las instrucciones y adopta la postura indicada."],
+    ["Maniobra","Realiza la maniobra guiada por el profesional."],
+    ["Repetición","Puede ser necesario repetir para validar la prueba."],
+    ["Cierre","Descansa y espera la siguiente indicación."]
+  ];
+}
+
+function getTechniqueSection(exam) {
+  const items = getTechniqueBlueprint(exam);
+  const countWord = ["cero","un","dos","tres","cuatro","cinco","seis","siete","ocho"][items.length] || String(items.length);
+  return {
+    title:`Una maniobra, ${countWord} momentos.`,
+    intro:"Selecciona cada paso. La idea es familiarizarte con el examen, no reemplazar la instrucción del profesional.",
+    steps: items.map((item, index) => ({
+      title: item[0],
+      short: item[0].split(" ").slice(0,2).join(" "),
+      description: item[1],
+      tip: "Consejo FPAIR",
+      tipText: "Sigue la instrucción del profesional y mantén un buen sello de la boquilla o postura según el examen.",
+      mistake: "Error frecuente",
+      mistakeText: "Intentar adelantar la maniobra sin esperar la indicación del equipo de salud.",
+      image: getTechniqueImagePath(exam, index)
+    }))
+  };
+}
+
+function getFlowConfig(exam) {
+  return {
+    during: exam.steps?.during || {
+      title:"Durante el examen",
+      intro:"El profesional te irá guiando durante la medición.",
+      items:[["Indicaciones","Sigue paso a paso la guía del profesional."]]
+    },
+    technique: getTechniqueSection(exam),
+    practice: {
+      title:"Practicar la técnica",
+      intro:"Cuando el simulador esté listo, podrás entrenar esta maniobra antes de tu examen.",
+      items:[["Simulador FPAIR","Accede al entrenamiento guiado para practicar a tu ritmo."]],
+      simulatorLink: getSimulatorLink(exam)
+    }
+  };
+}
+
+function renderDuringSection(exam, flow) {
+  const stepData = flow.during;
+  const imagePath = getDuringImagePath(exam);
+  return `
+    <div class="info-panel">
+      <div class="info-panel-header">
+        <div>
+          <h3>${stepData.title}</h3>
+          <p class="info-panel-intro">${stepData.intro}</p>
+        </div>
+      </div>
+      <div class="during-layout">
+        <div class="info-list">
+          ${stepData.items.map(item => `
+            <div class="info-item">
+              <div class="info-check">✓</div>
+              <div>
+                <strong>${item[0]}</strong>
+                <span>${item[1]}</span>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+        <div class="step-visual-slot media-slot-video">
+          <img src="${imagePath}" alt="Visual educativo de ${exam.name} durante el examen" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+          <div class="media-placeholder-content" style="display:none">
+            <strong>ESPACIO PARA IMAGEN DURANTE</strong>
+            <span>${exam.name}</span>
+            <small>${imagePath}</small>
+          </div>
+        </div>
+      </div>
+      <div class="context-actions">
+        <a class="btn btn-secondary" href="${exam.link}">Ver página completa del examen →</a>
+      </div>
+    </div>
+  `;
+}
+
+function renderTechniqueSection(exam, flow) {
+  const technique = flow.technique;
+  const stepsMarkup = technique.steps.map((step, index) => `
+    <button type="button" class="technique-step-button ${index === 0 ? 'active' : ''}" data-tech-step="${index}">
+      <strong>${String(index + 1).padStart(2,'0')} · ${step.title}</strong>
+      <span>${step.short || step.title}</span>
+    </button>
+  `).join('');
+  const first = technique.steps[0];
+  return `
+    <div class="info-panel technique-panel">
+      <div class="info-panel-header">
+        <div>
+          <div class="context-label">FPAIR / TÉCNICA GUIADA</div>
+          <h3>${technique.title}</h3>
+          <p class="info-panel-intro">${technique.intro}</p>
+        </div>
+      </div>
+      <div class="technique-layout" data-technique-root="${exam.id}">
+        <div class="technique-steps">${stepsMarkup}</div>
+        <div class="technique-stage">
+          <div class="step-visual-slot media-slot-video technique-image-slot">
+            <img id="techniqueImage" src="${first.image}" alt="Paso técnico 1 de ${exam.name}" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+            <div class="media-placeholder-content" id="techniquePlaceholder" style="display:none">
+              <strong>ESPACIO PARA IMAGEN DEL PASO</strong>
+              <span id="techniquePlaceholderTitle">Paso 01 · ${first.title}</span>
+              <small id="techniquePlaceholderPath">${first.image}</small>
+            </div>
+          </div>
+          <div class="technique-copy">
+            <div class="context-label">PASO <span id="techniqueStepCounter">01</span> / ${String(technique.steps.length).padStart(2,'0')}</div>
+            <h3 id="techniqueStepTitle">${first.title}</h3>
+            <p class="info-panel-intro" id="techniqueStepDescription">${first.description}</p>
+            <div class="technique-meta-grid">
+              <div class="mini-card"><strong id="techniqueTipLabel">${first.tip}</strong><span id="techniqueTipText">${first.tipText}</span></div>
+              <div class="mini-card"><strong id="techniqueMistakeLabel">${first.mistake}</strong><span id="techniqueMistakeText">${first.mistakeText}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderPracticeSection(exam, flow) {
+  const practice = flow.practice;
+  return `
+    <div class="info-panel">
+      <div class="info-panel-header">
+        <div>
+          <h3>${practice.title}</h3>
+          <p class="info-panel-intro">${practice.intro}</p>
+        </div>
+      </div>
+      <div class="practice-panel media-slot-video">
+        <div class="media-placeholder-content">
+          <strong>SIMULADOR FPAIR</strong>
+          <span>${exam.name}</span>
+          <small>Ruta sugerida: ${practice.simulatorLink}</small>
+        </div>
+      </div>
+      <div class="context-actions">
+        <a class="btn btn-primary" href="${practice.simulatorLink}">Ir al simulador →</a>
+      </div>
+    </div>
+  `;
+}
+
+function getContextSectionMarkup(exam, flow, step) {
+  if (step === "technique") return renderTechniqueSection(exam, flow);
+  if (step === "practice") return renderPracticeSection(exam, flow);
+  return renderDuringSection(exam, flow);
+}
+
+function bindTechniqueEvents(exam) {
+  const root = document.querySelector('[data-technique-root]');
+  if (!root) return;
+  const flow = getFlowConfig(exam);
+  const steps = flow.technique.steps;
+  const image = document.getElementById('techniqueImage');
+  const placeholder = document.getElementById('techniquePlaceholder');
+  const placeholderTitle = document.getElementById('techniquePlaceholderTitle');
+  const placeholderPath = document.getElementById('techniquePlaceholderPath');
+  const title = document.getElementById('techniqueStepTitle');
+  const desc = document.getElementById('techniqueStepDescription');
+  const counter = document.getElementById('techniqueStepCounter');
+  const tipLabel = document.getElementById('techniqueTipLabel');
+  const tipText = document.getElementById('techniqueTipText');
+  const mistakeLabel = document.getElementById('techniqueMistakeLabel');
+  const mistakeText = document.getElementById('techniqueMistakeText');
+
+  function activate(index) {
+    const step = steps[index];
+    root.querySelectorAll('[data-tech-step]').forEach((button, buttonIndex) => {
+      button.classList.toggle('active', buttonIndex === index);
+    });
+    counter.textContent = String(index + 1).padStart(2,'0');
+    title.textContent = step.title;
+    desc.textContent = step.description;
+    tipLabel.textContent = step.tip;
+    tipText.textContent = step.tipText;
+    mistakeLabel.textContent = step.mistake;
+    mistakeText.textContent = step.mistakeText;
+    if (placeholderTitle) placeholderTitle.textContent = `Paso ${String(index + 1).padStart(2,'0')} · ${step.title}`;
+    if (placeholderPath) placeholderPath.textContent = step.image;
+    if (image) {
+      image.style.display = '';
+      if (placeholder) placeholder.style.display = 'none';
+      image.src = step.image;
+      image.alt = `Paso ${index + 1} de ${exam.name}`;
+      image.onerror = function() {
+        this.style.display = 'none';
+        if (placeholder) placeholder.style.display = 'grid';
+      };
+    }
+  }
+
+  root.querySelectorAll('[data-tech-step]').forEach((button, index) => {
+    button.addEventListener('click', () => activate(index));
+  });
 }
 
 
@@ -7169,18 +7601,6 @@ function bindSelectorEvents() {
               button.dataset.examId
             ];
 
-          if (
-            exam &&
-            exam.audience === "pediatric" &&
-            exam.link
-          ) {
-
-            window.location.href =
-              exam.link;
-
-            return;
-          }
-
           openExam(
             button.dataset.examId
           );
@@ -7252,301 +7672,89 @@ function openExam(examId) {
 function renderExamContext(exam) {
 
   const stepNames = {
-
     during:"Durante",
-
+    technique:"Técnica",
     practice:"Practicar"
-
   };
 
+  const flow = getFlowConfig(exam);
 
   const step =
-    stepNames[state.step] && exam.steps[state.step]
+    stepNames[state.step] && flow[state.step]
       ? state.step
       : "during";
 
-
   state.step = step;
 
+  const stepIndex = Object.keys(stepNames).indexOf(step);
 
-  const stepData =
-    exam.steps[step];
-
-
-  const stepIndex =
-    Object.keys(stepNames)
-      .indexOf(step);
-
-
-  progressBar.style.width =
-    `${((stepIndex + 1) / 2) * 100}%`;
-
-  progressText.textContent =
-    `${stepIndex + 1} de 2`;
-
+  progressBar.style.width = `${((stepIndex + 1) / 3) * 100}%`;
+  progressText.textContent = `${stepIndex + 1} de 3`;
 
   const related =
     (exam.related || [])
-      .map(
-        id => ALL_EXAMS[id]
-      )
+      .map(id => ALL_EXAMS[id])
       .filter(Boolean);
 
-
   totemBody.innerHTML = `
-
     <div class="context-toolbar">
-
       <div class="breadcrumb">
-
-        <span>
-          ${audienceName(exam.audience)}
-        </span>
-
+        <span>${audienceName(exam.audience)}</span>
         <span>›</span>
-
-        <span class="breadcrumb-current">
-          ${exam.name}
-        </span>
-
+        <span class="breadcrumb-current">${exam.name}</span>
         <span>›</span>
-
-        <span class="breadcrumb-current">
-          ${stepNames[step]}
-        </span>
-
+        <span class="breadcrumb-current">${stepNames[step]}</span>
       </div>
-
-
-      <button
-        class="back-button"
-        type="button"
-        id="contextBack"
-      >
-        ← Atrás
-      </button>
-
+      <button class="back-button" type="button" id="contextBack">← Atrás</button>
     </div>
-
 
     <div class="context-view">
-
-
       <div class="context-hero">
-
-
         ${renderLargeMedia(exam)}
-
-
         <div class="context-intro">
-
-          <div class="context-label">
-            FPAIR / ${exam.number}
-          </div>
-
-          <h2>
-            ${exam.name}
-          </h2>
-
-          <p>
-            ${exam.short}
-          </p>
-
-
+          <div class="context-label">FPAIR / ${exam.number}</div>
+          <h2>${exam.name}</h2>
+          <p>${exam.short}</p>
           <div class="pathway-grid">
-
-            ${Object.entries(stepNames)
-              .map(
-                ([key,label],index) => `
-
-                  <button
-                    type="button"
-                    class="pathway-button ${key === step ? "active" : ""}"
-                    data-step="${key}"
-                  >
-
-                    <span class="pathway-number">
-                      0${index + 1}
-                    </span>
-
-                    <strong>
-                      ${label}
-                    </strong>
-
-                    <span>
-                      ${
-                        key === "during"
-                          ? "Qué ocurrirá"
-                          : "Familiarízate"
-                      }
-                    </span>
-
-                  </button>
-
-                `
-              )
-              .join("")}
-
+            ${Object.entries(stepNames).map(([key,label],index) => `
+              <button type="button" class="pathway-button ${key === step ? 'active' : ''}" data-step="${key}">
+                <span class="pathway-number">0${index + 1}</span>
+                <strong>${label}</strong>
+                <span>${key === 'during' ? 'Qué ocurrirá' : key === 'technique' ? 'Aprende la maniobra' : 'Entrena'}</span>
+              </button>
+            `).join('')}
           </div>
-
         </div>
-
       </div>
 
+      ${getContextSectionMarkup(exam, flow, step)}
 
-      <div class="info-panel">
-
-        <div class="info-panel-header">
-
-          <div>
-
-            <h3>
-              ${stepData.title}
-            </h3>
-
-            <p class="info-panel-intro">
-              ${stepData.intro}
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="info-list">
-
-          ${stepData.items
-            .map(
-              item => `
-
-                <div class="info-item">
-
-                  <div class="info-check">
-                    ✓
-                  </div>
-
-                  <div>
-
-                    <strong>
-                      ${item[0]}
-                    </strong>
-
-                    <span>
-                      ${item[1]}
-                    </span>
-
-                  </div>
-
-                </div>
-
-              `
-            )
-            .join("")}
-
-        </div>
-
-
-
-
-        <div class="context-actions">
-
-          ${
-            step === "practice"
-              ? `
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  id="launchPractice"
-                >
-                  Practicar esta técnica
-                </button>
-              `
-              : `
-                <a
-                  class="btn btn-secondary"
-                  href="${exam.link}"
-                >
-                  Ver página completa del examen →
-                </a>
-              `
-          }
-
-        </div>
-
-      </div>
-
-
-      ${
-        related.length
-          ? `
-
-            <div class="related-section">
-
-              <div class="related-header">
-
-                <div>
-
-                  <h3>
-                    También puede interesarte
-                  </h3>
-
-                  <p>
-                    Estos exámenes entregan información diferente
-                    y pueden complementar la evaluación según cada caso.
-                  </p>
-
-                </div>
-
-              </div>
-
-
-              <div class="related-grid">
-
-                ${related
-                  .map(
-                    relatedExam => `
-
-                      <button
-                        type="button"
-                        class="related-card"
-                        data-related-id="${relatedExam.id}"
-                      >
-
-                        ${renderIcon(relatedExam)}
-
-                        <div>
-
-                          <strong>
-                            ${relatedExam.name}
-                          </strong>
-
-                          <span>
-                            Conocer este examen →
-                          </span>
-
-                        </div>
-
-                      </button>
-
-                    `
-                  )
-                  .join("")}
-
-              </div>
-
+      ${related.length ? `
+        <div class="related-section">
+          <div class="related-header">
+            <div>
+              <h3>También puede interesarte</h3>
+              <p>Estos exámenes entregan información diferente y pueden complementar la evaluación según cada caso.</p>
             </div>
-
-          `
-          : ""
-      }
-
-
+          </div>
+          <div class="related-grid">
+            ${related.map(relatedExam => `
+              <button type="button" class="related-card" data-related-id="${relatedExam.id}">
+                ${renderIcon(relatedExam)}
+                <div>
+                  <strong>${relatedExam.name}</strong>
+                  <span>Conocer este examen →</span>
+                </div>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      ` : ""}
     </div>
-
   `;
 
-
-  bindContextEvents();
+  bindContextEvents(exam);
+  bindTechniqueEvents(exam);
 
 }
 
@@ -7555,95 +7763,29 @@ function renderExamContext(exam) {
    EVENTOS DEL CONTEXTO
    ============================================================ */
 
-function bindContextEvents() {
+function bindContextEvents(exam) {
 
-  const back =
-    document.getElementById(
-      "contextBack"
-    );
+  const back = document.getElementById("contextBack");
+  if (back) back.addEventListener("click", goBack);
 
-  if (back) {
-
-    back.addEventListener(
-      "click",
-      goBack
-    );
-
-  }
-
-
-  document
-    .querySelectorAll("[data-step]")
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const step =
-            button.dataset.step;
-
-          navigate(
-            `#fpair/examenes/${state.audience}/${state.examId}/${step}`
-          );
-
-        }
-      );
-
+  document.querySelectorAll("[data-step]").forEach(button => {
+    button.addEventListener("click", () => {
+      const step = button.dataset.step;
+      navigate(`#fpair/examenes/${state.audience}/${state.examId}/${step}`);
     });
+  });
 
-
-  document
-    .querySelectorAll("[data-related-id]")
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          openExam(
-            button.dataset.relatedId
-          );
-
-        }
-      );
-
+  document.querySelectorAll("[data-related-id]").forEach(button => {
+    button.addEventListener("click", () => {
+      openExam(button.dataset.relatedId);
     });
+  });
 
-
-  const practice =
-    document.getElementById(
-      "goPractice"
-    );
-
-  if (practice) {
-
-    practice.addEventListener(
-      "click",
-      () => {
-
-        navigate(
-          `#fpair/examenes/${state.audience}/${state.examId}/practice`
-        );
-
-      }
-    );
-
-  }
-
-
-  const launchPractice =
-    document.getElementById(
-      "launchPractice"
-    );
-
-  if (launchPractice) {
-
-    launchPractice.addEventListener(
-      "click",
-      openPracticeModal
-    );
-
+  const goPractice = document.getElementById("goPractice");
+  if (goPractice) {
+    goPractice.addEventListener("click", () => {
+      navigate(`#fpair/examenes/${state.audience}/${state.examId}/practice`);
+    });
   }
 
 }
