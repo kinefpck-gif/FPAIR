@@ -239,8 +239,8 @@ input:focus-visible {
 
 .brand-mark {
 
-  width:42px;
-  height:42px;
+  width:46px;
+  height:46px;
 
   border-radius:13px;
 
@@ -263,6 +263,13 @@ input:focus-visible {
   box-shadow:
     0 8px 22px
     rgba(14,138,130,.25);
+}
+
+.brand-mark img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:13px;
 }
 
 
@@ -1097,14 +1104,14 @@ main {
 
 .media-slot-icon {
 
-  width:48px;
-  height:48px;
+  width:58px;
+  height:58px;
 
   flex:none;
 
-  border-radius:14px;
+  border-radius:16px;
 
-  border:1px dashed var(--border);
+  border:1px solid var(--border);
 
   background:var(--surface-alt);
 
@@ -1136,7 +1143,7 @@ main {
 
   object-fit:contain;
   object-position:center;
-  padding:3px;
+  padding:4px;
 }
 
 
@@ -3093,15 +3100,12 @@ footer {
            ====================================================== -->
 
       <div class="brand-mark">
-
-        <!--
         <img
           src="assets/images/logo/fpair-logo.png"
           alt="FPAIR"
+          width="46"
+          height="46"
         >
-        -->
-
-        F
       </div>
 
       <div class="brand-text">
@@ -3132,15 +3136,15 @@ footer {
         Preparación
       </a>
 
-      <a href="#entrenamiento">
+      <a href="tecnicas_guiadas.html">
         Técnica guiada
       </a>
 
-      <a href="#interpretacion">
+      <a href="interpretacion_ia.html">
         Interpretación
       </a>
 
-      <a href="#confianza">
+      <a href="examenes-seguros.html">
         Confianza clínica
       </a>
 
@@ -3697,377 +3701,8 @@ footer {
         <div class="fpair-stage-actions"><a class="btn btn-primary" href="preparacion_info.html#consentimiento">Revisar consentimiento</a></div>
       </div>
     </div>
-
-    <div class="fpair-prep-footer">
-      <div><strong>Tu seguridad primero.</strong><span>Las indicaciones pueden variar según el examen, tu situación clínica y el laboratorio.</span></div>
-      <a class="fpair-text-link" href="preparacion_info.html">Abrir preparación <span>↗</span></a>
-    </div>
   </div>
 </section>
-
-
-<!-- ============================================================
-     ENTRENAMIENTO
-     ============================================================ -->
-
-<section
-  class="section"
-  id="entrenamiento"
->
-
-  <div class="container">
-
-    <div class="section-header">
-
-      <div class="eyebrow">
-
-        <span class="eyebrow-dot"></span>
-
-        Técnica guiada
-
-      </div>
-
-      <h2>
-        No tienes que saber hacerlo antes de llegar.
-      </h2>
-
-      <p>
-        El profesional te explicará y acompañará durante
-        la maniobra. FPAIR puede ayudarte a familiarizarte
-        previamente con el proceso.
-      </p>
-
-    </div>
-
-    <!-- ========================================================
-         ACCESO AL CENTRO DE ENTRENAMIENTO FPAIR
-         Página futura: entrenamiento.html
-         ======================================================== -->
-    <div class="fpair-training-entry">
-
-      <div class="fpair-training-entry-content">
-
-        <div
-          class="fpair-training-entry-icon"
-          aria-hidden="true"
-        >
-          ▶
-        </div>
-
-        <div>
-
-          <span class="fpair-training-entry-label">
-            FPAIR / ENTRENAMIENTO
-          </span>
-
-          <strong>
-            ¿Quieres practicar antes de tu examen?
-          </strong>
-
-          <p>
-            Accede al centro de entrenamiento FPAIR para
-            familiarizarte con las maniobras, practicar a tu ritmo
-            y llegar con mayor confianza al laboratorio.
-          </p>
-
-        </div>
-
-      </div>
-
-      <a
-        class="btn btn-primary"
-        href="entrenamiento.html"
-        aria-label="Abrir centro de entrenamiento FPAIR"
-      >
-        Ir a entrenamiento →
-      </a>
-
-    </div>
-
-
-    <div class="training-grid">
-
-
-      <div class="training-card">
-
-
-        <div class="training-step">
-
-          <div class="training-number">
-            01
-          </div>
-
-          <div>
-
-            <strong>
-              Inspira profundamente
-            </strong>
-
-            <span>
-              Prepárate según las instrucciones del profesional.
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <div class="training-step">
-
-          <div class="training-number">
-            02
-          </div>
-
-          <div>
-
-            <strong>
-              Exhala con decisión
-            </strong>
-
-            <span>
-              Sigue las indicaciones sobre cómo comenzar
-              y mantener el esfuerzo.
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <div class="training-step">
-
-          <div class="training-number">
-            03
-          </div>
-
-          <div>
-
-            <strong>
-              Continúa hasta que te indiquen
-            </strong>
-
-            <span>
-              El tiempo y el esfuerzo necesarios pueden
-              variar entre personas y exámenes.
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <div class="training-step">
-
-          <div class="training-number">
-            04
-          </div>
-
-          <div>
-
-            <strong>
-              Si algo te incomoda, comunícalo
-            </strong>
-
-            <span>
-              El profesional está ahí para acompañarte.
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <div class="context-actions">
-
-          <button
-            class="btn btn-primary"
-            type="button"
-            id="practiceFromSection"
-          >
-            Practicar con FPAIR
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- ======================================================
-           ESPACIO PARA VIDEO / GIF
-           ====================================================== -->
-
-      <div class="training-media">
-
-        <div class="media-placeholder-content">
-
-          <strong>
-            ESPACIO PARA VIDEO / GIF
-          </strong>
-
-          <span>
-            Agregar aquí material FPAIR
-          </span>
-
-          <!--
-          EJEMPLO:
-
-          <video controls>
-            <source
-              src="assets/videos/tecnica-espirometria.mp4"
-              type="video/mp4"
-            >
-          </video>
-
-          O:
-
-          <img
-            src="assets/images/gifs/espirometria.gif"
-            alt="Técnica de espirometría"
-          >
-
-          -->
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<!-- ============================================================
-     INTERPRETACIÓN
-     ============================================================ -->
-
-<section
-  class="section section-alt"
-  id="interpretacion"
->
-
-  <div class="container">
-
-    <div class="section-header">
-
-      <div class="eyebrow">
-
-        <span class="eyebrow-dot"></span>
-
-        Comprender
-
-      </div>
-
-      <h2>
-        Tus resultados contienen información.
-      </h2>
-
-      <p>
-        FPAIR puede ayudarte a entender qué significa cada
-        parámetro de manera sencilla, sin reemplazar
-        la interpretación del profesional de salud.
-      </p>
-
-    </div>
-
-
-    <div class="interpretation-box">
-
-
-      <div>
-
-        <div class="parameter-list">
-
-          <div class="parameter">
-
-            <strong>
-              CVF
-            </strong>
-
-            <span>
-              Cantidad total de aire que puedes expulsar
-              después de una inspiración máxima.
-            </span>
-
-          </div>
-
-
-          <div class="parameter">
-
-            <strong>
-              VEF1
-            </strong>
-
-            <span>
-              Volumen de aire expulsado durante el primer
-              segundo de una maniobra forzada.
-            </span>
-
-          </div>
-
-
-          <div class="parameter">
-
-            <strong>
-              VEF1/CVF
-            </strong>
-
-            <span>
-              Relación entre el volumen expulsado durante
-              el primer segundo y la capacidad vital forzada.
-            </span>
-
-          </div>
-
-
-          <div class="parameter">
-
-            <strong>
-              Z-score
-            </strong>
-
-            <span>
-              Permite comparar un resultado con el rango
-              esperado para personas con características similares.
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <div class="context-actions">
-
-          <button
-            class="btn btn-primary"
-            type="button"
-            id="openInterpretation"
-          >
-            Explorar interpretación
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <div class="interpretation-chart">
-
-        <canvas
-          id="interpretationChart"
-          aria-label="Ejemplo educativo de distribución de resultados"
-        ></canvas>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
 
 
 <!-- ============================================================
@@ -4108,35 +3743,6 @@ footer {
       <div class="fpair-forum-mark">F</div>
       <div><span class="fpair-topic-code">PRÓXIMA ETAPA</span><h3>Foro FPAIR</h3><p>Un espacio para preguntas frecuentes, educación respiratoria y contenidos construidos desde las dudas reales de pacientes y laboratorios.</p></div>
       <a class="fpair-forum-status" href="foro.html"><span></span>Explorar foro →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     EXPERIENCIA FPAIR — ANTES / DURANTE / DESPUÉS
-     ============================================================ -->
-<section class="section section-alt fpair-journey-section" id="confianza">
-  <div class="container">
-    <div class="section-header fpair-section-head-wide">
-      <div class="eyebrow"><span class="eyebrow-dot"></span>FPAIR</div>
-      <h2>Educación antes, durante y después del examen.</h2>
-      <p>No necesitas leerlo todo. Elige el momento que te interesa y FPAIR te muestra solo la información relevante.</p>
-    </div>
-
-    <div class="fpair-journey-explorer">
-      <div class="fpair-journey-rail" role="tablist" aria-label="Momentos del examen">
-        <button class="fpair-journey-step active" type="button" data-journey="antes" aria-selected="true"><span>01</span><strong>Antes</strong><small>Prepárate</small></button>
-        <div class="fpair-rail-line"></div>
-        <button class="fpair-journey-step" type="button" data-journey="durante" aria-selected="false"><span>02</span><strong>Durante</strong><small>Comprende</small></button>
-        <div class="fpair-rail-line"></div>
-        <button class="fpair-journey-step" type="button" data-journey="despues" aria-selected="false"><span>03</span><strong>Después</strong><small>Interpreta</small></button>
-      </div>
-      <div class="fpair-journey-panel" id="journeyPanel" aria-live="polite">
-        <span class="fpair-topic-code">ANTES DEL EXAMEN</span>
-        <h3>Llega con menos incertidumbre.</h3>
-        <p>Revisa indicaciones, medicamentos, contraindicaciones y consentimiento. Si algo no está claro, anótalo para preguntarlo al equipo.</p>
-        <div class="fpair-mini-actions"><a href="#preparacion">Explorar preparación →</a><a href="biblioteca.html#experiencia-laboratorio">Conocer la experiencia →</a></div>
-      </div>
     </div>
   </div>
 </section>
@@ -6098,9 +5704,9 @@ const PEDIATRIC_EXAMS = {
     short:
       "Una evaluación adaptada para que niños y niñas puedan aprender la maniobra.",
 
-    icon:"",
+    icon:"assets/images/icons/espirometria_ninos.png",
 
-    media:"",
+    media:"assets/images/exams/espirometria_ninos.png",
 
     link:"espirometria_ninos.html",
 
@@ -6262,9 +5868,9 @@ const PEDIATRIC_EXAMS = {
     short:
       "Evalúa el intercambio gaseoso con una técnica adaptada al paciente pediátrico.",
 
-    icon:"",
+    icon:"assets/images/icons/dlco_ninos.png",
 
-    media:"",
+    media:"assets/images/exams/dlco_ninos.png",
 
     link:"dlco_ninos.html",
 
@@ -6425,9 +6031,9 @@ const PEDIATRIC_EXAMS = {
     short:
       "Evalúa la mecánica respiratoria mediante una técnica sencilla y poco demandante.",
 
-    icon:"",
+    icon:"assets/images/icons/ios_ninos.png",
 
-    media:"",
+    media:"assets/images/exams/ios_ninos.png",
 
     link:"ios_ninos.html",
 
@@ -6589,9 +6195,9 @@ const PEDIATRIC_EXAMS = {
     short:
       "Evalúa un marcador relacionado con inflamación de la vía aérea mediante una maniobra adaptada.",
 
-    icon:"",
+    icon:"assets/images/icons/feno_ninos.png",
 
-    media:"",
+    media:"assets/images/exams/feno_ninos.png",
 
     link:"feno_ninos.html",
 
@@ -6753,9 +6359,9 @@ const PEDIATRIC_EXAMS = {
     short:
       "Evalúa cómo responde la respiración durante una actividad física controlada.",
 
-    icon:"",
+    icon:"assets/images/icons/test_ejercicio_ninos.png",
 
-    media:"",
+    media:"assets/images/exams/test_ejercicio_ninos.png",
 
     link:"test_ejercicio_ninos.html",
 
@@ -6917,9 +6523,9 @@ const PEDIATRIC_EXAMS = {
     short:
       "Estudia la respuesta de las vías respiratorias mediante un protocolo controlado.",
 
-    icon:"",
+    icon:"assets/images/icons/provocacion_ninos.png",
 
-    media:"",
+    media:"assets/images/exams/provocacion_ninos.png",
 
     link:"provocacion_ninos.html",
 
