@@ -7049,8 +7049,11 @@ function getDuringImagePath(exam) {
   return `assets/images/during/${exam.id}.png`;
 }
 
-function getTechniqueImagePath(exam, index) {
-  return `assets/images/technique/${exam.id}-paso-${String(index + 1).padStart(2, "0")}.png`;
+function getTechniqueImagePath(exam, index, code = null) {
+  const suffix = code
+    ? String(code).replace(/\./g, "-")
+    : String(index + 1).padStart(2, "0");
+  return `assets/images/technique/${exam.id}-paso-${suffix}.png`;
 }
 
 function getSimulatorLink(exam) {
@@ -7058,145 +7061,206 @@ function getSimulatorLink(exam) {
 }
 
 function getTechniqueBlueprint(exam) {
+  const S = (code, title, description, tipText, mistakeText) => ({
+    code,
+    title,
+    description,
+    tipText,
+    mistakeText
+  });
+
   const blueprints = {
     espirometria:[
-      ["Inspiración máxima","Llena tus pulmones todo lo que puedas antes de comenzar."],
-      ["Sellar la boquilla","Coloca la boca bien ajustada para que no escape aire."],
-      ["Inicio explosivo","Sopla fuerte desde el primer instante."],
-      ["Mantener la exhalación","Sigue soplando sin detenerte hasta el final."],
-      ["Final adecuado","Termina solo cuando el profesional te lo indique."],
-      ["Recuperación","Respira con normalidad y prepárate para repetir si es necesario."]
+      S("01","Postura correcta, pinza y boquilla","Siéntate erguido, con la cabeza en posición neutra. Coloca la pinza nasal y la boquilla según la indicación del profesional.","Mantén la espalda recta y la boquilla estable antes de comenzar.","Iniciar encorvado, sin pinza nasal o con la boquilla mal posicionada."),
+      S("02","Respirar normal, labios bien sellados","Respira tranquilamente a través de la boquilla, manteniendo los labios completamente cerrados para evitar fugas de aire.","Comprueba que no salga aire por los lados de la boquilla.","Dejar espacios entre los labios y la boquilla."),
+      S("03","Inspiración máxima","Llena tus pulmones al máximo, hasta sentir que ya no puedes inspirar más.","Haz una inspiración rápida y completa antes del soplido.","Comenzar la espiración desde una inspiración incompleta."),
+      S("04","Soplar con inicio explosivo","Sopla inmediatamente, fuerte y rápido desde el primer instante.","Piensa en expulsar todo el aire de golpe al comenzar.","Empezar lentamente o dudar antes de soplar."),
+      S("05","Mantener espiración","Continúa soplando sin interrupciones y mantén el esfuerzo hasta que el profesional te indique finalizar.","Aunque sientas que queda poco aire, sigue soplando mientras te lo indiquen.","Detener el soplido demasiado pronto."),
+      S("06","Final adecuado","Termina la espiración completamente, sin cortar el esfuerzo antes de tiempo.","Mantén el sello labial hasta que te indiquen que la maniobra terminó.","Retirar la boquilla o cortar la espiración anticipadamente."),
+      S("07","Recuperación","Retira la boquilla cuando te lo indiquen y vuelve a respirar normalmente durante unos segundos.","Descansa y avisa si presentas mareo, tos o molestias.","Intentar repetir inmediatamente sin recuperar una respiración cómoda."),
+      S("08","Repetir","La maniobra se repite varias veces hasta obtener mediciones confiables y reproducibles.","Cada repetición debe comenzar nuevamente con una inspiración máxima.","Relajarse demasiado en las repeticiones y realizar esfuerzos menores.")
     ],
+
     dlco:[
-      ["Preparación","Respira tranquilo y sigue la indicación del profesional."],
-      ["Exhalar completamente","Vacía el aire antes de iniciar la inspiración de la mezcla."],
-      ["Inspirar y contener","Llena los pulmones profundamente y mantén una apnea breve."],
-      ["Exhalar para la medición","Suelta el aire según la maniobra indicada para completar la prueba."]
+      S("01","Postura correcta, pinza y boquilla","Siéntate erguido, coloca la pinza nasal y ubica correctamente la boquilla del equipo.","Mantén una postura estable y cómoda durante toda la maniobra.","Comenzar con mala postura o con fugas alrededor de la boquilla."),
+      S("02","Respirar normal, labios bien sellados","Respira normalmente por la boquilla durante unos ciclos, manteniendo un sello completo con los labios.","Respira tranquilo mientras el equipo registra el volumen corriente.","Morder la boquilla o permitir fugas de aire."),
+      S("03","Espirar completamente","Vacía tus pulmones todo lo posible antes de inspirar la mezcla de gas.","Sigue exhalando hasta que el profesional te indique que has llegado al volumen mínimo.","Detener la espiración antes de vaciar completamente los pulmones."),
+      S("04","Inspirar y mantener","Desde pulmones vacíos, inspira rápida y profundamente hasta llenar completamente los pulmones y luego mantén la respiración durante el tiempo indicado.","La inspiración debe ser rápida, completa y seguida de una apnea tranquila.","Inspirar parcialmente, demorarse demasiado o dejar escapar aire durante la apnea."),
+      S("05","Espirar completamente para la medición","Al finalizar la apnea, exhala de forma continua y completa para que el equipo analice la muestra de gas.","Mantén el sello de la boquilla hasta completar la exhalación indicada.","Retirar la boquilla o interrumpir la espiración antes de terminar la medición.")
     ],
+
     pletismografia:[
-      ["Ingresar a la cabina","Siéntate cómodo dentro de la cabina y escucha la explicación."],
-      ["Boquilla y pinza nasal","Sella la boquilla y mantén la nariz ocluida si se indica."],
-      ["Respiración tranquila","Respira suavemente mientras el equipo registra tus volúmenes."],
-      ["Pequeños jadeos","Realiza los jadeos cortos cuando el profesional lo solicite."],
-      ["Repetición","Algunas maniobras se repiten para asegurar mediciones confiables."]
+      S("01","Ingresar a la cabina","Entra a la cabina pletismográfica y siéntate cómodo, con la espalda apoyada y los pies estables.","La cabina permite medir cambios muy pequeños de presión mientras respiras.","Moverse innecesariamente o cambiar de postura durante la medición."),
+      S("02","Boquilla, pinza nasal y presionar mejillas","Coloca la boquilla, usa la pinza nasal y sostiene firmemente ambas mejillas con las manos según la indicación del profesional.","El apoyo de las mejillas reduce el movimiento de la vía aérea superior durante el jadeo.","Dejar las mejillas libres o perder el sello de la boquilla."),
+      S("03","Respirar normal, labios bien sellados","Respira tranquilamente por la boquilla durante unos ciclos, manteniendo los labios bien cerrados.","Usa respiraciones pequeñas y regulares antes de comenzar el jadeo.","Respirar demasiado profundo o permitir fugas alrededor de la boquilla."),
+      S("04","Jadeo: respiración normal pero rápida","Realiza respiraciones pequeñas y rápidas, como un jadeo suave, siguiendo el ritmo que indique el operador.","Mantén un ritmo constante sin hacer inspiraciones o espiraciones grandes.","Jadear demasiado fuerte, demasiado lento o con volúmenes muy amplios."),
+      S("05","Oclusión del equipo: no detener el jadeo","Cuando el obturador cierre momentáneamente el flujo, continúa jadeando sin detener el movimiento respiratorio.","Sigue exactamente el mismo ritmo durante la breve oclusión.","Detener la respiración al sentir que el flujo se bloquea."),
+      S("06","Apertura del equipo e inhalación máxima","Cuando se abra nuevamente el circuito, inspira profundamente hasta llenar completamente los pulmones.","Realiza una inspiración máxima apenas recibas la indicación.","Hacer una inspiración parcial o demorarse después de la apertura."),
+      S("07","Espirar completamente","Después de la inspiración máxima, vacía los pulmones completamente según la instrucción del operador.","Continúa exhalando hasta alcanzar el volumen mínimo posible.","Interrumpir la espiración antes de tiempo."),
+      S("08","Recuperación","Vuelve a respirar normalmente y descansa unos segundos.","Mantén la calma y espera la siguiente indicación.","Cambiar de posición o retirar el equipo antes de que te lo indiquen."),
+      S("09","Repetir","La secuencia se repite para obtener mediciones reproducibles de volúmenes y resistencias.","Intenta realizar cada repetición con el mismo ritmo y postura.","Modificar mucho la técnica entre una repetición y otra.")
     ],
+
     ios:[
-      ["Postura estable","Siéntate derecho y respira con tranquilidad."],
-      ["Sellar la boquilla","Mantén la boca bien cerrada alrededor de la boquilla."],
-      ["Sostener mejillas","Apoya firmemente las mejillas para evitar vibraciones."],
-      ["Respirar normal","Continúa respirando tranquilo hasta completar la medición."]
+      S("01","Postura correcta","Siéntate erguido, con la cabeza en posición neutra, pies apoyados y hombros relajados.","Permanece quieto y evita hablar durante la medición.","Inclinarse, moverse o cambiar la posición de la cabeza."),
+      S("02","Boquilla, pinza nasal y presionar mejillas","Coloca la pinza nasal, sella la boquilla y sostiene las mejillas con ambas manos para reducir su vibración.","Apoya las mejillas de forma firme pero cómoda.","No sostener las mejillas o permitir fugas en la boquilla."),
+      S("03","Respirar normal, labios bien sellados","Respira normalmente y de forma regular mientras el equipo aplica pequeñas oscilaciones de presión.","No necesitas soplar fuerte: solo respira tranquilo.","Hacer inspiraciones profundas, hablar, tragar repetidamente o respirar de forma irregular."),
+      S("04","Recuperación","Retira la boquilla cuando te lo indiquen y vuelve a respirar normalmente.","Descansa unos segundos antes de una nueva medición.","Retirar la boquilla antes de que termine el registro."),
+      S("05","Repetir","La medición se repite para confirmar que los registros sean estables y confiables.","Mantén la misma postura y respiración en cada repetición.","Cambiar la postura o el soporte de las mejillas entre mediciones.")
     ],
+
     feno:[
-      ["Inspirar profundamente","Toma aire según la indicación del equipo."],
-      ["Exhalar lento y constante","Sopla de forma sostenida manteniendo la velocidad indicada."],
-      ["Mantener el flujo","Observa la guía visual y trata de mantenerte en rango."],
-      ["Repetir si es necesario","Puede ser necesario repetir la maniobra para validar la medición."]
+      S("01","Postura correcta","Siéntate erguido y relajado, con la cabeza en posición neutra.","Mantén una postura estable para controlar mejor el flujo espiratorio.","Encogerse o modificar la postura durante la maniobra."),
+      S("02","Boquilla","Coloca la boquilla dentro de la boca y sella completamente los labios alrededor de ella.","Asegura un sello cómodo antes de iniciar.","Dejar escapar aire por los lados de la boquilla."),
+      S("03","Inspiración máxima","Inspira profundamente hasta llenar completamente los pulmones, siguiendo el sistema del equipo.","Llena los pulmones de forma continua hasta capacidad máxima.","Realizar una inspiración incompleta."),
+      S("04","Espirar completamente de forma sostenida","Exhala de manera suave, continua y sostenida, manteniendo el flujo objetivo que muestra el equipo.","Usa la guía visual o sonora para mantener el flujo estable durante toda la exhalación.","Soplar demasiado fuerte, variar el flujo o interrumpir la espiración."),
+      S("05","Repetir","La maniobra puede repetirse hasta obtener mediciones válidas y reproducibles.","Descansa brevemente entre intentos y repite con el mismo flujo.","Intentar la siguiente maniobra sin recuperar una respiración normal.")
     ],
+
     pimpem:[
-      ["Preparación","Siéntate cómodo y sella bien la boquilla."],
-      ["Inspiración máxima","Para PIM, inspira con máxima fuerza cuando te lo indiquen."],
-      ["Espiración máxima","Para PEM, exhala con máxima fuerza cuando te lo indiquen."],
-      ["Repetición","Se realizan varias maniobras para obtener el mejor valor."]
+      S("01","Postura correcta","Siéntate erguido, con la espalda recta y una posición estable para realizar esfuerzos máximos.","Mantén el tronco firme durante cada maniobra.","Inclinar el cuerpo o usar movimientos del tronco para ayudar al esfuerzo."),
+      S("02","Boquilla, pinza nasal y presionar mejillas","Coloca la boquilla y pinza nasal; sostiene las mejillas con las manos si el operador lo solicita.","Mantén un sello labial completo alrededor de la boquilla.","Permitir fugas de aire durante el esfuerzo máximo."),
+      S("03","Respirar normal, labios bien sellados","Respira normalmente antes de iniciar la medición y espera la señal del operador.","No adelantes el esfuerzo: comienza cuando te lo indiquen.","Iniciar la maniobra antes de alcanzar el volumen pulmonar requerido."),
+      S("04.1","Medición PIM: espirar completamente e inspirar con fuerza","Para medir PIM, vacía completamente tus pulmones y luego inspira con la máxima fuerza posible contra la resistencia del equipo.","Realiza el esfuerzo inspiratorio máximo de inmediato y mantenlo el tiempo indicado.","No vaciar completamente los pulmones o realizar un esfuerzo inspiratorio progresivo y débil."),
+      S("04.2","Medición PEM: inspirar completamente y soplar con fuerza","Para medir PEM, llena completamente tus pulmones y luego sopla con la máxima fuerza posible contra la resistencia del equipo.","Comienza la espiración con máxima fuerza y mantén el esfuerzo según la indicación.","Comenzar desde una inspiración incompleta o dejar escapar aire por la boquilla."),
+      S("05","Recuperación","Vuelve a respirar normalmente y descansa entre esfuerzos máximos.","Espera unos segundos para recuperar una respiración cómoda.","Encadenar esfuerzos sin recuperación suficiente."),
+      S("06","Repetir","Las mediciones se repiten hasta obtener esfuerzos máximos técnicamente adecuados y reproducibles.","Intenta alcanzar un esfuerzo similar en cada repetición.","Reducir la intensidad del esfuerzo en las repeticiones posteriores.")
     ],
-    metacolina:[
-      ["Medición basal","Primero se realiza una medición inicial."],
-      ["Administración del estímulo","Recibirás la sustancia o estímulo según el protocolo."],
-      ["Espera guiada","Se respeta un tiempo breve antes de repetir la medición."],
-      ["Control de la respuesta","Se repite la prueba para evaluar cambios en la vía aérea."],
-      ["Avisar síntomas","Si sientes tos, pecho apretado o disnea, comunícalo de inmediato."]
+
+    provocacion:[
+      S("01","Postura correcta, pinza y boquilla","Adopta una postura erguida, coloca la pinza nasal y posiciona correctamente la boquilla para la espirometría de control.","Mantén la misma postura en todas las mediciones del protocolo.","Cambiar de postura entre las distintas etapas del examen."),
+      S("02","Respirar normal, labios bien sellados","Respira tranquilamente por la boquilla y mantén los labios completamente sellados.","Evita fugas antes de comenzar la maniobra forzada.","Dejar escapar aire alrededor de la boquilla."),
+      S("03","Inspiración máxima","Inspira hasta llenar completamente tus pulmones.","Asegúrate de llegar a una inspiración máxima antes del soplido.","Comenzar desde un volumen pulmonar insuficiente."),
+      S("04","Soplar con inicio explosivo","Comienza la espiración de inmediato y con la máxima fuerza desde el primer instante.","El inicio rápido es fundamental para medir correctamente el VEF1.","Empezar lentamente o dudar antes de soplar."),
+      S("05","Espiración mayor a 1 segundo y detener","Mantén la espiración durante más de un segundo y detente cuando el profesional lo indique, de acuerdo con el protocolo de provocación.","Concéntrate en realizar correctamente el primer segundo de la maniobra.","Interrumpir antes del tiempo indicado o prolongar innecesariamente la maniobra."),
+      S("06","Recuperación","Respira normalmente mientras esperas la siguiente dosis, estímulo o medición.","Comunica de inmediato tos intensa, sensación de pecho apretado, mareo o dificultad respiratoria.","Ocultar síntomas o levantarse sin indicación durante el protocolo."),
+      S("07","Repetir","La secuencia se repite según las etapas del protocolo para comparar el VEF1 y evaluar la respuesta bronquial.","Sigue siempre la misma técnica para que las mediciones sean comparables.","Realizar esfuerzos muy diferentes entre una medición y otra.")
     ],
+
     shunt:[
-      ["Preparación","Mantente cómodo y atento a las indicaciones."],
-      ["Administración del gas","Respira según el circuito o mezcla que te indiquen."],
-      ["Medición","El equipo registra la información sobre oxigenación e intercambio."],
-      ["Control final","Puede haber mediciones adicionales para completar el estudio."]
+      S("01","Postura correcta","Permanece en la posición indicada por el equipo clínico, generalmente sentado o semisentado, y evita esfuerzos durante la prueba.","Mantén la misma posición durante las mediciones para facilitar la comparación.","Cambiar repetidamente de posición durante el protocolo."),
+      S("02","Muestra de gases arteriales","Se obtiene una primera muestra de sangre arterial para conocer los gases basales.","Mantén el brazo o sitio de punción relajado y sigue las indicaciones del profesional.","Mover el sitio de punción durante la toma de muestra."),
+      S("03","Respirar O2 al 100%","Respira oxígeno al 100% mediante el sistema indicado durante el tiempo establecido por el protocolo.","Mantén bien colocada la interfaz y respira de forma tranquila y continua.","Retirar la interfaz o interrumpir la administración de oxígeno antes de tiempo."),
+      S("04","Repetir muestra de gases arteriales","Tras completar el periodo con oxígeno al 100%, se obtiene una segunda muestra de sangre arterial.","Continúa siguiendo las instrucciones hasta que finalice la segunda muestra.","Modificar la respiración o retirarse del oxígeno antes de la toma indicada."),
+      S("05","Recuperación","Finalizada la medición, vuelve a la respiración habitual y se comprime el sitio de punción según corresponda.","Permanece tranquilo mientras se comprueba que no haya sangrado o molestias importantes.","Retirar la compresión demasiado pronto."),
+      S("06","Control final","El equipo revisa tu estado general y confirma que el procedimiento ha terminado de forma segura.","Comunica cualquier dolor, mareo o malestar antes de retirarte.","Irse antes del control final del sitio de punción y del estado general.")
     ],
-    caminata6min:[
-      ["Inicio controlado","Comienza el recorrido al ritmo indicado."],
-      ["Marcha sostenida","Camina intentando mantener el mejor ritmo tolerable."],
-      ["Monitoreo","Se controlan síntomas, saturación y frecuencia cardíaca."],
-      ["Cierre","Al finalizar se registran distancia, síntomas y recuperación."]
+
+    caminata:[
+      S("01","Ropa adecuada","Usa ropa cómoda y calzado seguro para caminar durante seis minutos.","Si utilizas ayudas para caminar habitualmente, informa al equipo antes de comenzar.","Realizar la prueba con calzado inadecuado o ropa que limite el movimiento."),
+      S("02","Medición de signos vitales y explicación del examen","Antes de comenzar se registran signos vitales, saturación de oxígeno, síntomas y se explica claramente el recorrido.","Escucha cómo debes caminar, cómo girar y qué hacer si necesitas detenerte.","Comenzar sin entender las instrucciones o sin comunicar síntomas basales."),
+      S("03","Caminata durante 6 minutos","Camina durante seis minutos intentando recorrer la mayor distancia posible de acuerdo con tu tolerancia y las indicaciones recibidas.","Mantén un ritmo propio y sostenido; puedes disminuir la velocidad o detenerte si lo necesitas.","Correr o modificar la técnica de marcha para aumentar artificialmente la distancia."),
+      S("04","Mediciones durante la caminata","Durante el recorrido se controlan parámetros como saturación, frecuencia cardíaca, síntomas y nivel de esfuerzo según el protocolo.","Sigue caminando mientras el profesional realiza los controles, salvo que te indiquen detenerte.","Ignorar síntomas relevantes como mareo, dolor torácico o disnea intensa."),
+      S("05","Mediciones durante recuperación","Al finalizar los seis minutos, se registran nuevamente signos vitales, saturación, frecuencia cardíaca y síntomas durante la recuperación.","Permanece en el área indicada hasta que tus parámetros comiencen a recuperarse.","Finalizar la caminata y retirarse inmediatamente sin control de recuperación."),
+      S("06","Control final","Se registra la distancia recorrida y se confirma que tus parámetros y síntomas sean seguros antes de finalizar.","Pregunta cualquier duda antes de retirarte.","Abandonar el área antes de completar la evaluación final.")
     ],
-    gasometria:[
-      ["Preparación","Se identifica la arteria y se prepara el sitio de punción."],
-      ["Punción arterial","Se toma una pequeña muestra de sangre arterial."],
-      ["Compresión","Luego se comprime el sitio para evitar hematomas."],
-      ["Análisis","La muestra se analiza para conocer oxígeno, CO2 y equilibrio ácido-base."]
-    ],
+
     cpet:[
-      ["Preparación","Se colocan sensores y se explica el protocolo."],
-      ["Inicio suave","Comienzas caminando o pedaleando a baja intensidad."],
-      ["Carga progresiva","La dificultad aumenta de forma gradual mientras te monitorizan."],
-      ["Esfuerzo máximo","Continúas hasta tu límite o hasta que el profesional indique detenerte."],
-      ["Recuperación","Se observa la recuperación cardiorrespiratoria después del esfuerzo."]
+      S("01","Preparación inicial y postura","Te ubicarás en la bicicleta ergométrica o cinta según el protocolo. Se ajusta la posición para que puedas realizar ejercicio de forma segura y eficiente.","Mantén una postura estable y avisa si el asiento, pedales o apoyo no resultan cómodos.","Comenzar el ejercicio con una posición mal ajustada."),
+      S("02","Colocación de monitorización","Se colocan electrodos para electrocardiograma y otros sensores para controlar frecuencia cardíaca, saturación de oxígeno y presión arterial durante el ejercicio.","Permite que los sensores queden bien fijados antes de comenzar.","Mover o retirar sensores durante el ejercicio."),
+      S("03","Mascarilla o boquilla para análisis de gases","Se coloca una mascarilla o boquilla conectada al analizador para medir ventilación, consumo de oxígeno y producción de CO2 respiración a respiración.","El sistema debe quedar cómodo y sin fugas para que las mediciones sean confiables.","Ajustar o separar la mascarilla durante el esfuerzo sin avisar."),
+      S("04","Reposo y medición basal","Antes del ejercicio permaneces en reposo mientras el sistema registra los valores cardiorrespiratorios basales.","Respira de forma natural y evita hablar durante el registro basal.","Moverse o hablar continuamente durante la fase basal."),
+      S("05","Inicio del ejercicio suave","Comienzas con una fase de ejercicio de baja intensidad para adaptarte al movimiento y al equipo.","En bicicleta, intenta mantener la cadencia que te indique el profesional.","Acelerar demasiado al inicio o cambiar constantemente la cadencia."),
+      S("06","Aumento progresivo de carga","La resistencia o velocidad aumenta de manera progresiva según el protocolo mientras se registran continuamente tus respuestas respiratoria, cardiovascular y metabólica.","Mantén el ritmo indicado aunque notes que el esfuerzo aumenta gradualmente.","Modificar el ritmo de manera brusca sin indicación."),
+      S("07","Mantener ritmo y comunicar síntomas","Continúa el ejercicio manteniendo la cadencia o velocidad solicitada y comunica cualquier síntoma importante durante la prueba.","Avisa si aparece dolor torácico, mareo, falta de aire intensa, dolor muscular limitante u otra molestia relevante.","Ocultar síntomas o esperar hasta no poder continuar para comunicarlos."),
+      S("08","Esfuerzo máximo o final del examen","Continúa hasta alcanzar el máximo esfuerzo tolerado o hasta que el equipo clínico indique detener el ejercicio por criterios del protocolo o de seguridad.","Concéntrate en mantener el esfuerzo hasta recibir la instrucción de finalizar.","Detenerse de forma brusca sin comunicar el motivo, salvo que exista una urgencia."),
+      S("09","Recuperación activa","Después de terminar la fase de esfuerzo, continúa con una carga muy baja o recuperación guiada mientras se mantienen las mediciones.","No te bajes inmediatamente del equipo: sigue las instrucciones durante la recuperación.","Detener completamente el movimiento o retirarse del equipo antes de tiempo."),
+      S("10","Control final","Se siguen registrando frecuencia cardíaca, presión arterial, saturación, síntomas y recuperación hasta que el equipo confirme que puedes finalizar.","Permanece sentado o en la posición indicada hasta completar el control final.","Retirar la monitorización antes de que el profesional confirme el término del examen.")
     ],
+
+    gasometria:[
+      S("01","Preparación del sitio","Se identifica la arteria y se prepara el área para la toma de la muestra.","Mantén el brazo relajado y sigue las indicaciones del profesional.","Mover la extremidad mientras se prepara la punción."),
+      S("02","Punción arterial","Se obtiene una pequeña muestra de sangre arterial utilizando material estéril.","Respira normalmente mientras se realiza la toma.","Contener la respiración o mover el brazo durante la punción."),
+      S("03","Compresión","Después de retirar la aguja se comprime el sitio para disminuir el riesgo de sangrado o hematoma.","Mantén la presión durante el tiempo que te indiquen.","Soltar la compresión demasiado pronto."),
+      S("04","Análisis y control","La muestra se analiza para medir oxígeno, CO2 y equilibrio ácido-base, y se revisa el sitio de punción antes de finalizar.","Comunica dolor intenso, hormigueo o sangrado persistente.","Retirarse sin revisar el sitio de punción.")
+    ],
+
     espirometria_ninos:[
-      ["Tomar mucho aire","Imagina que inflas un gran globo con tus pulmones."],
-      ["Cerrar bien la boquilla","Haz un sellado fuerte con la boca para que no escape aire."],
-      ["Soplar fuerte","Sopla con toda tu energía desde el primer segundo."],
-      ["Seguir soplando","Continúa hasta que te indiquen parar."],
-      ["Descansar","Respira tranquilo y prepárate para repetir si hace falta."]
+      S("01","Postura y boquilla","Siéntate como te indiquen y prepara la boquilla con ayuda del profesional.","Mantén la espalda recta y escucha la consigna como si fuera un juego.","Moverse mucho o separar la boca de la boquilla."),
+      S("02","Respirar tranquilo","Respira normal por la boquilla y cierra bien los labios.","Imagina que respiras por un tubo sin dejar escapar aire.","Dejar escapar aire por los lados."),
+      S("03","Tomar mucho aire","Llena tus pulmones todo lo que puedas.","Imagina que estás inflando un gran globo dentro de tu pecho.","Tomar solo un poco de aire antes de soplar."),
+      S("04","Soplar fuerte","Sopla fuerte y rápido desde el primer momento.","Como si quisieras apagar muchas velas de una sola vez.","Empezar con un soplido suave."),
+      S("05","Seguir soplando","Continúa soplando hasta que el profesional te diga que pares.","Sigue aunque sientas que ya queda poco aire.","Parar antes de la señal."),
+      S("06","Descansar","Vuelve a respirar normal y descansa.","Cuenta cómo te sientes antes de repetir.","Repetir demasiado rápido sin recuperar el aire."),
+      S("07","Repetir","Haz nuevamente la maniobra para obtener una buena medición.","Intenta hacerlo igual de bien en cada intento.","Perder la atención durante las repeticiones.")
     ],
+
     dlco_ninos:[
-      ["Preparación","Respira tranquilo y escucha la instrucción."],
-      ["Vaciar el aire","Suelta el aire antes de empezar."],
-      ["Llenar y aguantar","Toma aire profundo y aguanta un poquito."],
-      ["Soltar para medir","Exhala como te indiquen para completar la prueba."]
+      S("01","Postura, pinza y boquilla","Siéntate cómodo, coloca la pinza nasal y sella la boquilla.","Respira tranquilo mientras aprendes la secuencia.","Mover la boquilla o dejar escapar aire."),
+      S("02","Respirar normal","Respira suavemente por la boquilla durante unos ciclos.","Haz respiraciones pequeñas y tranquilas.","Respirar demasiado rápido o profundo."),
+      S("03","Vaciar los pulmones","Suelta todo el aire antes de comenzar la inspiración grande.","Sigue hasta que te indiquen que tus pulmones están vacíos.","Dejar aire sin expulsar antes del siguiente paso."),
+      S("04","Llenar y aguantar","Toma aire profundo hasta llenar tus pulmones y aguántalo durante el tiempo que te indiquen.","Imagina que guardas el aire como un secreto durante unos segundos.","Dejar escapar aire durante la pausa."),
+      S("05","Soltar para medir","Suelta el aire de forma continua para que el equipo pueda realizar la medición.","Mantén la boquilla hasta que termine el paso.","Retirar la boquilla antes de tiempo.")
     ],
+
     ios_ninos:[
-      ["Sentarse como estatua","Mantén una postura tranquila."],
-      ["Boquilla segura","Sella bien la boquilla con la boca."],
-      ["Sujetar las mejillas","Ayuda a que la prueba sea más precisa."],
-      ["Respirar suave","Respira normal hasta terminar."]
+      S("01","Sentarse tranquilo","Siéntate derecho y permanece lo más quieto posible.","Imagina que eres una estatua durante unos segundos.","Moverse o hablar durante la medición."),
+      S("02","Boquilla, pinza y mejillas","Coloca la boquilla y pinza nasal y ayuda a sostener tus mejillas como te enseñen.","Las manos ayudan a que las ondas lleguen mejor a tus pulmones.","Soltar las mejillas durante la prueba."),
+      S("03","Respirar normal","Respira tranquilo por la boquilla, sin soplar fuerte.","Solo respira como lo haces normalmente.","Hacer respiraciones muy grandes o soplar."),
+      S("04","Recuperación","Retira la boquilla cuando te lo indiquen y respira normal.","Descansa antes de repetir.","Retirar el equipo antes de la señal."),
+      S("05","Repetir","Se repite la medición para confirmar un buen registro.","Hazlo igual que la primera vez.","Cambiar mucho la postura entre intentos.")
     ],
+
     feno_ninos:[
-      ["Tomar aire","Inspira como te indiquen."],
-      ["Soplar despacito","Mantén un soplido suave y continuo."],
-      ["Seguir la guía","Intenta sostener la velocidad correcta."],
-      ["Repetir","Se puede repetir para confirmar el resultado."]
+      S("01","Postura correcta","Siéntate derecho y cómodo.","Mantén la cabeza en una posición tranquila.","Inclinarse durante la maniobra."),
+      S("02","Boquilla","Coloca la boca alrededor de la boquilla y ciérrala bien.","No dejes escapar aire por los lados.","Separar los labios de la boquilla."),
+      S("03","Tomar mucho aire","Llena tus pulmones profundamente.","Toma todo el aire que puedas.","Inspirar solo un poco."),
+      S("04","Soplar suave y sostenido","Sopla despacio y de forma continua siguiendo la guía del equipo.","Intenta mantener el indicador en el lugar correcto.","Soplar demasiado fuerte o cortar el soplido."),
+      S("05","Repetir","Puede ser necesario repetir para confirmar la medición.","Descansa y vuelve a intentarlo de la misma forma.","Repetir sin recuperar una respiración tranquila.")
     ],
+
     test_ejercicio_ninos:[
-      ["Comenzar el ejercicio","Empieza a caminar o correr según el protocolo."],
-      ["Mantener el ritmo","Sigue la actividad mientras te observan."],
-      ["Avisar molestias","Si sientes algo raro, avísalo de inmediato."],
-      ["Recuperarte","Al terminar, descansa mientras registran tu recuperación."]
+      S("01","Preparación","Usa ropa cómoda y escucha cómo será el ejercicio.","Pregunta cualquier duda antes de comenzar.","Comenzar sin entender el recorrido o la actividad."),
+      S("02","Controles iniciales","Se colocan los sensores o se miden los parámetros necesarios antes del ejercicio.","Permanece quieto mientras preparan el equipo.","Mover o retirar sensores."),
+      S("03","Comenzar el ejercicio","Empieza a caminar, correr o pedalear según el protocolo.","Sigue el ritmo que te indiquen.","Empezar demasiado rápido."),
+      S("04","Mantener el ejercicio","Continúa mientras el profesional controla tu respiración y otros parámetros.","Cuenta cómo te sientes durante el ejercicio.","Ocultar molestias o síntomas."),
+      S("05","Recuperación","Al terminar, descansa mientras se controlan tus parámetros.","Quédate en el lugar hasta que te indiquen que terminaste.","Irse inmediatamente después del ejercicio."),
+      S("06","Control final","El profesional confirma que te encuentras bien antes de finalizar.","Avisa si todavía sientes molestias.","No comunicar síntomas persistentes.")
     ],
+
     provocacion_ninos:[
-      ["Medición inicial","Primero se realiza una medición de base."],
-      ["Recibir el estímulo","Luego se administra el estímulo del protocolo."],
-      ["Esperar un momento","Se espera el tiempo indicado."],
-      ["Volver a medir","Se repite la prueba para ver si hubo cambios."],
-      ["Contar cómo te sientes","Si aparece tos o molestia, dilo enseguida."]
+      S("01","Postura y boquilla","Siéntate correctamente y prepara la boquilla y pinza nasal según te enseñen.","Mantén la misma postura en cada medición.","Cambiar de postura entre mediciones."),
+      S("02","Respirar normal","Respira tranquilo y mantén la boca bien sellada.","No dejes escapar aire.","Separar los labios de la boquilla."),
+      S("03","Tomar mucho aire","Llena los pulmones completamente.","Haz una inspiración grande antes de soplar.","Tomar poco aire."),
+      S("04","Soplar fuerte","Sopla rápido y fuerte cuando te den la señal.","Empieza con toda tu energía desde el primer momento.","Comenzar lentamente."),
+      S("05","Soplar el tiempo indicado","Mantén el soplido durante el tiempo que te indiquen y luego detente.","Escucha la señal del profesional.","Parar demasiado pronto."),
+      S("06","Recuperación","Respira tranquilo mientras esperas la siguiente etapa.","Cuenta de inmediato si sientes tos, falta de aire o molestias.","No avisar cómo te sientes."),
+      S("07","Repetir","La prueba se repite durante las distintas etapas del protocolo.","Intenta usar la misma técnica cada vez.","Hacer esfuerzos muy distintos entre intentos.")
     ]
   };
+
   const key = exam.id;
   const exact = blueprints[key];
   if (exact) return exact;
   const baseKey = key.replace(/_ninos$/, "");
   if (blueprints[baseKey]) return blueprints[baseKey];
   return [
-    ["Preparación","Escucha las instrucciones y adopta la postura indicada."],
-    ["Maniobra","Realiza la maniobra guiada por el profesional."],
-    ["Repetición","Puede ser necesario repetir para validar la prueba."],
-    ["Cierre","Descansa y espera la siguiente indicación."]
+    S("01","Preparación","Escucha las instrucciones y adopta la postura indicada.","Sigue paso a paso la guía del profesional.","Adelantar la maniobra sin esperar la indicación."),
+    S("02","Maniobra","Realiza la maniobra guiada por el profesional.","Mantén la técnica que te indiquen.","Cambiar la técnica durante la medición."),
+    S("03","Recuperación","Descansa y vuelve a respirar normalmente.","Comunica cualquier molestia.","Repetir sin recuperar una respiración cómoda."),
+    S("04","Repetir","La prueba puede repetirse para confirmar mediciones confiables.","Intenta mantener la misma técnica.","Realizar esfuerzos muy diferentes entre repeticiones.")
   ];
 }
 
 function getTechniqueSection(exam) {
   const items = getTechniqueBlueprint(exam);
-  const countWord = ["cero","un","dos","tres","cuatro","cinco","seis","siete","ocho"][items.length] || String(items.length);
+  const numberWords = {
+    1:"un",2:"dos",3:"tres",4:"cuatro",5:"cinco",6:"seis",7:"siete",8:"ocho",9:"nueve",10:"diez",11:"once",12:"doce"
+  };
+  const countWord = numberWords[items.length] || String(items.length);
   return {
-    title:`Una maniobra, ${countWord} momentos.`,
-    intro:"Selecciona cada paso. La idea es familiarizarte con el examen, no reemplazar la instrucción del profesional.",
+    title:`Una técnica, ${countWord} momentos.`,
+    intro:"Selecciona cada paso. La idea es familiarizarte con la técnica del examen, no reemplazar la instrucción del profesional.",
     steps: items.map((item, index) => ({
-      title: item[0],
-      short: item[0].split(" ").slice(0,2).join(" "),
-      description: item[1],
+      code: item.code || String(index + 1).padStart(2,"0"),
+      title: item.title,
+      short: item.title,
+      description: item.description,
       tip: "Consejo FPAIR",
-      tipText: "Sigue la instrucción del profesional y mantén un buen sello de la boquilla o postura según el examen.",
+      tipText: item.tipText || "Sigue la instrucción del profesional y mantén una técnica estable durante el examen.",
       mistake: "Error frecuente",
-      mistakeText: "Intentar adelantar la maniobra sin esperar la indicación del equipo de salud.",
-      image: getTechniqueImagePath(exam, index)
+      mistakeText: item.mistakeText || "Adelantar la maniobra o modificar la técnica antes de recibir la indicación.",
+      image: getTechniqueImagePath(exam, index, item.code)
     }))
   };
 }
@@ -7261,7 +7325,7 @@ function renderTechniqueSection(exam, flow) {
   const technique = flow.technique;
   const stepsMarkup = technique.steps.map((step, index) => `
     <button type="button" class="technique-step-button ${index === 0 ? 'active' : ''}" data-tech-step="${index}">
-      <strong>${String(index + 1).padStart(2,'0')} · ${step.title}</strong>
+      <strong>${step.code} · ${step.title}</strong>
       <span>${step.short || step.title}</span>
     </button>
   `).join('');
@@ -7282,12 +7346,12 @@ function renderTechniqueSection(exam, flow) {
             <img id="techniqueImage" src="${first.image}" alt="Paso técnico 1 de ${exam.name}" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
             <div class="media-placeholder-content" id="techniquePlaceholder" style="display:none">
               <strong>ESPACIO PARA IMAGEN DEL PASO</strong>
-              <span id="techniquePlaceholderTitle">Paso 01 · ${first.title}</span>
+              <span id="techniquePlaceholderTitle">Paso ${first.code} · ${first.title}</span>
               <small id="techniquePlaceholderPath">${first.image}</small>
             </div>
           </div>
           <div class="technique-copy">
-            <div class="context-label">PASO <span id="techniqueStepCounter">01</span> / ${String(technique.steps.length).padStart(2,'0')}</div>
+            <div class="context-label">PASO <span id="techniqueStepCounter">${first.code}</span> / ${String(technique.steps.length).padStart(2,'0')}</div>
             <h3 id="techniqueStepTitle">${first.title}</h3>
             <p class="info-panel-intro" id="techniqueStepDescription">${first.description}</p>
             <div class="technique-meta-grid">
@@ -7361,14 +7425,14 @@ function bindTechniqueEvents(exam) {
     root.querySelectorAll('[data-tech-step]').forEach((button, buttonIndex) => {
       button.classList.toggle('active', buttonIndex === activeIndex);
     });
-    counter.textContent = String(activeIndex + 1).padStart(2,'0');
+    counter.textContent = step.code;
     title.textContent = step.title;
     desc.textContent = step.description;
     tipLabel.textContent = step.tip;
     tipText.textContent = step.tipText;
     mistakeLabel.textContent = step.mistake;
     mistakeText.textContent = step.mistakeText;
-    if (placeholderTitle) placeholderTitle.textContent = `Paso ${String(activeIndex + 1).padStart(2,'0')} · ${step.title}`;
+    if (placeholderTitle) placeholderTitle.textContent = `Paso ${step.code} · ${step.title}`;
     if (placeholderPath) placeholderPath.textContent = step.image;
     if (prev) prev.disabled = activeIndex === 0;
     if (next) next.disabled = activeIndex === steps.length - 1;
@@ -7376,7 +7440,7 @@ function bindTechniqueEvents(exam) {
       image.style.display = '';
       if (placeholder) placeholder.style.display = 'none';
       image.src = step.image;
-      image.alt = `Paso ${activeIndex + 1} de ${exam.name}`;
+      image.alt = `Paso ${step.code} de ${exam.name}: ${step.title}`;
       image.onerror = function() {
         this.style.display = 'none';
         if (placeholder) placeholder.style.display = 'grid';
